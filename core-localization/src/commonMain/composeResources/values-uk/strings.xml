@@ -1,0 +1,19 @@
+<resources>
+    <string name="welcome_name_label">Ім'я</string>
+    <string name="welcome_name_placeholder">Приклад імені</string>
+    <string name="welcome_birth_date_label">Дата народження</string>
+    <string name="welcome_birth_date_placeholder">дд/мм/рррр</string>
+    <string name="welcome_gender_label">Стать</string>
+    <string name="welcome_gender_placeholder">Стать</string>
+    <string name="welcome_height_label">Зріст</string>
+    <string name="welcome_height_placeholder">0 см</string>
+    <string name="welcome_weight_label">Вага</string>
+    <string name="welcome_weight_placeholder">0 кг</string>
+    <string name="welcome_continue_button">Продовжити</string>
+    <string name="welcome_gender_male">Чоловік</string>
+    <string name="welcome_gender_female">Жінка</string>
+    <string name="welcome_title">Вітаємо!</string>
+    <string name="welcome_subtitle">Давайте розпочнемо подорож у таємниці їжі</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_cancel">Скасувати</string>
+</resources>

@@ -1,0 +1,30 @@
+<resources>
+    <string name="welcome_name_label">Name</string>
+    <string name="welcome_name_placeholder">Example name</string>
+    <string name="welcome_birth_date_label">Birth date</string>
+    <string name="welcome_birth_date_placeholder">dd/mm/yyyy</string>
+    <string name="welcome_gender_label">Gender</string>
+    <string name="welcome_gender_placeholder">Gender</string>
+    <string name="welcome_height_label">Height</string>
+    <string name="welcome_height_placeholder">0 Cm</string>
+    <string name="welcome_weight_label">Weight</string>
+    <string name="welcome_weight_placeholder">0 Kg</string>
+    <string name="welcome_continue_button">Continue</string>
+    <string name="welcome_gender_male">Male</string>
+    <string name="welcome_gender_female">Female</string>
+    <string name="welcome_title">Welcome!</string>
+    <string name="welcome_subtitle">Let's start the journey to food secrets</string>
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Cancel</string>
+
+    <string name="validation_error_name_empty">Name cannot be empty</string>
+    <string name="validation_error_name_too_short">Name is too short</string>
+    <string name="validation_error_date_empty">Birth date cannot be empty</string>
+    <string name="validation_error_date_invalid">Invalid date format</string>
+    <string name="validation_error_height_empty">Height cannot be empty</string>
+    <string name="validation_error_height_invalid">Invalid height</string>
+    <string name="validation_error_weight_empty">Weight cannot be empty</string>
+    <string name="validation_error_weight_invalid">Invalid weight</string>
+    <string name="validation_error_gender_empty">Please select a gender</string>
+    <string name="error_unknown">An unexpected error occurred</string>
+</resources>
