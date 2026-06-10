@@ -23,6 +23,7 @@ data class Color(
     val icon: Color,
     val textLight: Color,
     val text: Color,
+    val error: Color,
 )
 
 val LocalColor = staticCompositionLocalOf {
@@ -44,6 +45,7 @@ val LocalColor = staticCompositionLocalOf {
         icon = Color.Unspecified,
         textLight = Color.Unspecified,
         text = Color.Unspecified,
+        error = Color.Unspecified,
     )
 }
 
@@ -64,7 +66,8 @@ internal val ColorLight = Color(
     iconWhite = Color.White,
     icon = Color(0xff181818),
     textLight = Color(0xfffcfcfc),
-    text = Color(0xff181818)
+    text = Color(0xff181818),
+    error = Color(0xfff17152),
 )
 
 internal val ColorDark = Color(
@@ -84,6 +87,7 @@ internal val ColorDark = Color(
     iconWhite = Color.White,
     icon = Color.White,
     textLight = Color(0xfffcfcfc),
-    text = Color(0xfffcfcfc)
+    text = Color(0xfffcfcfc),
+    error = Color(0xfff17152),
 )
 

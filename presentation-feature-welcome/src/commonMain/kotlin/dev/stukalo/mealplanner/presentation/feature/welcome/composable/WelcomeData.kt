@@ -75,6 +75,7 @@ internal fun WelcomeData(
                     onIntent(ViewIntent.OnChangeNameInputIntent(it.text))
                 },
                 placeholder = stringResource(Res.string.welcome_name_placeholder),
+                error = nameErrorMessage?.let { stringResource(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Theme.spacing.space24),
@@ -103,6 +104,7 @@ internal fun WelcomeData(
                         onValueChange = { },
                         placeholder = stringResource(Res.string.welcome_birth_date_placeholder),
                         enabled = false,
+                        error = dateErrorMessage?.let { stringResource(it) },
                         onClick = {
                             onIntent(ViewIntent.OnShowDatePickerIntent)
                         },
@@ -129,6 +131,7 @@ internal fun WelcomeData(
                         onValueChange = { },
                         placeholder = stringResource(Res.string.welcome_gender_placeholder),
                         enabled = false,
+                        error = genderErrorMessage?.let { stringResource(it) },
                         onClick = {
                             onIntent(ViewIntent.OnShowGenderPickerIntent)
                         },
@@ -162,6 +165,7 @@ internal fun WelcomeData(
                             onIntent(ViewIntent.OnChangeHeightInputIntent(it.text))
                         },
                         placeholder = stringResource(Res.string.welcome_height_placeholder),
+                        error = heightErrorMessage?.let { stringResource(it) },
                         modifier = Modifier
                             .fillMaxWidth()
                     )
@@ -187,6 +191,7 @@ internal fun WelcomeData(
                             onIntent(ViewIntent.OnChangeWeightInputIntent(it.text))
                         },
                         placeholder = stringResource(Res.string.welcome_weight_placeholder),
+                        error = weightErrorMessage?.let { stringResource(it) },
                         modifier = Modifier
                             .fillMaxWidth()
                     )
