@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract
 
+import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
 internal sealed interface ViewIntent : MviIntent {
@@ -20,16 +21,12 @@ internal sealed interface ViewIntent : MviIntent {
     ) : ViewIntent
 
     data class OnChangeGenderInputIntent(
-        val value: String,
+        val value: GenderDomainModel,
     ) : ViewIntent
 
     data object OnShowDatePickerIntent : ViewIntent
 
     data object OnHideDatePickerIntent : ViewIntent
-
-    data object OnShowGenderPickerIntent : ViewIntent
-
-    data object OnHideGenderPickerIntent : ViewIntent
 
     data object OnContinueClickIntent : ViewIntent
 }

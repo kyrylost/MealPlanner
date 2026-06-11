@@ -4,6 +4,7 @@ import java.util.Date
 
 data class UserDomainModel(
     val id: Long = 0,
+    val name: String,
     val birthDate: Date,
     val height: Double,
     val weight: Double,

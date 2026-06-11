@@ -17,7 +17,7 @@ fun Theme(
 ) {
     val color: Color = when {
         darkTheme -> ColorDark
-        else -> ColorLight
+        else -> ColorDark
     }
 
     val typography = Typography(

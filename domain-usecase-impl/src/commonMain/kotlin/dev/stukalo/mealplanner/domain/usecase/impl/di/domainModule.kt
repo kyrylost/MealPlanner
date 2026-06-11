@@ -1,9 +1,9 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.di
 
-import dev.stukalo.mealplanner.domain.usecase.GetAutoCompleteHintsUseCase
-import dev.stukalo.mealplanner.domain.usecase.GetProductByBarcodeUseCase
-import dev.stukalo.mealplanner.domain.usecase.GetProductsByQueryUseCase
-import dev.stukalo.mealplanner.domain.usecase.GetRecipesUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
+import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetAutoCompleteHintsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductByBarcodeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductsByQueryUseCaseImpl

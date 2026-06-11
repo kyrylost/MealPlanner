@@ -2,16 +2,22 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "c141acd83c7956e8dd8e97c246c1874d",
+    "identityHash": "c947318cda956bd2bd3d0d4d5d2d2db1",
     "entities": [
       {
         "tableName": "UserDatabaseModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `birthDate` INTEGER NOT NULL, `height` REAL NOT NULL, `weight` REAL NOT NULL, `physicalActivity` INTEGER NOT NULL, `gender` TEXT NOT NULL, `diet` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `birthDate` INTEGER NOT NULL, `height` REAL NOT NULL, `weight` REAL NOT NULL, `physicalActivity` INTEGER NOT NULL, `gender` TEXT NOT NULL, `diet` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -61,7 +67,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c141acd83c7956e8dd8e97c246c1874d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c947318cda956bd2bd3d0d4d5d2d2db1')"
     ]
   }
 }

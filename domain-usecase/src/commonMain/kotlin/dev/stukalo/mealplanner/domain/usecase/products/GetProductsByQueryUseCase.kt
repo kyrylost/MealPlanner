@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.domain.usecase
+package dev.stukalo.mealplanner.domain.usecase.products
 
 import androidx.paging.PagingData
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel

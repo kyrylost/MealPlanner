@@ -24,6 +24,8 @@ data class Color(
     val textLight: Color,
     val text: Color,
     val error: Color,
+    val warning: Color,
+    val success: Color,
 )
 
 val LocalColor = staticCompositionLocalOf {
@@ -46,14 +48,16 @@ val LocalColor = staticCompositionLocalOf {
         textLight = Color.Unspecified,
         text = Color.Unspecified,
         error = Color.Unspecified,
+        warning = Color.Unspecified,
+        success = Color.Unspecified,
     )
 }
 
 internal val ColorLight = Color(
     orange = Color(0xfff17152),
     orangeDark = Color(0xffeb6a4b),
-    green = Color(0xffcde26c),
-    greenDark = Color(0xffb6c858),
+    green = Color(0xFF82E26C),
+    greenDark = Color(0xFF539546),
     purple = Color(0xffcbb1f2),
     purpleDark = Color(0xffb696e8),
     yellow = Color(0xfff4d559),
@@ -68,13 +72,15 @@ internal val ColorLight = Color(
     textLight = Color(0xfffcfcfc),
     text = Color(0xff181818),
     error = Color(0xfff17152),
+    warning = Color(0xfff4d559),
+    success = Color(0xFF82E26C),
 )
 
 internal val ColorDark = Color(
     orange = Color(0xfff17152),
     orangeDark = Color(0xffeb6a4b),
-    green = Color(0xffcde26c),
-    greenDark = Color(0xffb6c858),
+    green = Color(0xFF82E26C),
+    greenDark = Color(0xFF539546),
     purple = Color(0xffcbb1f2),
     purpleDark = Color(0xffb696e8),
     yellow = Color(0xfff4d559),
@@ -82,12 +88,14 @@ internal val ColorDark = Color(
     lightGray = Color(0xffdcdcdc),
     gray = Color(0xff282828),
     darkGray = Color(0xff181818),
-    background = Color(0xff282828),
-    backgroundSecondary = Color(0xff181818),
+    background = Color(0xff181818),
+    backgroundSecondary = Color(0xff282828),
     iconWhite = Color.White,
     icon = Color.White,
     textLight = Color(0xfffcfcfc),
     text = Color(0xfffcfcfc),
     error = Color(0xfff17152),
+    warning = Color(0xfff4d559),
+    success = Color(0xFF82E26C),
 )
 

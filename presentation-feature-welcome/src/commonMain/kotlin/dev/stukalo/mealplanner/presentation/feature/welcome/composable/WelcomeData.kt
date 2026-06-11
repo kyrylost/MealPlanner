@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
@@ -35,12 +35,12 @@ import dev.stukalo.mealplanner.core.localization.welcome_name_placeholder
 import dev.stukalo.mealplanner.core.localization.welcome_gender_female
 import dev.stukalo.mealplanner.core.localization.welcome_gender_label
 import dev.stukalo.mealplanner.core.localization.welcome_gender_male
-import dev.stukalo.mealplanner.core.localization.welcome_gender_placeholder
 import dev.stukalo.mealplanner.core.localization.welcome_weight_label
 import dev.stukalo.mealplanner.core.localization.welcome_weight_placeholder
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.PrimaryButtonSizeSet
 import dev.stukalo.mealplanner.presentation.core.ui.widget.input.RoundedPlaceholderTextField
+import dev.stukalo.mealplanner.presentation.core.ui.widget.selection.SelectionGroup
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource
@@ -57,7 +57,7 @@ internal fun WelcomeData(
     with(state) {
         Column(
             modifier = modifier
-                .background(color = Theme.color.backgroundSecondary)
+                .background(color = Theme.color.background)
         ) {
             Text(
                 text = stringResource(Res.string.welcome_name_label),
@@ -126,17 +126,22 @@ internal fun WelcomeData(
                                 bottom = Theme.spacing.space12
                             )
                     )
-                    RoundedPlaceholderTextField(
-                        value = genderInput,
-                        onValueChange = { },
-                        placeholder = stringResource(Res.string.welcome_gender_placeholder),
-                        enabled = false,
-                        error = genderErrorMessage?.let { stringResource(it) },
-                        onClick = {
-                            onIntent(ViewIntent.OnShowGenderPickerIntent)
+                    val male = stringResource(Res.string.welcome_gender_male)
+                    val female = stringResource(Res.string.welcome_gender_female)
+                    val options = listOf(male, female)
+                    SelectionGroup(
+                        options = options,
+                        selectedOption = when (gender) {
+                            GenderDomainModel.MALE -> male
+                            GenderDomainModel.FEMALE -> female
+                            null -> null
                         },
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        onOptionSelected = {
+                            val selectedGender = if (it == male) GenderDomainModel.MALE else GenderDomainModel.FEMALE
+                            onIntent(ViewIntent.OnChangeGenderInputIntent(selectedGender))
+                            focusManager.clearFocus()
+                        },
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
@@ -216,38 +221,6 @@ internal fun WelcomeData(
                         vertical = Theme.spacing.space24
                     ),
             )
-
-            if (showGenderPicker) {
-                AlertDialog(
-                    onDismissRequest = {
-                        onIntent(ViewIntent.OnHideGenderPickerIntent)
-                    },
-                    confirmButton = { },
-                    text = {
-                        Column {
-                            val male = stringResource(Res.string.welcome_gender_male)
-                            val female = stringResource(Res.string.welcome_gender_female)
-                            listOf(male, female).forEach { gender ->
-                                TextButton(
-                                    onClick = {
-                                        onIntent(ViewIntent.OnChangeGenderInputIntent(gender))
-                                        onIntent(ViewIntent.OnHideGenderPickerIntent)
-                                        focusManager.clearFocus()
-                                    },
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        text = gender,
-                                        style = Theme.typography.bodyLarge,
-                                        color = Theme.color.text
-                                    )
-                                }
-                            }
-                        }
-                    },
-                    containerColor = Theme.color.backgroundSecondary,
-                )
-            }
 
             if (showDatePicker) {
                 val datePickerState = rememberDatePickerState()

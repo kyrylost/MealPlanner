@@ -2,7 +2,7 @@ package dev.stukalo.mealplanner.domain.usecase.impl.products
 
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.repository.SearchRepository
-import dev.stukalo.mealplanner.domain.usecase.GetProductByBarcodeUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 
 internal class GetProductByBarcodeUseCaseImpl(
     private val searchRepository: SearchRepository,

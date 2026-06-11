@@ -28,11 +28,6 @@ object AnimationConfiguration {
          * The default animation duration in milliseconds.
          */
         const val DEFAULT = 500
-
-        /**
-         * The default animation duration for snackbar in milliseconds.
-         */
-        const val SNACKBAR = 5_000L
     }
 
     /**

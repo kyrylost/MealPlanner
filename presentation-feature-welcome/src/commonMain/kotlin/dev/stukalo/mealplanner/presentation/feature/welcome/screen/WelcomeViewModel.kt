@@ -3,13 +3,13 @@ package dev.stukalo.mealplanner.presentation.feature.welcome.screen
 import dev.stukalo.mealplanner.common.core.date.formatDate
 import dev.stukalo.mealplanner.common.core.validation.ValidationResult
 import dev.stukalo.mealplanner.common.core.validation.onError
-import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateGenderUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateNameUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarType
 import dev.stukalo.mealplanner.presentation.feature.welcome.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
@@ -58,14 +58,6 @@ internal class WelcomeViewModel(
 
             ViewIntent.OnHideDatePickerIntent -> {
                 updateState { PartialStateChange.ShowDatePicker(false).reduce(it) }
-            }
-
-            ViewIntent.OnShowGenderPickerIntent -> {
-                updateState { PartialStateChange.ShowGenderPicker(true).reduce(it) }
-            }
-
-            ViewIntent.OnHideGenderPickerIntent -> {
-                updateState { PartialStateChange.ShowGenderPicker(false).reduce(it) }
             }
 
             ViewIntent.OnContinueClickIntent -> {
@@ -151,18 +143,9 @@ internal class WelcomeViewModel(
         intent: ViewIntent.OnChangeGenderInputIntent
     ) {
         updateState { currentState ->
-            PartialStateChange.GenderInput.ValueChange(
-                value = intent.value,
+            PartialStateChange.GenderInput.SelectionChange(
+                gender = intent.value,
             ).reduce(currentState)
-        }
-
-        val gender = GenderDomainModel.entries.find { it.name == intent.value }
-        validateGenderUseCase(gender).onError {
-            updateState { currentState ->
-                PartialStateChange.GenderInput.Error(
-                    errorMessage = it.toMessage()
-                ).reduce(currentState)
-            }
         }
     }
 
@@ -175,11 +158,7 @@ internal class WelcomeViewModel(
                 async { validateDateUseCase(state.dateInput) },
                 async { validateHeightUseCase(state.heightInput.toDoubleOrNull()) },
                 async { validateWeightUseCase(state.weightInput.toDoubleOrNull()) },
-                async {
-                    validateGenderUseCase(
-                        GenderDomainModel.entries.find { it.name == state.genderInput }
-                    )
-                }
+                async { validateGenderUseCase(state.gender) }
             ).awaitAll()
 
             val (nameResult, dateResult, heightResult, weightResult, genderResult) = results
@@ -193,8 +172,15 @@ internal class WelcomeViewModel(
                         dateErrorMessage = (dateResult as? ValidationResult.Error)?.exception?.toMessage(),
                         heightErrorMessage = (heightResult as? ValidationResult.Error)?.exception?.toMessage(),
                         weightErrorMessage = (weightResult as? ValidationResult.Error)?.exception?.toMessage(),
-                        genderErrorMessage = (genderResult as? ValidationResult.Error)?.exception?.toMessage(),
                     ).reduce(currentState)
+                }
+                (genderResult as? ValidationResult.Error)?.let {
+                    sendEvent(
+                        ViewEvent.ShowSnackbar(
+                            message = it.exception.toMessage(),
+                            type = SnackbarType.ERROR
+                        )
+                    )
                 }
             } else {
                 sendEvent(ViewEvent.NavigateToMainScreen)
@@ -202,4 +188,3 @@ internal class WelcomeViewModel(
         }
     }
 }
-// snackbar, gender sa selection view, show error in input

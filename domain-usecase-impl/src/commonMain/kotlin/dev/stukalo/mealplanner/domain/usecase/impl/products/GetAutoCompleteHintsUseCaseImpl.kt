@@ -1,7 +1,7 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.products
 
 import dev.stukalo.mealplanner.domain.repository.SearchRepository
-import dev.stukalo.mealplanner.domain.usecase.GetAutoCompleteHintsUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
 
 internal class GetAutoCompleteHintsUseCaseImpl(
     private val searchRepository: SearchRepository,

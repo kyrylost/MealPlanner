@@ -10,25 +10,31 @@ import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 
 internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
 
-    override fun mapTo(model: UserDatabaseModel): UserDomainModel = UserDomainModel(
-        id = model.id,
-        birthDate = model.birthDate,
-        height = model.height,
-        weight = model.weight,
-        physicalActivity = model.physicalActivity,
-        gender = model.gender.toDomain(),
-        diet = model.diet.toDomain()
-    )
+    override fun mapTo(model: UserDatabaseModel): UserDomainModel = with(model) {
+        UserDomainModel(
+            id = id,
+            name = name,
+            birthDate = birthDate,
+            height = height,
+            weight = weight,
+            physicalActivity = physicalActivity,
+            gender = gender.toDomain(),
+            diet = diet.toDomain()
+        )
+    }
 
-    override fun mapFrom(model: UserDomainModel): UserDatabaseModel = UserDatabaseModel(
-        id = model.id,
-        birthDate = model.birthDate,
-        height = model.height,
-        weight = model.weight,
-        physicalActivity = model.physicalActivity,
-        gender = model.gender.toData(),
-        diet = model.diet.toData()
-    )
+    override fun mapFrom(model: UserDomainModel): UserDatabaseModel = with(model) {
+        UserDatabaseModel(
+            id = id,
+            name = name,
+            birthDate = birthDate,
+            height = height,
+            weight = weight,
+            physicalActivity = physicalActivity,
+            gender = gender.toData(),
+            diet = diet.toData()
+        )
+    }
 
     private fun GenderDatabaseModel.toDomain(): GenderDomainModel = when (this) {
         GenderDatabaseModel.MALE -> GenderDomainModel.MALE

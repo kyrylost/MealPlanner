@@ -1,6 +1,7 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract
 
 import dev.stukalo.mealplanner.common.core.date.formatDate
+import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import org.jetbrains.compose.resources.StringResource
 import java.util.Date
 
@@ -73,26 +74,16 @@ internal sealed interface PartialStateChange {
 
     sealed interface GenderInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is ValueChange -> oldState.copy(
-                genderInput = value,
-                genderErrorMessage = null,
-            )
-
-            is Error -> oldState.copy(
-                genderErrorMessage = errorMessage,
+            is SelectionChange -> oldState.copy(
+                gender = gender,
             )
         }
 
-        data class ValueChange(val value: String) : GenderInput
-        data class Error(val errorMessage: StringResource?) : GenderInput
+        data class SelectionChange(val gender: GenderDomainModel) : GenderInput
     }
 
     data class ShowDatePicker(val show: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(showDatePicker = show)
-    }
-
-    data class ShowGenderPicker(val show: Boolean) : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = oldState.copy(showGenderPicker = show)
     }
 
     data class ValidationErrors(
@@ -100,14 +91,12 @@ internal sealed interface PartialStateChange {
         val dateErrorMessage: StringResource? = null,
         val heightErrorMessage: StringResource? = null,
         val weightErrorMessage: StringResource? = null,
-        val genderErrorMessage: StringResource? = null,
     ) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             nameErrorMessage = nameErrorMessage,
             dateErrorMessage = dateErrorMessage,
             heightErrorMessage = heightErrorMessage,
             weightErrorMessage = weightErrorMessage,
-            genderErrorMessage = genderErrorMessage,
         )
     }
 }

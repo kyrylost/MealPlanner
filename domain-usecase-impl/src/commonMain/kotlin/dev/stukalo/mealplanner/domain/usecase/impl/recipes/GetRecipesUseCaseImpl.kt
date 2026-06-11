@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.domain.repository.RecipeRepository
-import dev.stukalo.mealplanner.domain.usecase.GetRecipesUseCase
+import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import kotlinx.coroutines.flow.Flow
 
 internal class GetRecipesUseCaseImpl(
