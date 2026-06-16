@@ -6,4 +6,8 @@ import java.util.Locale
 
 fun Date.formatDate(
     format: String = DAY_MONTH_YEAR_FORMAT
-) = SimpleDateFormat(format, Locale.getDefault()).format(this)
+): String? = SimpleDateFormat(format, Locale.getDefault()).format(this)
+
+fun String.parseDate(
+    format: String = DAY_MONTH_YEAR_FORMAT
+): Date? = SimpleDateFormat(format, Locale.getDefault()).parse(this)

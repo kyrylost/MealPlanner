@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.zIndex
 import androidx.window.core.layout.WindowSizeClass
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.AppLoader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeData
 import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeHeader
@@ -86,6 +87,11 @@ internal fun WelcomeContent(
                     )
                 }
             }
+        }
+
+
+        if (state.isLoading) {
+            AppLoader()
         }
 
         AppSnackbarHost(

@@ -22,4 +22,5 @@ internal data class ViewState(
     val diet: DietDomainModel? = null,
     val currentStep: Int = 1,
     val showDatePicker: Boolean = false,
+    val isLoading: Boolean = false,
 ) : MviViewState

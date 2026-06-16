@@ -1,9 +1,12 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen
 
 import dev.stukalo.mealplanner.common.core.date.formatDate
+import dev.stukalo.mealplanner.common.core.date.parseDate
 import dev.stukalo.mealplanner.common.core.exception.AppException
 import dev.stukalo.mealplanner.common.core.validation.ValidationResult
-import dev.stukalo.mealplanner.common.core.validation.onError
+import dev.stukalo.mealplanner.common.core.validation.onValidationError
+import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
+import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDietUseCase
@@ -28,6 +31,7 @@ internal class WelcomeViewModel(
     private val validateGenderUseCase: ValidateGenderUseCase,
     private val validateActivityLevelUseCase: ValidateActivityLevelUseCase,
     private val validateDietUseCase: ValidateDietUseCase,
+    private val saveUserDataUseCase: SaveUserDataUseCase,
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
     override val initialState = ViewState()
@@ -89,7 +93,7 @@ internal class WelcomeViewModel(
             ).reduce(currentState)
         }
 
-        validateNameUseCase(intent.value).onError {
+        validateNameUseCase(intent.value).onValidationError {
             updateState { currentState ->
                 PartialStateChange.NameInput.Error(
                     errorMessage = it.toMessage()
@@ -108,7 +112,7 @@ internal class WelcomeViewModel(
         }
 
         val formattedDate = intent.date?.let { Date(it).formatDate() }.orEmpty()
-        validateDateUseCase(formattedDate).onError {
+        validateDateUseCase(formattedDate).onValidationError {
             updateState { currentState ->
                 PartialStateChange.DateInput.Error(
                     errorMessage = it.toMessage()
@@ -126,7 +130,7 @@ internal class WelcomeViewModel(
             ).reduce(currentState)
         }
 
-        validateHeightUseCase(intent.value.toDoubleOrNull()).onError {
+        validateHeightUseCase(intent.value.toDoubleOrNull()).onValidationError {
             updateState { currentState ->
                 PartialStateChange.HeightInput.Error(
                     errorMessage = it.toMessage()
@@ -144,7 +148,7 @@ internal class WelcomeViewModel(
             ).reduce(currentState)
         }
 
-        validateWeightUseCase(intent.value.toDoubleOrNull()).onError {
+        validateWeightUseCase(intent.value.toDoubleOrNull()).onValidationError {
             updateState { currentState ->
                 PartialStateChange.WeightInput.Error(
                     errorMessage = it.toMessage()
@@ -210,23 +214,23 @@ internal class WelcomeViewModel(
                     ValidationResult.Success
                 }
             }
-            2 -> validateWeightUseCase(state.weightInput.toDoubleOrNull()).onError {
+            2 -> validateWeightUseCase(state.weightInput.toDoubleOrNull()).onValidationError {
                 updateState { currentState ->
                     PartialStateChange.WeightInput.Error(it.toMessage()).reduce(currentState)
                 }
             }
-            3 -> validateHeightUseCase(state.heightInput.toDoubleOrNull()).onError {
+            3 -> validateHeightUseCase(state.heightInput.toDoubleOrNull()).onValidationError {
                 updateState { currentState ->
                     PartialStateChange.HeightInput.Error(it.toMessage()).reduce(currentState)
                 }
             }
-            4 -> validateGenderUseCase(state.gender).onError {
+            4 -> validateGenderUseCase(state.gender).onValidationError {
                 sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
             }
-            5 -> validateActivityLevelUseCase(state.activityLevel).onError {
+            5 -> validateActivityLevelUseCase(state.activityLevel).onValidationError {
                 sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
             }
-            6 -> validateDietUseCase(state.diet).onError {
+            6 -> validateDietUseCase(state.diet).onValidationError {
                 sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
             }
             else -> ValidationResult.Success
@@ -236,8 +240,42 @@ internal class WelcomeViewModel(
             if (currentStep < 6) {
                 updateState { PartialStateChange.StepChange(currentStep + 1).reduce(it) }
             } else {
-                sendEvent(ViewEvent.NavigateToMainScreen)
+                saveUserDataAndNavigate()
             }
         }
+    }
+
+    private suspend fun saveUserDataAndNavigate() {
+        val state = viewState.value
+        val birthDate = state.dateInput.parseDate()
+        val activityLevel = state.activityLevel
+        val gender = state.gender
+        val diet = state.diet
+
+        if (birthDate == null || activityLevel == null || gender == null || diet == null) {
+            return
+        }
+
+        updateState { PartialStateChange.Loading(true).reduce(it) }
+
+        val user = UserDomainModel(
+            name = state.nameInput,
+            birthDate = birthDate,
+            height = state.heightInput.toDoubleOrNull() ?: 0.0,
+            weight = state.weightInput.toDoubleOrNull() ?: 0.0,
+            physicalActivity = activityLevel,
+            gender = gender,
+            diet = diet,
+        )
+
+        saveUserDataUseCase(user)
+            .onSuccess {
+                sendEvent(ViewEvent.NavigateToMainScreen)
+            }
+            .onFailure { exception ->
+                sendEvent(ViewEvent.ShowSnackbar(exception.toMessage(), SnackbarType.ERROR))
+            }
+
+        updateState { PartialStateChange.Loading(false).reduce(it) }
     }
 }

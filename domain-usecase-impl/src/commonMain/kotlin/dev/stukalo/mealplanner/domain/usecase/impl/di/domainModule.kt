@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.domain.usecase.impl.products.GetAutoCompleteHints
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductByBarcodeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductsByQueryUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecipesUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveUserDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateActivityLevelUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateDateUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateDietUseCaseImpl
@@ -15,6 +16,7 @@ import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCa
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
+import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDietUseCase
@@ -31,6 +33,8 @@ val domainModule = module {
     singleOf(::GetProductsByQueryUseCaseImpl) bind GetProductsByQueryUseCase::class
     singleOf(::GetProductByBarcodeUseCaseImpl) bind GetProductByBarcodeUseCase::class
     singleOf(::GetAutoCompleteHintsUseCaseImpl) bind GetAutoCompleteHintsUseCase::class
+
+    singleOf(::SaveUserDataUseCaseImpl) bind SaveUserDataUseCase::class
 
     singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
     singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class

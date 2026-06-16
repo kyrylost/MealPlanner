@@ -112,6 +112,10 @@ internal sealed interface PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(showDatePicker = show)
     }
 
+    data class Loading(val isLoading: Boolean) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(isLoading = isLoading)
+    }
+
     data class ValidationErrors(
         val nameErrorMessage: StringResource? = null,
         val dateErrorMessage: StringResource? = null,

@@ -6,13 +6,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
-import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.AppSnackbarHost
+import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.AppLoader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.AppSnackbarVisuals
 import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarModel
-import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarType
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -52,6 +50,10 @@ internal fun WelcomeScreen(
                     snackbarHostState = snackbarHostState,
                     onIntent = viewModel::onIntent
                 )
+
+                if (state.isLoading) {
+                    AppLoader()
+                }
             }
         },
     )

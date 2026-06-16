@@ -12,8 +12,8 @@ internal class UserRepositoryImpl(
     private val userMapper: UserMapper
 ) : UserRepository {
 
-    override suspend fun insert(user: UserDomainModel) {
-        userDatabaseSource.insert(userMapper.mapFrom(user))
+    override suspend fun insert(user: UserDomainModel): Result<Unit> {
+        return userDatabaseSource.insert(userMapper.mapFrom(user))
     }
 
     override suspend fun count(): Int {

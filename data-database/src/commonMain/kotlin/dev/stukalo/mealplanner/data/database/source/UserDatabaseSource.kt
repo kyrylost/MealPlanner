@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.Flow
 class UserDatabaseSource(
     private val dao: UserDao
 ) {
-    suspend fun insert(user: UserDatabaseModel) = dao.insert(user)
+    suspend fun insert(user: UserDatabaseModel): Result<Unit> = runCatching {
+        dao.insert(user)
+    }
 
     suspend fun count() = dao.count()
 
