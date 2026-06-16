@@ -25,20 +25,25 @@ fun FredokaFont() = FontFamily(
 
 @Immutable
 data class Typography(
-    val titleLarge: TextStyle,
-    val titleNormal: TextStyle,
-    val titleSmall: TextStyle,
-    val bodyLarge: TextStyle,
-    val bodyNormal: TextStyle,
+    val bold48: TextStyle,
+    val bold16: TextStyle,
+    val bold14: TextStyle,
+    val bold12: TextStyle,
+    val semibold48: TextStyle,
+    val regular48: TextStyle,
+    val regular14: TextStyle,
+    val regular12: TextStyle,
 )
 
 val LocalTypography = staticCompositionLocalOf {
     Typography(
-        titleLarge = TextStyle.Default,
-        titleNormal = TextStyle.Default,
-        titleSmall = TextStyle.Default,
-        bodyLarge = TextStyle.Default,
-        bodyNormal = TextStyle.Default,
+        bold48 = TextStyle.Default,
+        bold16 = TextStyle.Default,
+        bold14 = TextStyle.Default,
+        bold12 = TextStyle.Default,
+        semibold48 = TextStyle.Default,
+        regular48 = TextStyle.Default,
+        regular14 = TextStyle.Default,
+        regular12 = TextStyle.Default,
     )
 }
-

@@ -1,15 +1,27 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.di
 
-import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
-import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
-import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
-import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetAutoCompleteHintsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductByBarcodeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductsByQueryUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecipesUseCaseImpl
-import dev.stukalo.mealplanner.domain.usecase.validation.*
-import dev.stukalo.mealplanner.domain.usecase.impl.validation.*
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateActivityLevelUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateDateUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateDietUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateGenderUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateHeightUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateNameUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateWeightUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
+import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDietUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateGenderUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateNameUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -25,4 +37,6 @@ val domainModule = module {
     singleOf(::ValidateHeightUseCaseImpl) bind ValidateHeightUseCase::class
     singleOf(::ValidateWeightUseCaseImpl) bind ValidateWeightUseCase::class
     singleOf(::ValidateGenderUseCaseImpl) bind ValidateGenderUseCase::class
+    singleOf(::ValidateActivityLevelUseCaseImpl) bind ValidateActivityLevelUseCase::class
+    singleOf(::ValidateDietUseCaseImpl) bind ValidateDietUseCase::class
 }

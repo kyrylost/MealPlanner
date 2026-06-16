@@ -17,49 +17,73 @@ fun Theme(
 ) {
     val color: Color = when {
         darkTheme -> ColorDark
-        else -> ColorDark
+        else -> ColorLight
     }
 
     val typography = Typography(
-        titleLarge = TextStyle(
+        bold48 = TextStyle(
+            fontFamily = FredokaFont(),
+            fontWeight = FontWeight.Bold,
+            fontSize = 48.sp,
+            lineHeight = 56.sp,
+            letterSpacing = 0.5.sp,
+            color = color.textPrimary,
+        ),
+        bold16 = TextStyle(
             fontFamily = FredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             lineHeight = 24.sp,
             letterSpacing = 0.5.sp,
-            color = color.text,
+            color = color.textPrimary,
         ),
-        titleNormal = TextStyle(
+        bold14 = TextStyle(
             fontFamily = FredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             lineHeight = 21.sp,
             letterSpacing = 0.5.sp,
-            color = color.text,
+            color = color.textPrimary,
         ),
-        titleSmall = TextStyle(
+        bold12 = TextStyle(
             fontFamily = FredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             letterSpacing = 0.5.sp,
-            color = color.text,
+            color = color.textPrimary,
         ),
-        bodyLarge = TextStyle(
+        semibold48 = TextStyle(
+            fontFamily = FredokaFont(),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 48.sp,
+            lineHeight = 56.sp,
+            letterSpacing = 0.5.sp,
+            color = color.textPrimary,
+        ),
+        regular48 = TextStyle(
+            fontFamily = FredokaFont(),
+            fontWeight = FontWeight.Normal,
+            fontSize = 48.sp,
+            lineHeight = 56.sp,
+            letterSpacing = 0.5.sp,
+            color = color.textPrimary,
+        ),
+        regular14 = TextStyle(
             fontFamily = FredokaFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             lineHeight = 21.sp,
             letterSpacing = 0.5.sp,
-            color = color.text,
+            color = color.textPrimary,
         ),
-        bodyNormal = TextStyle(
+        regular12 = TextStyle(
             fontFamily = FredokaFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             letterSpacing = 0.5.sp,
-            color = color.text,
+            color = color.textPrimary,
         ),
     )
 

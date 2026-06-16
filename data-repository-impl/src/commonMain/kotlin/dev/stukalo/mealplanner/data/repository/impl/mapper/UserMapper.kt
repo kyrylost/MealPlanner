@@ -1,9 +1,11 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
 import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
+import dev.stukalo.mealplanner.data.database.model.ActivityLevelDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.DietDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.GenderDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.UserDatabaseModel
+import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
@@ -17,7 +19,7 @@ internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
             birthDate = birthDate,
             height = height,
             weight = weight,
-            physicalActivity = physicalActivity,
+            physicalActivity = physicalActivity.toDomain(),
             gender = gender.toDomain(),
             diet = diet.toDomain()
         )
@@ -30,7 +32,7 @@ internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
             birthDate = birthDate,
             height = height,
             weight = weight,
-            physicalActivity = physicalActivity,
+            physicalActivity = physicalActivity.toData(),
             gender = gender.toData(),
             diet = diet.toData()
         )
@@ -58,5 +60,21 @@ internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
         DietDomainModel.WEIGHT_GAIN -> DietDatabaseModel.WEIGHT_GAIN
         DietDomainModel.WEIGHT_LOSS -> DietDatabaseModel.WEIGHT_LOSS
         DietDomainModel.CUTTING_DIET -> DietDatabaseModel.CUTTING_DIET
+    }
+
+    private fun ActivityLevelDatabaseModel.toDomain(): ActivityLevelDomainModel = when (this) {
+        ActivityLevelDatabaseModel.VERY_LOW -> ActivityLevelDomainModel.VERY_LOW
+        ActivityLevelDatabaseModel.LOW -> ActivityLevelDomainModel.LOW
+        ActivityLevelDatabaseModel.MEDIUM -> ActivityLevelDomainModel.MEDIUM
+        ActivityLevelDatabaseModel.HIGH -> ActivityLevelDomainModel.HIGH
+        ActivityLevelDatabaseModel.VERY_HIGH -> ActivityLevelDomainModel.VERY_HIGH
+    }
+
+    private fun ActivityLevelDomainModel.toData(): ActivityLevelDatabaseModel = when (this) {
+        ActivityLevelDomainModel.VERY_LOW -> ActivityLevelDatabaseModel.VERY_LOW
+        ActivityLevelDomainModel.LOW -> ActivityLevelDatabaseModel.LOW
+        ActivityLevelDomainModel.MEDIUM -> ActivityLevelDatabaseModel.MEDIUM
+        ActivityLevelDomainModel.HIGH -> ActivityLevelDatabaseModel.HIGH
+        ActivityLevelDomainModel.VERY_HIGH -> ActivityLevelDatabaseModel.VERY_HIGH
     }
 }

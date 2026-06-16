@@ -8,7 +8,7 @@ data class UserDomainModel(
     val birthDate: Date,
     val height: Double,
     val weight: Double,
-    val physicalActivity: Int,
+    val physicalActivity: ActivityLevelDomainModel,
     val gender: GenderDomainModel,
     val diet: DietDomainModel,
 )

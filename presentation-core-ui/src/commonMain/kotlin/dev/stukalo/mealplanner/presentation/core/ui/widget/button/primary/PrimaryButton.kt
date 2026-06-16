@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.Dp
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColor
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSize
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.PrimaryButtonDefault
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.primaryButtonDefaultColorSet
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.StateButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.PrimaryButtonDefault
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.primaryButtonDefaultColorSet
 
 /**
  * A composable function that represents a primary button with customizable properties and optional loading state.
@@ -34,7 +34,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.button.StateButton
  *               Default is provided by [PrimaryButtonDefault.buttonColor].
  * @param sizes The [ButtonSize] instance that provides size configurations for the button.
  * @param corner The corner radius of the button. Default is provided by [PrimaryButtonDefault.corner].
- * @param textStyle The style of the text displayed on the button. Default is [Theme.typography.bodyNormal].
+ * @param textStyle The style of the text displayed on the button. Default is [Theme.typography.regular12].
  * @param animation The [ButtonAnimation] instance that provides animation configurations for the button.
  *                  Default is provided by [PrimaryButtonDefault.animation].
  * @param interactionSource The [MutableInteractionSource] for the button to track interaction states.
@@ -50,9 +50,9 @@ fun PrimaryButton(
     enabled: Boolean = true,
     isLoading: Boolean = false,
     colors: ButtonColor = PrimaryButtonDefault.buttonColor(primaryButtonDefaultColorSet()),
-    sizes: ButtonSize,
+    sizes: ButtonSize = PrimaryButtonDefault.buttonSizeSet().default(),
     corner: Dp = PrimaryButtonDefault.corner(),
-    textStyle: TextStyle = Theme.typography.bodyNormal,
+    textStyle: TextStyle = Theme.typography.regular12,
     animation: ButtonAnimation = PrimaryButtonDefault.animation(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {

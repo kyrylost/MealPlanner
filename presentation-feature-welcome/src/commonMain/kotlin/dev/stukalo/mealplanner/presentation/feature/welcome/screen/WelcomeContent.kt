@@ -15,11 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.zIndex
 import androidx.window.core.layout.WindowSizeClass
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeData
-import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeTitle
+import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeHeader
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
 
@@ -50,8 +51,10 @@ internal fun WelcomeContent(
                     modifier = Modifier
                         .background(color = Theme.color.backgroundSecondary)
                 ) {
-                    WelcomeTitle(
-                        modifier = Modifier.weight(1f).fillMaxHeight()
+                    WelcomeHeader(
+                        currentStep = state.currentStep,
+                        totalSteps = 6,
+                        modifier = Modifier.weight(1f).fillMaxHeight().zIndex(1f)
                     )
                     WelcomeData(
                         state = state,
@@ -62,9 +65,11 @@ internal fun WelcomeContent(
             } else {
                 Column(
                     modifier = Modifier
-                        .background(color = Theme.color.darkGray)
+                        .background(color = Theme.color.backgroundSecondary)
                 ) {
-                    WelcomeTitle(
+                    WelcomeHeader(
+                        currentStep = state.currentStep,
+                        totalSteps = 6,
                         modifier = Modifier.fillMaxWidth()
                     )
                     WelcomeData(

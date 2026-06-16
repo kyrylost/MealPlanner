@@ -206,7 +206,7 @@ private fun PreviewDrawButton() {
                 spacing = 8.dp,
                 minHeight = 64.dp,
                 paddings = PaddingValues(all = 8.dp),
-                textStyle = Theme.typography.bodyNormal,
+                textStyle = Theme.typography.regular12,
                 isLoading = false,
                 loadingSize = 0.dp,
                 horizontalArrangement = Alignment.TopStart,

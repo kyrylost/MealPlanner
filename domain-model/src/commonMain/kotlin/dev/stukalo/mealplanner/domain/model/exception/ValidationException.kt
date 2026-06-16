@@ -35,4 +35,12 @@ sealed class ValidationException : AppException() {
     sealed class Gender : ValidationException() {
         class NotSelected : Gender()
     }
+
+    sealed class ActivityLevel : ValidationException() {
+        class NotSelected : ActivityLevel()
+    }
+
+    sealed class Diet : ValidationException() {
+        class NotSelected : Diet()
+    }
 }

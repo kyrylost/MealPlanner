@@ -147,7 +147,7 @@ private fun PreviewPreviewAnimateButton() {
                 spacing = 8.dp,
                 minHeight = 64.dp,
                 paddings = PaddingValues(all = 8.dp),
-                textStyle = Theme.typography.bodyNormal,
+                textStyle = Theme.typography.regular12,
                 animationDuration = 400,
                 animationEasing = EaseInBack,
                 isLoading = false,

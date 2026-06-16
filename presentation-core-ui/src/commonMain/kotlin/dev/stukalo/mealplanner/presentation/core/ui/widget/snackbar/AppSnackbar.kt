@@ -1,7 +1,10 @@
 package dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +24,7 @@ fun AppSnackbar(
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = when (model.type) {
-        SnackbarType.SUCCESS -> Theme.color.green
+        SnackbarType.SUCCESS -> Theme.color.success
         SnackbarType.WARNING -> Theme.color.warning
         SnackbarType.ERROR -> Theme.color.error
     }
@@ -43,8 +46,8 @@ fun AppSnackbar(
             }
             Text(
                 text = text,
-                style = Theme.typography.bodyLarge,
-                color = Theme.color.textLight
+                style = Theme.typography.regular14,
+                color = Theme.color.textOnPrimary
             )
         }
     }

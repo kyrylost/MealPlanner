@@ -1,6 +1,8 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract
 
 import dev.stukalo.mealplanner.common.core.date.formatDate
+import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
+import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import org.jetbrains.compose.resources.StringResource
 import java.util.Date
@@ -80,6 +82,30 @@ internal sealed interface PartialStateChange {
         }
 
         data class SelectionChange(val gender: GenderDomainModel) : GenderInput
+    }
+
+    sealed interface ActivityLevelInput : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = when (this) {
+            is SelectionChange -> oldState.copy(
+                activityLevel = activityLevel,
+            )
+        }
+
+        data class SelectionChange(val activityLevel: ActivityLevelDomainModel) : ActivityLevelInput
+    }
+
+    sealed interface DietInput : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = when (this) {
+            is SelectionChange -> oldState.copy(
+                diet = diet,
+            )
+        }
+
+        data class SelectionChange(val diet: DietDomainModel) : DietInput
+    }
+
+    data class StepChange(val step: Int) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(currentStep = step)
     }
 
     data class ShowDatePicker(val show: Boolean) : PartialStateChange {
