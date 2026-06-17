@@ -18,14 +18,13 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    
+
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "MainApplication"
             isStatic = true
         }
     }
@@ -114,19 +113,22 @@ configure<ApplicationExtension> {
 }
 
 dependencies {
-//    implementation(projects.presentationFeatureStyling)
-//    implementation(project(":presentation-feature-styling"))
     debugImplementation(libs.compose.ui.tooling)
 }
 
 compose.desktop {
     application {
         mainClass = "MainKt"
+        // For development
+        jvmArgs += "-splash:${project.projectDir}/src/desktopMain/resources/splash.png"
+        // For packaged app
+        jvmArgs += $$"-splash:$APPDIR/resources/splash.png"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "dev.stukalo.mealplanner"
             packageVersion = "1.0.0"
+            appResourcesRootDir = rootDir.resolve("myAssets")
 
             val iconsRoot = project.file("desktop-icons")
             windows {
@@ -139,5 +141,11 @@ compose.desktop {
                 iconFile.set(iconsRoot.resolve("icon-linux.png"))
             }
         }
+    }
+}
+
+tasks.withType<org.gradle.jvm.tasks.Jar> {
+    manifest {
+        attributes["SplashScreen-Image"] = "splash.png"
     }
 }

@@ -1,7 +1,6 @@
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import dev.stukalo.mealplanner.App
-import org.koin.core.KoinApplication
 
 fun main() = application {
     Window(
