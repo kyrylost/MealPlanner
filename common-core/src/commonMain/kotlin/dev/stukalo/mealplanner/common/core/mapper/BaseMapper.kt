@@ -25,7 +25,7 @@ interface BaseMapper<In : Any, Out : Any> {
      */
     fun mapTo(model: In): Out =
         throw NotImplementedError(
-            "${this::class.java} function mapTo function for class ${model::class.java} is not implemented",
+            "${this::class.simpleName} function mapTo function for class ${model::class.simpleName} is not implemented",
         )
 
     /**
@@ -40,7 +40,7 @@ interface BaseMapper<In : Any, Out : Any> {
      */
     fun mapFrom(model: Out): In =
         throw NotImplementedError(
-            "${this::class.java} function mapFrom function for class ${model::class.java} is not implemented",
+            "${this::class.simpleName} function mapFrom function for class ${model::class.simpleName} is not implemented",
         )
 
     /**

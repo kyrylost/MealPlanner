@@ -5,6 +5,9 @@ plugins {
 kotlin {
     jvm("desktop")
 
+    iosArm64()
+    iosSimulatorArm64()
+
     sourceSets {
         commonMain.dependencies {
             implementation(projects.commonCore)
@@ -15,6 +18,7 @@ kotlin {
             implementation(projects.dataNetworkFooddatacentral)
             implementation(projects.dataDatabase)
             implementation(libs.androidx.paging.common)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
         }

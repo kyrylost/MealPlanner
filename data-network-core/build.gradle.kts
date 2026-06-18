@@ -6,20 +6,30 @@ plugins {
 }
 
 kotlin {
+    applyDefaultHierarchyTemplate()
+
     jvm("desktop")
+
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":common-core"))
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.koin.core)
+            implementation(projects.commonCore)
         }
         val desktopMain by getting {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
             }
         }
     }

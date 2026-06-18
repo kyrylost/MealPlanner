@@ -5,11 +5,14 @@ plugins {
 
 kotlin {
     jvm("desktop")
-    
+
+    iosArm64()
+    iosSimulatorArm64()
+
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":data-network-core"))
-            implementation(project(":data-network-openfoodfacts"))
+            implementation(projects.dataNetworkCore)
+            implementation(projects.dataNetworkOpenfoodfacts)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)

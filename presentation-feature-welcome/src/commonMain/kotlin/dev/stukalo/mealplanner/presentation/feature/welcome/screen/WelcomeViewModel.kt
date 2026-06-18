@@ -21,7 +21,9 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.Part
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
-import java.util.Date
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Instant
 
 internal class WelcomeViewModel(
     private val validateNameUseCase: ValidateNameUseCase,
@@ -111,7 +113,12 @@ internal class WelcomeViewModel(
             ).reduce(currentState)
         }
 
-        val formattedDate = intent.date?.let { Date(it).formatDate() }.orEmpty()
+        val formattedDate = intent.date?.let {
+            Instant.fromEpochMilliseconds(it)
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+                .date
+                .formatDate()
+        }.orEmpty()
         validateDateUseCase(formattedDate).onValidationError {
             updateState { currentState ->
                 PartialStateChange.DateInput.Error(

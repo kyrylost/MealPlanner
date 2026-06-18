@@ -39,6 +39,9 @@ kotlin {
 
     jvm("desktop")
 
+    iosArm64()
+    iosSimulatorArm64()
+
     sourceSets {
         val desktopMain by getting
 
@@ -59,6 +62,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.adaptive)
             implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)

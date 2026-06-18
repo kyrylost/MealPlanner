@@ -1,13 +1,28 @@
 package dev.stukalo.mealplanner.common.core.date
 
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format.DateTimeFormat
 
-fun Date.formatDate(
-    format: String = DAY_MONTH_YEAR_FORMAT
-): String? = SimpleDateFormat(format, Locale.getDefault()).format(this)
 
+/**
+ * Formats a LocalDate into a String.
+ * Note: kotlinx-datetime formatting won't return null, so the return type is just String.
+ */
+fun LocalDate.formatDate(
+    format: DateTimeFormat<LocalDate> = dayMonthYearFormat
+): String = format.format(this)
+
+/**
+ * Parses a String into a LocalDate.
+ * Returns null if the string cannot be parsed according to the format.
+ */
 fun String.parseDate(
-    format: String = DAY_MONTH_YEAR_FORMAT
-): Date? = SimpleDateFormat(format, Locale.getDefault()).parse(this)
+    format: DateTimeFormat<LocalDate> = dayMonthYearFormat
+): LocalDate? {
+    return try {
+        LocalDate.parse(this, format)
+    } catch (e: IllegalArgumentException) {
+        e.printStackTrace()
+        null
+    }
+}

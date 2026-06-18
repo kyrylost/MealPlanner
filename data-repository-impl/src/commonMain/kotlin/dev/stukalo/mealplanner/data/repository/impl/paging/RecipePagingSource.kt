@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import dev.stukalo.mealplanner.data.network.edamam.recipe.source.EdamamRecipeNetSource
 import dev.stukalo.mealplanner.data.repository.impl.mapper.RecipeMapper
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
-import java.lang.reflect.Type
 
 internal class RecipePagingSource(
     private val edamamRecipeNetSource: EdamamRecipeNetSource,

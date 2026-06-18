@@ -4,8 +4,10 @@ import dev.stukalo.mealplanner.common.core.date.formatDate
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.StringResource
-import java.util.Date
+import kotlin.time.Instant
 
 internal sealed interface PartialStateChange {
     fun reduce(oldState: ViewState): ViewState
@@ -29,7 +31,12 @@ internal sealed interface PartialStateChange {
     sealed interface DateInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
             is DateChange -> oldState.copy(
-                dateInput = date?.let { Date(it).formatDate() }.orEmpty(),
+                dateInput = date?.let {
+                    Instant.fromEpochMilliseconds(it)
+                        .toLocalDateTime(TimeZone.currentSystemDefault())
+                        .date
+                        .formatDate()
+                }.orEmpty(),
                 dateErrorMessage = null,
             )
 

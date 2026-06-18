@@ -1,5 +1,7 @@
 package dev.stukalo.mealplanner.presentation.core.ui.widget.button.core
 
+import kotlin.jvm.JvmStatic
+
 /**
  * Object representing different interaction states for a button.
  *

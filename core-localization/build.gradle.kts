@@ -28,6 +28,9 @@ kotlin {
 
     jvm("desktop")
 
+    iosArm64()
+    iosSimulatorArm64()
+
     sourceSets {
         commonMain.dependencies {
             implementation(libs.compose.runtime)

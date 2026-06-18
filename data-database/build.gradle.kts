@@ -42,6 +42,9 @@ kotlin {
 
     jvm("desktop")
 
+    iosArm64()
+    iosSimulatorArm64()
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)
@@ -49,6 +52,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
             implementation(libs.koin.core)
@@ -57,10 +61,8 @@ kotlin {
 }
 
 dependencies {
-    listOf(
-        "kspAndroid",
-        "kspDesktop",
-    ).forEach {
-        add(it, libs.androidx.room.compiler)
-    }
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspDesktop", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
 }

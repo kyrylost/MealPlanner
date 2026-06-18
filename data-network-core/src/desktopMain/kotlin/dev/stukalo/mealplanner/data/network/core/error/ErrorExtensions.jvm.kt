@@ -1,11 +1,11 @@
-package dev.stukalo.mealplanner.common.core.exception
+package dev.stukalo.mealplanner.data.network.core.error
 
 import java.net.ConnectException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-val Throwable?.isConnectionError: Boolean
+actual val Throwable?.isConnectionError: Boolean
     get() = this is ConnectException ||
             this is UnknownHostException ||
             this is SocketException ||

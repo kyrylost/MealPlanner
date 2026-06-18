@@ -1,16 +1,16 @@
 package dev.stukalo.mealplanner.data.database.model.converter
 
 import androidx.room.TypeConverter
-import java.util.Date
+import kotlinx.datetime.LocalDate
 
 class DateConverter {
   @TypeConverter
-  fun fromTimestamp(value: Long?): Date? {
-    return value?.let { Date(it) }
+  fun fromEpochDays(value: Long?): LocalDate? {
+    return value?.let { LocalDate.fromEpochDays(it) }
   }
 
   @TypeConverter
-  fun dateToTimestamp(date: Date?): Long? {
-    return date?.time
+  fun dateToEpochDays(date: LocalDate?): Long? {
+    return date?.toEpochDays()
   }
 }
