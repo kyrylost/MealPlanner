@@ -8,10 +8,11 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 configure<LibraryExtension> {
-    namespace = "dev.stukalo.mealplanner.presentation.feature.statistics"
+    namespace = "dev.stukalo.mealplanner.presentation.feature.welcome"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

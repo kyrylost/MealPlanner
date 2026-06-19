@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
+import dev.stukalo.mealplanner.presentation.core.navigation.ext.safeNavigation
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.GatewayScreen
 
 fun NavGraphBuilder.gatewayNavigationGraph(
@@ -12,12 +13,12 @@ fun NavGraphBuilder.gatewayNavigationGraph(
     composable<NavigationDirection.Gateway> {
         GatewayScreen(
             onNavigateToMain = {
-                navController.navigate(NavigationDirection.MainFlow) {
+                navController.safeNavigation(NavigationDirection.Home) {
                     popUpTo(NavigationDirection.Gateway) { inclusive = true }
                 }
             },
             onNavigateToWelcome = {
-                navController.navigate(NavigationDirection.Welcome) {
+                navController.safeNavigation(NavigationDirection.Welcome) {
                     popUpTo(NavigationDirection.Gateway) { inclusive = true }
                 }
             }

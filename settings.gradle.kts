@@ -63,6 +63,7 @@ include(":presentation-feature-main")
 include(":presentation-feature-home")
 include(":presentation-feature-search")
 include(":presentation-feature-statistics")
+include(":presentation-feature-recipe-details")
 
 
 

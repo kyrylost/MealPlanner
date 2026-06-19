@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 configure<LibraryExtension> {
@@ -63,7 +64,12 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
+            implementation(projects.presentationCoreUi)
             implementation(projects.presentationFeatureSearch)
+            implementation(projects.presentationFeatureBarcodeScanner)
+            implementation(projects.presentationFeatureHome)
+            implementation(projects.presentationFeatureStatistics)
+            implementation(projects.presentationFeatureRecipeDetails)
             implementation(projects.dataNetworkEdamam)
             implementation(projects.dataNetworkOpenfoodfacts)
             implementation(projects.dataNetworkFooddatacentral)

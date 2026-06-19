@@ -18,14 +18,17 @@ sealed interface NavigationDirection {
     data object BarcodeScanner: NavigationDirection
 
     @Serializable
-    data object MainFlow: NavigationDirection
+    data object Home: NavigationDirection
+
+    @Serializable
+    data object Statistics: NavigationDirection
 
     @Serializable
     data object Search: NavigationDirection
 
     @Serializable
-    data class ProcessingFlow(
-        val url: String
+    data class RecipeDetails(
+        val recipeId: String
     ): NavigationDirection
 
 }

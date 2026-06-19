@@ -1,14 +1,16 @@
 package dev.stukalo.mealplanner.presentation.feature.host
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
-import dev.stukalo.mealplanner.presentation.feature.barcodescanner.navigation.barcodeScannerNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.gateway.navigation.gatewayNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.main.navigation.mainFlowRoute
 import dev.stukalo.mealplanner.presentation.feature.onboarding.navigation.onboardingNavigationGraph
+import dev.stukalo.mealplanner.presentation.feature.recipedetails.navigation.recipeDetailsNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.welcome.navigation.welcomeNavigationGraph
 
 @Preview
@@ -20,6 +22,10 @@ fun MealPlannerNavHost() {
     NavHost(
         navController = navController,
         startDestination = NavigationDirection.Gateway,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
     ) {
         gatewayNavigationGraph(
             navController = navController
@@ -33,7 +39,7 @@ fun MealPlannerNavHost() {
             navController = navController
         )
 
-        barcodeScannerNavigationGraph(
+        recipeDetailsNavigationGraph(
             navController = navController
         )
 

@@ -68,6 +68,7 @@ kotlin {
             implementation(projects.presentationFeatureWelcome)
             implementation(projects.presentationFeatureOnboarding)
             implementation(projects.presentationFeatureBarcodeScanner)
+            implementation(projects.presentationFeatureRecipeDetails)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

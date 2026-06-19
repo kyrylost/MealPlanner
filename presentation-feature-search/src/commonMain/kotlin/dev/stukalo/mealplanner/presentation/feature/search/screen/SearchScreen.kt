@@ -1,6 +1,7 @@
 package dev.stukalo.mealplanner.presentation.feature.search.screen
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
+import dev.stukalo.mealplanner.presentation.core.styling.BottomBarHeight
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -30,7 +32,10 @@ fun SearchScreen(
             Text("Search Recipes")
         }
 
-        LazyColumn(modifier = Modifier.weight(1f)) {
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(bottom = BottomBarHeight.current)
+        ) {
             items(count = recipes.itemCount) { index ->
                 val recipe = recipes[index]
                 if (recipe != null) {

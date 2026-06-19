@@ -5,23 +5,35 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.main.screen.MainFlowScreen
-import dev.stukalo.mealplanner.presentation.feature.search.screen.SearchScreen
 
 fun NavGraphBuilder.mainFlowRoute(
     navController: NavHostController,
 ) {
-    composable<NavigationDirection.MainFlow> {
+    composable<NavigationDirection.Home> {
         MainFlowScreen(
-            onNavigateToBarcodeScanner = {
-                navController.navigate(NavigationDirection.BarcodeScanner)
-            },
-            onNavigateToSearch = {
-                navController.navigate(NavigationDirection.Search)
-            },
+            appNavController = navController,
+            initialTab = NavigationDirection.Home,
+        )
+    }
+
+    composable<NavigationDirection.Statistics> {
+        MainFlowScreen(
+            appNavController = navController,
+            initialTab = NavigationDirection.Statistics,
         )
     }
 
     composable<NavigationDirection.Search> {
-        SearchScreen()
+        MainFlowScreen(
+            appNavController = navController,
+            initialTab = NavigationDirection.Search,
+        )
+    }
+
+    composable<NavigationDirection.BarcodeScanner> {
+        MainFlowScreen(
+            appNavController = navController,
+            initialTab = NavigationDirection.BarcodeScanner,
+        )
     }
 }

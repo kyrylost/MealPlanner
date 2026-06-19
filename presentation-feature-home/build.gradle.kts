@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 configure<LibraryExtension> {
@@ -62,6 +63,8 @@ kotlin {
             implementation(libs.adaptive)
             implementation(libs.navigation.compose)
             implementation(projects.presentationCoreNavigation)
+            implementation(projects.dataNetworkFooddatacentral)
+            implementation(libs.koin.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

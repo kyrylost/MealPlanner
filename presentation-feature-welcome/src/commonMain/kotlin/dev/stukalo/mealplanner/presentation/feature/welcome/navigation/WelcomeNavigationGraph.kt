@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
+import dev.stukalo.mealplanner.presentation.core.navigation.ext.safeNavigation
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.WelcomeScreen
 
 fun NavGraphBuilder.welcomeNavigationGraph(
@@ -12,7 +13,7 @@ fun NavGraphBuilder.welcomeNavigationGraph(
     composable<NavigationDirection.Welcome> {
         WelcomeScreen(
             onNavigateToMain = {
-                navController.navigate(NavigationDirection.MainFlow)
+                navController.safeNavigation(NavigationDirection.Home)
             },
         )
     }

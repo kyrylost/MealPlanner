@@ -1,65 +1,79 @@
 package dev.stukalo.mealplanner.presentation.feature.main.screen
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import dev.stukalo.mealplanner.data.network.fooddatacentral.source.FoodDataCentralNetSource
-import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
+import dev.stukalo.mealplanner.presentation.core.styling.LocalBottomBarHeight
+import dev.stukalo.mealplanner.presentation.core.ui.haze.hazeSource
+import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
+import dev.stukalo.mealplanner.presentation.feature.main.component.MealPlannerBottomNavigationBar
+import dev.stukalo.mealplanner.presentation.feature.main.navigation.ext.navigateTab
+import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.InnerMainNavigationGraph
+import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.MainTab
 
 @Composable
 fun MainFlowScreen(
-    onNavigateToBarcodeScanner: () -> Unit,
-    onNavigateToSearch: () -> Unit,
+    appNavController: NavHostController,
+    initialTab: NavigationDirection,
 ) {
-    val fdcNetSource: FoodDataCentralNetSource = koinInject()
-    val scope = rememberCoroutineScope()
-    var resultText by remember { mutableStateOf("") }
+    val mainNavController = rememberNavController()
+    var bottomBarHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
+    val hazeState = rememberHazeState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+    val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val selectedTab = MainTab.entries.find { tab ->
+        currentDestination?.hasRoute(tab.route::class) == true
+    } ?: MainTab.Home
+
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "MainFlowScreen",
-            modifier = Modifier
-                .statusBarsPadding()
-        )
-
-        Button(onClick = onNavigateToBarcodeScanner) {
-            Text("Go to Barcode Scanner")
+        CompositionLocalProvider(LocalBottomBarHeight provides bottomBarHeight) {
+            InnerMainNavigationGraph(
+                mainNavController = mainNavController,
+                appNavController = appNavController,
+                startDestination = initialTab,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .hazeSource(hazeState)
+            )
         }
 
-        Button(onClick = onNavigateToSearch) {
-            Text("Search Recipes")
-        }
-
-        Button(onClick = {
-            scope.launch {
-                try {
-                    val searchResult = fdcNetSource.searchProduct("cheddar cheese", 10, 1)
-                    resultText = "FDC search result: $searchResult"
-                } catch (e: Exception) {
-                    resultText = "FDC Error: ${e.message}"
-                    e.printStackTrace()
+        MealPlannerBottomNavigationBar(
+            selectedTab = selectedTab,
+            onTabSelected = { tab ->
+                val isPopped = mainNavController.popBackStack(
+                    route = tab.route,
+                    inclusive = false
+                )
+                if (!isPopped) {
+                    mainNavController.navigateTab(tab.route)
                 }
-            }
-        }) {
-            Text("Test Fdc searchFood")
-        }
-
-        Text(text = resultText)
+            },
+            hazeState = hazeState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .onGloballyPositioned {
+                    bottomBarHeight = with(density) { it.size.height.toDp() }
+                }
+        )
     }
 }
