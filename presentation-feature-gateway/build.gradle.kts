@@ -8,11 +8,10 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-    alias(libs.plugins.kotlinSerialization)
 }
 
 configure<LibraryExtension> {
-    namespace = "dev.stukalo.mealplanner.presentation.feature.host"
+    namespace = "dev.stukalo.mealplanner.presentation.feature.gateway"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -50,6 +49,7 @@ kotlin {
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.appcompat)
             implementation(libs.material)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -62,12 +62,18 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.adaptive)
             implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(projects.commonCore)
             implementation(projects.presentationCoreNavigation)
-            implementation(projects.presentationFeatureMain)
-            implementation(projects.presentationFeatureGateway)
-            implementation(projects.presentationFeatureWelcome)
-            implementation(projects.presentationFeatureOnboarding)
-            implementation(projects.presentationFeatureBarcodeScanner)
+            implementation(projects.presentationCoreStyling)
+            implementation(projects.coreLocalization)
+            implementation(projects.presentationCorePlatform)
+            implementation(projects.presentationCoreUi)
+            implementation(projects.domainUsecase)
+            implementation(projects.domainModel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

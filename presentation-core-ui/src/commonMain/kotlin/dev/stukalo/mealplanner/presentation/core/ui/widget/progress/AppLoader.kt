@@ -22,7 +22,7 @@ fun AppLoader(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f))
+            .background(Color.Black.copy(alpha = 0.3f))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

@@ -168,7 +168,7 @@ internal class WelcomeViewModel(
         intent: ViewIntent.OnChangeGenderInputIntent
     ) {
         updateState { currentState ->
-            PartialStateChange.GenderInput.SelectionChange(
+            PartialStateChange.GenderChange(
                 gender = intent.value,
             ).reduce(currentState)
         }
@@ -178,7 +178,7 @@ internal class WelcomeViewModel(
         intent: ViewIntent.OnChangeActivityLevelInputIntent
     ) {
         updateState { currentState ->
-            PartialStateChange.ActivityLevelInput.SelectionChange(
+            PartialStateChange.ActivityLevelChange(
                 activityLevel = intent.value,
             ).reduce(currentState)
         }
@@ -188,7 +188,7 @@ internal class WelcomeViewModel(
         intent: ViewIntent.OnChangeDietInputIntent
     ) {
         updateState { currentState ->
-            PartialStateChange.DietInput.SelectionChange(
+            PartialStateChange.DietChange(
                 diet = intent.value,
             ).reduce(currentState)
         }

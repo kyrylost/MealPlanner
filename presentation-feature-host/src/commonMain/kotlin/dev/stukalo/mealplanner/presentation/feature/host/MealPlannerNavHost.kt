@@ -1,14 +1,15 @@
 package dev.stukalo.mealplanner.presentation.feature.host
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
+import dev.stukalo.mealplanner.presentation.feature.barcodescanner.navigation.barcodeScannerNavigationGraph
+import dev.stukalo.mealplanner.presentation.feature.gateway.navigation.gatewayNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.main.navigation.mainFlowRoute
 import dev.stukalo.mealplanner.presentation.feature.onboarding.navigation.onboardingNavigationGraph
-import dev.stukalo.mealplanner.presentation.feature.barcodescanner.navigation.barcodeScannerNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.welcome.navigation.welcomeNavigationGraph
-import androidx.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
@@ -18,8 +19,12 @@ fun MealPlannerNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = NavigationDirection.Welcome,
+        startDestination = NavigationDirection.Gateway,
     ) {
+        gatewayNavigationGraph(
+            navController = navController
+        )
+
         welcomeNavigationGraph(
             navController = navController
         )

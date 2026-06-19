@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 sealed interface NavigationDirection {
 
     @Serializable
+    data object Gateway: NavigationDirection
+
+    @Serializable
     data object Welcome: NavigationDirection
 
     @Serializable

@@ -81,34 +81,16 @@ internal sealed interface PartialStateChange {
         data class Error(val errorMessage: StringResource?) : WeightInput
     }
 
-    sealed interface GenderInput : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is SelectionChange -> oldState.copy(
-                gender = gender,
-            )
-        }
-
-        data class SelectionChange(val gender: GenderDomainModel) : GenderInput
+    data class GenderChange(val gender: GenderDomainModel) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(gender = gender)
     }
 
-    sealed interface ActivityLevelInput : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is SelectionChange -> oldState.copy(
-                activityLevel = activityLevel,
-            )
-        }
-
-        data class SelectionChange(val activityLevel: ActivityLevelDomainModel) : ActivityLevelInput
+    data class ActivityLevelChange(val activityLevel: ActivityLevelDomainModel) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(activityLevel = activityLevel)
     }
 
-    sealed interface DietInput : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is SelectionChange -> oldState.copy(
-                diet = diet,
-            )
-        }
-
-        data class SelectionChange(val diet: DietDomainModel) : DietInput
+    data class DietChange(val diet: DietDomainModel) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(diet = diet)
     }
 
     data class StepChange(val step: Int) : PartialStateChange {

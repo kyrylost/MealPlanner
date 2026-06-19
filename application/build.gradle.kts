@@ -68,6 +68,7 @@ kotlin {
             implementation(projects.domainUsecaseImpl)
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationFeatureHost)
+            implementation(projects.presentationFeatureGateway)
             implementation(projects.presentationFeatureWelcome)
             implementation(projects.presentationFeatureSearch)
         }
