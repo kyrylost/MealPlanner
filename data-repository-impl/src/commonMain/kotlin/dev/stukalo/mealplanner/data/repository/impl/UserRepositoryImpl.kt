@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.data.repository.impl
 
-import dev.stukalo.mealplanner.data.database.source.UserDatabaseSource
+import dev.stukalo.mealplanner.data.database.source.user.UserDatabaseSource
 import dev.stukalo.mealplanner.data.repository.impl.mapper.UserMapper
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.domain.repository.UserRepository
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 
 internal class UserRepositoryImpl(
     private val userDatabaseSource: UserDatabaseSource,
-    private val userMapper: UserMapper
+    private val userMapper: UserMapper,
 ) : UserRepository {
 
     override suspend fun insert(user: UserDomainModel): Result<Unit> {

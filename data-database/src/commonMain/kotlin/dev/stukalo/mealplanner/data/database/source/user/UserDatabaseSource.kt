@@ -1,7 +1,7 @@
-package dev.stukalo.mealplanner.data.database.source
+package dev.stukalo.mealplanner.data.database.source.user
 
-import dev.stukalo.mealplanner.data.database.dao.UserDao
-import dev.stukalo.mealplanner.data.database.model.UserDatabaseModel
+import dev.stukalo.mealplanner.data.database.dao.user.UserDao
+import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
 import kotlinx.coroutines.flow.Flow
 
 class UserDatabaseSource(

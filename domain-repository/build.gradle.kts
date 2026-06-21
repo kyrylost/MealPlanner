@@ -13,6 +13,8 @@ kotlin {
             api(projects.domainModel)
             implementation(libs.androidx.paging.common)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.datetime)
+
         }
     }
 }

@@ -1,10 +1,10 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
 import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
-import dev.stukalo.mealplanner.data.database.model.ActivityLevelDatabaseModel
-import dev.stukalo.mealplanner.data.database.model.DietDatabaseModel
-import dev.stukalo.mealplanner.data.database.model.GenderDatabaseModel
-import dev.stukalo.mealplanner.data.database.model.UserDatabaseModel
+import dev.stukalo.mealplanner.data.database.model.user.ActivityLevelDatabaseModel
+import dev.stukalo.mealplanner.data.database.model.user.DietDatabaseModel
+import dev.stukalo.mealplanner.data.database.model.user.GenderDatabaseModel
+import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel

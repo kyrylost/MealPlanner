@@ -5,7 +5,14 @@ import dev.stukalo.mealplanner.common.core.date.parseDate
 import dev.stukalo.mealplanner.common.core.exception.AppException
 import dev.stukalo.mealplanner.common.core.validation.ValidationResult
 import dev.stukalo.mealplanner.common.core.validation.onValidationError
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.error_unknown
+import dev.stukalo.mealplanner.domain.model.norm.DailyNormDomainModel
+import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
+import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
+import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
+import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
@@ -21,8 +28,12 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.Part
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.todayIn
+import kotlin.time.Clock
 import kotlin.time.Instant
 
 internal class WelcomeViewModel(
@@ -34,6 +45,7 @@ internal class WelcomeViewModel(
     private val validateActivityLevelUseCase: ValidateActivityLevelUseCase,
     private val validateDietUseCase: ValidateDietUseCase,
     private val saveUserDataUseCase: SaveUserDataUseCase,
+    private val saveDailyNormUseCase: SaveDailyNormUseCase,
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
     override val initialState = ViewState()
@@ -275,14 +287,81 @@ internal class WelcomeViewModel(
             diet = diet,
         )
 
-        saveUserDataUseCase(user)
-            .onSuccess {
-                sendEvent(ViewEvent.NavigateToMainScreen)
-            }
-            .onFailure { exception ->
-                sendEvent(ViewEvent.ShowSnackbar(exception.toMessage(), SnackbarType.ERROR))
+        coroutineScope {
+            val saveUserTask = async { saveUserDataUseCase(user) }
+            val saveDailyNormTask = async {
+                val dailyNorm = calculateDailyNorm(user)
+                saveDailyNormUseCase(dailyNorm)
             }
 
+            val saveUserResult = saveUserTask.await()
+            val saveDailyNormResult = saveDailyNormTask.await()
+
+            if (saveUserResult.isSuccess && saveDailyNormResult.isSuccess) {
+                sendEvent(ViewEvent.NavigateToMainScreen)
+            } else {
+                val error = saveUserResult.exceptionOrNull() ?: saveDailyNormResult.exceptionOrNull()
+                val message = error?.toMessage() ?: Res.string.error_unknown
+                sendEvent(ViewEvent.ShowSnackbar(message, SnackbarType.ERROR))
+            }
+        }
+
         updateState { PartialStateChange.Loading(false).reduce(it) }
+    }
+
+    private fun calculateDailyNorm(user: UserDomainModel): DailyNormDomainModel {
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        var age = today.year - user.birthDate.year
+        if (today.month < user.birthDate.month ||
+            (today.month == user.birthDate.month && today.day < user.birthDate.day)
+        ) {
+            age--
+        }
+
+        val activityCoefficient = when (user.physicalActivity) {
+            ActivityLevelDomainModel.VERY_LOW -> 1.1
+            ActivityLevelDomainModel.LOW -> 1.3
+            ActivityLevelDomainModel.MEDIUM -> 1.5
+            ActivityLevelDomainModel.HIGH -> 1.7
+            ActivityLevelDomainModel.VERY_HIGH -> 1.9
+        }
+
+        var calories = if (user.gender == GenderDomainModel.MALE) {
+            when (age) {
+                in 0..30 -> (0.0630 * user.weight + 2.8957) * 240
+                in 31..60 -> (0.0491 * user.weight + 2.4587) * 240
+                else -> (0.0491 * user.weight + 1.8988) * 240
+            }
+        } else {
+            when (age) {
+                in 0..30 -> (0.0621 * user.weight + 2.0357) * 240
+                in 31..60 -> (0.0342 * user.weight + 3.5377) * 240
+                else -> (0.0377 * user.weight + 2.7545) * 240
+            }
+        }
+        calories *= activityCoefficient
+
+        val (proteinsCoefficient, fatsCoefficient, carbsCoefficient) = when (user.diet) {
+            DietDomainModel.BALANCED_DIET -> Triple(0.2, 0.2, 0.6)
+            DietDomainModel.WEIGHT_GAIN -> {
+                calories *= 1.1
+                Triple(0.28, 0.2, 0.52)
+            }
+            DietDomainModel.WEIGHT_LOSS -> {
+                calories *= 0.8
+                Triple(0.31, 0.29, 0.41)
+            }
+            DietDomainModel.CUTTING_DIET -> {
+                calories *= 0.85
+                Triple(0.5, 0.2, 0.3)
+            }
+        }
+
+        return DailyNormDomainModel(
+            calories = calories,
+            proteins = (calories * proteinsCoefficient) / 4,
+            fats = (calories * fatsCoefficient) / 9,
+            carbohydrates = (calories * carbsCoefficient) / 4
+        )
     }
 }

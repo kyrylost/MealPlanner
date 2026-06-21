@@ -9,6 +9,7 @@ import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetThemePaletteUseCas
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemePaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.CheckUserExistsUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveDailyNormUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveUserDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateActivityLevelUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateDateUseCaseImpl
@@ -26,6 +27,7 @@ import dev.stukalo.mealplanner.domain.usecase.setting.GetThemePaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemePaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CheckUserExistsUseCase
+import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
@@ -50,6 +52,7 @@ val domainModule = module {
     singleOf(::GetAutoCompleteHintsUseCaseImpl) bind GetAutoCompleteHintsUseCase::class
 
     singleOf(::SaveUserDataUseCaseImpl) bind SaveUserDataUseCase::class
+    singleOf(::SaveDailyNormUseCaseImpl) bind SaveDailyNormUseCase::class
     singleOf(::CheckUserExistsUseCaseImpl) bind CheckUserExistsUseCase::class
 
     singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
