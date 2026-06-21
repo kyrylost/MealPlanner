@@ -27,6 +27,9 @@ sealed interface NavigationDirection {
     data object Search: NavigationDirection
 
     @Serializable
+    data object Settings: NavigationDirection
+
+    @Serializable
     data class RecipeDetails(
         val recipeId: String
     ): NavigationDirection

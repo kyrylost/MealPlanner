@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
-import dev.stukalo.mealplanner.presentation.core.styling.BottomBarHeight
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.BottomBarHeight
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

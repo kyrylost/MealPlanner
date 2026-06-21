@@ -63,12 +63,17 @@ kotlin {
             implementation(libs.adaptive)
             implementation(libs.navigation.compose)
             implementation(projects.presentationCoreNavigation)
+            implementation(projects.presentationCoreStyling)
             implementation(projects.presentationFeatureMain)
             implementation(projects.presentationFeatureGateway)
             implementation(projects.presentationFeatureWelcome)
             implementation(projects.presentationFeatureOnboarding)
             implementation(projects.presentationFeatureBarcodeScanner)
             implementation(projects.presentationFeatureRecipeDetails)
+            implementation(projects.presentationFeatureSettings)
+            implementation(projects.domainModel)
+            implementation(projects.domainUsecase)
+            implementation(libs.koin.compose.viewmodel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

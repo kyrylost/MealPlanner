@@ -10,6 +10,8 @@ fun NavGraphBuilder.statisticsNavigationGraph(
     navController: NavHostController,
 ) {
     composable<NavigationDirection.Statistics> {
-        StatisticsScreen()
+        StatisticsScreen(
+            onSettingsClick = { navController.navigate(NavigationDirection.Settings) }
+        )
     }
 }

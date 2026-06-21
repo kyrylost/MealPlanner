@@ -17,6 +17,7 @@ kotlin {
             implementation(projects.dataNetworkOpenfoodfacts)
             implementation(projects.dataNetworkFooddatacentral)
             implementation(projects.dataDatabase)
+            implementation(projects.dataPreferences)
             implementation(libs.androidx.paging.common)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines.core)

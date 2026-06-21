@@ -4,6 +4,10 @@ import dev.stukalo.mealplanner.domain.usecase.impl.products.GetAutoCompleteHints
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductByBarcodeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductsByQueryUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecipesUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetLocaleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetThemePaletteUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemePaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.CheckUserExistsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveUserDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateActivityLevelUseCaseImpl
@@ -17,6 +21,10 @@ import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCa
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetThemePaletteUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetThemePaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CheckUserExistsUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
@@ -31,6 +39,11 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val domainModule = module {
+    singleOf(::GetThemePaletteUseCaseImpl) bind GetThemePaletteUseCase::class
+    singleOf(::SetThemePaletteUseCaseImpl) bind SetThemePaletteUseCase::class
+    singleOf(::GetLocaleUseCaseImpl) bind GetLocaleUseCase::class
+    singleOf(::SetLocaleUseCaseImpl) bind SetLocaleUseCase::class
+
     singleOf(::GetRecipesUseCaseImpl) bind GetRecipesUseCase::class
     singleOf(::GetProductsByQueryUseCaseImpl) bind GetProductsByQueryUseCase::class
     singleOf(::GetProductByBarcodeUseCaseImpl) bind GetProductByBarcodeUseCase::class

@@ -1,28 +1,55 @@
 package dev.stukalo.mealplanner.presentation.core.styling
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.stukalo.mealplanner.presentation.core.styling.color.AppColors
+import dev.stukalo.mealplanner.presentation.core.styling.color.ColorDark
+import dev.stukalo.mealplanner.presentation.core.styling.color.ColorGreenDark
+import dev.stukalo.mealplanner.presentation.core.styling.color.ColorLight
+import dev.stukalo.mealplanner.presentation.core.styling.color.LocalColor
+import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
+import dev.stukalo.mealplanner.presentation.core.styling.color.animateColors
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.Elevation
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalElevation
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalRadius
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalSpacing
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalThickness
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.Radius
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.Spacing
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.Thickness
+import dev.stukalo.mealplanner.presentation.core.styling.shape.LocalShape
+import dev.stukalo.mealplanner.presentation.core.styling.shape.Shape
+import dev.stukalo.mealplanner.presentation.core.styling.typography.LocalTypography
+import dev.stukalo.mealplanner.presentation.core.styling.typography.Typography
+import dev.stukalo.mealplanner.presentation.core.styling.typography.fredokaFont
 
 @Composable
 fun Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    palette: ThemeColorPalette = ThemeColorPalette.ORANGE,
     content: @Composable () -> Unit,
 ) {
-    val color: Color = when {
-        darkTheme -> ColorDark
-        else -> ColorLight
+    val targetColors: AppColors = when (palette) {
+        ThemeColorPalette.ORANGE -> if (darkTheme) ColorDark else ColorLight
+        ThemeColorPalette.GREEN -> if (darkTheme) ColorGreenDark else ColorGreenDark
     }
+
+    val color = animateColors(targetColors)
 
     val typography = Typography(
         bold48 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 48.sp,
             lineHeight = 56.sp,
@@ -30,7 +57,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold16 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             lineHeight = 24.sp,
@@ -38,7 +65,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold14 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             lineHeight = 21.sp,
@@ -46,7 +73,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold12 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
             lineHeight = 18.sp,
@@ -54,7 +81,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         semibold48 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.SemiBold,
             fontSize = 48.sp,
             lineHeight = 56.sp,
@@ -62,7 +89,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         regular48 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 48.sp,
             lineHeight = 56.sp,
@@ -70,7 +97,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         regular14 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             lineHeight = 21.sp,
@@ -78,7 +105,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         regular12 = TextStyle(
-            fontFamily = FredokaFont(),
+            fontFamily = fredokaFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             lineHeight = 18.sp,
@@ -120,6 +147,7 @@ fun Theme(
         space32 = 32.dp,
         space48 = 48.dp,
         space64 = 64.dp,
+        space128 = 128.dp,
     )
 
     val thickness = Thickness(
@@ -146,7 +174,7 @@ fun Theme(
 }
 
 object Theme {
-    val color: Color
+    val color: AppColors
         @Composable
         get() = LocalColor.current
     val typography: Typography
@@ -167,4 +195,16 @@ object Theme {
     val thickness: Thickness
         @Composable
         get() = LocalThickness.current
+}
+
+@Preview
+@Composable
+private fun ThemePreview() {
+    Theme {
+        Box(
+            modifier = Modifier
+                .size(100.dp)
+                .background(Theme.color.primary)
+        )
+    }
 }

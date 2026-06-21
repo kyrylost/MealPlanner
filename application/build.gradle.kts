@@ -62,6 +62,7 @@ kotlin {
             implementation(projects.dataNetworkFooddatacentralImpl)
             implementation(projects.dataDatabase)
             implementation(projects.dataRepositoryImpl)
+            implementation(projects.dataPreferences)
             implementation(projects.domainModel)
             implementation(projects.domainRepository)
             implementation(projects.domainUsecase)
@@ -71,6 +72,7 @@ kotlin {
             implementation(projects.presentationFeatureGateway)
             implementation(projects.presentationFeatureWelcome)
             implementation(projects.presentationFeatureSearch)
+            implementation(projects.presentationFeatureSettings)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -64,6 +64,7 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
+            implementation(projects.presentationCoreUi)
             implementation(projects.domainUsecase)
         }
         desktopMain.dependencies {

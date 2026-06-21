@@ -8,14 +8,18 @@ import dev.stukalo.mealplanner.data.repository.impl.mapper.FdcProductMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.OffProductMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.RecipeMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.UserMapper
+import dev.stukalo.mealplanner.data.repository.impl.setting.SettingsRepositoryImpl
 import dev.stukalo.mealplanner.domain.repository.RecipeRepository
 import dev.stukalo.mealplanner.domain.repository.SearchRepository
+import dev.stukalo.mealplanner.domain.repository.SettingsRepository
 import dev.stukalo.mealplanner.domain.repository.UserRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val dataRepositoryModule = module {
+    singleOf(::SettingsRepositoryImpl) bind SettingsRepository::class
+
     singleOf(::UserMapper)
     singleOf(::UserRepositoryImpl) bind UserRepository::class
 

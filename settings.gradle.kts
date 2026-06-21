@@ -43,6 +43,7 @@ include(":data-network-openfoodfacts-impl")
 include(":data-network-fooddatacentral")
 include(":data-network-fooddatacentral-impl")
 include(":data-repository-impl")
+include(":data-preferences")
 
 include(":domain-model")
 include(":domain-repository")
@@ -63,6 +64,7 @@ include(":presentation-feature-main")
 include(":presentation-feature-home")
 include(":presentation-feature-search")
 include(":presentation-feature-statistics")
+include(":presentation-feature-settings")
 include(":presentation-feature-recipe-details")
 
 
