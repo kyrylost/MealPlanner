@@ -38,6 +38,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.typography.fredokaFont
 fun Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     palette: ThemeColorPalette = ThemeColorPalette.ORANGE,
+    animatePaletteChange: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val targetColors: AppColors = when (palette) {
@@ -45,7 +46,7 @@ fun Theme(
         ThemeColorPalette.GREEN -> if (darkTheme) ColorGreenDark else ColorGreenDark
     }
 
-    val color = animateColors(targetColors)
+    val color = if (animatePaletteChange) animateColors(targetColors) else targetColors
 
     val typography = Typography(
         bold48 = TextStyle(

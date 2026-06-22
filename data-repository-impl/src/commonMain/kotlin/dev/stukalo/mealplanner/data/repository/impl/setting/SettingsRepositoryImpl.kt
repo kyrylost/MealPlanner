@@ -10,7 +10,7 @@ class SettingsRepositoryImpl(
     private val dataSource: SettingsPreferencesDataSource,
 ) : SettingsRepository {
 
-    override fun getThemePalette(): Flow<ColorPaletteDomainModel> = dataSource.getThemePaletteName()
+    override fun getColorPalette(): Flow<ColorPaletteDomainModel> = dataSource.getColorPaletteName()
         .map { name ->
             if (name == null) return@map ColorPaletteDomainModel.ORANGE
             try {
@@ -20,8 +20,8 @@ class SettingsRepositoryImpl(
             }
         }
 
-    override suspend fun setThemePalette(palette: ColorPaletteDomainModel) {
-        dataSource.setThemePaletteName(palette.name)
+    override suspend fun setColorPalette(palette: ColorPaletteDomainModel) {
+        dataSource.setColorPaletteName(palette.name)
     }
 
     override fun getLocale(): Flow<String> = dataSource.getLocale()

@@ -3,8 +3,8 @@ package dev.stukalo.mealplanner.presentation.feature.host
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.gateway.navigation.gatewayNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.main.navigation.mainFlowRoute
@@ -14,9 +14,9 @@ import dev.stukalo.mealplanner.presentation.feature.settings.navigation.settings
 import dev.stukalo.mealplanner.presentation.feature.welcome.navigation.welcomeNavigationGraph
 
 @Composable
-internal fun AppNavHost() {
-    val navController = rememberNavController()
-
+internal fun AppNavHost(
+    navController: NavHostController,
+) {
     NavHost(
         navController = navController,
         startDestination = NavigationDirection.Gateway,
