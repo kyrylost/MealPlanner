@@ -9,13 +9,9 @@ import dev.stukalo.mealplanner.presentation.feature.home.screen.HomeScreen
 
 fun NavGraphBuilder.homeNavigationGraph(
     appNavController: NavHostController,
-    onNavigateToBarcodeScanner: () -> Unit,
-    onNavigateToSearch: () -> Unit,
 ) {
     composable<NavigationDirection.Home> {
         HomeScreen(
-            onNavigateToBarcodeScanner = onNavigateToBarcodeScanner,
-            onNavigateToSearch = onNavigateToSearch,
             onNavigateToRecipeDetails = { recipeId ->
                 appNavController.safeNavigation(NavigationDirection.RecipeDetails(recipeId))
             }

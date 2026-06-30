@@ -18,7 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
-import dev.stukalo.mealplanner.presentation.core.styling.LocalBottomBarHeight
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.hazeSource
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.feature.main.component.MealPlannerBottomNavigationBar

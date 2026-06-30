@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.core.ui.icons
+package dev.stukalo.mealplanner.presentation.feature.main.icons
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val IconSettings: ImageVector
+val NavigationBarIcons.IconSettings: ImageVector
     get() {
         if (_IconSettings != null) {
             return _IconSettings!!

@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.navigation.barcodeScannerNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.home.navigation.homeNavigationGraph
-import dev.stukalo.mealplanner.presentation.feature.main.navigation.ext.navigateTab
 import dev.stukalo.mealplanner.presentation.feature.search.navigation.searchNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.statistics.navigation.statisticsNavigationGraph
 
@@ -30,13 +29,7 @@ internal fun InnerMainNavigationGraph(
         popExitTransition = { ExitTransition.None },
     ) {
         homeNavigationGraph(
-            appNavController = appNavController,
-            onNavigateToBarcodeScanner = {
-                mainNavController.navigateTab(NavigationDirection.BarcodeScanner)
-            },
-            onNavigateToSearch = {
-                mainNavController.navigateTab(NavigationDirection.Search)
-            }
+            appNavController = appNavController
         )
 
         searchNavigationGraph(

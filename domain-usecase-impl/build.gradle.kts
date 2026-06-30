@@ -13,6 +13,7 @@ kotlin {
             implementation(projects.domainUsecase)
             implementation(projects.domainRepository)
             implementation(libs.androidx.paging.common)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
         }
     }

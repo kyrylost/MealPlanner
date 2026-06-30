@@ -26,6 +26,12 @@ internal class NutritionRepositoryImpl(
         return dailyProgressDatabaseSource.insert(dailyProgressMapper.mapFrom(progress))
     }
 
+    override fun getDailyNormAsFlow(): Flow<DailyNormDomainModel?> {
+        return dailyNormDatabaseSource.getDailyNormAsFlow().map {
+            it?.let { dailyNormMapper.mapTo(it) }
+        }
+    }
+
     override fun getDailyProgressAsFlow(date: LocalDate): Flow<DailyProgressDomainModel?> {
         return dailyProgressDatabaseSource.getProgressByDateAsFlow(date).map {
             it?.let { dailyProgressMapper.mapTo(it) }

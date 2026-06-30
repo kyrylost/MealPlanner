@@ -8,6 +8,9 @@ import dev.stukalo.mealplanner.common.core.validation.onValidationError
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.error_unknown
 import dev.stukalo.mealplanner.domain.model.norm.DailyNormDomainModel
+import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_CARB_GRAM
+import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_FAT_GRAM
+import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_PROTEIN_GRAM
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
@@ -359,9 +362,9 @@ internal class WelcomeViewModel(
 
         return DailyNormDomainModel(
             calories = calories,
-            proteins = (calories * proteinsCoefficient) / 4,
-            fats = (calories * fatsCoefficient) / 9,
-            carbohydrates = (calories * carbsCoefficient) / 4
+            proteins = (calories * proteinsCoefficient) / CALORIES_PER_PROTEIN_GRAM,
+            fats = (calories * fatsCoefficient) / CALORIES_PER_FAT_GRAM,
+            carbohydrates = (calories * carbsCoefficient) / CALORIES_PER_CARB_GRAM
         )
     }
 }

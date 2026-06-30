@@ -3,8 +3,8 @@ package dev.stukalo.mealplanner.data.preferences.settings
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsPreferencesDataSource {
-    fun getThemePaletteName(): Flow<String?>
-    suspend fun setThemePaletteName(name: String)
+    fun getColorPaletteName(): Flow<String?>
+    suspend fun setColorPaletteName(name: String)
     fun getLocale(): Flow<String?>
     suspend fun setLocale(locale: String)
 }

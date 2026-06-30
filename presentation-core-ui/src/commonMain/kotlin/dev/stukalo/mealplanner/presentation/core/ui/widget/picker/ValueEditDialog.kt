@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.text.TextButton
 import dev.stukalo.mealplanner.presentation.core.ui.widget.input.RoundedPlaceholderTextField
 
@@ -26,13 +27,23 @@ fun ValueEditDialog(
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        title = { Text(text = title) },
+        title = {
+            Text(
+                text = title,
+                style = Theme.typography.bold16,
+                color = Theme.color.textPrimary
+            )
+        },
         text = {
             RoundedPlaceholderTextField(
                 value = textValue,
                 onValueChange = { textValue = it },
                 placeholder = placeholder,
-                modifier = Modifier.fillMaxWidth()
+                textStyle = Theme.typography.regular12.copy(color = Theme.color.textPrimary),
+                activeColor = Theme.color.primary,
+                inactiveColor = Theme.color.surfaceVariant,
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         },
         confirmButton = {
@@ -49,6 +60,8 @@ fun ValueEditDialog(
                 text = dismissLabel,
                 onClick = onDismissRequest
             )
-        }
+        },
+        containerColor = Theme.color.backgroundSecondary,
+        shape = Theme.shape.normalRoundedCornerShape
     )
 }

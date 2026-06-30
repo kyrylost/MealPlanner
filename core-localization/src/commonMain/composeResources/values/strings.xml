@@ -50,4 +50,13 @@
     <string name="validation_error_activity_empty">Please select activity level</string>
     <string name="validation_error_diet_empty">Please select a diet</string>
     <string name="error_unknown">An unexpected error occurred</string>
+
+    <string name="home_hello">Hello</string>
+    <string name="home_proteins">Proteins</string>
+    <string name="home_fats">Fats</string>
+    <string name="home_carbs">Carbs</string>
+    <string name="home_steps">Steps</string>
+    <string name="home_recommended_for_today">Recommended for today</string>
+    <string name="home_calories">Calories</string>
+    <string name="home_kcal">%1$d kcal</string>
 </resources>

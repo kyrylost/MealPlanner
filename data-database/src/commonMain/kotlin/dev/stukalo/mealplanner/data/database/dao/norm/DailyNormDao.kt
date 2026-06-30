@@ -13,4 +13,7 @@ interface DailyNormDao {
 
     @Query("SELECT * FROM DailyNormDatabaseModel LIMIT 1")
     suspend fun getDailyNorm(): DailyNormDatabaseModel?
+
+    @Query("SELECT * FROM DailyNormDatabaseModel LIMIT 1")
+    fun getDailyNormAsFlow(): kotlinx.coroutines.flow.Flow<DailyNormDatabaseModel?>
 }

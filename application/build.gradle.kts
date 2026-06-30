@@ -70,6 +70,7 @@ kotlin {
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationFeatureHost)
             implementation(projects.presentationFeatureGateway)
+            implementation(projects.presentationFeatureHome)
             implementation(projects.presentationFeatureWelcome)
             implementation(projects.presentationFeatureSearch)
             implementation(projects.presentationFeatureSettings)

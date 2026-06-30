@@ -62,9 +62,16 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.adaptive)
             implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.datetime)
             implementation(projects.presentationCoreNavigation)
+            implementation(projects.presentationCoreStyling)
+            implementation(projects.presentationCoreUi)
+            implementation(projects.coreLocalization)
             implementation(projects.dataNetworkFooddatacentral)
+            implementation(projects.dataDatabase)
+            implementation(projects.domainUsecase)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

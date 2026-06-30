@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.welcome_step_x_of_y
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.SemiCircularProgressBar
+import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.circular.SemiCircularProgressBar
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

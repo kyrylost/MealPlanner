@@ -13,16 +13,16 @@ class SettingsPreferencesDataSourceImpl(
 ) : SettingsPreferencesDataSource {
 
     private object PreferencesKeys {
-        val THEME_PALETTE = stringPreferencesKey("theme_palette")
+        val COLOR_PALETTE = stringPreferencesKey("color_palette")
         val LOCALE = stringPreferencesKey("locale")
     }
 
-    override fun getThemePaletteName(): Flow<String?> = dataStore.data
-        .map { preferences -> preferences[PreferencesKeys.THEME_PALETTE] }
+    override fun getColorPaletteName(): Flow<String?> = dataStore.data
+        .map { preferences -> preferences[PreferencesKeys.COLOR_PALETTE] }
 
-    override suspend fun setThemePaletteName(name: String) {
+    override suspend fun setColorPaletteName(name: String) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.THEME_PALETTE] = name
+            preferences[PreferencesKeys.COLOR_PALETTE] = name
         }
     }
 

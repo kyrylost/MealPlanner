@@ -12,4 +12,7 @@ class DailyNormDatabaseSource(
 
     suspend fun getDailyNorm(): DailyNormDatabaseModel? = 
         dao.getDailyNorm()
+
+    fun getDailyNormAsFlow(): kotlinx.coroutines.flow.Flow<DailyNormDatabaseModel?> =
+        dao.getDailyNormAsFlow()
 }

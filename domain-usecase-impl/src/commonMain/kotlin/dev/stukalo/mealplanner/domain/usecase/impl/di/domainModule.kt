@@ -1,5 +1,8 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.di
 
+import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyNormUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyProgressUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.UpdateDailyProgressUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetAutoCompleteHintsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductByBarcodeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductsByQueryUseCaseImpl
@@ -9,6 +12,7 @@ import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemePaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.CheckUserExistsUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.user.GetUserUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveDailyNormUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveUserDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateActivityLevelUseCaseImpl
@@ -18,6 +22,9 @@ import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateGenderUseC
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateHeightUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateNameUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateWeightUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyNormUseCase
+import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyProgressUseCase
+import dev.stukalo.mealplanner.domain.usecase.nutrition.UpdateDailyProgressUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
@@ -27,6 +34,7 @@ import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemePaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CheckUserExistsUseCase
+import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
@@ -54,6 +62,11 @@ val domainModule = module {
     singleOf(::SaveUserDataUseCaseImpl) bind SaveUserDataUseCase::class
     singleOf(::SaveDailyNormUseCaseImpl) bind SaveDailyNormUseCase::class
     singleOf(::CheckUserExistsUseCaseImpl) bind CheckUserExistsUseCase::class
+    singleOf(::GetUserUseCaseImpl) bind GetUserUseCase::class
+
+    singleOf(::GetDailyNormUseCaseImpl) bind GetDailyNormUseCase::class
+    singleOf(::GetDailyProgressUseCaseImpl) bind GetDailyProgressUseCase::class
+    singleOf(::UpdateDailyProgressUseCaseImpl) bind UpdateDailyProgressUseCase::class
 
     singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
     singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class

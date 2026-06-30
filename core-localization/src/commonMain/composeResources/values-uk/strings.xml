@@ -16,4 +16,13 @@
     <string name="welcome_subtitle">Давайте розпочнемо подорож у таємниці їжі</string>
     <string name="common_ok">ОК</string>
     <string name="common_cancel">Скасувати</string>
+
+    <string name="home_hello">Привіт</string>
+    <string name="home_proteins">Білки</string>
+    <string name="home_fats">Жири</string>
+    <string name="home_carbs">Вуглеводи</string>
+    <string name="home_steps">Кроки</string>
+    <string name="home_recommended_for_today">Рекомендовано на сьогодні</string>
+    <string name="home_calories">Калорії</string>
+    <string name="home_kcal">%1$d ккал</string>
 </resources>

@@ -13,9 +13,9 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HostScreen(
-    viewModel: HostViewModel = koinViewModel()
-) {
+fun HostScreen() {
+    val viewModel: HostViewModel = koinViewModel()
+
     val navController = rememberNavController()
     val themePalette by viewModel.themePalette.collectAsStateWithLifecycle()
 

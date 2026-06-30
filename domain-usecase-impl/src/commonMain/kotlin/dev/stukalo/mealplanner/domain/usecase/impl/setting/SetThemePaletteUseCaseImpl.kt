@@ -8,6 +8,6 @@ class SetThemePaletteUseCaseImpl(
     private val settingsRepository: SettingsRepository
 ) : SetThemePaletteUseCase {
     override suspend fun invoke(palette: ColorPaletteDomainModel) {
-        settingsRepository.setThemePalette(palette)
+        settingsRepository.setColorPalette(palette)
     }
 }
