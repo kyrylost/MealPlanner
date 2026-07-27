@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.navigation.barcodeScannerNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.home.navigation.homeNavigationGraph
-import dev.stukalo.mealplanner.presentation.feature.search.navigation.searchNavigationGraph
+import dev.stukalo.mealplanner.presentation.feature.product.search.navigation.productSearchNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.statistics.navigation.statisticsNavigationGraph
 
 @Composable
@@ -32,9 +32,7 @@ internal fun InnerMainNavigationGraph(
             appNavController = appNavController
         )
 
-        searchNavigationGraph(
-            navController = appNavController
-        )
+        productSearchNavigationGraph()
 
         statisticsNavigationGraph(
             navController = appNavController

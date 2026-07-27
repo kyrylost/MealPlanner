@@ -22,7 +22,7 @@ internal class RecipeRepositoryImpl(
         carbohydrates: IntRange,
         fats: IntRange,
         proteins: IntRange,
-        mealType: MealTypeDomainModel,
+        mealTypes: List<MealTypeDomainModel>,
     ): Flow<PagingData<RecipeDomainModel>> {
         return Pager(
             config = PagingConfig(
@@ -38,10 +38,24 @@ internal class RecipeRepositoryImpl(
                     carbohydrates = "${carbohydrates.first}-${carbohydrates.last}",
                     fats = "${fats.first}-${fats.last}",
                     proteins = "${proteins.first}-${proteins.last}",
-                    mealType = mealType.name.lowercase(),
+                    mealTypes = mealTypes.map { it.name.lowercase().replace("_", "") },
                 )
             }
         ).flow
+    }
+
+    override suspend fun getRecipeById(id: String): Result<RecipeDomainModel> {
+        return try {
+            val response = edamamRecipeNetSource.getRecipeById(id)
+            val recipe = response.recipe?.let(recipeMapper::mapTo)
+            if (recipe != null) {
+                Result.success(recipe)
+            } else {
+                Result.failure(Exception("Recipe not found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }
 

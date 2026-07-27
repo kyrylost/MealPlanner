@@ -28,7 +28,9 @@ internal class RecipeMapper(
             url = model.url,
             cuisineType = model.cuisineType,
             dishType = model.dishType,
-            healthLabels = model.healthLabels
+            healthLabels = model.healthLabels,
+            id = model.uri?.substringAfterLast("_"),
+            instructionLines = model.instructionLines
         )
     }
 }

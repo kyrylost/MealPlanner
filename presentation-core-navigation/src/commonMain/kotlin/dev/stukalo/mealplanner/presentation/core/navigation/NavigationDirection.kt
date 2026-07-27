@@ -24,10 +24,19 @@ sealed interface NavigationDirection {
     data object Statistics: NavigationDirection
 
     @Serializable
-    data object Search: NavigationDirection
+    data object ProductSearch: NavigationDirection
+
+    @Serializable
+    data object RecipeSearch: NavigationDirection
 
     @Serializable
     data object Settings: NavigationDirection
+
+    @Serializable
+    data object MealSchedule: NavigationDirection
+
+    @Serializable
+    data object Filters: NavigationDirection
 
     @Serializable
     data class RecipeDetails(

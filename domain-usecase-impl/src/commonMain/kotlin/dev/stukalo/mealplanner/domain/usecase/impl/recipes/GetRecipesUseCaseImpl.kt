@@ -15,7 +15,7 @@ internal class GetRecipesUseCaseImpl(
         carbohydrates: IntRange,
         fats: IntRange,
         proteins: IntRange,
-        mealType: MealTypeDomainModel,
+        mealTypes: List<MealTypeDomainModel>,
     ): Flow<PagingData<RecipeDomainModel>> {
         return recipeRepository.getRecipesByNutrients(
             type = RECIPE_TYPE_ANY,
@@ -23,9 +23,11 @@ internal class GetRecipesUseCaseImpl(
             carbohydrates = carbohydrates,
             fats = fats,
             proteins = proteins,
-            mealType = mealType,
+            mealTypes = mealTypes,
         )
     }
-}
 
-private const val RECIPE_TYPE_ANY = "any" //Available also: public, user, edamam-generic
+    companion object {
+        private const val RECIPE_TYPE_ANY = "any" //Available also: public, user, edamam-generic
+    }
+}

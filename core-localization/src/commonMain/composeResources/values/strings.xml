@@ -52,11 +52,50 @@
     <string name="error_unknown">An unexpected error occurred</string>
 
     <string name="home_hello">Hello</string>
-    <string name="home_proteins">Proteins</string>
-    <string name="home_fats">Fats</string>
-    <string name="home_carbs">Carbs</string>
+    <string name="home_hello_name">%1$s!</string>
     <string name="home_steps">Steps</string>
     <string name="home_recommended_for_today">Recommended for today</string>
-    <string name="home_calories">Calories</string>
-    <string name="home_kcal">%1$d kcal</string>
+    <string name="home_consumed_amount_title">Portion Weight</string>
+    <string name="home_consumed_amount_subtitle">How many grams of this product did you eat?</string>
+
+    <string name="common_back">Back</string>
+    <string name="common_apply">Apply</string>
+    <string name="common_min">Min</string>
+    <string name="common_max">Max</string>
+    <string name="common_show_all">Show all</string>
+    <string name="common_grams">g</string>
+    <string name="common_minutes_short">%1$dm</string>
+    <string name="common_servings">%1$d servings</string>
+    <string name="common_filters">Filters</string>
+    <string name="common_settings">Settings</string>
+    <string name="common_meal_types">Meal Types</string>
+    <string name="common_product_search">Product Search</string>
+    <string name="common_calories">Calories</string>
+    <string name="common_proteins">Proteins</string>
+    <string name="common_fats">Fats</string>
+    <string name="common_carbs">Carbs</string>
+    <string name="common_kcal">%1$d kcal</string>
+    <string name="common_kcal_short">kcal</string>
+    <string name="common_grams_short">g</string>
+    <string name="common_unit_kcal">kcal</string>
+    <string name="common_unit_grams">g</string>
+    <string name="common_close">Close</string>
+
+    <string name="recipe_details_ingredients">Ingredients</string>
+    <string name="recipe_details_instructions">Instructions</string>
+    <string name="recipe_details_view_prep">View Preparation Steps</string>
+    <string name="recipe_details_log_meal">Log Meal</string>
+    <string name="recipe_details_not_found">Recipe not found</string>
+
+    <string name="settings_meal_config">Meal Configuration</string>
+    <string name="settings_meal_schedule">Meal Schedule</string>
+    <string name="settings_theme_choice">Theme Choice</string>
+
+    <string name="meal_schedule_auto_calculate">Auto-Calculate</string>
+    <string name="meal_schedule_total_percentage">Total Percentage: %1$d%%</string>
+    <string name="meal_schedule_total_error">Total must be 100%</string>
+    <string name="meal_schedule_percentage">Percentage:</string>
+    <string name="statistics_coming_soon">Statistics coming soon</string>
+    <string name="statistics_meal_tracking">Meal Tracking</string>
+    <string name="statistics_mark_as_consumed">Mark as consumed</string>
 </resources>

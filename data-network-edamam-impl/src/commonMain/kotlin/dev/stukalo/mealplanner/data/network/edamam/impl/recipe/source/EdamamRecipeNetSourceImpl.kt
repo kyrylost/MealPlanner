@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.data.network.edamam.impl.recipe.source
 
 import dev.stukalo.mealplanner.data.network.core.source.BaseNetSource
 import dev.stukalo.mealplanner.data.network.edamam.impl.recipe.source.route.EdamamRecipeRoutes
+import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamRecipeDetailsResponseNetModel
 import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamRecipeResponseNetModel
 import dev.stukalo.mealplanner.data.network.edamam.recipe.source.EdamamRecipeNetSource
 import io.ktor.client.HttpClient
@@ -18,7 +19,7 @@ internal class EdamamRecipeNetSourceImpl(
         carbohydrates: String,
         fats: String,
         proteins: String,
-        mealType: String
+        mealTypes: List<String>
     ): EdamamRecipeResponseNetModel {
         return performRequest {
             get(EdamamRecipeRoutes.Recipes.route) {
@@ -27,7 +28,7 @@ internal class EdamamRecipeNetSourceImpl(
                 parameter("nutrients[CHOCDF]", carbohydrates)
                 parameter("nutrients[FAT]", fats)
                 parameter("nutrients[PROCNT]", proteins)
-                parameter("mealType", mealType)
+                mealTypes.forEach { parameter("mealType", it) }
             }
         }
     }
@@ -35,6 +36,12 @@ internal class EdamamRecipeNetSourceImpl(
     override suspend fun getRecipesByUrl(url: String): EdamamRecipeResponseNetModel {
         return performRequest {
             get(url)
+        }
+    }
+
+    override suspend fun getRecipeById(id: String): EdamamRecipeDetailsResponseNetModel {
+        return performRequest {
+            get("${EdamamRecipeRoutes.Recipes.route}/$id")
         }
     }
 }

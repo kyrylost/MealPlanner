@@ -6,10 +6,13 @@ import androidx.compose.ui.text.TextStyle
 @Immutable
 data class Typography(
     val bold48: TextStyle,
+    val bold36: TextStyle,
     val bold16: TextStyle,
     val bold14: TextStyle,
     val bold12: TextStyle,
     val semibold48: TextStyle,
+    val semibold36: TextStyle,
+    val semibold16: TextStyle,
     val regular48: TextStyle,
     val regular14: TextStyle,
     val regular12: TextStyle,

@@ -12,6 +12,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 
+/**
+ * Base class for all MVI ViewModels in the project.
+ *
+ * IMPORTANT for AI: All feature ViewModels MUST inherit from this class.
+ * Consult ARCHITECTURE.md for details on the Intent/State/Event flow.
+ */
 abstract class BaseMviViewModel<I : MviIntent, S : MviViewState, E : MviSingleEvent> : BaseViewModel() {
 
     abstract val initialState: S

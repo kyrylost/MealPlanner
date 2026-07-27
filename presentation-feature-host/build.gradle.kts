@@ -71,6 +71,8 @@ kotlin {
             implementation(projects.presentationFeatureBarcodeScanner)
             implementation(projects.presentationFeatureRecipeDetails)
             implementation(projects.presentationFeatureSettings)
+            implementation(projects.presentationFeatureFilters)
+            implementation(projects.presentationFeatureRecipeSearch)
             implementation(projects.domainModel)
             implementation(projects.domainUsecase)
             implementation(libs.koin.compose.viewmodel)

@@ -1,4 +1,8 @@
+<!-- AI_CONTEXT: Always refer to ARCHITECTURE.md, CONTRIBUTING.md, and AGENTS.md for standards. -->
+# MealPlanner
+
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
@@ -12,3 +16,8 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+## Architecture & Standards
+- [ARCHITECTURE.md](ARCHITECTURE.md): High-level design and MVI patterns.
+- [CONTRIBUTING.md](CONTRIBUTING.md): Coding standards, naming, and UI rules.
+- [AGENTS.md](AGENTS.md): Specific guidance for AI assistants.

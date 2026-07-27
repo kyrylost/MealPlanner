@@ -72,8 +72,12 @@ kotlin {
             implementation(projects.presentationFeatureGateway)
             implementation(projects.presentationFeatureHome)
             implementation(projects.presentationFeatureWelcome)
-            implementation(projects.presentationFeatureSearch)
+            implementation(projects.presentationFeatureProductSearch)
+            implementation(projects.presentationFeatureRecipeSearch)
             implementation(projects.presentationFeatureSettings)
+            implementation(projects.presentationFeatureStatistics)
+            implementation(projects.presentationFeatureFilters)
+            implementation(projects.presentationFeatureRecipeDetails)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -1,37 +1,34 @@
 package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.LaunchedEffect
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
+import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewEvent
+import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewIntent
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RecipeDetailsScreen(
     recipeId: String,
     onBackClick: () -> Unit,
 ) {
-    Scaffold { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Recipe Details for ID: $recipeId")
-        }
-    }
-}
+    val viewModel: RecipeDetailsViewModel = koinViewModel()
 
-@Preview
-@Composable
-fun RecipeDetailsScreenPreview() {
-    RecipeDetailsScreen(
-        recipeId = "123",
-        onBackClick = {}
-    )
+    LaunchedEffect(recipeId) {
+        viewModel.onIntent(ViewIntent.LoadRecipe(recipeId))
+    }
+
+    MviScreen(
+        viewModel = viewModel,
+        onSingleEvent = { event ->
+            when (event) {
+                ViewEvent.NavigateBack -> onBackClick()
+            }
+        }
+    ) { state ->
+        RecipeDetailsContent(
+            state = state,
+            onIntent = viewModel::onIntent
+        )
+    }
 }

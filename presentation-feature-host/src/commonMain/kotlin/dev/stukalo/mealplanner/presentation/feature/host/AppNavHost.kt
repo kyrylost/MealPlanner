@@ -6,9 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
+import dev.stukalo.mealplanner.presentation.feature.filters.navigation.filtersNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.gateway.navigation.gatewayNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.main.navigation.mainFlowRoute
 import dev.stukalo.mealplanner.presentation.feature.onboarding.navigation.onboardingNavigationGraph
+import dev.stukalo.mealplanner.presentation.feature.recipe.search.navigation.recipeSearchNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.navigation.recipeDetailsNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.settings.navigation.settingsNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.welcome.navigation.welcomeNavigationGraph
@@ -42,6 +44,14 @@ internal fun AppNavHost(
         )
 
         settingsNavigationGraph(
+            navController = navController
+        )
+
+        filtersNavigationGraph(
+            navController = navController
+        )
+
+        recipeSearchNavigationGraph(
             navController = navController
         )
 

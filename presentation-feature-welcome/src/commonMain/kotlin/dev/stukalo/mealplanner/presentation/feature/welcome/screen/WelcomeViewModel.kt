@@ -49,6 +49,7 @@ internal class WelcomeViewModel(
     private val validateDietUseCase: ValidateDietUseCase,
     private val saveUserDataUseCase: SaveUserDataUseCase,
     private val saveDailyNormUseCase: SaveDailyNormUseCase,
+    private val clock: Clock,
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
     override val initialState = ViewState()
@@ -313,7 +314,7 @@ internal class WelcomeViewModel(
     }
 
     private fun calculateDailyNorm(user: UserDomainModel): DailyNormDomainModel {
-        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val today = clock.todayIn(TimeZone.currentSystemDefault())
         var age = today.year - user.birthDate.year
         if (today.month < user.birthDate.month ||
             (today.month == user.birthDate.month && today.day < user.birthDate.day)

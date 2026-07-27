@@ -4,6 +4,6 @@ enum class MealTypeDomainModel {
     BREAKFAST,
     LUNCH,
     DINNER,
-//    SNACK,
-//    TEATIME,
+    SNACK,
+    TEATIME,
 }

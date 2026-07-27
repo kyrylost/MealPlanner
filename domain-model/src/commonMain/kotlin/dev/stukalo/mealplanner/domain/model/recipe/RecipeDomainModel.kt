@@ -40,6 +40,9 @@ import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
  * mustard-free, no-oil-added, paleo, peanut-free, pescatarian, pork-free, red-meat-free,
  * sesame-free, shellfish-free, soy-free, sugar-conscious, sulfite-free, tree-nut-free,
  * vegan, vegetarian, wheat-free.
+ *
+ * @property id The unique identifier of the recipe.
+ * @property instructionLines The list of cooking instructions.
  */
 data class RecipeDomainModel(
     val product: ProductDomainModel,
@@ -51,4 +54,6 @@ data class RecipeDomainModel(
     val cuisineType: List<String>? = null,
     val dishType: List<String>? = null,
     val healthLabels: List<String>? = null,
+    val id: String? = null,
+    val instructionLines: List<String>? = null,
 )

@@ -112,6 +112,7 @@ internal fun WelcomeData(
                     focusManager.clearFocus()
                 },
                 corner = Theme.radius.radius24,
+                textStyle = Theme.typography.bold14,
                 modifier = Modifier.weight(1f)
             )
         }

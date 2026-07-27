@@ -22,7 +22,7 @@ enum class MainTab(
     ),
     Search(
         icon = NavigationBarIcons.Search,
-        route = NavigationDirection.Search
+        route = NavigationDirection.ProductSearch
     ),
     BarcodeScanner(
         icon = NavigationBarIcons.BarcodeScanner,

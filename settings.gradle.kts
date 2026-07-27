@@ -62,10 +62,12 @@ include(":presentation-feature-onboarding")
 include(":presentation-feature-barcode-scanner")
 include(":presentation-feature-main")
 include(":presentation-feature-home")
-include(":presentation-feature-search")
+include(":presentation-feature-product-search")
+include(":presentation-feature-recipe-search")
 include(":presentation-feature-statistics")
 include(":presentation-feature-settings")
 include(":presentation-feature-recipe-details")
+include(":presentation-feature-filters")
 
 
 

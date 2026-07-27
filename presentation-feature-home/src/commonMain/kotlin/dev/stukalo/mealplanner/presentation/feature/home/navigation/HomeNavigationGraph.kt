@@ -14,6 +14,9 @@ fun NavGraphBuilder.homeNavigationGraph(
         HomeScreen(
             onNavigateToRecipeDetails = { recipeId ->
                 appNavController.safeNavigation(NavigationDirection.RecipeDetails(recipeId))
+            },
+            onNavigateToRecipeSearch = {
+                appNavController.safeNavigation(NavigationDirection.RecipeSearch)
             }
         )
     }

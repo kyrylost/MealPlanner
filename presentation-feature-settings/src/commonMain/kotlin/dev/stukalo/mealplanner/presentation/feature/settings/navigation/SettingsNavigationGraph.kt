@@ -11,7 +11,7 @@ fun NavGraphBuilder.settingsNavigationGraph(
 ) {
     composable<NavigationDirection.Settings> {
         SettingsScreen(
-            onBackClick = { navController.popBackStack() }
+            onBackClick = { navController.popBackStack() },
         )
     }
 }

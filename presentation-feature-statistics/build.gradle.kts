@@ -65,7 +65,13 @@ kotlin {
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationCoreUi)
+            implementation(projects.coreLocalization)
+            implementation(projects.domainModel)
             implementation(projects.domainUsecase)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.kotlinx.datetime)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

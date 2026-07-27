@@ -18,11 +18,44 @@
     <string name="common_cancel">Скасувати</string>
 
     <string name="home_hello">Привіт</string>
-    <string name="home_proteins">Білки</string>
-    <string name="home_fats">Жири</string>
-    <string name="home_carbs">Вуглеводи</string>
+    <string name="home_hello_name">%1$s!</string>
     <string name="home_steps">Кроки</string>
     <string name="home_recommended_for_today">Рекомендовано на сьогодні</string>
-    <string name="home_calories">Калорії</string>
-    <string name="home_kcal">%1$d ккал</string>
+    <string name="home_consumed_amount_title">Вага порції</string>
+    <string name="home_consumed_amount_subtitle">Скільки грам цього продукту ви з'їли?</string>
+
+    <string name="common_back">Назад</string>
+    <string name="common_apply">Застосувати</string>
+    <string name="common_min">Мін</string>
+    <string name="common_max">Макс</string>
+    <string name="common_show_all">Показати все</string>
+    <string name="common_grams">г</string>
+    <string name="common_minutes_short">%1$d хв</string>
+    <string name="common_servings">%1$d порцій</string>
+    <string name="common_filters">Фільтри</string>
+    <string name="common_settings">Налаштування</string>
+    <string name="common_meal_types">Типи страв</string>
+    <string name="common_product_search">Пошук продуктів</string>
+    <string name="common_calories">Калорії</string>
+    <string name="common_proteins">Білки</string>
+    <string name="common_fats">Жири</string>
+    <string name="common_carbs">Вуглеводи</string>
+    <string name="common_kcal">%1$d ккал</string>
+    <string name="common_unit_kcal">ккал</string>
+    <string name="common_unit_grams">г</string>
+
+    <string name="recipe_details_ingredients">Інгредієнти</string>
+    <string name="recipe_details_instructions">Інструкції</string>
+    <string name="recipe_details_view_prep">Переглянути кроки приготування</string>
+    <string name="recipe_details_log_meal">Записати страву</string>
+    <string name="recipe_details_not_found">Рецепт не знайдено</string>
+
+    <string name="settings_meal_config">Конфігурація харчування</string>
+    <string name="settings_meal_schedule">Розклад харчування</string>
+    <string name="settings_theme_choice">Вибір теми</string>
+
+    <string name="meal_schedule_auto_calculate">Автоматичний розрахунок</string>
+    <string name="meal_schedule_total_percentage">Загальний відсоток: %1$d%%</string>
+    <string name="meal_schedule_total_error">Сума повинна бути 100%</string>
+    <string name="meal_schedule_percentage">Відсоток:</string>
 </resources>

@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EdamamRecipeNetModel(
+    @SerialName("uri") val uri: String? = null,
     @SerialName("label") val label: String? = null,
     @SerialName("image") val image: String? = null,
     @SerialName("url") val url: String? = null,
@@ -20,4 +21,5 @@ data class EdamamRecipeNetModel(
     @SerialName("dishType") val dishType: List<String>? = null,
     @SerialName("dietLabels") val dietLabels: List<String>? = null,
     @SerialName("healthLabels") val healthLabels: List<String>? = null,
+    @SerialName("instructionLines") val instructionLines: List<String>? = null,
 )

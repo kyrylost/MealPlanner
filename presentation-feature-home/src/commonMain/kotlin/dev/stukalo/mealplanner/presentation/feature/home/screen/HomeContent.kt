@@ -1,8 +1,10 @@
 package dev.stukalo.mealplanner.presentation.feature.home.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,9 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,42 +26,51 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
+import dev.stukalo.mealplanner.core.localization.common_carbs
+import dev.stukalo.mealplanner.core.localization.common_fats
 import dev.stukalo.mealplanner.core.localization.common_ok
-import dev.stukalo.mealplanner.core.localization.home_carbs
-import dev.stukalo.mealplanner.core.localization.home_fats
-import dev.stukalo.mealplanner.core.localization.home_hello
-import dev.stukalo.mealplanner.core.localization.home_proteins
+import dev.stukalo.mealplanner.core.localization.common_proteins
+import dev.stukalo.mealplanner.core.localization.common_show_all
+import dev.stukalo.mealplanner.core.localization.common_unit_grams
+import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
+import dev.stukalo.mealplanner.core.localization.home_consumed_amount_title
 import dev.stukalo.mealplanner.core.localization.home_recommended_for_today
 import dev.stukalo.mealplanner.core.localization.home_steps
+import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
+import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
-import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
+import dev.stukalo.mealplanner.presentation.core.ui.widget.recipe.RecipeCard
 import dev.stukalo.mealplanner.presentation.feature.home.component.ActivityGauge
 import dev.stukalo.mealplanner.presentation.feature.home.component.BackgroundCircles
-import dev.stukalo.mealplanner.presentation.feature.home.component.NutritionCard
+import dev.stukalo.mealplanner.presentation.feature.home.component.CaloriesProgressCard
+import dev.stukalo.mealplanner.presentation.feature.home.component.HomeHeader
 import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.NutrientType
 import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewState
+import kotlinx.coroutines.flow.flowOf
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun HomeContent(
     state: ViewState,
+    recommendedRecipes: LazyPagingItems<RecipeDomainModel>,
     onIntent: (ViewIntent) -> Unit,
 ) {
     val hazeState = rememberHazeState()
     var activeNutrientType by remember { mutableStateOf<NutrientType?>(null) }
 
     activeNutrientType?.let { type ->
-        val label = when (type) {
-            NutrientType.PROTEINS -> stringResource(Res.string.home_proteins)
-            NutrientType.FATS -> stringResource(Res.string.home_fats)
-            NutrientType.CARBS -> stringResource(Res.string.home_carbs)
-        }
         ValueEditDialog(
             initialValue = "",
             onDismissRequest = { activeNutrientType = null },
@@ -67,7 +79,8 @@ internal fun HomeContent(
                     onIntent(ViewIntent.OnAddNutrient(type, it))
                 }
             },
-            title = label,
+            title = stringResource(Res.string.home_consumed_amount_title),
+            message = stringResource(Res.string.home_consumed_amount_subtitle),
             placeholder = "0.0",
             confirmLabel = stringResource(Res.string.common_ok),
             dismissLabel = stringResource(Res.string.common_cancel)
@@ -77,121 +90,201 @@ internal fun HomeContent(
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundCircles(hazeState)
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-                .padding(horizontal = Theme.spacing.space16)
-                .verticalScroll(rememberScrollState())
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 328.dp),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = Theme.spacing.space16,
+                end = Theme.spacing.space16,
+                bottom = Theme.spacing.space16
+            ),
+            horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
         ) {
-            Spacer(modifier = Modifier.height(Theme.spacing.space48))
-
-            // Header
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
             ) {
-                Column {
-                    Text(
-                        text = stringResource(Res.string.home_hello),
-                        style = Theme.typography.regular48,
-                        color = Theme.color.textSecondary
+                Spacer(modifier = Modifier.height(Theme.spacing.space48))
+            }
+
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                HomeHeader(
+                    userName = state.userName,
+                    modifier = Modifier.fillMaxWidth().statusBarsPadding()
+                )
+            }
+
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                Spacer(modifier = Modifier.height(Theme.spacing.space128))
+            }
+
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                CaloriesProgressCard(
+                    currentCalories = state.currentCalories,
+                    targetCalories = state.targetCalories,
+                    hazeState = hazeState
+                )
+            }
+
+            // Activity Gauges
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = Theme.spacing.space24),
+                    horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
+                    verticalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
+                    maxItemsInEachRow = 2
+                ) {
+                    val gaugeModifier = Modifier.weight(1f)
+                    ActivityGauge(
+                        current = state.proteins,
+                        target = state.proteinsTarget,
+                        label = stringResource(Res.string.common_proteins),
+                        unit = stringResource(Res.string.common_unit_grams),
+                        hazeState = hazeState,
+                        modifier = gaugeModifier,
+                        onClick = { activeNutrientType = NutrientType.PROTEINS }
                     )
-                    Text(
-                        text = "${state.userName}!",
-                        style = Theme.typography.semibold48,
-                        color = Theme.color.textPrimary
+                    ActivityGauge(
+                        current = state.fats,
+                        target = state.fatsTarget,
+                        label = stringResource(Res.string.common_fats),
+                        unit = stringResource(Res.string.common_unit_grams),
+                        hazeState = hazeState,
+                        modifier = gaugeModifier,
+                        onClick = { activeNutrientType = NutrientType.FATS }
+                    )
+                    ActivityGauge(
+                        current = state.carbs,
+                        target = state.carbsTarget,
+                        label = stringResource(Res.string.common_carbs),
+                        unit = stringResource(Res.string.common_unit_grams),
+                        hazeState = hazeState,
+                        modifier = gaugeModifier,
+                        onClick = { activeNutrientType = NutrientType.CARBS }
+                    )
+                    ActivityGauge(
+                        current = state.steps,
+                        target = state.stepsTarget,
+                        label = stringResource(Res.string.home_steps),
+                        unit = "",
+                        hazeState = hazeState,
+                        modifier = gaugeModifier
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(Theme.spacing.space128))
-
-            NutritionCard(
-                currentCalories = state.currentCalories,
-                targetCalories = state.targetCalories,
-                hazeState = hazeState
-            )
-
-            Spacer(modifier = Modifier.height(Theme.spacing.space24))
-
-            Row(modifier = Modifier.fillMaxWidth()) {
-                ActivityGauge(
-                    current = state.proteins,
-                    target = state.proteinsTarget,
-                    label = stringResource(Res.string.home_proteins),
-                    unit = "g",
-                    modifier = Modifier.weight(1f),
-                    hazeState = hazeState,
-                    onClick = { activeNutrientType = NutrientType.PROTEINS }
-                )
-                Spacer(modifier = Modifier.width(Theme.spacing.space16))
-                ActivityGauge(
-                    current = state.fats,
-                    target = state.fatsTarget,
-                    label = stringResource(Res.string.home_fats),
-                    unit = "g",
-                    modifier = Modifier.weight(1f),
-                    hazeState = hazeState,
-                    onClick = { activeNutrientType = NutrientType.FATS }
-                )
-            }
-            Spacer(modifier = Modifier.height(Theme.spacing.space16))
-            Row(modifier = Modifier.fillMaxWidth()) {
-                ActivityGauge(
-                    current = state.carbs,
-                    target = state.carbsTarget,
-                    label = stringResource(Res.string.home_carbs),
-                    unit = "g",
-                    modifier = Modifier.weight(1f),
-                    hazeState = hazeState,
-                    onClick = { activeNutrientType = NutrientType.CARBS }
-                )
-                Spacer(modifier = Modifier.width(Theme.spacing.space16))
-                ActivityGauge(
-                    current = state.steps,
-                    target = state.stepsTarget,
-                    label = stringResource(Res.string.home_steps),
-                    unit = "",
-                    modifier = Modifier.weight(1f),
-                    hazeState = hazeState
-                )
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                Spacer(modifier = Modifier.height(Theme.spacing.space32))
             }
 
-            Spacer(modifier = Modifier.height(Theme.spacing.space32))
-
-            Text(
-                text = stringResource(Res.string.home_recommended_for_today),
-                style = Theme.typography.bold16,
-                color = Theme.color.textPrimary
-            )
-
-            Spacer(modifier = Modifier.height(Theme.spacing.space16))
-
-            repeat(2) { index ->
-                BlurredCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                        .padding(bottom = Theme.spacing.space16),
-                    hazeState = hazeState
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Text(
+                        text = stringResource(Res.string.home_recommended_for_today),
+                        style = Theme.typography.bold16,
+                        color = Theme.color.textPrimary
+                    )
+                    Text(
+                        text = stringResource(Res.string.common_show_all),
+                        style = Theme.typography.bold14,
+                        color = Theme.color.textPrimary,
+                        modifier = Modifier.clickable { onIntent(ViewIntent.OnShowAllRecipesClick) }
+                    )
+                }
+            }
+
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                Spacer(modifier = Modifier.height(Theme.spacing.space16))
+            }
+
+            // Recommended Recipes
+            if (recommendedRecipes.loadState.refresh is LoadState.Loading && recommendedRecipes.itemCount == 0) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .clickable { onIntent(ViewIntent.OnRecipeClick("recipe_$index")) },
+                            .fillMaxWidth()
+                            .padding(vertical = Theme.spacing.space32),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "Recipe Placeholder ${index + 1}",
-                            style = Theme.typography.regular14,
-                            color = Theme.color.textPrimary
+                        CircularProgressIndicator(color = Theme.color.primary)
+                    }
+                }
+            } else {
+                items(
+                    count = recommendedRecipes.itemCount,
+                    key = recommendedRecipes.itemKey { it.id.orEmpty() },
+                    contentType = recommendedRecipes.itemContentType { "recipe" },
+                ) { index ->
+                    val recipe = recommendedRecipes[index]
+                    if (recipe != null) {
+                        RecipeCard(
+                            title = recipe.product.productName.orEmpty(),
+                            imageUrl = recipe.product.imageUrl,
+                            totalTime = recipe.totalTime,
+                            healthLabels = recipe.healthLabels,
+                            modifier = Modifier.fillMaxWidth(),
+                            hazeState = hazeState,
+                            onClick = { onIntent(ViewIntent.OnRecipeClick(recipe.id.orEmpty())) }
                         )
+                    }
+                }
+
+                if (recommendedRecipes.loadState.append is LoadState.Loading) {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = Theme.spacing.space16),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(color = Theme.color.primary)
+                        }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(LocalBottomBarHeight.current))
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                Spacer(modifier = Modifier.height(LocalBottomBarHeight.current))
+            }
         }
     }
 }
@@ -201,19 +294,15 @@ internal fun HomeContent(
 private fun HomeContentPreview() {
     Theme {
         HomeContent(
-            state = ViewState(
-                userName = "Name",
-                currentCalories = 1258,
-                targetCalories = 2000,
-                proteins = 45f,
-                proteinsTarget = 60f,
-                fats = 30f,
-                fatsTarget = 70f,
-                carbs = 150f,
-                carbsTarget = 250f,
-                steps = 8432f,
-                stepsTarget = 10000f
-            ),
+            state = ViewState(userName = "User"),
+            recommendedRecipes = flowOf(
+                PagingData.from(
+                    listOf(
+                        RecipeDomainModel(product = ProductDomainModel(productName = "Salmon Salad")),
+                        RecipeDomainModel(product = ProductDomainModel(productName = "Beef Stew"))
+                    )
+                )
+            ).collectAsLazyPagingItems(),
             onIntent = {}
         )
     }

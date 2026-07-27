@@ -60,9 +60,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.adaptive)
+            implementation(libs.coil.compose)
             implementation("io.github.alexzhirkevich:compottie:2.0.0")
             implementation(projects.commonCore)
             implementation(projects.presentationCoreStyling)
+            implementation(projects.domainModel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

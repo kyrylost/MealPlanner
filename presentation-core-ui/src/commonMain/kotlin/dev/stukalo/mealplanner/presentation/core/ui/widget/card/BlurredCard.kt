@@ -2,7 +2,6 @@ package dev.stukalo.mealplanner.presentation.core.ui.widget.card
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -29,7 +28,7 @@ fun BlurredCard(
                 .hazeChild(state = hazeState, tint = tint)
                 .blur(12.dp)
         )
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box {
             content()
         }
     }

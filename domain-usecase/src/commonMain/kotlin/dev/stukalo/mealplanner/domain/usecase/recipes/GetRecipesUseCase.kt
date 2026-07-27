@@ -11,6 +11,6 @@ interface GetRecipesUseCase {
         carbohydrates: IntRange,
         fats: IntRange,
         proteins: IntRange,
-        mealType: MealTypeDomainModel,
+        mealTypes: List<MealTypeDomainModel>,
     ): Flow<PagingData<RecipeDomainModel>>
 }

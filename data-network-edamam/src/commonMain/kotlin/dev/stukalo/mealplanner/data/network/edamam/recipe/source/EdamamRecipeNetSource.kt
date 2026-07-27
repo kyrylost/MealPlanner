@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.data.network.edamam.recipe.source
 
+import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamRecipeDetailsResponseNetModel
 import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamRecipeResponseNetModel
 
 interface EdamamRecipeNetSource {
@@ -9,8 +10,10 @@ interface EdamamRecipeNetSource {
         carbohydrates: String,
         fats: String,
         proteins: String,
-        mealType: String,
+        mealTypes: List<String>,
     ): EdamamRecipeResponseNetModel
 
     suspend fun getRecipesByUrl(url: String): EdamamRecipeResponseNetModel
+
+    suspend fun getRecipeById(id: String): EdamamRecipeDetailsResponseNetModel
 }

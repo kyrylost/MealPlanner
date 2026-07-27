@@ -12,6 +12,8 @@ interface RecipeRepository {
         carbohydrates: IntRange,
         fats: IntRange,
         proteins: IntRange,
-        mealType: MealTypeDomainModel,
+        mealTypes: List<MealTypeDomainModel>,
     ): Flow<PagingData<RecipeDomainModel>>
+
+    suspend fun getRecipeById(id: String): Result<RecipeDomainModel>
 }

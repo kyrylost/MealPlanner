@@ -23,10 +23,10 @@ fun NavGraphBuilder.mainFlowRoute(
         )
     }
 
-    composable<NavigationDirection.Search> {
+    composable<NavigationDirection.ProductSearch> {
         MainFlowScreen(
             appNavController = navController,
-            initialTab = NavigationDirection.Search,
+            initialTab = NavigationDirection.ProductSearch,
         )
     }
 
