@@ -6,21 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_settings
 import dev.stukalo.mealplanner.core.localization.statistics_meal_tracking
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSettings
+import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.component.MealDetailsDialog
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.component.MealTrackingItem
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.MealSlotProgress
@@ -39,19 +35,11 @@ internal fun StatisticsContent(
             .fillMaxSize()
             .background(color = Theme.color.background)
     ) {
-        IconButton(
-            onClick = onSettingsClick,
-            modifier = Modifier
-                .align(Alignment.End)
-                .statusBarsPadding()
-                .padding(Theme.spacing.space16)
-        ) {
-            Icon(
-                imageVector = IconSettings,
-                contentDescription = stringResource(Res.string.common_settings),
-                tint = Theme.color.iconPrimary
-            )
-        }
+        CommonHeader(
+            title = "",
+            rightIcon = IconSettings,
+            onRightIconClick = onSettingsClick
+        )
 
         LazyColumn(
             modifier = Modifier

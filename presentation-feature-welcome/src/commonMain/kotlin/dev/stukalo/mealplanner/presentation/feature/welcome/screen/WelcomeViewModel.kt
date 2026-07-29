@@ -52,7 +52,10 @@ internal class WelcomeViewModel(
     private val clock: Clock,
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
-    override val initialState = ViewState()
+    override val initialState = ViewState(
+        weightInput = PRESELECTED_WEIGHT,
+        heightInput = PRESELECTED_HEIGHT
+    )
 
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
@@ -367,5 +370,10 @@ internal class WelcomeViewModel(
             fats = (calories * fatsCoefficient) / CALORIES_PER_FAT_GRAM,
             carbohydrates = (calories * carbsCoefficient) / CALORIES_PER_CARB_GRAM
         )
+    }
+
+    companion object {
+        private const val PRESELECTED_WEIGHT = "70"
+        private const val PRESELECTED_HEIGHT = "170"
     }
 }

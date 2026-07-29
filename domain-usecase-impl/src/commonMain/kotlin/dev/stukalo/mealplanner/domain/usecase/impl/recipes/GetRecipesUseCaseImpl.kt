@@ -16,6 +16,7 @@ internal class GetRecipesUseCaseImpl(
         fats: IntRange,
         proteins: IntRange,
         mealTypes: List<MealTypeDomainModel>,
+        query: String?,
     ): Flow<PagingData<RecipeDomainModel>> {
         return recipeRepository.getRecipesByNutrients(
             type = RECIPE_TYPE_ANY,
@@ -24,6 +25,7 @@ internal class GetRecipesUseCaseImpl(
             fats = fats,
             proteins = proteins,
             mealTypes = mealTypes,
+            query = query,
         )
     }
 

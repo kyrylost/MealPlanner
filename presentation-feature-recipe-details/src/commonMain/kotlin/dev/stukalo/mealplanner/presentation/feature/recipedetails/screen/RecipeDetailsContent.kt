@@ -14,12 +14,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_back
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_minutes_short
 import dev.stukalo.mealplanner.core.localization.common_ok
@@ -57,6 +51,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.HealthLabelChip
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.InfoChip
@@ -110,36 +105,14 @@ internal fun RecipeDetailsContent(
                 contentPadding = PaddingValues(bottom = 120.dp)
             ) {
                 item {
-                    Box(
+                    AsyncImage(
+                        model = currentRecipe.product.imageUrl,
+                        contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .aspectRatio(1.2f)
-                    ) {
-                        AsyncImage(
-                            model = currentRecipe.product.imageUrl,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                        
-                        Surface(
-                            modifier = Modifier
-                                .padding(Theme.spacing.space16)
-                                .statusBarsPadding()
-                                .size(Theme.spacing.space48),
-                            shape = Theme.shape.normalRoundedCornerShape,
-                            color = Color.Black.copy(alpha = 0.3f),
-                            onClick = { onIntent(ViewIntent.OnBackClick) }
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Icon(
-                                    imageVector = IconBack,
-                                    contentDescription = stringResource(Res.string.common_back),
-                                    tint = Color.White
-                                )
-                            }
-                        }
-                    }
+                            .aspectRatio(1.2f),
+                        contentScale = ContentScale.Crop
+                    )
                 }
 
                 item {
@@ -235,6 +208,12 @@ internal fun RecipeDetailsContent(
                     }
                 }
             }
+
+            CommonHeader(
+                title = "",
+                leftIcon = IconBack,
+                onLeftIconClick = { onIntent(ViewIntent.OnBackClick) }
+            )
 
             PrimaryButton(
                 text = stringResource(Res.string.recipe_details_log_meal),

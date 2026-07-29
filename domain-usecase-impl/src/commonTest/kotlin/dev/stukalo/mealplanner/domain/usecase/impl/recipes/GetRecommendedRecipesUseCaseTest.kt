@@ -94,7 +94,8 @@ class GetRecommendedRecipesUseCaseTest {
                 carbohydrates: IntRange,
                 fats: IntRange,
                 proteins: IntRange,
-                mealTypes: List<MealTypeDomainModel>
+                mealTypes: List<MealTypeDomainModel>,
+                query: String?,
             ): Flow<PagingData<RecipeDomainModel>> {
                 capturedCalories = calories
                 return flowOf(PagingData.empty())
@@ -152,7 +153,8 @@ class GetRecommendedRecipesUseCaseTest {
                 carbohydrates: IntRange,
                 fats: IntRange,
                 proteins: IntRange,
-                mealTypes: List<MealTypeDomainModel>
+                mealTypes: List<MealTypeDomainModel>,
+                query: String?,
             ): Flow<PagingData<RecipeDomainModel>> {
                 capturedCalories = calories
                 return flowOf(PagingData.empty())

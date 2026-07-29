@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -13,11 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_settings
 import dev.stukalo.mealplanner.core.localization.settings_meal_config
 import dev.stukalo.mealplanner.core.localization.settings_theme_choice
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.SettingsHeader
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
+import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ThemeOption
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
@@ -32,9 +33,12 @@ internal fun SettingsContent(
         modifier = Modifier
             .fillMaxSize()
             .background(Theme.color.background)
-            .statusBarsPadding()
     ) {
-        SettingsHeader(onBackClick = { onIntent(ViewIntent.OnBackClick) })
+        CommonHeader(
+            title = stringResource(Res.string.common_settings),
+            leftIcon = IconBack,
+            onLeftIconClick = { onIntent(ViewIntent.OnBackClick) }
+        )
 
         LazyColumn(
             modifier = Modifier

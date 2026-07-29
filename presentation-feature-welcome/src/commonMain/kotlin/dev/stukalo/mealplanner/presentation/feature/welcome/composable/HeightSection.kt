@@ -15,7 +15,7 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.welcome_height_label
-import dev.stukalo.mealplanner.core.localization.welcome_height_placeholder
+import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
@@ -30,7 +30,7 @@ internal fun HeightSection(
     modifier: Modifier = Modifier
 ) {
     var showEditDialog by remember { mutableStateOf(false) }
-    val heightValue = state.heightInput.toFloatOrNull() ?: 170f
+    val heightValue = state.heightInput.toFloatOrNull() ?: 0f
 
     Column(modifier = modifier) {
         RulerPicker(
@@ -38,7 +38,7 @@ internal fun HeightSection(
             value = heightValue,
             onValueChange = { onIntent(ViewIntent.OnChangeHeightInputIntent(it.toString())) },
             range = 50f..250f,
-            unit = stringResource(Res.string.welcome_height_placeholder),
+            unit = stringResource(Res.string.welcome_height_unit_cm),
             onEditClick = { showEditDialog = true },
             modifier = Modifier.fillMaxWidth().padding(top = Theme.spacing.space24)
         )
@@ -49,7 +49,7 @@ internal fun HeightSection(
                 onDismissRequest = { showEditDialog = false },
                 onConfirm = { onIntent(ViewIntent.OnChangeHeightInputIntent(it)) },
                 title = stringResource(Res.string.welcome_height_label),
-                placeholder = stringResource(Res.string.welcome_height_placeholder),
+                placeholder = stringResource(Res.string.welcome_height_unit_cm),
                 confirmLabel = stringResource(Res.string.common_ok),
                 dismissLabel = stringResource(Res.string.common_cancel)
             )

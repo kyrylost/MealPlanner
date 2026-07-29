@@ -12,12 +12,16 @@ import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contrac
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class RecipeSearchViewModel(
     private val getRecipesUseCase: GetRecipesUseCase,
     private val getRecommendedRecipesUseCase: GetRecommendedRecipesUseCase,
@@ -28,8 +32,26 @@ class RecipeSearchViewModel(
     private val _recipes = MutableStateFlow<PagingData<RecipeDomainModel>>(PagingData.empty())
     val recipes: Flow<PagingData<RecipeDomainModel>> = _recipes
 
+    private val _searchFlow = MutableStateFlow("")
+
     init {
         onIntent(ViewIntent.InitialLoad)
+        setupSearch()
+    }
+
+    private fun setupSearch() {
+        viewModelScope.launch {
+            _searchFlow
+                .debounce(500.milliseconds)
+                .distinctUntilChanged()
+                .collectLatest { query ->
+                    if (query.isEmpty() && viewState.value.filters == null) {
+                        searchRecommended()
+                    } else {
+                        searchWithFilters(query, viewState.value.filters)
+                    }
+                }
+        }
     }
 
     override suspend fun processIntent(intent: ViewIntent) {
@@ -37,15 +59,27 @@ class RecipeSearchViewModel(
             ViewIntent.InitialLoad -> {
                 searchRecommended()
             }
+            is ViewIntent.OnSearchQueryChange -> {
+                updateState { it.copy(searchQuery = intent.query) }
+                _searchFlow.value = intent.query
+            }
             is ViewIntent.ApplyFilters -> {
                 updateState { it.copy(filters = intent.filters) }
-                searchWithFilters(intent.filters)
+                searchWithFilters(viewState.value.searchQuery, intent.filters)
+            }
+            ViewIntent.OnClearFilters -> {
+                updateState { it.copy(filters = null, searchQuery = "") }
+                _searchFlow.value = ""
+                searchRecommended()
             }
             is ViewIntent.OnRecipeClick -> {
                 sendEvent(ViewEvent.NavigateToRecipeDetails(intent.recipeId))
             }
             ViewIntent.OnFiltersClick -> {
                 sendEvent(ViewEvent.NavigateToFilters)
+            }
+            ViewIntent.OnBackClick -> {
+                sendEvent(ViewEvent.NavigateBack)
             }
         }
     }
@@ -58,14 +92,15 @@ class RecipeSearchViewModel(
         }
     }
 
-    private fun searchWithFilters(filters: FilterDomainModel) {
+    private fun searchWithFilters(query: String, filters: FilterDomainModel?) {
         viewModelScope.launch {
             getRecipesUseCase(
-                calories = filters.caloriesRange ?: 0..2000,
-                carbohydrates = filters.carbsRange ?: 0..500,
-                fats = filters.fatsRange ?: 0..500,
-                proteins = filters.proteinsRange ?: 0..500,
-                mealTypes = filters.mealTypes
+                calories = filters?.caloriesRange ?: 0..5000,
+                carbohydrates = filters?.carbsRange ?: 0..1000,
+                fats = filters?.fatsRange ?: 0..1000,
+                proteins = filters?.proteinsRange ?: 0..1000,
+                mealTypes = filters?.mealTypes ?: emptyList(),
+                query = query.ifEmpty { null }
             ).cachedIn(viewModelScope)
                 .collectLatest { _recipes.value = it }
         }

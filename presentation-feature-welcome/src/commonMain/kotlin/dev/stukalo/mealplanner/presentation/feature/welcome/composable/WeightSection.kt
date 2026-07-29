@@ -15,7 +15,7 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.welcome_weight_label
-import dev.stukalo.mealplanner.core.localization.welcome_weight_placeholder
+import dev.stukalo.mealplanner.core.localization.welcome_weight_unit_kg
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
@@ -30,15 +30,15 @@ internal fun WeightSection(
     modifier: Modifier = Modifier
 ) {
     var showEditDialog by remember { mutableStateOf(false) }
-    val weightValue = state.weightInput.toFloatOrNull() ?: 70f
+    val weightValue = state.weightInput.toFloatOrNull() ?: 0f
 
     Column(modifier = modifier) {
         RulerPicker(
             label = stringResource(Res.string.welcome_weight_label),
             value = weightValue,
             onValueChange = { onIntent(ViewIntent.OnChangeWeightInputIntent(it.toString())) },
-            range = 30f..200f,
-            unit = stringResource(Res.string.welcome_weight_placeholder), // Assuming this is "kg" or similar
+            range = 30f..300f,
+            unit = stringResource(Res.string.welcome_weight_unit_kg), // Assuming this is "kg" or similar
             onEditClick = { showEditDialog = true },
             modifier = Modifier.fillMaxWidth().padding(top = Theme.spacing.space24)
         )
@@ -49,7 +49,7 @@ internal fun WeightSection(
                 onDismissRequest = { showEditDialog = false },
                 onConfirm = { onIntent(ViewIntent.OnChangeWeightInputIntent(it)) },
                 title = stringResource(Res.string.welcome_weight_label),
-                placeholder = stringResource(Res.string.welcome_weight_placeholder),
+                placeholder = stringResource(Res.string.welcome_weight_unit_kg),
                 confirmLabel = stringResource(Res.string.common_ok),
                 dismissLabel = stringResource(Res.string.common_cancel)
             )

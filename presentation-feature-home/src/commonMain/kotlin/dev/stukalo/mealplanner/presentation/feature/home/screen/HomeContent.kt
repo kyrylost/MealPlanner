@@ -25,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -91,7 +90,7 @@ internal fun HomeContent(
         BackgroundCircles(hazeState)
 
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 328.dp),
+            columns = GridCells.Adaptive(minSize = Theme.size.compactScreenWidth),
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
                 start = Theme.spacing.space16,
@@ -197,7 +196,7 @@ internal fun HomeContent(
                     GridItemSpan(maxLineSpan)
                 }
             ) {
-                Spacer(modifier = Modifier.height(Theme.spacing.space32))
+                Spacer(modifier = Modifier.height(Theme.spacing.space48))
             }
 
             item(
@@ -212,13 +211,13 @@ internal fun HomeContent(
                 ) {
                     Text(
                         text = stringResource(Res.string.home_recommended_for_today),
-                        style = Theme.typography.bold16,
+                        style = Theme.typography.bold14,
                         color = Theme.color.textPrimary
                     )
                     Text(
                         text = stringResource(Res.string.common_show_all),
                         style = Theme.typography.bold14,
-                        color = Theme.color.textPrimary,
+                        color = Theme.color.primary,
                         modifier = Modifier.clickable { onIntent(ViewIntent.OnShowAllRecipesClick) }
                     )
                 }

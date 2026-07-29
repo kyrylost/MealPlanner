@@ -5,7 +5,10 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
 sealed interface ViewIntent : MviIntent {
     data object InitialLoad : ViewIntent
-    data class ApplyFilters(val filters: FilterDomainModel) : ViewIntent
+    data class OnSearchQueryChange(val query: String) : ViewIntent
+    data class ApplyFilters(val filters: FilterDomainModel?) : ViewIntent
+    data object OnClearFilters : ViewIntent
     data class OnRecipeClick(val recipeId: String) : ViewIntent
     data object OnFiltersClick : ViewIntent
+    data object OnBackClick : ViewIntent
 }

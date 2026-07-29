@@ -6,9 +6,9 @@
     <string name="welcome_gender_label">Gender</string>
     <string name="welcome_gender_placeholder">Gender</string>
     <string name="welcome_height_label">Height</string>
-    <string name="welcome_height_placeholder">0 Cm</string>
+    <string name="welcome_height_unit_cm">Cm</string>
     <string name="welcome_weight_label">Weight</string>
-    <string name="welcome_weight_placeholder">0 Kg</string>
+    <string name="welcome_weight_unit_kg">Kg</string>
     <string name="welcome_continue_button">Continue</string>
     <string name="welcome_back_button">Back</string>
     <string name="welcome_gender_male">Male</string>
@@ -70,6 +70,10 @@
     <string name="common_settings">Settings</string>
     <string name="common_meal_types">Meal Types</string>
     <string name="common_product_search">Product Search</string>
+    <string name="common_recipe_search">Recipe Search</string>
+    <string name="common_search">Search</string>
+    <string name="common_no_results">No results found</string>
+    <string name="common_clear_filters">Clear Filters</string>
     <string name="common_calories">Calories</string>
     <string name="common_proteins">Proteins</string>
     <string name="common_fats">Fats</string>

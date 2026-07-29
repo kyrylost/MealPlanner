@@ -102,8 +102,9 @@ fun RulerPicker(
             )
             
             Row(verticalAlignment = Alignment.CenterVertically) {
+                val formattedValue = if (value % 1f == 0f) value.toInt().toString() else value.toString()
                 Text(
-                    text = value.toString(),
+                    text = formattedValue,
                     style = Theme.typography.bold16,
                     color = textPrimaryColor
                 )
@@ -141,7 +142,10 @@ fun RulerPicker(
                         if (newOffset in minValueOffset..maxValueOffset) {
                             dragOffset = newOffset
                             val newValue = range.start + (-dragOffset / lineSpacingPx * step)
-                            onValueChange((newValue * 10).roundToInt() / 10f)
+                            val snappedValue = ((newValue - range.start) / step).roundToInt() * step + range.start
+                            if (snappedValue != value) {
+                                onValueChange(snappedValue)
+                            }
                         }
                     }
                 ),

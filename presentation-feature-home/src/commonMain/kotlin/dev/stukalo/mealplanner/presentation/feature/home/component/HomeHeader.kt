@@ -24,12 +24,12 @@ internal fun HomeHeader(
         Column {
             Text(
                 text = stringResource(Res.string.home_hello),
-                style = Theme.typography.regular48,
+                style = Theme.typography.handwrittenRegular64,
                 color = Theme.color.textSecondary
             )
             Text(
                 text = stringResource(Res.string.home_hello_name, userName),
-                style = Theme.typography.semibold48,
+                style = Theme.typography.handwrittenSemibold64,
                 color = Theme.color.textPrimary
             )
         }

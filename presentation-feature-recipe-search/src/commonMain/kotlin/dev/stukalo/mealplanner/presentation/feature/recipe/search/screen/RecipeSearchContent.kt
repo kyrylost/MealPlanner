@@ -3,31 +3,44 @@ package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_clear_filters
+import dev.stukalo.mealplanner.core.localization.common_no_results
+import dev.stukalo.mealplanner.core.localization.common_recipe_search
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.BottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconFilter
+import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.recipe.RecipeCard
+import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.ActiveFilterChips
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.RecipeSearchHeader
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun RecipeSearchContent(
@@ -38,24 +51,50 @@ internal fun RecipeSearchContent(
     val hazeState = rememberHazeState()
 
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 328.dp),
+        columns = GridCells.Adaptive(minSize = Theme.size.compactScreenWidth),
         modifier = Modifier
             .fillMaxSize()
             .background(Theme.color.background),
         contentPadding = PaddingValues(
-            start = Theme.spacing.space16,
-            end = Theme.spacing.space16,
             bottom = Theme.spacing.space16 + (BottomBarHeight.current)
         ),
         horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
         verticalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
     ) {
-        item(
-            span = { GridItemSpan(maxLineSpan) }
-        ) {
-            RecipeSearchHeader(
-                onFiltersClick = { onIntent(ViewIntent.OnFiltersClick) }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            CommonHeader(
+                title = stringResource(Res.string.common_recipe_search),
+                leftIcon = IconBack,
+                leftIconTint = Theme.color.iconPrimary,
+                onLeftIconClick = { onIntent(ViewIntent.OnBackClick) },
+                rightIcon = IconFilter,
+                rightIconTint = Theme.color.primary,
+                onRightIconClick = { onIntent(ViewIntent.OnFiltersClick) }
             )
+        }
+
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            RecipeSearchHeader(
+                query = state.searchQuery,
+                onQueryChange = { onIntent(ViewIntent.OnSearchQueryChange(it)) },
+                modifier = Modifier.padding(horizontal = Theme.spacing.space16)
+            )
+        }
+
+        state.filters?.let { filters ->
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                ActiveFilterChips(
+                    filters = filters,
+                    onRemoveMealType = { type ->
+                        val newTypes = filters.mealTypes.filter { it != type }
+                        onIntent(ViewIntent.ApplyFilters(filters.copy(mealTypes = newTypes)))
+                    },
+                    onRemoveNutrient = { type ->
+                        // Logic to clear specific nutrient ranges
+                    },
+                    modifier = Modifier.padding(horizontal = Theme.spacing.space16)
+                )
+            }
         }
 
         if (recipes.loadState.refresh is LoadState.Loading && recipes.itemCount == 0) {
@@ -68,6 +107,10 @@ internal fun RecipeSearchContent(
                 ) {
                     CircularProgressIndicator(color = Theme.color.primary)
                 }
+            }
+        } else if (recipes.loadState.refresh is LoadState.NotLoading && recipes.itemCount == 0) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                EmptyState(onClearFilters = { onIntent(ViewIntent.OnClearFilters) })
             }
         } else {
             items(
@@ -82,7 +125,9 @@ internal fun RecipeSearchContent(
                         imageUrl = recipe.product.imageUrl,
                         totalTime = recipe.totalTime,
                         healthLabels = recipe.healthLabels,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = Theme.spacing.space16),
                         hazeState = hazeState,
                         onClick = {
                             onIntent(ViewIntent.OnRecipeClick(recipe.id.orEmpty()))
@@ -103,6 +148,28 @@ internal fun RecipeSearchContent(
                     }
                 }
             }
+        }
+    }
+}
+// core ui title desc and img(optional)
+@Composable
+private fun EmptyState(
+    onClearFilters: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = Theme.spacing.space64),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = stringResource(Res.string.common_no_results),
+            style = Theme.typography.bold16,
+            color = Theme.color.textSecondary
+        )
+        Spacer(modifier = Modifier.height(Theme.spacing.space16))
+        Button(onClick = onClearFilters) {
+            Text(stringResource(Res.string.common_clear_filters))
         }
     }
 }

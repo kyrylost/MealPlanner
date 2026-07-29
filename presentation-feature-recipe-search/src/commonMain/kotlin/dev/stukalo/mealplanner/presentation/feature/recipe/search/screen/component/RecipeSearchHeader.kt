@@ -3,34 +3,48 @@ package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.compon
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_filters
+import dev.stukalo.mealplanner.core.localization.common_recipe_search
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
+import dev.stukalo.mealplanner.presentation.core.ui.widget.input.RoundedPlaceholderTextField
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeSearchHeader(
-    onFiltersClick: () -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .statusBarsPadding()
-            .padding(vertical = Theme.spacing.space16)
+            .padding(vertical = Theme.spacing.space8),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Button(
-            onClick = onFiltersClick,
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(stringResource(Res.string.common_filters))
-        }
+        RoundedPlaceholderTextField(
+            value = query,
+            onValueChange = onQueryChange,
+            placeholder = stringResource(Res.string.common_recipe_search),
+            leadingIcon = {
+                Icon(
+                    imageVector = IconSearch,
+                    contentDescription = null,
+                    tint = Theme.color.textSecondary.copy(alpha = 0.5f),
+                    modifier = Modifier.size(Theme.spacing.space20)
+                )
+            },
+            modifier = Modifier.weight(1f),
+            backgroundColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f),
+            cornerRadiusDp = Theme.radius.radius16,
+            contentPaddingDp = Theme.spacing.space12,
+        )
     }
 }
 
@@ -38,6 +52,9 @@ fun RecipeSearchHeader(
 @Composable
 private fun RecipeSearchHeaderPreview() {
     Theme {
-        RecipeSearchHeader(onFiltersClick = {})
+        RecipeSearchHeader(
+            query = "",
+            onQueryChange = {}
+        )
     }
 }

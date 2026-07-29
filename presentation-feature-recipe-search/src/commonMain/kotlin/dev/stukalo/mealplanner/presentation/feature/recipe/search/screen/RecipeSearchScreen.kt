@@ -44,6 +44,9 @@ fun RecipeSearchScreen(
                 is ViewEvent.NavigateToRecipeDetails -> {
                     navController.navigate(NavigationDirection.RecipeDetails(event.recipeId))
                 }
+                is ViewEvent.NavigateBack -> {
+                    navController.popBackStack()
+                }
             }
         }
     ) { state ->

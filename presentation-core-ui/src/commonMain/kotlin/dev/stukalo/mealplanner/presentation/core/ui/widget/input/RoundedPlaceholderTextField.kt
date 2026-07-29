@@ -7,13 +7,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
@@ -36,6 +42,8 @@ fun RoundedPlaceholderTextField(
     onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     textStyle: TextStyle = Theme.typography.regular14,
     activeColor: Color = Theme.color.textPrimary,
     inactiveColor: Color = Theme.color.textSecondary,
@@ -44,6 +52,7 @@ fun RoundedPlaceholderTextField(
     contentPaddingDp: Dp = 20.dp,
     singleLine: Boolean = true,
     imeAction: ImeAction = ImeAction.Done,
+    cursorColor: Color = Theme.color.textPrimary,
     readOnly: Boolean = false,
     enabled: Boolean = true,
     error: String? = null,
@@ -74,38 +83,54 @@ fun RoundedPlaceholderTextField(
                 )
                 .padding(contentPaddingDp)
         ) {
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChange,
-                singleLine = singleLine,
-                textStyle = textStyle.copy(color = textColor),
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
-                readOnly = readOnly,
-                enabled = enabled,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null
-                    ) {
-                        onClick()
-                    }
-                    .onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                    }
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                if (leadingIcon != null) {
+                    leadingIcon()
+                    Spacer(modifier = Modifier.width(Theme.spacing.space8))
+                }
 
-            // Placeholder: shown only when text is empty
-            if (value.text.isEmpty()) {
-                // show placeholder; color depends on active/inactive too (here we use a lighter gray)
-                val placeholderColor =
-                    if (isFocused) inactiveColor.copy(alpha = 0.6f)
-                    else inactiveColor.copy(alpha = 0.8f)
-                Text(
-                    text = placeholder,
-                    style = textStyle.copy(color = placeholderColor),
-                    modifier = Modifier.align(Alignment.CenterStart)
-                )
+                Box(modifier = Modifier.weight(1f)) {
+                    BasicTextField(
+                        value = value,
+                        onValueChange = onValueChange,
+                        singleLine = singleLine,
+                        textStyle = textStyle.copy(color = textColor),
+                        cursorBrush = SolidColor(cursorColor),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
+                        readOnly = readOnly,
+                        enabled = enabled,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(
+                                interactionSource = interactionSource,
+                                indication = null
+                            ) {
+                                onClick()
+                            }
+                            .onFocusChanged { focusState ->
+                                isFocused = focusState.isFocused
+                            }
+                    )
+
+                    if (value.text.isEmpty()) {
+                        val placeholderColor =
+                            if (isFocused) inactiveColor.copy(alpha = 0.6f)
+                            else inactiveColor.copy(alpha = 0.8f)
+                        Text(
+                            text = placeholder,
+                            style = textStyle.copy(color = placeholderColor),
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        )
+                    }
+                }
+
+                if (trailingIcon != null) {
+                    Spacer(modifier = Modifier.width(Theme.spacing.space8))
+                    trailingIcon()
+                }
             }
         }
 
@@ -126,84 +151,57 @@ fun RoundedPlaceholderTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     textStyle: TextStyle = Theme.typography.regular14,
-    activeColor: Color = Color.Black,
-    inactiveColor: Color = Color.Gray,
+    activeColor: Color = Theme.color.textPrimary,
+    inactiveColor: Color = Theme.color.textSecondary,
     backgroundColor: Color = Color.Transparent,
     cornerRadiusDp: Dp = 16.dp,
     contentPaddingDp: Dp = 20.dp,
     singleLine: Boolean = true,
     imeAction: ImeAction = ImeAction.Done,
+    cursorColor: Color = Theme.color.textPrimary,
     readOnly: Boolean = false,
     enabled: Boolean = true,
     error: String? = null,
     onClick: () -> Unit = { },
 ) {
-    var isFocused by remember { mutableStateOf(false) }
-    val borderColor by animateColorAsState(
-        targetValue = when {
-            error != null -> Theme.color.error
-            isFocused -> activeColor
-            else -> inactiveColor
-        }
-    )
-    val textColor by animateColorAsState(targetValue = if (isFocused) activeColor else inactiveColor)
+    var textFieldValueState by remember {
+        mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length)))
+    }
 
-    val interactionSource = remember { MutableInteractionSource() }
-
-    Column(modifier = modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(cornerRadiusDp))
-                .background(backgroundColor)
-                .border(
-                    width = Theme.thickness.thickness1,
-                    color = borderColor,
-                    shape = RoundedCornerShape(cornerRadiusDp)
-                )
-                .padding(contentPaddingDp)
-        ) {
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChange,
-                singleLine = singleLine,
-                textStyle = textStyle.copy(color = textColor),
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
-                readOnly = readOnly,
-                enabled = enabled,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null
-                    ) {
-                        onClick()
-                    }
-                    .onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                    }
-            )
-
-            if (value.isEmpty()) {
-                val placeholderColor =
-                    if (isFocused) inactiveColor.copy(alpha = 0.6f)
-                    else inactiveColor.copy(alpha = 0.8f)
-                Text(
-                    text = placeholder,
-                    style = textStyle.copy(color = placeholderColor),
-                    modifier = Modifier.align(Alignment.CenterStart)
-                )
-            }
-        }
-
-        if (error != null) {
-            Text(
-                text = error,
-                color = Theme.color.error,
-                style = Theme.typography.regular12,
-                modifier = Modifier.padding(top = 4.dp, start = 16.dp)
+    LaunchedEffect(value) {
+        if (value != textFieldValueState.text) {
+            textFieldValueState = textFieldValueState.copy(
+                text = value,
+                selection = TextRange(value.length)
             )
         }
     }
+
+    RoundedPlaceholderTextField(
+        value = textFieldValueState,
+        onValueChange = { newValue ->
+            textFieldValueState = newValue
+            onValueChange(newValue.text)
+        },
+        modifier = modifier,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        textStyle = textStyle,
+        activeColor = activeColor,
+        inactiveColor = inactiveColor,
+        backgroundColor = backgroundColor,
+        cornerRadiusDp = cornerRadiusDp,
+        contentPaddingDp = contentPaddingDp,
+        singleLine = singleLine,
+        imeAction = imeAction,
+        cursorColor = cursorColor,
+        readOnly = readOnly,
+        enabled = enabled,
+        error = error,
+        onClick = onClick
+    )
 }

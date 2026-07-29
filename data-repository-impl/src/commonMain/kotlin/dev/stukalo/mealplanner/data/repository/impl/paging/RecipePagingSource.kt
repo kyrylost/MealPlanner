@@ -15,6 +15,7 @@ internal class RecipePagingSource(
     private val fats: String,
     private val proteins: String,
     private val mealTypes: List<String>,
+    private val query: String?,
 ) : PagingSource<String, RecipeDomainModel>() {
 
     override fun getRefreshKey(state: PagingState<String, RecipeDomainModel>): String? = null
@@ -29,6 +30,7 @@ internal class RecipePagingSource(
                     fats = fats,
                     proteins = proteins,
                     mealTypes = mealTypes,
+                    query = query,
                 )
             } else {
                 edamamRecipeNetSource.getRecipesByUrl(params.key!!)

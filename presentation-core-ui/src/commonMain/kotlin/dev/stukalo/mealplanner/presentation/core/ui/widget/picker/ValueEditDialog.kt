@@ -51,9 +51,7 @@ fun ValueEditDialog(
                 value = textValue,
                 onValueChange = { textValue = it },
                 placeholder = placeholder,
-                textStyle = Theme.typography.regular12.copy(color = Theme.color.textPrimary),
-                activeColor = Theme.color.primary,
-                inactiveColor = Theme.color.surfaceVariant,
+                textStyle = Theme.typography.regular12,
                 modifier = Modifier
                     .fillMaxWidth()
             )

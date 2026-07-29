@@ -23,16 +23,19 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.animateColors
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.Elevation
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalElevation
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalRadius
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalSize
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalSpacing
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalThickness
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.Radius
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.Size
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.Spacing
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.Thickness
 import dev.stukalo.mealplanner.presentation.core.styling.shape.LocalShape
 import dev.stukalo.mealplanner.presentation.core.styling.shape.Shape
 import dev.stukalo.mealplanner.presentation.core.styling.typography.LocalTypography
 import dev.stukalo.mealplanner.presentation.core.styling.typography.Typography
-import dev.stukalo.mealplanner.presentation.core.styling.typography.fredokaFont
+import dev.stukalo.mealplanner.presentation.core.styling.typography.caveatFont
+import dev.stukalo.mealplanner.presentation.core.styling.typography.nunitoFont
 
 @Composable
 fun Theme(
@@ -50,7 +53,7 @@ fun Theme(
 
     val typography = Typography(
         bold48 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 48.sp,
             lineHeight = 56.sp,
@@ -58,7 +61,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold36 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 36.sp,
             lineHeight = 42.sp,
@@ -66,7 +69,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold16 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             lineHeight = 24.sp,
@@ -74,7 +77,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold14 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             lineHeight = 21.sp,
@@ -82,7 +85,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         bold12 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
             lineHeight = 18.sp,
@@ -90,7 +93,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         semibold48 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.SemiBold,
             fontSize = 48.sp,
             lineHeight = 56.sp,
@@ -98,7 +101,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         semibold36 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.SemiBold,
             fontSize = 36.sp,
             lineHeight = 42.sp,
@@ -106,7 +109,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         semibold16 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp,
             lineHeight = 24.sp,
@@ -114,7 +117,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         regular48 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 48.sp,
             lineHeight = 56.sp,
@@ -122,7 +125,7 @@ fun Theme(
             color = color.textPrimary,
         ),
         regular14 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             lineHeight = 21.sp,
@@ -130,11 +133,27 @@ fun Theme(
             color = color.textPrimary,
         ),
         regular12 = TextStyle(
-            fontFamily = fredokaFont(),
+            fontFamily = nunitoFont(),
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             letterSpacing = 0.5.sp,
+            color = color.textPrimary,
+        ),
+        handwrittenRegular64 = TextStyle(
+            fontFamily = caveatFont(),
+            fontWeight = FontWeight.Normal,
+            fontSize = 64.sp,
+            lineHeight = 64.sp,
+            letterSpacing = 1.sp,
+            color = color.textPrimary,
+        ),
+        handwrittenSemibold64 = TextStyle(
+            fontFamily = caveatFont(),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 64.sp,
+            lineHeight = 64.sp,
+            letterSpacing = 1.sp,
             color = color.textPrimary,
         ),
     )
@@ -175,6 +194,10 @@ fun Theme(
         space128 = 128.dp,
     )
 
+    val size = Size(
+        compactScreenWidth = 328.dp,
+    )
+
     val thickness = Thickness(
         thickness1 = 1.dp,
         thickness2 = 2.dp,
@@ -192,6 +215,7 @@ fun Theme(
         LocalElevation provides elevation,
         LocalShape provides shape,
         LocalSpacing provides spacing,
+        LocalSize provides size,
         LocalRadius provides radius,
         LocalThickness provides thickness,
         content = content
@@ -214,6 +238,9 @@ object Theme {
     val spacing: Spacing
         @Composable
         get() = LocalSpacing.current
+    val size: Size
+        @Composable
+        get() = LocalSize.current
     val radius: Radius
         @Composable
         get() = LocalRadius.current

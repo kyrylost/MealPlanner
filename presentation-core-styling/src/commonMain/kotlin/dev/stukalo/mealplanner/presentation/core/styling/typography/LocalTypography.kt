@@ -16,5 +16,7 @@ val LocalTypography = staticCompositionLocalOf {
         regular48 = TextStyle.Default,
         regular14 = TextStyle.Default,
         regular12 = TextStyle.Default,
+        handwrittenRegular64 = TextStyle.Default,
+        handwrittenSemibold64 = TextStyle.Default,
     )
 }

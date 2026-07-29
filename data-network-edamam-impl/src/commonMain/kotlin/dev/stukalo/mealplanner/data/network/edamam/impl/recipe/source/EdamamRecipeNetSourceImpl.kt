@@ -19,11 +19,13 @@ internal class EdamamRecipeNetSourceImpl(
         carbohydrates: String,
         fats: String,
         proteins: String,
-        mealTypes: List<String>
+        mealTypes: List<String>,
+        query: String?
     ): EdamamRecipeResponseNetModel {
         return performRequest {
             get(EdamamRecipeRoutes.Recipes.route) {
                 parameter("type", type)
+                parameter("q", query)
                 parameter("nutrients[ENERC_KCAL]", calories)
                 parameter("nutrients[CHOCDF]", carbohydrates)
                 parameter("nutrients[FAT]", fats)

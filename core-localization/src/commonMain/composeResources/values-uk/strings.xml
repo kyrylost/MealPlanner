@@ -6,9 +6,9 @@
     <string name="welcome_gender_label">Стать</string>
     <string name="welcome_gender_placeholder">Стать</string>
     <string name="welcome_height_label">Зріст</string>
-    <string name="welcome_height_placeholder">0 см</string>
+    <string name="welcome_height_unit_cm">см</string>
     <string name="welcome_weight_label">Вага</string>
-    <string name="welcome_weight_placeholder">0 кг</string>
+    <string name="welcome_weight_unit_kg">кг</string>
     <string name="welcome_continue_button">Продовжити</string>
     <string name="welcome_gender_male">Чоловік</string>
     <string name="welcome_gender_female">Жінка</string>
@@ -28,7 +28,7 @@
     <string name="common_apply">Застосувати</string>
     <string name="common_min">Мін</string>
     <string name="common_max">Макс</string>
-    <string name="common_show_all">Показати все</string>
+    <string name="common_show_all">Всі</string>
     <string name="common_grams">г</string>
     <string name="common_minutes_short">%1$d хв</string>
     <string name="common_servings">%1$d порцій</string>
@@ -36,6 +36,10 @@
     <string name="common_settings">Налаштування</string>
     <string name="common_meal_types">Типи страв</string>
     <string name="common_product_search">Пошук продуктів</string>
+    <string name="common_recipe_search">Пошук рецептів</string>
+    <string name="common_search">Пошук</string>
+    <string name="common_no_results">Нічого не знайдено</string>
+    <string name="common_clear_filters">Скинути фільтри</string>
     <string name="common_calories">Калорії</string>
     <string name="common_proteins">Білки</string>
     <string name="common_fats">Жири</string>

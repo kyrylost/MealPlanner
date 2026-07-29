@@ -23,6 +23,7 @@ internal class RecipeRepositoryImpl(
         fats: IntRange,
         proteins: IntRange,
         mealTypes: List<MealTypeDomainModel>,
+        query: String?,
     ): Flow<PagingData<RecipeDomainModel>> {
         return Pager(
             config = PagingConfig(
@@ -39,6 +40,7 @@ internal class RecipeRepositoryImpl(
                     fats = "${fats.first}-${fats.last}",
                     proteins = "${proteins.first}-${proteins.last}",
                     mealTypes = mealTypes.map { it.name.lowercase().replace("_", "") },
+                    query = query,
                 )
             }
         ).flow
