@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.product.search.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,9 +75,7 @@ internal fun ProductSearchContent(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Theme.color.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier
@@ -135,10 +133,12 @@ internal fun ProductSearchContent(
 @Composable
 private fun ProductSearchContentPreview() {
     Theme {
-        ProductSearchContent(
-            state = ViewState(query = "Apple"),
-            products = null,
-            onIntent = {}
-        )
+        Surface(color = Theme.color.background) {
+            ProductSearchContent(
+                state = ViewState(query = "Apple"),
+                products = null,
+                onIntent = {}
+            )
+        }
     }
 }

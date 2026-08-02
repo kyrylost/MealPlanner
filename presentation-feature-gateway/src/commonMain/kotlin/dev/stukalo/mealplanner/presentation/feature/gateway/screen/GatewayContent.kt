@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.presentation.feature.gateway.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,8 +29,10 @@ internal fun GatewayContent(
 @Composable
 private fun GatewayContentPreview() {
     Theme {
-        GatewayContent(
-            state = ViewState(isLoading = true)
-        )
+        Surface(color = Theme.color.background) {
+            GatewayContent(
+                state = ViewState(isLoading = true)
+            )
+        }
     }
 }

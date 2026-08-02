@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +17,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -104,9 +104,7 @@ internal fun RecipeDetailsContent(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Theme.color.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         if (state.isLoading) {
             CircularProgressIndicator(
@@ -263,39 +261,41 @@ internal fun RecipeDetailsContent(
 @Composable
 private fun RecipeDetailsContentPreview() {
     Theme {
-        RecipeDetailsContent(
-            state = ViewState(
-                recipe = RecipeDomainModel(
-                    id = "1",
-                    product = ProductDomainModel(
-                        productName = "Healthy Salmon Salad",
-                        imageUrl = "https://www.edamam.com/web-img/70a/70af3664d422998a449174092b37803f.jpg",
-                        caloriesTotal = 450f,
-                        nutrientsTotal = listOf(
-                            NutrientDomainModel(NutrientTypeDomainModel.PROTEIN, 35f),
-                            NutrientDomainModel(NutrientTypeDomainModel.FATS, 20f),
-                            NutrientDomainModel(NutrientTypeDomainModel.CARBOHYDRATES, 15f)
-                        )
-                    ),
-                    servings = 2,
-                    totalTime = 25,
-                    ingredientLines = listOf(
-                        "200g Fresh Salmon",
-                        "100g Mixed Greens",
-                        "1 Avocado",
-                        "Olive Oil"
-                    ),
-                    instructionLines = listOf(
-                        "Season the salmon with salt and pepper.",
-                        "Pan-sear the salmon for 4 minutes on each side.",
-                        "Toss the greens with avocado and olive oil.",
-                        "Top with the salmon and serve."
-                    ),
-                    healthLabels = listOf("Gluten-Free", "Keto-Friendly", "Low-Sugar"),
-                    url = "https://example.com/recipe"
-                )
-            ),
-            onIntent = {}
-        )
+        Surface(color = Theme.color.background) {
+            RecipeDetailsContent(
+                state = ViewState(
+                    recipe = RecipeDomainModel(
+                        id = "1",
+                        product = ProductDomainModel(
+                            productName = "Healthy Salmon Salad",
+                            imageUrl = "https://www.edamam.com/web-img/70a/70af3664d422998a449174092b37803f.jpg",
+                            caloriesTotal = 450f,
+                            nutrientsTotal = listOf(
+                                NutrientDomainModel(NutrientTypeDomainModel.PROTEIN, 35f),
+                                NutrientDomainModel(NutrientTypeDomainModel.FATS, 20f),
+                                NutrientDomainModel(NutrientTypeDomainModel.CARBOHYDRATES, 15f)
+                            )
+                        ),
+                        servings = 2,
+                        totalTime = 25,
+                        ingredientLines = listOf(
+                            "200g Fresh Salmon",
+                            "100g Mixed Greens",
+                            "1 Avocado",
+                            "Olive Oil"
+                        ),
+                        instructionLines = listOf(
+                            "Season the salmon with salt and pepper.",
+                            "Pan-sear the salmon for 4 minutes on each side.",
+                            "Toss the greens with avocado and olive oil.",
+                            "Top with the salmon and serve."
+                        ),
+                        healthLabels = listOf("Gluten-Free", "Keto-Friendly", "Low-Sugar"),
+                        url = "https://example.com/recipe"
+                    )
+                ),
+                onIntent = {}
+            )
+        }
     }
 }

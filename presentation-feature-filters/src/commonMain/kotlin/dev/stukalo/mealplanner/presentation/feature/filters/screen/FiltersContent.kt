@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,9 +46,7 @@ internal fun FiltersContent(
     val filters = state.filters
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Theme.color.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             CommonHeader(
@@ -172,9 +171,11 @@ private fun FilterSection(
 @Composable
 private fun FiltersContentPreview() {
     Theme {
-        FiltersContent(
-            state = ViewState(),
-            onIntent = {}
-        )
+        Surface(color = Theme.color.background) {
+            FiltersContent(
+                state = ViewState(),
+                onIntent = {}
+            )
+        }
     }
 }

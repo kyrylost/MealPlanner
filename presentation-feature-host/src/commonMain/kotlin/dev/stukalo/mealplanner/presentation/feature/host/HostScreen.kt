@@ -1,7 +1,10 @@
 package dev.stukalo.mealplanner.presentation.feature.host
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,6 +34,11 @@ fun HostScreen() {
         palette = themeColorPalette,
         animatePaletteChange = !isGateway
     ) {
-        AppNavHost(navController = navController)
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Theme.color.background
+        ) {
+            AppNavHost(navController = navController)
+        }
     }
 }

@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.statistics.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,7 +33,6 @@ internal fun StatisticsContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Theme.color.background)
             .statusBarsPadding()
     ) {
         LazyColumn(
@@ -79,15 +78,17 @@ internal fun StatisticsContent(
 @Composable
 private fun StatisticsContentPreview() {
     Theme {
-        StatisticsContent(
-            state = ViewState(
-                meals = listOf(
-                    MealSlotProgress(1, "Breakfast", 500.0, 30.0, 15.0, 60.0, true),
-                    MealSlotProgress(2, "Lunch", 800.0, 40.0, 25.0, 100.0, false),
-                    MealSlotProgress(3, "Dinner", 700.0, 35.0, 20.0, 80.0, false),
-                )
-            ),
-            onIntent = {},
-        )
+        Surface(color = Theme.color.background) {
+            StatisticsContent(
+                state = ViewState(
+                    meals = listOf(
+                        MealSlotProgress(1, "Breakfast", 500.0, 30.0, 15.0, 60.0, true),
+                        MealSlotProgress(2, "Lunch", 800.0, 40.0, 25.0, 100.0, false),
+                        MealSlotProgress(3, "Dinner", 700.0, 35.0, 20.0, 80.0, false),
+                    )
+                ),
+                onIntent = {},
+            )
+        }
     }
 }

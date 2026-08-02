@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.settings.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,7 +31,6 @@ internal fun SettingsContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Theme.color.background)
             .statusBarsPadding()
     ) {
         LazyColumn(
@@ -76,9 +75,11 @@ internal fun SettingsContent(
 @Composable
 private fun SettingsContentPreview() {
     Theme {
-        SettingsContent(
-            state = ViewState(),
-            onIntent = {}
-        )
+        Surface(color = Theme.color.background) {
+            SettingsContent(
+                state = ViewState(),
+                onIntent = {}
+            )
+        }
     }
 }

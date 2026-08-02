@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,9 +50,7 @@ internal fun RecipeSearchContent(
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = Theme.size.compactScreenWidth),
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Theme.color.background),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
             bottom = Theme.spacing.space16 + (BottomBarHeight.current)
         ),
@@ -154,10 +152,12 @@ internal fun RecipeSearchContent(
 @Composable
 private fun RecipeSearchContentPreview() {
     Theme {
-        RecipeSearchContent(
-            state = ViewState(),
-            recipes = flowOf(PagingData.from(emptyList<RecipeDomainModel>())).collectAsLazyPagingItems(),
-            onIntent = {}
-        )
+        Surface(color = Theme.color.background) {
+            RecipeSearchContent(
+                state = ViewState(),
+                recipes = flowOf(PagingData.from(emptyList<RecipeDomainModel>())).collectAsLazyPagingItems(),
+                onIntent = {}
+            )
+        }
     }
 }
