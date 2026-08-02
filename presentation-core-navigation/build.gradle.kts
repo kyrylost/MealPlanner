@@ -13,10 +13,16 @@ plugins {
 
 configure<LibraryExtension> {
     namespace = "dev.stukalo.mealplanner.presentation.core.navigation"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
     }
 
     buildTypes {
@@ -62,7 +68,6 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.adaptive)
             implementation(libs.navigation.compose)
-
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

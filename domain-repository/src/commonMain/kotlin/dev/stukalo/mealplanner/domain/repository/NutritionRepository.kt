@@ -7,8 +7,12 @@ import kotlinx.datetime.LocalDate
 
 interface NutritionRepository {
     suspend fun saveDailyNorm(dailyNorm: DailyNormDomainModel): Result<Unit>
+
     suspend fun saveDailyProgress(progress: DailyProgressDomainModel): Result<Unit>
+
     fun getDailyNormAsFlow(): Flow<DailyNormDomainModel?>
+
     fun getDailyProgressAsFlow(date: LocalDate): Flow<DailyProgressDomainModel?>
+
     fun getProgressByPeriodAsFlow(startDate: LocalDate, endDate: LocalDate): Flow<List<DailyProgressDomainModel>>
 }

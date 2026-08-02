@@ -14,11 +14,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
 
 @Composable
-fun InfoChip(
-    text: String,
-    icon: ImageVector? = null,
-    modifier: Modifier = Modifier
-) {
+fun InfoChip(text: String, icon: ImageVector? = null, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,

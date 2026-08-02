@@ -13,10 +13,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.AppSna
 import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarModel
 
 @Composable
-fun AppSnackbarHost(
-    hostState: SnackbarHostState,
-    modifier: Modifier = Modifier
-) {
+fun AppSnackbarHost(hostState: SnackbarHostState, modifier: Modifier = Modifier) {
     AnimatedVisibility(
         visible = hostState.currentSnackbarData != null,
         enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
@@ -24,8 +21,9 @@ fun AppSnackbarHost(
         modifier = modifier
     ) {
         SnackbarHost(hostState = hostState) { data ->
-            val model = (data.visuals as? AppSnackbarVisuals)?.model
-                ?: SnackbarModel(message = data.visuals.message)
+            val model =
+                (data.visuals as? AppSnackbarVisuals)?.model
+                    ?: SnackbarModel(message = data.visuals.message)
 
             AppSnackbar(model = model)
         }

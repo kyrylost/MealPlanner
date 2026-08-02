@@ -4,9 +4,7 @@ import dev.stukalo.mealplanner.data.database.dao.slot.MealSlotDao
 import dev.stukalo.mealplanner.data.database.model.slot.MealSlotDatabaseModel
 import kotlinx.coroutines.flow.Flow
 
-class MealSlotDatabaseSource(
-    private val dao: MealSlotDao
-) {
+class MealSlotDatabaseSource(private val dao: MealSlotDao) {
     suspend fun insert(slot: MealSlotDatabaseModel): Result<Unit> = runCatching {
         dao.insert(slot)
     }
@@ -15,11 +13,9 @@ class MealSlotDatabaseSource(
         dao.insertAll(slots)
     }
 
-    fun getAllSlotsAsFlow(): Flow<List<MealSlotDatabaseModel>> =
-        dao.getAllSlotsAsFlow()
+    fun getAllSlotsAsFlow(): Flow<List<MealSlotDatabaseModel>> = dao.getAllSlotsAsFlow()
 
-    suspend fun getSlotById(id: Int): MealSlotDatabaseModel? =
-        dao.getSlotById(id)
+    suspend fun getSlotById(id: Int): MealSlotDatabaseModel? = dao.getSlotById(id)
 
     suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit> = runCatching {
         dao.updateConsumedStatus(id, isConsumed)

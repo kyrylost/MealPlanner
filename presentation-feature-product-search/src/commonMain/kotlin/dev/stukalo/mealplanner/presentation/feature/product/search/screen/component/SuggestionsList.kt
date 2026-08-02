@@ -15,12 +15,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 @Composable
-fun SuggestionsList(
-    suggestions: List<String>,
-    onSuggestionClick: (String) -> Unit
-) {
+fun SuggestionsList(suggestions: List<String>, onSuggestionClick: (String) -> Unit) {
     LazyColumn(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .background(Theme.color.background),
         contentPadding = PaddingValues(Theme.spacing.space16)
@@ -31,7 +29,8 @@ fun SuggestionsList(
                 text = suggestion,
                 style = Theme.typography.regular14,
                 color = Theme.color.textPrimary,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .clickable { onSuggestionClick(suggestion) }
                     .padding(vertical = Theme.spacing.space12)

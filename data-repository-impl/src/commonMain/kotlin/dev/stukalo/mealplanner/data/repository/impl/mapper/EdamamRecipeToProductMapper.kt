@@ -9,19 +9,19 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 
 internal class EdamamRecipeToProductMapper : BaseMapper<EdamamRecipeNetModel, ProductDomainModel> {
-
     override fun mapTo(model: EdamamRecipeNetModel): ProductDomainModel {
         val totalNutrients = mapNutrients(model.totalNutrients)
         val totalWeight = model.totalWeight?.toFloat() ?: 0f
         val caloriesTotal = model.calories?.toFloat()
 
-        val (nutrientsPer100g, caloriesPer100g) = if (totalWeight > 0) {
-            totalNutrients.map {
-                it.copy(amount = (it.amount ?: 0f) / totalWeight * 100f)
-            } to (caloriesTotal?.div(totalWeight)?.times(100f))
-        } else {
-            null to null
-        }
+        val (nutrientsPer100g, caloriesPer100g) =
+            if (totalWeight > 0) {
+                totalNutrients.map {
+                    it.copy(amount = (it.amount ?: 0f) / totalWeight * 100f)
+                } to (caloriesTotal?.div(totalWeight)?.times(100f))
+            } else {
+                null to null
+            }
 
         return ProductDomainModel(
             id = model.uri?.substringAfterLast("_"),
@@ -35,18 +35,15 @@ internal class EdamamRecipeToProductMapper : BaseMapper<EdamamRecipeNetModel, Pr
         )
     }
 
-    private fun mapNutrients(nutrients: EdamamNutrientsNetModel?): List<NutrientDomainModel> {
-        return buildList {
-            nutrients?.protein?.let { add(it.toDomain(NutrientTypeDomainModel.PROTEIN)) }
-            nutrients?.carbs?.let { add(it.toDomain(NutrientTypeDomainModel.CARBOHYDRATES)) }
-            nutrients?.fat?.let { add(it.toDomain(NutrientTypeDomainModel.FATS)) }
-        }
+    private fun mapNutrients(nutrients: EdamamNutrientsNetModel?): List<NutrientDomainModel> = buildList {
+        nutrients?.protein?.let { add(it.toDomain(NutrientTypeDomainModel.PROTEIN)) }
+        nutrients?.carbs?.let { add(it.toDomain(NutrientTypeDomainModel.CARBOHYDRATES)) }
+        nutrients?.fat?.let { add(it.toDomain(NutrientTypeDomainModel.FATS)) }
     }
 
-    private fun EdamamNutrientNetModel.toDomain(type: NutrientTypeDomainModel): NutrientDomainModel {
-        return NutrientDomainModel(
+    private fun EdamamNutrientNetModel.toDomain(type: NutrientTypeDomainModel): NutrientDomainModel =
+        NutrientDomainModel(
             nutrientType = type,
             amount = quantity?.toFloat()
         )
-    }
 }

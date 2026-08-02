@@ -7,10 +7,11 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-actual val platformDataPreferencesModule: Module = module {
-    single<DataStore<Preferences>> {
-        createDataStore(
-            context = androidContext(),
-        )
+actual val platformDataPreferencesModule: Module =
+    module {
+        single<DataStore<Preferences>> {
+            createDataStore(
+                context = androidContext()
+            )
+        }
     }
-}

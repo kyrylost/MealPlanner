@@ -11,9 +11,8 @@ import kotlinx.coroutines.launch
 
 class RecipeDetailsViewModel(
     private val getRecipeByIdUseCase: GetRecipeByIdUseCase,
-    private val logRecipeConsumedUseCase: LogRecipeConsumedUseCase,
+    private val logRecipeConsumedUseCase: LogRecipeConsumedUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     override val initialState = ViewState()
 
     override suspend fun processIntent(intent: ViewIntent) {
@@ -33,11 +32,12 @@ class RecipeDetailsViewModel(
     private fun loadRecipe(id: String) {
         viewModelScope.launch {
             updateState { it.copy(isLoading = true) }
-            getRecipeByIdUseCase(id).onSuccess { recipe ->
-                updateState { it.copy(recipe = recipe, isLoading = false) }
-            }.onFailure {
-                updateState { it.copy(isLoading = false) }
-            }
+            getRecipeByIdUseCase(id)
+                .onSuccess { recipe ->
+                    updateState { it.copy(recipe = recipe, isLoading = false) }
+                }.onFailure {
+                    updateState { it.copy(isLoading = false) }
+                }
         }
     }
 

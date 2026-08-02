@@ -8,10 +8,7 @@ import dev.stukalo.mealplanner.presentation.feature.main.icons.NavigationBarIcon
 import dev.stukalo.mealplanner.presentation.feature.main.icons.Search
 import dev.stukalo.mealplanner.presentation.feature.main.icons.Statistics
 
-enum class MainTab(
-    val icon: ImageVector,
-    val route: NavigationDirection,
-) {
+enum class MainTab(val icon: ImageVector, val route: NavigationDirection) {
     Home(
         icon = NavigationBarIcons.Home,
         route = NavigationDirection.Home
@@ -27,5 +24,5 @@ enum class MainTab(
     Settings(
         icon = NavigationBarIcons.IconSettings,
         route = NavigationDirection.Settings
-    ),
+    )
 }

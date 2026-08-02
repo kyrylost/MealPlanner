@@ -5,12 +5,8 @@ import kotlinx.datetime.LocalTime
 
 class TimeConverter {
     @TypeConverter
-    fun fromString(value: String?): LocalTime? {
-        return value?.let { LocalTime.parse(it) }
-    }
+    fun fromString(value: String?): LocalTime? = value?.let { LocalTime.parse(it) }
 
     @TypeConverter
-    fun timeToString(time: LocalTime?): String? {
-        return time?.toString()
-    }
+    fun timeToString(time: LocalTime?): String? = time?.toString()
 }

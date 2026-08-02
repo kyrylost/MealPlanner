@@ -15,14 +15,15 @@ import org.koin.dsl.module
 
 expect val databaseBuilderModule: Module
 
-val databaseModule = module {
-    singleOf(::getRoomDatabase)
-    singleOf(::getUserDao)
-    singleOf(::getDailyNormDao)
-    singleOf(::getDailyProgressDao)
-    singleOf(::getMealSlotDao)
-    singleOf(::UserDatabaseSource)
-    singleOf(::DailyNormDatabaseSource)
-    singleOf(::DailyProgressDatabaseSource)
-    singleOf(::MealSlotDatabaseSource)
-}
+val databaseModule =
+    module {
+        singleOf(::getRoomDatabase)
+        singleOf(::getUserDao)
+        singleOf(::getDailyNormDao)
+        singleOf(::getDailyProgressDao)
+        singleOf(::getMealSlotDao)
+        singleOf(::UserDatabaseSource)
+        singleOf(::DailyNormDatabaseSource)
+        singleOf(::DailyProgressDatabaseSource)
+        singleOf(::MealSlotDatabaseSource)
+    }

@@ -27,10 +27,7 @@ import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.InnerM
 import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.MainTab
 
 @Composable
-fun MainFlowScreen(
-    appNavController: NavHostController,
-    initialTab: NavigationDirection,
-) {
+fun MainFlowScreen(appNavController: NavHostController, initialTab: NavigationDirection) {
     val mainNavController = rememberNavController()
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
@@ -39,9 +36,10 @@ fun MainFlowScreen(
     val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val selectedTab = MainTab.entries.find { tab ->
-        currentDestination?.hasRoute(tab.route::class) == true
-    } ?: MainTab.Home
+    val selectedTab =
+        MainTab.entries.find { tab ->
+            currentDestination?.hasRoute(tab.route::class) == true
+        } ?: MainTab.Home
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -51,7 +49,8 @@ fun MainFlowScreen(
                 mainNavController = mainNavController,
                 appNavController = appNavController,
                 startDestination = initialTab,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .hazeSource(hazeState)
             )
@@ -60,16 +59,18 @@ fun MainFlowScreen(
         MealPlannerBottomNavigationBar(
             selectedTab = selectedTab,
             onTabSelected = { tab ->
-                val isPopped = mainNavController.popBackStack(
-                    route = tab.route,
-                    inclusive = false
-                )
+                val isPopped =
+                    mainNavController.popBackStack(
+                        route = tab.route,
+                        inclusive = false
+                    )
                 if (!isPopped) {
                     mainNavController.navigateTab(tab.route)
                 }
             },
             hazeState = hazeState,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .align(Alignment.BottomCenter)
                 .onGloballyPositioned {
                     bottomBarHeight = with(density) { it.size.height.toDp() }

@@ -9,5 +9,5 @@ data class ViewState(
     val query: String = "",
     val isLoading: Boolean = false,
     val suggestions: List<String> = emptyList(),
-    val productsFlow: Flow<PagingData<ProductDomainModel>>? = null,
+    val productsFlow: Flow<PagingData<ProductDomainModel>>? = null
 ) : MviViewState

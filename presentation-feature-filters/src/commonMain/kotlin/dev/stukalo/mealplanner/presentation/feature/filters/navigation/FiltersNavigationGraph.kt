@@ -8,14 +8,12 @@ import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.FiltersScreen
 import kotlinx.serialization.json.Json
 
-fun NavGraphBuilder.filtersNavigationGraph(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.filtersNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.Filters> {
         // Retrieve initial filters from savedStateHandle if any
         val initialFiltersJson = navController.previousBackStackEntry?.savedStateHandle?.get<String>("filter_result")
         val initialFilters = initialFiltersJson?.let { Json.decodeFromString<FilterDomainModel>(it) }
-        
+
         FiltersScreen(
             initialFilters = initialFilters,
             onApplyFilters = { filters ->

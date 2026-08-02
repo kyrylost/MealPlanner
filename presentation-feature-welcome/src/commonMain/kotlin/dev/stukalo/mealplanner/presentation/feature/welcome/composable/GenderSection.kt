@@ -25,11 +25,7 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.View
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun GenderSection(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun GenderSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.welcome_gender_label),
@@ -38,20 +34,30 @@ internal fun GenderSection(
         )
 
         GenderDomainModel.entries.forEach { gender ->
-            val nameRes = when (gender) {
-                GenderDomainModel.MALE -> Res.string.welcome_gender_male
-                GenderDomainModel.FEMALE -> Res.string.welcome_gender_female
-            }
+            val nameRes =
+                when (gender) {
+                    GenderDomainModel.MALE -> Res.string.welcome_gender_male
+                    GenderDomainModel.FEMALE -> Res.string.welcome_gender_female
+                }
 
             val isSelected = state.gender == gender
             Card(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(vertical = Theme.spacing.space4)
                     .clip(RoundedCornerShape(Theme.spacing.space16))
                     .clickable { onIntent(ViewIntent.OnChangeGenderInputIntent(gender)) },
-                colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) Theme.color.primary else Theme.color.backgroundSecondary.copy(alpha = 0.1f)
+                colors =
+                CardDefaults.cardColors(
+                    containerColor =
+                    if (isSelected) {
+                        Theme.color.primary
+                    } else {
+                        Theme.color.backgroundSecondary.copy(
+                            alpha = 0.1f
+                        )
+                    }
                 )
             ) {
                 Box(modifier = Modifier.padding(Theme.spacing.space16), contentAlignment = Alignment.CenterStart) {

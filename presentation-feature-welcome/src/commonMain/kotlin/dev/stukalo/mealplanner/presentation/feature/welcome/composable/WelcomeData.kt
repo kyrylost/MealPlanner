@@ -42,32 +42,38 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun WelcomeData(
-    modifier: Modifier = Modifier,
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-) {
+internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onIntent: (ViewIntent) -> Unit) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .background(color = Theme.color.background)
     ) {
         AnimatedContent(
             targetState = state.currentStep,
             transitionSpec = {
                 if (targetState > initialState) {
-                    (slideInHorizontally(animationSpec = tween(300)) { it } + fadeIn(animationSpec = tween(300))) togetherWith
-                            (slideOutHorizontally(animationSpec = tween(300)) { -it } + fadeOut(animationSpec = tween(300)))
+                    (
+                        slideInHorizontally(
+                            animationSpec = tween(300)
+                        ) { it } + fadeIn(animationSpec = tween(300))
+                        ) togetherWith
+                        (slideOutHorizontally(animationSpec = tween(300)) { -it } + fadeOut(animationSpec = tween(300)))
                 } else {
-                    (slideInHorizontally(animationSpec = tween(300)) { -it } + fadeIn(animationSpec = tween(300))) togetherWith
-                            (slideOutHorizontally(animationSpec = tween(300)) { it } + fadeOut(animationSpec = tween(300)))
+                    (
+                        slideInHorizontally(
+                            animationSpec = tween(300)
+                        ) { -it } + fadeIn(animationSpec = tween(300))
+                        ) togetherWith
+                        (slideOutHorizontally(animationSpec = tween(300)) { it } + fadeOut(animationSpec = tween(300)))
                 }.using(SizeTransform(clip = true))
             },
             modifier = Modifier.weight(1f).fillMaxWidth()
         ) { step ->
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = Theme.spacing.space24)
@@ -89,7 +95,8 @@ internal fun WelcomeData(
         )
 
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
                 .padding(Theme.spacing.space24),
@@ -99,7 +106,8 @@ internal fun WelcomeData(
                 TextButton(
                     text = stringResource(Res.string.welcome_back_button),
                     onClick = { onIntent(ViewIntent.OnBackClickIntent) },
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .weight(backButtonWeight)
                         .alpha(backButtonWeight)
                 )

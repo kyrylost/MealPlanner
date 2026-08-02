@@ -8,10 +8,7 @@ import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contrac
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun RecipeDetailsScreen(
-    recipeId: String,
-    onBackClick: () -> Unit,
-) {
+fun RecipeDetailsScreen(recipeId: String, onBackClick: () -> Unit) {
     val viewModel: RecipeDetailsViewModel = koinViewModel()
 
     LaunchedEffect(recipeId) {

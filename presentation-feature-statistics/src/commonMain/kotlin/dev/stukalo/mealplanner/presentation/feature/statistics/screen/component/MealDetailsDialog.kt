@@ -25,15 +25,12 @@ import org.jetbrains.compose.resources.stringResource
 
 /**
  * A dialog displaying detailed information about a meal slot.
- * 
+ *
  * @param meal The meal slot progress to display.
  * @param onDismissRequest The callback for dismissing the dialog.
  */
 @Composable
-fun MealDetailsDialog(
-    meal: MealSlotProgress,
-    onDismissRequest: () -> Unit
-) {
+fun MealDetailsDialog(meal: MealSlotProgress, onDismissRequest: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
@@ -80,10 +77,7 @@ fun MealDetailsDialog(
 }
 
 @Composable
-private fun NutrientRow(
-    label: String,
-    value: String
-) {
+private fun NutrientRow(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -107,7 +101,8 @@ private fun NutrientRow(
 private fun MealDetailsDialogPreview() {
     Theme {
         MealDetailsDialog(
-            meal = MealSlotProgress(
+            meal =
+            MealSlotProgress(
                 id = 1,
                 name = "Lunch",
                 calories = 750.0,

@@ -16,5 +16,5 @@ data class Spacing(
     val space32: Dp,
     val space48: Dp,
     val space64: Dp,
-    val space128: Dp,
+    val space128: Dp
 )

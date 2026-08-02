@@ -22,6 +22,8 @@ interface DailyProgressDao {
     @Query("SELECT * FROM DailyProgressDatabaseModel ORDER BY date DESC")
     fun getAllProgressAsFlow(): Flow<List<DailyProgressDatabaseModel>>
 
-    @Query("SELECT * FROM DailyProgressDatabaseModel WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
+    @Query(
+        "SELECT * FROM DailyProgressDatabaseModel WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC"
+    )
     fun getProgressByPeriodAsFlow(startDate: LocalDate, endDate: LocalDate): Flow<List<DailyProgressDatabaseModel>>
 }

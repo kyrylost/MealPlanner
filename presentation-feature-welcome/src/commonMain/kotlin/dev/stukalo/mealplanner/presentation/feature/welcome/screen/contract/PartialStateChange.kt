@@ -14,70 +14,85 @@ internal sealed interface PartialStateChange {
 
     sealed interface NameInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is TextChange -> oldState.copy(
-                nameInput = value,
-                nameErrorMessage = null,
-            )
+            is TextChange ->
+                oldState.copy(
+                    nameInput = value,
+                    nameErrorMessage = null
+                )
 
-            is Error -> oldState.copy(
-                nameErrorMessage = errorMessage,
-            )
+            is Error ->
+                oldState.copy(
+                    nameErrorMessage = errorMessage
+                )
         }
 
         data class TextChange(val value: String) : NameInput
+
         data class Error(val errorMessage: StringResource?) : NameInput
     }
 
     sealed interface DateInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is DateChange -> oldState.copy(
-                dateInput = date?.let {
-                    Instant.fromEpochMilliseconds(it)
-                        .toLocalDateTime(TimeZone.currentSystemDefault())
-                        .date
-                        .formatDate()
-                }.orEmpty(),
-                dateErrorMessage = null,
-            )
+            is DateChange ->
+                oldState.copy(
+                    dateInput =
+                    date
+                        ?.let {
+                            Instant
+                                .fromEpochMilliseconds(it)
+                                .toLocalDateTime(TimeZone.currentSystemDefault())
+                                .date
+                                .formatDate()
+                        }.orEmpty(),
+                    dateErrorMessage = null
+                )
 
-            is Error -> oldState.copy(
-                dateErrorMessage = errorMessage,
-            )
+            is Error ->
+                oldState.copy(
+                    dateErrorMessage = errorMessage
+                )
         }
 
         data class DateChange(val date: Long?) : DateInput
+
         data class Error(val errorMessage: StringResource?) : DateInput
     }
 
     sealed interface HeightInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is ValueChange -> oldState.copy(
-                heightInput = value,
-                heightErrorMessage = null,
-            )
+            is ValueChange ->
+                oldState.copy(
+                    heightInput = value,
+                    heightErrorMessage = null
+                )
 
-            is Error -> oldState.copy(
-                heightErrorMessage = errorMessage,
-            )
+            is Error ->
+                oldState.copy(
+                    heightErrorMessage = errorMessage
+                )
         }
 
         data class ValueChange(val value: String) : HeightInput
+
         data class Error(val errorMessage: StringResource?) : HeightInput
     }
 
     sealed interface WeightInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
-            is ValueChange -> oldState.copy(
-                weightInput = value,
-                weightErrorMessage = null,
-            )
+            is ValueChange ->
+                oldState.copy(
+                    weightInput = value,
+                    weightErrorMessage = null
+                )
 
-            is Error -> oldState.copy(
-                weightErrorMessage = errorMessage,
-            )
+            is Error ->
+                oldState.copy(
+                    weightErrorMessage = errorMessage
+                )
         }
 
         data class ValueChange(val value: String) : WeightInput
+
         data class Error(val errorMessage: StringResource?) : WeightInput
     }
 
@@ -109,13 +124,13 @@ internal sealed interface PartialStateChange {
         val nameErrorMessage: StringResource? = null,
         val dateErrorMessage: StringResource? = null,
         val heightErrorMessage: StringResource? = null,
-        val weightErrorMessage: StringResource? = null,
+        val weightErrorMessage: StringResource? = null
     ) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             nameErrorMessage = nameErrorMessage,
             dateErrorMessage = dateErrorMessage,
             heightErrorMessage = heightErrorMessage,
-            weightErrorMessage = weightErrorMessage,
+            weightErrorMessage = weightErrorMessage
         )
     }
 }

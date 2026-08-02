@@ -6,9 +6,7 @@ import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.onboarding.screen.OnboardingScreen
 
-fun NavGraphBuilder.onboardingNavigationGraph(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.onboardingNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.Onboarding> {
         OnboardingScreen()
     }

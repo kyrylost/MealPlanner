@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class BaseViewModel : ViewModel() {
-
     /**
      * Launches a coroutine with optional loading, result, and error handling, and supports debouncing.
      *
@@ -59,19 +58,20 @@ abstract class BaseViewModel : ViewModel() {
         // TODO: maybe, change to UiError whatever
         onError: (suspend (Throwable) -> Unit)? = null,
         debounce: Long? = null,
-        request: suspend CoroutineScope.() -> T?,
+        request: suspend CoroutineScope.() -> T?
     ): Job {
-        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            coroutineScope.launch {
-                // TODO: maybe, change to UiError whatever
+        val exceptionHandler =
+            CoroutineExceptionHandler { _, throwable ->
+                coroutineScope.launch {
+                    // TODO: maybe, change to UiError whatever
 //                val uiError = handleException(throwable)
 //                uiError?.let { onError?.invoke(it) }
-                onError?.invoke(throwable)
-                onLoading?.invoke(false)
+                    onError?.invoke(throwable)
+                    onLoading?.invoke(false)
+                }
             }
-        }
         return coroutineScope.launch(
-            context = exceptionHandler + coroutineContext,
+            context = exceptionHandler + coroutineContext
         ) {
             debounce?.let { delay(it) }
             onLoading?.invoke(true)

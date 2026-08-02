@@ -16,8 +16,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColor
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonInteractionState
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSize
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonInteractionState
 
 /**
  * A composable function that represents a stateful button with customizable properties and animations.
@@ -64,7 +64,7 @@ fun StateButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     isLoading: Boolean,
-    horizontalArrangement: Alignment = Alignment.Center,
+    horizontalArrangement: Alignment = Alignment.Center
 ) {
     //region core
     val isHovered by interactionSource.collectIsHoveredAsState()
@@ -86,7 +86,7 @@ fun StateButton(
                     onClick()
                 }
             },
-            role = Button,
+            role = Button
         )
 
     val backgroundColor = colors.backgroundColor(interactionState, enabled, isLoading).value
@@ -113,6 +113,6 @@ fun StateButton(
         modifier = currentModifier,
         isLoading = isLoading,
         loadingSize = sizes.loadingSize,
-        horizontalArrangement = horizontalArrangement,
+        horizontalArrangement = horizontalArrangement
     )
 }

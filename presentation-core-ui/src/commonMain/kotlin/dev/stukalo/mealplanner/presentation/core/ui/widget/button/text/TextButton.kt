@@ -33,7 +33,7 @@ fun TextButton(
     corner: Dp = TextButtonDefault.corner(),
     textStyle: TextStyle = Theme.typography.regular14,
     animation: ButtonAnimation = TextButtonDefault.animation(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
     StateButton(
         text,
@@ -48,7 +48,7 @@ fun TextButton(
         modifier,
         enabled,
         interactionSource,
-        isLoading,
+        isLoading
     )
 }
 
@@ -57,7 +57,7 @@ fun TextButton(
 private fun PreviewTextButton() {
     Theme {
         TextButton(
-            text = "Text button",
+            text = "Text button"
         )
     }
 }

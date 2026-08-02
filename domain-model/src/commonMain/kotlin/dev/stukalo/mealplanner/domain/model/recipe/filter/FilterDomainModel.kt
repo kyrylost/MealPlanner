@@ -15,8 +15,34 @@ data class FilterDomainModel(
     val maxCarbs: Int? = null,
     val mealTypes: List<MealTypeDomainModel> = emptyList()
 ) {
-    val caloriesRange: IntRange? get() = if (minCalories != null && maxCalories != null) minCalories..maxCalories else null
-    val proteinsRange: IntRange? get() = if (minProteins != null && maxProteins != null) minProteins..maxProteins else null
-    val fatsRange: IntRange? get() = if (minFats != null && maxFats != null) minFats..maxFats else null
-    val carbsRange: IntRange? get() = if (minCarbs != null && maxCarbs != null) minCarbs..maxCarbs else null
+    val caloriesRange: IntRange? get() =
+        if (minCalories != null &&
+            maxCalories != null
+        ) {
+            minCalories..maxCalories
+        } else {
+            null
+        }
+    val proteinsRange: IntRange? get() =
+        if (minProteins != null &&
+            maxProteins != null
+        ) {
+            minProteins..maxProteins
+        } else {
+            null
+        }
+    val fatsRange: IntRange? get() = if (minFats != null &&
+        maxFats != null
+    ) {
+        minFats..maxFats
+    } else {
+        null
+    }
+    val carbsRange: IntRange? get() = if (minCarbs != null &&
+        maxCarbs != null
+    ) {
+        minCarbs..maxCarbs
+    } else {
+        null
+    }
 }

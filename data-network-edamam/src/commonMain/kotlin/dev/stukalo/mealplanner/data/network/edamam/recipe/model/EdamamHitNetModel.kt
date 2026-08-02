@@ -4,6 +4,4 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EdamamHitNetModel(
-    @SerialName("recipe") val recipe: EdamamRecipeNetModel? = null,
-)
+data class EdamamHitNetModel(@SerialName("recipe") val recipe: EdamamRecipeNetModel? = null)

@@ -9,10 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-actual fun BarcodeScannerView(
-    modifier: Modifier,
-    onBarcodeScanned: (String) -> Unit
-) {
+actual fun BarcodeScannerView(modifier: Modifier, onBarcodeScanned: (String) -> Unit) {
     Box(
         modifier = modifier.background(Color.Black),
         contentAlignment = Alignment.Center

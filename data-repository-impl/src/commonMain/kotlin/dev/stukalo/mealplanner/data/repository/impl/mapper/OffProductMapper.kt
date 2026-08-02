@@ -7,20 +7,20 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 
 internal class OffProductMapper : BaseMapper<OFFProductResponseNetModel, ProductDomainModel> {
-
     override fun mapTo(model: OFFProductResponseNetModel): ProductDomainModel {
         val product = model.product
-        val nutrients = buildList {
-            product?.nutriments?.proteins100g?.let {
-                add(NutrientDomainModel(NutrientTypeDomainModel.PROTEIN, it.toFloat()))
+        val nutrients =
+            buildList {
+                product?.nutriments?.proteins100g?.let {
+                    add(NutrientDomainModel(NutrientTypeDomainModel.PROTEIN, it.toFloat()))
+                }
+                product?.nutriments?.carbohydrates100g?.let {
+                    add(NutrientDomainModel(NutrientTypeDomainModel.CARBOHYDRATES, it.toFloat()))
+                }
+                product?.nutriments?.fat100g?.let {
+                    add(NutrientDomainModel(NutrientTypeDomainModel.FATS, it.toFloat()))
+                }
             }
-            product?.nutriments?.carbohydrates100g?.let {
-                add(NutrientDomainModel(NutrientTypeDomainModel.CARBOHYDRATES, it.toFloat()))
-            }
-            product?.nutriments?.fat100g?.let {
-                add(NutrientDomainModel(NutrientTypeDomainModel.FATS, it.toFloat()))
-            }
-        }
 
         return ProductDomainModel(
             id = model.code,

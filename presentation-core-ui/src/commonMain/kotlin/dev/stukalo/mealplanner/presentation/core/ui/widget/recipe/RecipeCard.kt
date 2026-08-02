@@ -41,7 +41,7 @@ fun RecipeCard(
     healthLabels: List<String>?,
     hazeState: HazeState,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     BlurredCard(
         modifier = modifier,
@@ -49,13 +49,15 @@ fun RecipeCard(
         shape = Theme.shape.normalRoundedCornerShape
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .clickable { onClick() }
         ) {
             // Image Section
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .aspectRatio(Theme.aspect.recipeCard)
                     .background(Theme.color.textSecondary.copy(alpha = 0.1f))
@@ -66,11 +68,12 @@ fun RecipeCard(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
-                
+
                 // Health Labels Overlay
                 healthLabels?.let { labels ->
                     FlowRow(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .align(Alignment.TopStart)
                             .padding(Theme.spacing.space8),
                         horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space4),
@@ -86,7 +89,8 @@ fun RecipeCard(
 
             // Content Section
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(Theme.spacing.space12),
                 verticalArrangement = Arrangement.spacedBy(Theme.spacing.space24)
@@ -127,13 +131,16 @@ fun RecipeCard(
 private fun HealthLabel(label: String) {
     Surface(
         color = Theme.color.primary.copy(alpha = 0.8f),
-        shape = Theme.shape.normalRoundedCornerShape,
+        shape = Theme.shape.normalRoundedCornerShape
     ) {
         Text(
             text = label,
             style = Theme.typography.bold12,
             color = Color.White,
-            modifier = Modifier.padding(horizontal = Theme.spacing.space8, vertical = Theme.spacing.space2)
+            modifier = Modifier.padding(
+                horizontal = Theme.spacing.space8,
+                vertical = Theme.spacing.space2
+            )
         )
     }
 }

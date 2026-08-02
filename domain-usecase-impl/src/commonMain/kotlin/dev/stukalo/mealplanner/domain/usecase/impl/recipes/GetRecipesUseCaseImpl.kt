@@ -7,29 +7,25 @@ import dev.stukalo.mealplanner.domain.repository.RecipeRepository
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import kotlinx.coroutines.flow.Flow
 
-internal class GetRecipesUseCaseImpl(
-    private val recipeRepository: RecipeRepository,
-): GetRecipesUseCase {
+internal class GetRecipesUseCaseImpl(private val recipeRepository: RecipeRepository) : GetRecipesUseCase {
     override operator fun invoke(
         calories: IntRange,
         carbohydrates: IntRange,
         fats: IntRange,
         proteins: IntRange,
         mealTypes: List<MealTypeDomainModel>,
-        query: String?,
-    ): Flow<PagingData<RecipeDomainModel>> {
-        return recipeRepository.getRecipesByNutrients(
-            type = RECIPE_TYPE_ANY,
-            calories = calories,
-            carbohydrates = carbohydrates,
-            fats = fats,
-            proteins = proteins,
-            mealTypes = mealTypes,
-            query = query,
-        )
-    }
+        query: String?
+    ): Flow<PagingData<RecipeDomainModel>> = recipeRepository.getRecipesByNutrients(
+        type = RECIPE_TYPE_ANY,
+        calories = calories,
+        carbohydrates = carbohydrates,
+        fats = fats,
+        proteins = proteins,
+        mealTypes = mealTypes,
+        query = query
+    )
 
     companion object {
-        private const val RECIPE_TYPE_ANY = "any" //Available also: public, user, edamam-generic
+        private const val RECIPE_TYPE_ANY = "any" // Available also: public, user, edamam-generic
     }
 }

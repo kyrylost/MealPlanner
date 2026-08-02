@@ -27,9 +27,8 @@ internal class HomeViewModel(
     private val getDailyProgressUseCase: GetDailyProgressUseCase,
     private val updateNutrientProgressUseCase: UpdateNutrientProgressUseCase,
     getRecommendedRecipesUseCase: GetRecommendedRecipesUseCase,
-    private val clock: Clock,
+    private val clock: Clock
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     val recommendedRecipes = getRecommendedRecipesUseCase().cachedIn(viewModelScope)
 
     override val initialState = ViewState()
@@ -52,11 +51,12 @@ internal class HomeViewModel(
             }
             is ViewIntent.OnAddNutrient -> {
                 viewModelScope.launch {
-                    val nutrientType = when (intent.type) {
-                        NutrientType.PROTEINS -> NutrientTypeDomainModel.PROTEIN
-                        NutrientType.FATS -> NutrientTypeDomainModel.FATS
-                        NutrientType.CARBS -> NutrientTypeDomainModel.CARBOHYDRATES
-                    }
+                    val nutrientType =
+                        when (intent.type) {
+                            NutrientType.PROTEINS -> NutrientTypeDomainModel.PROTEIN
+                            NutrientType.FATS -> NutrientTypeDomainModel.FATS
+                            NutrientType.CARBS -> NutrientTypeDomainModel.CARBOHYDRATES
+                        }
                     updateNutrientProgressUseCase(nutrientType, intent.amount)
                 }
             }
@@ -75,7 +75,7 @@ internal class HomeViewModel(
 
     private suspend fun collectNutrition() {
         val today = clock.todayIn(TimeZone.currentSystemDefault())
-        
+
         combine(
             getDailyNormUseCase(),
             getDailyProgressUseCase(today)
@@ -85,20 +85,24 @@ internal class HomeViewModel(
             updateState { state ->
                 var newState = state
                 norm?.let {
-                    newState = PartialStateChange.DailyNormLoaded(
-                        calories = it.calories.toInt(),
-                        proteins = it.proteins.toFloat(),
-                        fats = it.fats.toFloat(),
-                        carbs = it.carbohydrates.toFloat()
-                    ).reduce(newState)
+                    newState =
+                        PartialStateChange
+                            .DailyNormLoaded(
+                                calories = it.calories.toInt(),
+                                proteins = it.proteins.toFloat(),
+                                fats = it.fats.toFloat(),
+                                carbs = it.carbohydrates.toFloat()
+                            ).reduce(newState)
                 }
                 progress?.let {
-                    newState = PartialStateChange.DailyProgressLoaded(
-                        calories = it.consumedCalories.toInt(),
-                        proteins = it.consumedProteins.toFloat(),
-                        fats = it.consumedFats.toFloat(),
-                        carbs = it.consumedCarbohydrates.toFloat()
-                    ).reduce(newState)
+                    newState =
+                        PartialStateChange
+                            .DailyProgressLoaded(
+                                calories = it.consumedCalories.toInt(),
+                                proteins = it.consumedProteins.toFloat(),
+                                fats = it.consumedFats.toFloat(),
+                                carbs = it.consumedCarbohydrates.toFloat()
+                            ).reduce(newState)
                 }
                 newState
             }

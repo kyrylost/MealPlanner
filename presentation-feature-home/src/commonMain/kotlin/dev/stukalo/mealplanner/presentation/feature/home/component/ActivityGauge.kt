@@ -26,20 +26,22 @@ internal fun ActivityGauge(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
-
     val safeProgress = if (target > 0) (current / target).coerceIn(0f, 1f) else 0f
     val percentage = if (target > 0) (current / target * 100).toInt() else 0
 
     BlurredCard(
-        modifier = modifier
+        modifier =
+        modifier
             .clip(RoundedCornerShape(Theme.radius.radius20))
             .clickable { onClick() },
         hazeState = hazeState
     ) {
         SemiCircularProgressBar(
             progress = safeProgress,
-            progressBrush = Brush.linearGradient(
-                colors = listOf(
+            progressBrush =
+            Brush.linearGradient(
+                colors =
+                listOf(
                     Theme.color.secondary,
                     Theme.color.primary
                 )
@@ -53,9 +55,10 @@ internal fun ActivityGauge(
             sideTitleStyle = Theme.typography.regular12,
             labelPadding = Theme.spacing.space12,
             labelPosition = LabelPosition.Bottom,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
-                .padding(Theme.spacing.space12),
+                .padding(Theme.spacing.space12)
         )
     }
 }

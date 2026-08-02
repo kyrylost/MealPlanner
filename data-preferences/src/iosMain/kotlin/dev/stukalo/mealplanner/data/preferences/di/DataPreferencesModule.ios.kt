@@ -6,6 +6,7 @@ import dev.stukalo.mealplanner.data.preferences.core.createDataStore
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-actual val platformDataPreferencesModule: Module = module {
-    single<DataStore<Preferences>> { createDataStore() }
-}
+actual val platformDataPreferencesModule: Module =
+    module {
+        single<DataStore<Preferences>> { createDataStore() }
+    }

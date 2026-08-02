@@ -19,7 +19,7 @@ internal fun InnerMainNavigationGraph(
     mainNavController: NavHostController,
     appNavController: NavHostController,
     startDestination: NavigationDirection,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = mainNavController,
@@ -64,7 +64,7 @@ internal fun InnerMainNavigationGraph(
             } else {
                 ExitTransition.None
             }
-        },
+        }
     ) {
         homeNavigationGraph(
             appNavController = appNavController

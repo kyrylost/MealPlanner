@@ -30,24 +30,26 @@ fun CommonHeader(
     onLeftIconClick: (() -> Unit)? = null,
     rightIcon: ImageVector? = null,
     rightIconTint: Color = Theme.color.iconPrimary,
-    onRightIconClick: (() -> Unit)? = null,
+    onRightIconClick: (() -> Unit)? = null
 ) {
     val iconClickableAreaSize = 40.dp
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .statusBarsPadding()
             .padding(
                 vertical = Theme.spacing.space8,
-                horizontal = Theme.spacing.space16,
+                horizontal = Theme.spacing.space16
             )
     ) {
         if (leftIcon != null && onLeftIconClick != null) {
             IconButton(
                 onClick = onLeftIconClick,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .size(iconClickableAreaSize)
                     .align(Alignment.CenterStart)
             ) {
@@ -55,7 +57,8 @@ fun CommonHeader(
                     imageVector = leftIcon,
                     contentDescription = null,
                     tint = leftIconTint,
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(Theme.spacing.space8)
                 )
             }
@@ -66,7 +69,8 @@ fun CommonHeader(
             style = Theme.typography.bold16,
             color = Theme.color.textPrimary,
             textAlign = TextAlign.Center,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = Theme.spacing.space48)
         )
@@ -74,7 +78,8 @@ fun CommonHeader(
         if (rightIcon != null && onRightIconClick != null) {
             IconButton(
                 onClick = onRightIconClick,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .size(iconClickableAreaSize)
                     .align(Alignment.CenterEnd)
             ) {
@@ -82,7 +87,8 @@ fun CommonHeader(
                     imageVector = rightIcon,
                     contentDescription = null,
                     tint = rightIconTint,
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(Theme.spacing.space8)
                 )
             }
@@ -95,7 +101,8 @@ fun CommonHeader(
 private fun CommonHeaderPreview() {
     Theme {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .background(Theme.color.background)
         ) {

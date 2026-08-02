@@ -32,19 +32,15 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ProductCard(
-    product: ProductDomainModel,
-    hazeState: HazeState,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
+fun ProductCard(product: ProductDomainModel, hazeState: HazeState, modifier: Modifier = Modifier, onClick: () -> Unit) {
     BlurredCard(
         modifier = modifier,
         hazeState = hazeState,
         shape = Theme.shape.normalRoundedCornerShape
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .clickable { onClick() }
                 .padding(Theme.spacing.space16),
@@ -70,17 +66,38 @@ fun ProductCard(
                 )
                 NutrientShortInfo(
                     label = stringResource(Res.string.common_proteins),
-                    value = product.nutrients?.find { it.nutrientType == NutrientTypeDomainModel.PROTEIN }?.amount?.toInt()?.let { stringResource(Res.string.common_grams_value, it) } ?: "--",
+                    value =
+                    product.nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.PROTEIN
+                        }?.amount
+                        ?.toInt()
+                        ?.let { stringResource(Res.string.common_grams_value, it) }
+                        ?: "--",
                     unit = stringResource(Res.string.common_unit_grams)
                 )
                 NutrientShortInfo(
                     label = stringResource(Res.string.common_fats),
-                    value = product.nutrients?.find { it.nutrientType == NutrientTypeDomainModel.FATS }?.amount?.toInt()?.let { stringResource(Res.string.common_grams_value, it) } ?: "--",
+                    value =
+                    product.nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.FATS
+                        }?.amount
+                        ?.toInt()
+                        ?.let { stringResource(Res.string.common_grams_value, it) }
+                        ?: "--",
                     unit = stringResource(Res.string.common_unit_grams)
                 )
                 NutrientShortInfo(
                     label = stringResource(Res.string.common_carbs),
-                    value = product.nutrients?.find { it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES }?.amount?.toInt()?.let { stringResource(Res.string.common_grams_value, it) } ?: "--",
+                    value =
+                    product.nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES
+                        }?.amount
+                        ?.toInt()
+                        ?.let { stringResource(Res.string.common_grams_value, it) }
+                        ?: "--",
                     unit = stringResource(Res.string.common_unit_grams)
                 )
             }
@@ -89,11 +106,7 @@ fun ProductCard(
 }
 
 @Composable
-private fun NutrientShortInfo(
-    label: String,
-    value: String,
-    unit: String
-) {
+private fun NutrientShortInfo(label: String, value: String, unit: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = value,
@@ -113,10 +126,12 @@ private fun NutrientShortInfo(
 private fun ProductCardPreview() {
     Theme {
         ProductCard(
-            product = ProductDomainModel(
+            product =
+            ProductDomainModel(
                 productName = "Healthy Apple",
                 calories = 52f,
-                nutrients = listOf(
+                nutrients =
+                listOf(
                     NutrientDomainModel(NutrientTypeDomainModel.PROTEIN, 0.3f),
                     NutrientDomainModel(NutrientTypeDomainModel.FATS, 0.2f),
                     NutrientDomainModel(NutrientTypeDomainModel.CARBOHYDRATES, 14f)

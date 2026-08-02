@@ -16,19 +16,16 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 /**
  * A generic settings option component.
- * 
+ *
  * @param title The title of the option.
  * @param onClick The callback for when the option is clicked.
  * @param modifier The modifier to apply to the component.
  */
 @Composable
-fun SettingsOption(
-    title: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun SettingsOption(title: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .clip(Theme.shape.normalRoundedCornerShape)
             .background(Theme.color.backgroundSecondary)

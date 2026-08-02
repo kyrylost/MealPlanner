@@ -27,11 +27,7 @@ interface ButtonColor {
      */
     @Stable
     @Composable
-    fun borderColor(
-        interactionState: Int,
-        enabled: Boolean,
-        loading: Boolean,
-    ): State<Color>
+    fun borderColor(interactionState: Int, enabled: Boolean, loading: Boolean): State<Color>
 
     /**
      * Returns the foreground color of the button based on the interaction state, enabled state, and loading state.
@@ -43,11 +39,7 @@ interface ButtonColor {
      */
     @Stable
     @Composable
-    fun foregroundColor(
-        interactionState: Int,
-        enabled: Boolean,
-        loading: Boolean,
-    ): State<Color>
+    fun foregroundColor(interactionState: Int, enabled: Boolean, loading: Boolean): State<Color>
 
     /**
      * Returns the background color of the button based on the interaction state, enabled state, and loading state.
@@ -59,9 +51,5 @@ interface ButtonColor {
      */
     @Stable
     @Composable
-    fun backgroundColor(
-        interactionState: Int,
-        enabled: Boolean,
-        loading: Boolean,
-    ): State<Color>
+    fun backgroundColor(interactionState: Int, enabled: Boolean, loading: Boolean): State<Color>
 }

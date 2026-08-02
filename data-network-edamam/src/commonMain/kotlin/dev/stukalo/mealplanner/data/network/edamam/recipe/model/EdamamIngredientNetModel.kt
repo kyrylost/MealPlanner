@@ -12,5 +12,5 @@ data class EdamamIngredientNetModel(
     @SerialName("weight") val weight: Double? = null,
     @SerialName("foodCategory") val foodCategory: String? = null,
     @SerialName("foodId") val foodId: String,
-    @SerialName("image") val image: String? = null,
+    @SerialName("image") val image: String? = null
 )

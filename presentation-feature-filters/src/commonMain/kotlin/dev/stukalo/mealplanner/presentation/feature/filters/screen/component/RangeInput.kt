@@ -18,7 +18,7 @@ fun RangeInput(
     max: Int?,
     onMinChange: (Int?) -> Unit,
     onMaxChange: (Int?) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),

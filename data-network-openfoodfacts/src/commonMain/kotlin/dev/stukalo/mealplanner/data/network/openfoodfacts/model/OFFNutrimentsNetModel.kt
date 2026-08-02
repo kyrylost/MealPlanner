@@ -12,5 +12,5 @@ data class OFFNutrimentsNetModel(
     @SerialName("energy-kcal") val energyKcal: Double? = null,
     @SerialName("proteins") val proteins: Double? = null,
     @SerialName("carbohydrates") val carbohydrates: Double? = null,
-    @SerialName("fat") val fat: Double? = null,
+    @SerialName("fat") val fat: Double? = null
 )

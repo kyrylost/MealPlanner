@@ -7,8 +7,9 @@ import androidx.datastore.preferences.core.PreferencesFileSerializer
 import java.io.File
 
 fun createDataStore(): DataStore<Preferences> = createDataStore(
-    storage = FileStorage(
+    storage =
+    FileStorage(
         serializer = PreferencesFileSerializer,
-        produceFile = { File(System.getProperty("java.io.tmpdir"), dataStoreFileName) }
+        produceFile = { File(System.getProperty("java.io.tmpdir"), DATA_STORE_FILE_NAME) }
     )
 )

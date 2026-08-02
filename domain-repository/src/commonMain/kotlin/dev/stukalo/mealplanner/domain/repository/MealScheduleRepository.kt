@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface MealScheduleRepository {
     fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>>
+
     suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit>
+
     suspend fun resetDailyConsumedStatus(): Result<Unit>
 }

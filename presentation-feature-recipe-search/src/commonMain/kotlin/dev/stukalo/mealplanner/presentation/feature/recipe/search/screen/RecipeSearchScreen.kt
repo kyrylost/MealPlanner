@@ -14,17 +14,16 @@ import kotlinx.serialization.json.Json
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun RecipeSearchScreen(
-    navController: NavController,
-) {
+fun RecipeSearchScreen(navController: NavController) {
     val viewModel: RecipeSearchViewModel = koinViewModel()
     val recipes = viewModel.recipes.collectAsLazyPagingItems()
 
     // Observe result from FiltersScreen
-    val filterResultState = navController.currentBackStackEntry
-        ?.savedStateHandle
-        ?.getStateFlow<String?>("filter_result", null)
-        ?.collectAsState()
+    val filterResultState =
+        navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.getStateFlow<String?>("filter_result", null)
+            ?.collectAsState()
 
     LaunchedEffect(filterResultState?.value) {
         filterResultState?.value?.let { json ->

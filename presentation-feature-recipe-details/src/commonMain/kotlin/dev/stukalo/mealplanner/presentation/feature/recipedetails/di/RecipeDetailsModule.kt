@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.RecipeD
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val recipeDetailsModule = module {
-    viewModelOf(::RecipeDetailsViewModel)
-}
+val recipeDetailsModule =
+    module {
+        viewModelOf(::RecipeDetailsViewModel)
+    }

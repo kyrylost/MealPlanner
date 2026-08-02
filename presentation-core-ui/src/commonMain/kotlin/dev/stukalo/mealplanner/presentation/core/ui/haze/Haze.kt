@@ -45,37 +45,42 @@ fun Modifier.hazeSource(state: HazeState): Modifier = this
 
 private data class HazeSourceElement(val state: HazeState) : ModifierNodeElement<HazeSourceNode>() {
     override fun create() = HazeSourceNode(state)
+
     override fun update(node: HazeSourceNode) {
         node.state = state
     }
 }
 
-class HazeSourceNode(var state: HazeState) : Modifier.Node(), DrawModifierNode, CompositionLocalConsumerModifierNode {
+class HazeSourceNode(var state: HazeState) :
+    Modifier.Node(),
+    DrawModifierNode,
+    CompositionLocalConsumerModifierNode {
     override fun ContentDrawScope.draw() {
         val graphicsContext = currentValueOf(LocalGraphicsContext)
-        val layer = state.contentLayer ?: graphicsContext.createGraphicsLayer().also { state.contentLayer = it }
+        val layer =
+            state.contentLayer
+                ?: graphicsContext.createGraphicsLayer().also { state.contentLayer = it }
         layer.record {
             this@draw.drawContent()
         }
         drawLayer(layer)
-        
+
         // Notify all consumers to redraw themselves to match the updated background content
         state.consumers.forEach { it.invalidateDraw() }
     }
 }
 
 /**
- * Draws the captured background content. 
- * This modifier does NOT draw the composable's own content, 
+ * Draws the captured background content.
+ * This modifier does NOT draw the composable's own content,
  * making it suitable for use with Modifier.blur() in a separate background layer.
  */
-fun Modifier.hazeChild(
-    state: HazeState,
-    tint: Color = Color.Transparent
-): Modifier = this.then(HazeChildElement(state, tint))
+fun Modifier.hazeChild(state: HazeState, tint: Color = Color.Transparent): Modifier =
+    this.then(HazeChildElement(state, tint))
 
 private data class HazeChildElement(val state: HazeState, val tint: Color) : ModifierNodeElement<HazeChildNode>() {
     override fun create() = HazeChildNode(state, tint)
+
     override fun update(node: HazeChildNode) {
         node.state = state
         node.tint = tint
@@ -83,8 +88,10 @@ private data class HazeChildElement(val state: HazeState, val tint: Color) : Mod
 }
 
 class HazeChildNode(var state: HazeState, var tint: Color) :
-    Modifier.Node(), DrawModifierNode, GlobalPositionAwareModifierNode, CompositionLocalConsumerModifierNode {
-    
+    Modifier.Node(),
+    DrawModifierNode,
+    GlobalPositionAwareModifierNode,
+    CompositionLocalConsumerModifierNode {
     private var position by mutableStateOf(Offset.Zero)
 
     override fun onAttach() {

@@ -13,8 +13,5 @@ interface LogProductConsumedUseCase {
      * @param weight The weight of the consumed product in grams.
      * @return [Result] indicating success or failure.
      */
-    suspend operator fun invoke(
-        product: ProductDomainModel,
-        weight: Float? = null,
-    ): Result<Unit>
+    suspend operator fun invoke(product: ProductDomainModel, weight: Float? = null): Result<Unit>
 }

@@ -3,7 +3,8 @@ package dev.stukalo.mealplanner.presentation.core.styling.color
 import androidx.compose.ui.graphics.Color
 
 enum class ThemeColorPalette {
-    ORANGE, GREEN
+    ORANGE,
+    GREEN
 }
 
 fun ThemeColorPalette.toPrimaryColor() = when (this) {

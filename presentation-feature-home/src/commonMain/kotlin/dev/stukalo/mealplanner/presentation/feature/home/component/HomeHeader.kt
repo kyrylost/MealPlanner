@@ -13,10 +13,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun HomeHeader(
-    userName: String,
-    modifier: Modifier = Modifier
-) {
+internal fun HomeHeader(userName: String, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier

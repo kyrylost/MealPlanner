@@ -15,14 +15,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.circular.Sem
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun WelcomeHeader(
-    currentStep: Int,
-    totalSteps: Int,
-    modifier: Modifier = Modifier,
-) {
+internal fun WelcomeHeader(currentStep: Int, totalSteps: Int, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier =
+        modifier
             .statusBarsPadding()
             .padding(Theme.spacing.space32)
     ) {

@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.update
  * Consult ARCHITECTURE.md for details on the Intent/State/Event flow.
  */
 abstract class BaseMviViewModel<I : MviIntent, S : MviViewState, E : MviSingleEvent> : BaseViewModel() {
-
     abstract val initialState: S
 
     private val viewMutableState: MutableStateFlow<S> by lazy {

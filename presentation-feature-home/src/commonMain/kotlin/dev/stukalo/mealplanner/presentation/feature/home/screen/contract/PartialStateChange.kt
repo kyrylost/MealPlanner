@@ -7,12 +7,8 @@ internal sealed interface PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(userName = userName)
     }
 
-    data class DailyNormLoaded(
-        val calories: Int,
-        val proteins: Float,
-        val fats: Float,
-        val carbs: Float
-    ) : PartialStateChange {
+    data class DailyNormLoaded(val calories: Int, val proteins: Float, val fats: Float, val carbs: Float) :
+        PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             targetCalories = calories,
             proteinsTarget = proteins,
@@ -21,12 +17,8 @@ internal sealed interface PartialStateChange {
         )
     }
 
-    data class DailyProgressLoaded(
-        val calories: Int,
-        val proteins: Float,
-        val fats: Float,
-        val carbs: Float
-    ) : PartialStateChange {
+    data class DailyProgressLoaded(val calories: Int, val proteins: Float, val fats: Float, val carbs: Float) :
+        PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             currentCalories = calories,
             proteins = proteins,

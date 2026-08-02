@@ -63,41 +63,42 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import kotlin.time.Clock
 
-val domainModule = module {
-    single<Clock> { Clock.System }
+val domainModule =
+    module {
+        single<Clock> { Clock.System }
 
-    singleOf(::GetColorPaletteUseCaseImpl) bind GetColorPaletteUseCase::class
-    singleOf(::SetThemePaletteUseCaseImpl) bind SetThemePaletteUseCase::class
-    singleOf(::GetLocaleUseCaseImpl) bind GetLocaleUseCase::class
-    singleOf(::SetLocaleUseCaseImpl) bind SetLocaleUseCase::class
+        singleOf(::GetColorPaletteUseCaseImpl) bind GetColorPaletteUseCase::class
+        singleOf(::SetThemePaletteUseCaseImpl) bind SetThemePaletteUseCase::class
+        singleOf(::GetLocaleUseCaseImpl) bind GetLocaleUseCase::class
+        singleOf(::SetLocaleUseCaseImpl) bind SetLocaleUseCase::class
 
-    singleOf(::GetRecipesUseCaseImpl) bind GetRecipesUseCase::class
-    singleOf(::GetRecommendedRecipesUseCaseImpl) bind GetRecommendedRecipesUseCase::class
-    singleOf(::GetRecipeByIdUseCaseImpl) bind GetRecipeByIdUseCase::class
-    singleOf(::GetProductsByQueryUseCaseImpl) bind GetProductsByQueryUseCase::class
-    singleOf(::GetProductByBarcodeUseCaseImpl) bind GetProductByBarcodeUseCase::class
-    singleOf(::GetAutoCompleteHintsUseCaseImpl) bind GetAutoCompleteHintsUseCase::class
+        singleOf(::GetRecipesUseCaseImpl) bind GetRecipesUseCase::class
+        singleOf(::GetRecommendedRecipesUseCaseImpl) bind GetRecommendedRecipesUseCase::class
+        singleOf(::GetRecipeByIdUseCaseImpl) bind GetRecipeByIdUseCase::class
+        singleOf(::GetProductsByQueryUseCaseImpl) bind GetProductsByQueryUseCase::class
+        singleOf(::GetProductByBarcodeUseCaseImpl) bind GetProductByBarcodeUseCase::class
+        singleOf(::GetAutoCompleteHintsUseCaseImpl) bind GetAutoCompleteHintsUseCase::class
 
-    singleOf(::SaveUserDataUseCaseImpl) bind SaveUserDataUseCase::class
-    singleOf(::SaveDailyNormUseCaseImpl) bind SaveDailyNormUseCase::class
-    singleOf(::CheckUserExistsUseCaseImpl) bind CheckUserExistsUseCase::class
-    singleOf(::GetUserUseCaseImpl) bind GetUserUseCase::class
+        singleOf(::SaveUserDataUseCaseImpl) bind SaveUserDataUseCase::class
+        singleOf(::SaveDailyNormUseCaseImpl) bind SaveDailyNormUseCase::class
+        singleOf(::CheckUserExistsUseCaseImpl) bind CheckUserExistsUseCase::class
+        singleOf(::GetUserUseCaseImpl) bind GetUserUseCase::class
 
-    singleOf(::GetDailyNormUseCaseImpl) bind GetDailyNormUseCase::class
-    singleOf(::GetDailyProgressUseCaseImpl) bind GetDailyProgressUseCase::class
-    singleOf(::UpdateDailyProgressUseCaseImpl) bind UpdateDailyProgressUseCase::class
-    singleOf(::UpdateNutrientProgressUseCaseImpl) bind UpdateNutrientProgressUseCase::class
-    singleOf(::LogRecipeConsumedUseCaseImpl) bind LogRecipeConsumedUseCase::class
-    singleOf(::LogProductConsumedUseCaseImpl) bind LogProductConsumedUseCase::class
+        singleOf(::GetDailyNormUseCaseImpl) bind GetDailyNormUseCase::class
+        singleOf(::GetDailyProgressUseCaseImpl) bind GetDailyProgressUseCase::class
+        singleOf(::UpdateDailyProgressUseCaseImpl) bind UpdateDailyProgressUseCase::class
+        singleOf(::UpdateNutrientProgressUseCaseImpl) bind UpdateNutrientProgressUseCase::class
+        singleOf(::LogRecipeConsumedUseCaseImpl) bind LogRecipeConsumedUseCase::class
+        singleOf(::LogProductConsumedUseCaseImpl) bind LogProductConsumedUseCase::class
 
-    singleOf(::GetMealScheduleUseCaseImpl) bind GetMealScheduleUseCase::class
-    singleOf(::TrackMealConsumedUseCaseImpl) bind TrackMealConsumedUseCase::class
+        singleOf(::GetMealScheduleUseCaseImpl) bind GetMealScheduleUseCase::class
+        singleOf(::TrackMealConsumedUseCaseImpl) bind TrackMealConsumedUseCase::class
 
-    singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
-    singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class
-    singleOf(::ValidateHeightUseCaseImpl) bind ValidateHeightUseCase::class
-    singleOf(::ValidateWeightUseCaseImpl) bind ValidateWeightUseCase::class
-    singleOf(::ValidateGenderUseCaseImpl) bind ValidateGenderUseCase::class
-    singleOf(::ValidateActivityLevelUseCaseImpl) bind ValidateActivityLevelUseCase::class
-    singleOf(::ValidateDietUseCaseImpl) bind ValidateDietUseCase::class
-}
+        singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
+        singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class
+        singleOf(::ValidateHeightUseCaseImpl) bind ValidateHeightUseCase::class
+        singleOf(::ValidateWeightUseCaseImpl) bind ValidateWeightUseCase::class
+        singleOf(::ValidateGenderUseCaseImpl) bind ValidateGenderUseCase::class
+        singleOf(::ValidateActivityLevelUseCaseImpl) bind ValidateActivityLevelUseCase::class
+        singleOf(::ValidateDietUseCaseImpl) bind ValidateDietUseCase::class
+    }

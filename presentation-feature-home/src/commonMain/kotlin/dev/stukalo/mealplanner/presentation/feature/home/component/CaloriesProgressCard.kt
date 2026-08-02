@@ -20,7 +20,7 @@ internal fun CaloriesProgressCard(
     currentCalories: Int,
     targetCalories: Int,
     hazeState: HazeState,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val progress = if (targetCalories > 0) (currentCalories.toFloat() / targetCalories).coerceIn(0f, 1f) else 0f
     val percentage = "${(progress * 100).toInt()}%"
@@ -38,7 +38,7 @@ internal fun CaloriesProgressCard(
             bottomRightLabel = stringResource(Res.string.common_kcal, targetCalories),
             topPadding = Theme.spacing.space16,
             bottomPadding = Theme.spacing.space12,
-            modifier = Modifier.padding(Theme.spacing.space16),
+            modifier = Modifier.padding(Theme.spacing.space16)
         )
     }
 }

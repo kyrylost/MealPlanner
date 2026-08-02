@@ -14,23 +14,20 @@ import kotlin.time.Clock
 internal class LogProductConsumedUseCaseImpl(
     private val getDailyProgressUseCase: GetDailyProgressUseCase,
     private val updateDailyProgressUseCase: UpdateDailyProgressUseCase,
-    private val clock: Clock,
+    private val clock: Clock
 ) : LogProductConsumedUseCase {
-
-    override suspend fun invoke(
-        product: ProductDomainModel,
-        weight: Float?,
-    ): Result<Unit> = runCatching {
+    override suspend fun invoke(product: ProductDomainModel, weight: Float?): Result<Unit> = runCatching {
         val now = clock.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val today = now.date
 
-        val currentProgress = getDailyProgressUseCase(today).firstOrNull() ?: DailyProgressDomainModel(
-            date = today,
-            consumedCalories = 0.0,
-            consumedProteins = 0.0,
-            consumedFats = 0.0,
-            consumedCarbohydrates = 0.0
-        )
+        val currentProgress =
+            getDailyProgressUseCase(today).firstOrNull() ?: DailyProgressDomainModel(
+                date = today,
+                consumedCalories = 0.0,
+                consumedProteins = 0.0,
+                consumedFats = 0.0,
+                consumedCarbohydrates = 0.0
+            )
 
         val consumedCalories: Double
         val consumedProteins: Double
@@ -40,23 +37,63 @@ internal class LogProductConsumedUseCaseImpl(
         if (weight != null) {
             val ratio = (weight / 100.0)
             consumedCalories = (product.calories ?: 0f).toDouble() * ratio
-            consumedProteins = (product.nutrients?.find { it.nutrientType == NutrientTypeDomainModel.PROTEIN }?.amount ?: 0f).toDouble() * ratio
-            consumedFats = (product.nutrients?.find { it.nutrientType == NutrientTypeDomainModel.FATS }?.amount ?: 0f).toDouble() * ratio
-            consumedCarbohydrates = (product.nutrients?.find { it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES }?.amount ?: 0f).toDouble() * ratio
+            consumedProteins =
+                (
+                    product.nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.PROTEIN
+                        }?.amount ?: 0f
+                    ).toDouble() *
+                ratio
+            consumedFats =
+                (
+                    product.nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.FATS
+                        }?.amount ?: 0f
+                    ).toDouble() *
+                ratio
+            consumedCarbohydrates =
+                (
+                    product.nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES
+                        }?.amount ?: 0f
+                    ).toDouble() *
+                ratio
         } else {
             consumedCalories = (product.caloriesTotal ?: product.calories ?: 0f).toDouble()
             val nutrients = product.nutrientsTotal ?: product.nutrients
-            consumedProteins = (nutrients?.find { it.nutrientType == NutrientTypeDomainModel.PROTEIN }?.amount ?: 0f).toDouble()
-            consumedFats = (nutrients?.find { it.nutrientType == NutrientTypeDomainModel.FATS }?.amount ?: 0f).toDouble()
-            consumedCarbohydrates = (nutrients?.find { it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES }?.amount ?: 0f).toDouble()
+            consumedProteins =
+                (
+                    nutrients?.find {
+                        it.nutrientType == NutrientTypeDomainModel.PROTEIN
+                    }?.amount
+                        ?: 0f
+                    ).toDouble()
+            consumedFats =
+                (
+                    nutrients?.find {
+                        it.nutrientType == NutrientTypeDomainModel.FATS
+                    }?.amount ?: 0f
+                    ).toDouble()
+            consumedCarbohydrates =
+                (
+                    nutrients
+                        ?.find {
+                            it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES
+                        }?.amount ?: 0f
+                    ).toDouble()
         }
 
-        val updatedProgress = currentProgress.copy(
-            consumedCalories = currentProgress.consumedCalories + consumedCalories,
-            consumedProteins = currentProgress.consumedProteins + consumedProteins,
-            consumedFats = currentProgress.consumedFats + consumedFats,
-            consumedCarbohydrates = currentProgress.consumedCarbohydrates + consumedCarbohydrates
-        )
+        val updatedProgress =
+            currentProgress.copy(
+                consumedCalories = currentProgress.consumedCalories + consumedCalories,
+                consumedProteins = currentProgress.consumedProteins + consumedProteins,
+                consumedFats = currentProgress.consumedFats + consumedFats,
+                consumedCarbohydrates =
+                currentProgress.consumedCarbohydrates + consumedCarbohydrates
+            )
 
         updateDailyProgressUseCase(updatedProgress).getOrThrow()
     }

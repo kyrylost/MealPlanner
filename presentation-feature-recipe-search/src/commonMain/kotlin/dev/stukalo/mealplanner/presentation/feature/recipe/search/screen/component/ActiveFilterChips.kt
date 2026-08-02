@@ -34,25 +34,26 @@ fun ActiveFilterChips(
     onRemoveNutrient: (NutrientType) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val activeChips = remember(filters) {
-        mutableListOf<ChipData>().apply {
-            filters.mealTypes.forEach { type ->
-                add(ChipData.MealType(type))
-            }
-            if (filters.minCalories != null || filters.maxCalories != null) {
-                add(ChipData.Nutrient(NutrientType.CALORIES, filters.minCalories, filters.maxCalories))
-            }
-            if (filters.minProteins != null || filters.maxProteins != null) {
-                add(ChipData.Nutrient(NutrientType.PROTEINS, filters.minProteins, filters.maxProteins))
-            }
-            if (filters.minFats != null || filters.maxFats != null) {
-                add(ChipData.Nutrient(NutrientType.FATS, filters.minFats, filters.maxFats))
-            }
-            if (filters.minCarbs != null || filters.maxCarbs != null) {
-                add(ChipData.Nutrient(NutrientType.CARBS, filters.minCarbs, filters.maxCarbs))
+    val activeChips =
+        remember(filters) {
+            mutableListOf<ChipData>().apply {
+                filters.mealTypes.forEach { type ->
+                    add(ChipData.MealType(type))
+                }
+                if (filters.minCalories != null || filters.maxCalories != null) {
+                    add(ChipData.Nutrient(NutrientType.CALORIES, filters.minCalories, filters.maxCalories))
+                }
+                if (filters.minProteins != null || filters.maxProteins != null) {
+                    add(ChipData.Nutrient(NutrientType.PROTEINS, filters.minProteins, filters.maxProteins))
+                }
+                if (filters.minFats != null || filters.maxFats != null) {
+                    add(ChipData.Nutrient(NutrientType.FATS, filters.minFats, filters.maxFats))
+                }
+                if (filters.minCarbs != null || filters.maxCarbs != null) {
+                    add(ChipData.Nutrient(NutrientType.CARBS, filters.minCarbs, filters.maxCarbs))
+                }
             }
         }
-    }
 
     if (activeChips.isEmpty()) return
 
@@ -79,7 +80,8 @@ fun ActiveFilterChips(
                     )
                 },
                 shape = Theme.shape.normalRoundedCornerShape,
-                colors = AssistChipDefaults.assistChipColors(
+                colors =
+                AssistChipDefaults.assistChipColors(
                     containerColor = Theme.color.primary.copy(alpha = 0.1f),
                     labelColor = Theme.color.textPrimary
                 ),
@@ -102,12 +104,13 @@ private sealed class ChipData {
         @Composable
         override fun getLabel(): String {
             val name = stringResource(type.labelRes)
-            val range = when {
-                min != null && max != null -> "$min-$max"
-                min != null -> ">$min"
-                max != null -> "<$max"
-                else -> ""
-            }
+            val range =
+                when {
+                    min != null && max != null -> "$min-$max"
+                    min != null -> ">$min"
+                    max != null -> "<$max"
+                    else -> ""
+                }
             return "$name: $range ${stringResource(type.unitRes)}"
         }
     }

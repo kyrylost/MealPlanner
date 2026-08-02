@@ -29,5 +29,5 @@ data class EdamamNutrientsNetModel(
     @SerialName("VITB12") val vitB12: EdamamNutrientNetModel? = null,
     @SerialName("VITD") val vitD: EdamamNutrientNetModel? = null,
     @SerialName("TOCPHA") val vitE: EdamamNutrientNetModel? = null,
-    @SerialName("VITK1") val vitK: EdamamNutrientNetModel? = null,
+    @SerialName("VITK1") val vitK: EdamamNutrientNetModel? = null
 )

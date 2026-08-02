@@ -21,7 +21,7 @@ fun nunitoFont() = FontFamily(
     Font(Res.font.nunito_regular, weight = FontWeight.Normal),
     Font(Res.font.nunito_medium, weight = FontWeight.Medium),
     Font(Res.font.nunito_semibold, weight = FontWeight.SemiBold),
-    Font(Res.font.nunito_bold, weight = FontWeight.Bold),
+    Font(Res.font.nunito_bold, weight = FontWeight.Bold)
 )
 
 @Composable
@@ -29,5 +29,5 @@ fun caveatFont() = FontFamily(
     Font(Res.font.caveat_regular, weight = FontWeight.Normal),
     Font(Res.font.caveat_medium, weight = FontWeight.Medium),
     Font(Res.font.caveat_semibold, weight = FontWeight.SemiBold),
-    Font(Res.font.caveat_bold, weight = FontWeight.Bold),
+    Font(Res.font.caveat_bold, weight = FontWeight.Bold)
 )

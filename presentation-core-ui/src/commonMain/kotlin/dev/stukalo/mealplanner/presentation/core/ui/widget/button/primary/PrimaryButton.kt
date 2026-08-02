@@ -54,7 +54,7 @@ fun PrimaryButton(
     corner: Dp = PrimaryButtonDefault.corner(),
     textStyle: TextStyle = Theme.typography.regular12,
     animation: ButtonAnimation = PrimaryButtonDefault.animation(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
     StateButton(
         text,
@@ -69,7 +69,7 @@ fun PrimaryButton(
         modifier,
         enabled,
         interactionSource,
-        isLoading,
+        isLoading
     )
 }
 
@@ -80,7 +80,7 @@ private fun PreviewPrimaryButton() {
         PrimaryButton(
             text = "Primary button",
             sizes = PrimaryButtonDefault.buttonSizeSet().default(),
-            textStyle = PrimaryButtonDefault.typography().default(),
+            textStyle = PrimaryButtonDefault.typography().default()
         )
     }
 }
@@ -93,11 +93,12 @@ private fun PreviewTransparentPrimaryButton() {
             text = "Primary button",
             sizes = PrimaryButtonDefault.buttonSizeSet().small(),
             textStyle = PrimaryButtonDefault.typography().small(),
-            colors = PrimaryButtonDefault.buttonColor(
+            colors =
+            PrimaryButtonDefault.buttonColor(
                 primaryButtonDefaultColorSet().copy(
-                    backgroundColorDefault = Color.Transparent,
-                ),
-            ),
+                    backgroundColorDefault = Color.Transparent
+                )
+            )
         )
     }
 }

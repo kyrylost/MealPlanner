@@ -15,7 +15,6 @@ import kotlinx.serialization.json.Json
 private const val TIME_OUT = 15_000L
 
 internal fun client() = HttpClient {
-
     expectSuccess = true
 
     install(ContentNegotiation) {
@@ -48,5 +47,4 @@ internal fun client() = HttpClient {
             protocol = URLProtocol.HTTPS
         }
     }
-
 }

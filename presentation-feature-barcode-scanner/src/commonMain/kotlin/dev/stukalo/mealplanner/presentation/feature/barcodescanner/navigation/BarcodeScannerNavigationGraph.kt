@@ -6,9 +6,7 @@ import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.BarcodeScannerScreen
 
-fun NavGraphBuilder.barcodeScannerNavigationGraph(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.barcodeScannerNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.BarcodeScanner> {
         BarcodeScannerScreen()
     }

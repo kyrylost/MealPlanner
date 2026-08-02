@@ -31,11 +31,7 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.View
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun ActivityLevelSection(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun ActivityLevelSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.welcome_activity_label),
@@ -44,30 +40,41 @@ internal fun ActivityLevelSection(
         )
 
         ActivityLevelDomainModel.entries.forEach { level ->
-            val nameRes = when (level) {
-                ActivityLevelDomainModel.VERY_LOW -> Res.string.welcome_activity_very_low_name
-                ActivityLevelDomainModel.LOW -> Res.string.welcome_activity_low_name
-                ActivityLevelDomainModel.MEDIUM -> Res.string.welcome_activity_medium_name
-                ActivityLevelDomainModel.HIGH -> Res.string.welcome_activity_high_name
-                ActivityLevelDomainModel.VERY_HIGH -> Res.string.welcome_activity_very_high_name
-            }
-            val descRes = when (level) {
-                ActivityLevelDomainModel.VERY_LOW -> Res.string.welcome_activity_very_low_desc
-                ActivityLevelDomainModel.LOW -> Res.string.welcome_activity_low_desc
-                ActivityLevelDomainModel.MEDIUM -> Res.string.welcome_activity_medium_desc
-                ActivityLevelDomainModel.HIGH -> Res.string.welcome_activity_high_desc
-                ActivityLevelDomainModel.VERY_HIGH -> Res.string.welcome_activity_very_high_desc
-            }
+            val nameRes =
+                when (level) {
+                    ActivityLevelDomainModel.VERY_LOW -> Res.string.welcome_activity_very_low_name
+                    ActivityLevelDomainModel.LOW -> Res.string.welcome_activity_low_name
+                    ActivityLevelDomainModel.MEDIUM -> Res.string.welcome_activity_medium_name
+                    ActivityLevelDomainModel.HIGH -> Res.string.welcome_activity_high_name
+                    ActivityLevelDomainModel.VERY_HIGH -> Res.string.welcome_activity_very_high_name
+                }
+            val descRes =
+                when (level) {
+                    ActivityLevelDomainModel.VERY_LOW -> Res.string.welcome_activity_very_low_desc
+                    ActivityLevelDomainModel.LOW -> Res.string.welcome_activity_low_desc
+                    ActivityLevelDomainModel.MEDIUM -> Res.string.welcome_activity_medium_desc
+                    ActivityLevelDomainModel.HIGH -> Res.string.welcome_activity_high_desc
+                    ActivityLevelDomainModel.VERY_HIGH -> Res.string.welcome_activity_very_high_desc
+                }
 
             val isSelected = state.activityLevel == level
             Card(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(vertical = Theme.spacing.space4)
                     .clip(RoundedCornerShape(Theme.spacing.space16))
                     .clickable { onIntent(ViewIntent.OnChangeActivityLevelInputIntent(level)) },
-                colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) Theme.color.primary else Theme.color.backgroundSecondary.copy(alpha = 0.1f)
+                colors =
+                CardDefaults.cardColors(
+                    containerColor =
+                    if (isSelected) {
+                        Theme.color.primary
+                    } else {
+                        Theme.color.backgroundSecondary.copy(
+                            alpha = 0.1f
+                        )
+                    }
                 )
             ) {
                 Column(modifier = Modifier.padding(Theme.spacing.space16)) {

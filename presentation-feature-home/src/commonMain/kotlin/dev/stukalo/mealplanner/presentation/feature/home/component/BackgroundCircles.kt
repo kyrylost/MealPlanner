@@ -17,21 +17,20 @@ import dev.stukalo.mealplanner.presentation.core.ui.haze.hazeSource
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 
 @Composable
-internal fun BackgroundCircles(
-    hazeState: HazeState,
-    modifier: Modifier = Modifier,
-) {
+internal fun BackgroundCircles(hazeState: HazeState, modifier: Modifier = Modifier) {
     val primaryColor = Theme.color.secondary
     val backgroundColor = Theme.color.background
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxSize()
             .background(backgroundColor)
             .hazeSource(hazeState)
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawCircle(
-                brush = Brush.radialGradient(
+                brush =
+                Brush.radialGradient(
                     colors = listOf(primaryColor.copy(alpha = 0.2f), Color.Transparent),
                     center = Offset(size.width * 0.3f, size.height * 0.25f),
                     radius = 192.dp.toPx()
@@ -40,7 +39,8 @@ internal fun BackgroundCircles(
                 center = Offset(size.width * 0.3f, size.height * 0.25f)
             )
             drawCircle(
-                brush = Brush.radialGradient(
+                brush =
+                Brush.radialGradient(
                     colors = listOf(primaryColor.copy(alpha = 0.1f), Color.Transparent),
                     center = Offset(size.width * 0.8f, size.height * 0.7f),
                     radius = 96.dp.toPx()

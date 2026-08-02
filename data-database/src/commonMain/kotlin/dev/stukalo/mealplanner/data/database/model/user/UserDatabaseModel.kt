@@ -14,5 +14,5 @@ data class UserDatabaseModel(
     val weight: Double,
     val physicalActivity: ActivityLevelDatabaseModel,
     val gender: GenderDatabaseModel,
-    val diet: DietDatabaseModel,
+    val diet: DietDatabaseModel
 )

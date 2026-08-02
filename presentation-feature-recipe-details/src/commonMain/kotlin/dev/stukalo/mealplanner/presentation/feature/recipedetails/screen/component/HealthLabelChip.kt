@@ -9,14 +9,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 @Composable
-fun HealthLabelChip(
-    label: String,
-    modifier: Modifier = Modifier
-) {
+fun HealthLabelChip(label: String, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = Theme.color.primary.copy(alpha = 0.1f),
-        shape = Theme.shape.normalRoundedCornerShape,
+        shape = Theme.shape.normalRoundedCornerShape
     ) {
         Text(
             text = label,

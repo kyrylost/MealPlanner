@@ -16,5 +16,5 @@ data class IngredientDomainModel(
     val measure: String? = null,
     val weight: Float? = null,
     val imageUrl: String? = null,
-    val category: String? = null,
+    val category: String? = null
 )

@@ -55,5 +55,5 @@ data class RecipeDomainModel(
     val dishType: List<String>? = null,
     val healthLabels: List<String>? = null,
     val id: String? = null,
-    val instructionLines: List<String>? = null,
+    val instructionLines: List<String>? = null
 )

@@ -22,7 +22,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewSta
 fun <I : MviIntent, S : MviViewState, E : MviSingleEvent> MviScreen(
     viewModel: BaseMviViewModel<I, S, E>,
     onSingleEvent: suspend (E) -> Unit,
-    content: @Composable (state: S) -> Unit,
+    content: @Composable (state: S) -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 

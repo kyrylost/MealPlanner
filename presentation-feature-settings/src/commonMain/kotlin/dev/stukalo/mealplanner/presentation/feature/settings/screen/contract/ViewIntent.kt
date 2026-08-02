@@ -5,5 +5,6 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
 sealed interface ViewIntent : MviIntent {
     data class OnThemeClick(val palette: ColorPaletteDomainModel) : ViewIntent
+
     data object OnBackClick : ViewIntent
 }

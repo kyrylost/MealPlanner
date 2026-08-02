@@ -7,19 +7,13 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
-internal class EdamamFoodNetSourceImpl(
-    client: HttpClient,
-): BaseNetSource(client), EdamamFoodNetSource {
-
-    override suspend fun getAutoCompleteHints(
-        query: String,
-        limit: String,
-    ): List<String> {
-        return performRequest {
-            get(EdamamFoodRoutes.AutoComplete.route) {
-                parameter("q", query)
-                parameter("limit", limit)
-            }
+internal class EdamamFoodNetSourceImpl(client: HttpClient) :
+    BaseNetSource(client),
+    EdamamFoodNetSource {
+    override suspend fun getAutoCompleteHints(query: String, limit: String): List<String> = performRequest {
+        get(EdamamFoodRoutes.AutoComplete.route) {
+            parameter("q", query)
+            parameter("limit", limit)
         }
     }
 }

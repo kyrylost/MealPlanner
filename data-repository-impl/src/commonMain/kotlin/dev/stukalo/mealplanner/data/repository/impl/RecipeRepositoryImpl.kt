@@ -13,9 +13,8 @@ import kotlinx.coroutines.flow.Flow
 
 internal class RecipeRepositoryImpl(
     private val edamamRecipeNetSource: EdamamRecipeNetSource,
-    private val recipeMapper: RecipeMapper,
-): RecipeRepository {
-
+    private val recipeMapper: RecipeMapper
+) : RecipeRepository {
     override fun getRecipesByNutrients(
         type: String,
         calories: IntRange,
@@ -23,41 +22,38 @@ internal class RecipeRepositoryImpl(
         fats: IntRange,
         proteins: IntRange,
         mealTypes: List<MealTypeDomainModel>,
-        query: String?,
-    ): Flow<PagingData<RecipeDomainModel>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = RECIPES_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = {
-                RecipePagingSource(
-                    edamamRecipeNetSource = edamamRecipeNetSource,
-                    recipeMapper = recipeMapper,
-                    type = type,
-                    calories = "${calories.first}-${calories.last}",
-                    carbohydrates = "${carbohydrates.first}-${carbohydrates.last}",
-                    fats = "${fats.first}-${fats.last}",
-                    proteins = "${proteins.first}-${proteins.last}",
-                    mealTypes = mealTypes.map { it.name.lowercase().replace("_", "") },
-                    query = query,
-                )
-            }
-        ).flow
-    }
-
-    override suspend fun getRecipeById(id: String): Result<RecipeDomainModel> {
-        return try {
-            val response = edamamRecipeNetSource.getRecipeById(id)
-            val recipe = response.recipe?.let(recipeMapper::mapTo)
-            if (recipe != null) {
-                Result.success(recipe)
-            } else {
-                Result.failure(Exception("Recipe not found"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
+        query: String?
+    ): Flow<PagingData<RecipeDomainModel>> = Pager(
+        config =
+        PagingConfig(
+            pageSize = RECIPES_PAGE_SIZE,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = {
+            RecipePagingSource(
+                edamamRecipeNetSource = edamamRecipeNetSource,
+                recipeMapper = recipeMapper,
+                type = type,
+                calories = "${calories.first}-${calories.last}",
+                carbohydrates = "${carbohydrates.first}-${carbohydrates.last}",
+                fats = "${fats.first}-${fats.last}",
+                proteins = "${proteins.first}-${proteins.last}",
+                mealTypes = mealTypes.map { it.name.lowercase().replace("_", "") },
+                query = query
+            )
         }
+    ).flow
+
+    override suspend fun getRecipeById(id: String): Result<RecipeDomainModel> = try {
+        val response = edamamRecipeNetSource.getRecipeById(id)
+        val recipe = response.recipe?.let(recipeMapper::mapTo)
+        if (recipe != null) {
+            Result.success(recipe)
+        } else {
+            Result.failure(Exception("Recipe not found"))
+        }
+    } catch (e: Exception) {
+        Result.failure(e)
     }
 }
 

@@ -25,10 +25,11 @@ fun HostScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val isGateway = navBackStackEntry?.destination?.hasRoute<NavigationDirection.Gateway>() == true
 
-    val themeColorPalette = when (themePalette) {
-        ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
-        else -> ThemeColorPalette.ORANGE
-    }
+    val themeColorPalette =
+        when (themePalette) {
+            ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
+            else -> ThemeColorPalette.ORANGE
+        }
 
     Theme(
         palette = themeColorPalette,

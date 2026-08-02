@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.presentation.feature.gateway.screen.GatewayViewMo
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val gatewayModule = module {
-    viewModelOf(::GatewayViewModel)
-}
+val gatewayModule =
+    module {
+        viewModelOf(::GatewayViewModel)
+    }

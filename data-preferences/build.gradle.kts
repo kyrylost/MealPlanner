@@ -10,10 +10,16 @@ plugins {
 
 configure<LibraryExtension> {
     namespace = "dev.stukalo.mealplanner.data.preferences"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
     }
 
     compileOptions {
@@ -46,7 +52,7 @@ kotlin {
             implementation(projects.domainRepository)
             implementation(libs.koin.core)
         }
-        
+
         androidMain.dependencies {
             implementation(libs.koin.android)
         }

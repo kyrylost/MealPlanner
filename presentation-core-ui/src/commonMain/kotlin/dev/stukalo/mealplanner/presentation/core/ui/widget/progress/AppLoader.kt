@@ -16,11 +16,10 @@ import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 @Composable
-fun AppLoader(
-    modifier: Modifier = Modifier
-) {
+fun AppLoader(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.3f))
             .clickable(

@@ -24,7 +24,7 @@ fun ValueEditDialog(
     placeholder: String,
     confirmLabel: String,
     dismissLabel: String,
-    message: String? = null,
+    message: String? = null
 ) {
     var textValue by remember { mutableStateOf(initialValue) }
 
@@ -52,7 +52,8 @@ fun ValueEditDialog(
                 onValueChange = { textValue = it },
                 placeholder = placeholder,
                 textStyle = Theme.typography.regular12,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
             )
         },

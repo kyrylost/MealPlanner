@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.presentation.feature.host.HostViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val hostModule = module {
-    viewModelOf(::HostViewModel)
-}
+val hostModule =
+    module {
+        viewModelOf(::HostViewModel)
+    }

@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.Dp
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColor
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.IconButtonSize
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.icon.core.IconButtonDefault
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.icon.core.iconButtonDefaultColorSet
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconPreview16
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.StateIconButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.icon.core.IconButtonDefault
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.icon.core.iconButtonDefaultColorSet
 
 /**
  * A composable function that represents a customizable icon button with optional loading state and interactive behavior.
@@ -48,7 +48,7 @@ fun IconButton(
     sizes: IconButtonSize,
     corner: Dp = IconButtonDefault.corner(),
     animation: ButtonAnimation = IconButtonDefault.animation(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
     StateIconButton(
         onClick = onClick ?: {},
@@ -60,7 +60,7 @@ fun IconButton(
         modifier = modifier,
         enabled = enabled,
         interactionSource = interactionSource,
-        isLoading = isLoading,
+        isLoading = isLoading
     )
 }
 
@@ -70,7 +70,7 @@ private fun PreviewIconButton() {
     Theme {
         IconButton(
             icon = IconPreview16,
-            sizes = IconButtonDefault.buttonSizeSet().default(),
+            sizes = IconButtonDefault.buttonSizeSet().default()
         )
     }
 }

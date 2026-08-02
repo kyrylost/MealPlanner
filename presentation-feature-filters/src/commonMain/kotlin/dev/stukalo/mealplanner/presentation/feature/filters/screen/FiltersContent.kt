@@ -39,10 +39,7 @@ import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.View
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun FiltersContent(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit
-) {
+internal fun FiltersContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     val filters = state.filters
 
     Box(
@@ -57,7 +54,8 @@ internal fun FiltersContent(
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
+                contentPadding =
+                PaddingValues(
                     start = Theme.spacing.space16,
                     end = Theme.spacing.space16,
                     top = Theme.spacing.space16,
@@ -78,7 +76,9 @@ internal fun FiltersContent(
 
                 item {
                     FilterSection(
-                        title = "${stringResource(Res.string.common_proteins)} (${stringResource(Res.string.common_unit_grams)})"
+                        title = "${stringResource(
+                            Res.string.common_proteins
+                        )} (${stringResource(Res.string.common_unit_grams)})"
                     ) {
                         RangeInput(
                             min = filters.minProteins,
@@ -91,7 +91,9 @@ internal fun FiltersContent(
 
                 item {
                     FilterSection(
-                        title = "${stringResource(Res.string.common_fats)} (${stringResource(Res.string.common_unit_grams)})"
+                        title = "${stringResource(
+                            Res.string.common_fats
+                        )} (${stringResource(Res.string.common_unit_grams)})"
                     ) {
                         RangeInput(
                             min = filters.minFats,
@@ -104,7 +106,9 @@ internal fun FiltersContent(
 
                 item {
                     FilterSection(
-                        title = "${stringResource(Res.string.common_carbs)} (${stringResource(Res.string.common_unit_grams)})"
+                        title = "${stringResource(
+                            Res.string.common_carbs
+                        )} (${stringResource(Res.string.common_unit_grams)})"
                     ) {
                         RangeInput(
                             min = filters.minCarbs,
@@ -123,7 +127,7 @@ internal fun FiltersContent(
                         )
                     }
                 }
-                
+
                 item {
                     Spacer(modifier = Modifier.height(Theme.spacing.space32))
                 }
@@ -135,7 +139,8 @@ internal fun FiltersContent(
             onClick = { onIntent(ViewIntent.OnApplyClick) },
             corner = Theme.radius.radius24,
             textStyle = Theme.typography.bold14,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .padding(Theme.spacing.space16)
@@ -145,13 +150,10 @@ internal fun FiltersContent(
 }
 
 @Composable
-private fun FilterSection(
-    title: String,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
+private fun FilterSection(title: String, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .clip(Theme.shape.normalRoundedCornerShape)
             .background(Theme.color.backgroundSecondary.copy(alpha = 0.5f))

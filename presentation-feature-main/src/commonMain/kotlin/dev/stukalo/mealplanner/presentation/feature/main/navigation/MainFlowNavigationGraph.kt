@@ -6,34 +6,32 @@ import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.main.screen.MainFlowScreen
 
-fun NavGraphBuilder.mainFlowRoute(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.mainFlowRoute(navController: NavHostController) {
     composable<NavigationDirection.Home> {
         MainFlowScreen(
             appNavController = navController,
-            initialTab = NavigationDirection.Home,
+            initialTab = NavigationDirection.Home
         )
     }
 
     composable<NavigationDirection.Statistics> {
         MainFlowScreen(
             appNavController = navController,
-            initialTab = NavigationDirection.Statistics,
+            initialTab = NavigationDirection.Statistics
         )
     }
 
     composable<NavigationDirection.ProductSearch> {
         MainFlowScreen(
             appNavController = navController,
-            initialTab = NavigationDirection.ProductSearch,
+            initialTab = NavigationDirection.ProductSearch
         )
     }
 
     composable<NavigationDirection.BarcodeScanner> {
         MainFlowScreen(
             appNavController = navController,
-            initialTab = NavigationDirection.BarcodeScanner,
+            initialTab = NavigationDirection.BarcodeScanner
         )
     }
 }

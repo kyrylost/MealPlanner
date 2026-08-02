@@ -6,11 +6,9 @@ import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateGenderUseCase
 
 internal class ValidateGenderUseCaseImpl : ValidateGenderUseCase {
-    override fun invoke(gender: GenderDomainModel?): ValidationResult {
-        return if (gender == null) {
-            ValidationResult.Error(ValidationException.Gender.NotSelected())
-        } else {
-            ValidationResult.Success
-        }
+    override fun invoke(gender: GenderDomainModel?): ValidationResult = if (gender == null) {
+        ValidationResult.Error(ValidationException.Gender.NotSelected())
+    } else {
+        ValidationResult.Success
     }
 }

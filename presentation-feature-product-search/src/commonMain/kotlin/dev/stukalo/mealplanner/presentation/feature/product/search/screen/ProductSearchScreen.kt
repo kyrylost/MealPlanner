@@ -7,10 +7,7 @@ import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contra
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ProductSearchScreen(
-    onBackClick: () -> Unit,
-    onNavigateToBarcodeScanner: () -> Unit,
-) {
+fun ProductSearchScreen(onBackClick: () -> Unit, onNavigateToBarcodeScanner: () -> Unit) {
     val viewModel: ProductSearchViewModel = koinViewModel()
 
     MviScreen(

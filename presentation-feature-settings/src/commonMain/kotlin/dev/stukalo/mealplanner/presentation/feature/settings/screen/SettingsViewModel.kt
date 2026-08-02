@@ -8,10 +8,8 @@ import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.Vie
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
 import kotlinx.coroutines.launch
 
-class SettingsViewModel(
-    private val setThemePaletteUseCase: SetThemePaletteUseCase
-) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
+class SettingsViewModel(private val setThemePaletteUseCase: SetThemePaletteUseCase) :
+    BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
     override suspend fun processIntent(intent: ViewIntent) {

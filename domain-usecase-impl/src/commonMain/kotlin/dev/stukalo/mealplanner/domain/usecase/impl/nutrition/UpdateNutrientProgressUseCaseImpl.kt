@@ -14,38 +14,45 @@ import kotlin.time.Clock
 
 class UpdateNutrientProgressUseCaseImpl(
     private val nutritionRepository: NutritionRepository,
-    private val clock: Clock,
+    private val clock: Clock
 ) : UpdateNutrientProgressUseCase {
-
-    override suspend fun invoke(
-        type: NutrientTypeDomainModel,
-        amount: Float,
-    ): Result<Unit> {
+    override suspend fun invoke(type: NutrientTypeDomainModel, amount: Float): Result<Unit> {
         val today = clock.todayIn(TimeZone.currentSystemDefault())
 
-        val currentProgress = nutritionRepository.getDailyProgressAsFlow(today).first()
-            ?: DailyProgressDomainModel(
-                date = today,
-                consumedCalories = 0.0,
-                consumedProteins = 0.0,
-                consumedFats = 0.0,
-                consumedCarbohydrates = 0.0
-            )
+        val currentProgress =
+            nutritionRepository.getDailyProgressAsFlow(today).first()
+                ?: DailyProgressDomainModel(
+                    date = today,
+                    consumedCalories = 0.0,
+                    consumedProteins = 0.0,
+                    consumedFats = 0.0,
+                    consumedCarbohydrates = 0.0
+                )
 
-        val newProgress = when (type) {
-            NutrientTypeDomainModel.PROTEIN -> currentProgress.copy(
-                consumedProteins = currentProgress.consumedProteins + amount,
-                consumedCalories = currentProgress.consumedCalories + (amount * CALORIES_PER_PROTEIN_GRAM).toDouble()
-            )
-            NutrientTypeDomainModel.FATS -> currentProgress.copy(
-                consumedFats = currentProgress.consumedFats + amount,
-                consumedCalories = currentProgress.consumedCalories + (amount * CALORIES_PER_FAT_GRAM).toDouble()
-            )
-            NutrientTypeDomainModel.CARBOHYDRATES -> currentProgress.copy(
-                consumedCarbohydrates = currentProgress.consumedCarbohydrates + amount,
-                consumedCalories = currentProgress.consumedCalories + (amount * CALORIES_PER_CARB_GRAM).toDouble()
-            )
-        }
+        val newProgress =
+            when (type) {
+                NutrientTypeDomainModel.PROTEIN ->
+                    currentProgress.copy(
+                        consumedProteins = currentProgress.consumedProteins + amount,
+                        consumedCalories =
+                        currentProgress.consumedCalories +
+                            (amount * CALORIES_PER_PROTEIN_GRAM).toDouble()
+                    )
+                NutrientTypeDomainModel.FATS ->
+                    currentProgress.copy(
+                        consumedFats = currentProgress.consumedFats + amount,
+                        consumedCalories =
+                        currentProgress.consumedCalories +
+                            (amount * CALORIES_PER_FAT_GRAM).toDouble()
+                    )
+                NutrientTypeDomainModel.CARBOHYDRATES ->
+                    currentProgress.copy(
+                        consumedCarbohydrates = currentProgress.consumedCarbohydrates + amount,
+                        consumedCalories =
+                        currentProgress.consumedCalories +
+                            (amount * CALORIES_PER_CARB_GRAM).toDouble()
+                    )
+            }
         return nutritionRepository.saveDailyProgress(newProgress)
     }
 }

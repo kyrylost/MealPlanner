@@ -24,15 +24,14 @@ import kotlin.time.Duration.Companion.milliseconds
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class RecipeSearchViewModel(
     private val getRecipesUseCase: GetRecipesUseCase,
-    private val getRecommendedRecipesUseCase: GetRecommendedRecipesUseCase,
+    private val getRecommendedRecipesUseCase: GetRecommendedRecipesUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     override val initialState = ViewState()
 
-    private val _recipes = MutableStateFlow<PagingData<RecipeDomainModel>>(PagingData.empty())
-    val recipes: Flow<PagingData<RecipeDomainModel>> = _recipes
+    private val recipesFlow = MutableStateFlow<PagingData<RecipeDomainModel>>(PagingData.empty())
+    val recipes: Flow<PagingData<RecipeDomainModel>> = recipesFlow
 
-    private val _searchFlow = MutableStateFlow("")
+    private val searchFlow = MutableStateFlow("")
 
     init {
         onIntent(ViewIntent.InitialLoad)
@@ -41,7 +40,7 @@ class RecipeSearchViewModel(
 
     private fun setupSearch() {
         viewModelScope.launch {
-            _searchFlow
+            searchFlow
                 .debounce(500.milliseconds)
                 .distinctUntilChanged()
                 .collectLatest { query ->
@@ -61,7 +60,7 @@ class RecipeSearchViewModel(
             }
             is ViewIntent.OnSearchQueryChange -> {
                 updateState { it.copy(searchQuery = intent.query) }
-                _searchFlow.value = intent.query
+                searchFlow.value = intent.query
             }
             is ViewIntent.ApplyFilters -> {
                 updateState { it.copy(filters = intent.filters) }
@@ -69,7 +68,7 @@ class RecipeSearchViewModel(
             }
             ViewIntent.OnClearFilters -> {
                 updateState { it.copy(filters = null, searchQuery = "") }
-                _searchFlow.value = ""
+                searchFlow.value = ""
                 searchRecommended()
             }
             is ViewIntent.OnRecipeClick -> {
@@ -88,7 +87,7 @@ class RecipeSearchViewModel(
         viewModelScope.launch {
             getRecommendedRecipesUseCase()
                 .cachedIn(viewModelScope)
-                .collectLatest { _recipes.value = it }
+                .collectLatest { recipesFlow.value = it }
         }
     }
 
@@ -102,7 +101,7 @@ class RecipeSearchViewModel(
                 mealTypes = filters?.mealTypes ?: emptyList(),
                 query = query.ifEmpty { null }
             ).cachedIn(viewModelScope)
-                .collectLatest { _recipes.value = it }
+                .collectLatest { recipesFlow.value = it }
         }
     }
 }

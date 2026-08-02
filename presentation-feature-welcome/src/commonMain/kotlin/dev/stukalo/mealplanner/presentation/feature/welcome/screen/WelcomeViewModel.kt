@@ -49,13 +49,13 @@ internal class WelcomeViewModel(
     private val validateDietUseCase: ValidateDietUseCase,
     private val saveUserDataUseCase: SaveUserDataUseCase,
     private val saveDailyNormUseCase: SaveDailyNormUseCase,
-    private val clock: Clock,
+    private val clock: Clock
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
-    override val initialState = ViewState(
-        weightInput = PRESELECTED_WEIGHT,
-        heightInput = PRESELECTED_HEIGHT
-    )
+    override val initialState =
+        ViewState(
+            weightInput = PRESELECTED_WEIGHT,
+            heightInput = PRESELECTED_HEIGHT
+        )
 
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
@@ -105,111 +105,111 @@ internal class WelcomeViewModel(
         }
     }
 
-    private fun onChangeNameInput(
-        intent: ViewIntent.OnChangeNameInputIntent
-    ) {
+    private fun onChangeNameInput(intent: ViewIntent.OnChangeNameInputIntent) {
         updateState { currentState ->
-            PartialStateChange.NameInput.TextChange(
-                value = intent.value,
-            ).reduce(currentState)
+            PartialStateChange.NameInput
+                .TextChange(
+                    value = intent.value
+                ).reduce(currentState)
         }
 
         validateNameUseCase(intent.value).onValidationError {
             updateState { currentState ->
-                PartialStateChange.NameInput.Error(
-                    errorMessage = it.toMessage()
-                ).reduce(currentState)
+                PartialStateChange.NameInput
+                    .Error(
+                        errorMessage = it.toMessage()
+                    ).reduce(currentState)
             }
         }
     }
 
-    private fun onChangeDateInput(
-        intent: ViewIntent.OnChangeDateInputIntent
-    ) {
+    private fun onChangeDateInput(intent: ViewIntent.OnChangeDateInputIntent) {
         updateState { currentState ->
-            PartialStateChange.DateInput.DateChange(
-                date = intent.date,
-            ).reduce(currentState)
+            PartialStateChange.DateInput
+                .DateChange(
+                    date = intent.date
+                ).reduce(currentState)
         }
 
-        val formattedDate = intent.date?.let {
-            Instant.fromEpochMilliseconds(it)
-                .toLocalDateTime(TimeZone.currentSystemDefault())
-                .date
-                .formatDate()
-        }.orEmpty()
+        val formattedDate =
+            intent.date
+                ?.let {
+                    Instant
+                        .fromEpochMilliseconds(it)
+                        .toLocalDateTime(TimeZone.currentSystemDefault())
+                        .date
+                        .formatDate()
+                }.orEmpty()
         validateDateUseCase(formattedDate).onValidationError {
             updateState { currentState ->
-                PartialStateChange.DateInput.Error(
-                    errorMessage = it.toMessage()
-                ).reduce(currentState)
+                PartialStateChange.DateInput
+                    .Error(
+                        errorMessage = it.toMessage()
+                    ).reduce(currentState)
             }
         }
     }
 
-    private fun onChangeHeightInput(
-        intent: ViewIntent.OnChangeHeightInputIntent
-    ) {
+    private fun onChangeHeightInput(intent: ViewIntent.OnChangeHeightInputIntent) {
         updateState { currentState ->
-            PartialStateChange.HeightInput.ValueChange(
-                value = intent.value,
-            ).reduce(currentState)
+            PartialStateChange.HeightInput
+                .ValueChange(
+                    value = intent.value
+                ).reduce(currentState)
         }
 
         validateHeightUseCase(intent.value.toDoubleOrNull()).onValidationError {
             updateState { currentState ->
-                PartialStateChange.HeightInput.Error(
-                    errorMessage = it.toMessage()
-                ).reduce(currentState)
+                PartialStateChange.HeightInput
+                    .Error(
+                        errorMessage = it.toMessage()
+                    ).reduce(currentState)
             }
         }
     }
 
-    private fun onChangeWeightInput(
-        intent: ViewIntent.OnChangeWeightInputIntent
-    ) {
+    private fun onChangeWeightInput(intent: ViewIntent.OnChangeWeightInputIntent) {
         updateState { currentState ->
-            PartialStateChange.WeightInput.ValueChange(
-                value = intent.value,
-            ).reduce(currentState)
+            PartialStateChange.WeightInput
+                .ValueChange(
+                    value = intent.value
+                ).reduce(currentState)
         }
 
         validateWeightUseCase(intent.value.toDoubleOrNull()).onValidationError {
             updateState { currentState ->
-                PartialStateChange.WeightInput.Error(
-                    errorMessage = it.toMessage()
-                ).reduce(currentState)
+                PartialStateChange.WeightInput
+                    .Error(
+                        errorMessage = it.toMessage()
+                    ).reduce(currentState)
             }
         }
     }
 
-    private fun onChangeGenderInput(
-        intent: ViewIntent.OnChangeGenderInputIntent
-    ) {
+    private fun onChangeGenderInput(intent: ViewIntent.OnChangeGenderInputIntent) {
         updateState { currentState ->
-            PartialStateChange.GenderChange(
-                gender = intent.value,
-            ).reduce(currentState)
+            PartialStateChange
+                .GenderChange(
+                    gender = intent.value
+                ).reduce(currentState)
         }
     }
 
-    private fun onChangeActivityLevelInput(
-        intent: ViewIntent.OnChangeActivityLevelInputIntent
-    ) {
+    private fun onChangeActivityLevelInput(intent: ViewIntent.OnChangeActivityLevelInputIntent) {
         updateState { currentState ->
-            PartialStateChange.ActivityLevelChange(
-                activityLevel = intent.value,
-            ).reduce(currentState)
+            PartialStateChange
+                .ActivityLevelChange(
+                    activityLevel = intent.value
+                ).reduce(currentState)
         }
     }
 
-    private fun onChangeDietInput(
-        intent: ViewIntent.OnChangeDietInputIntent
-    ) {
+    private fun onChangeDietInput(intent: ViewIntent.OnChangeDietInputIntent) {
         updateState { currentState ->
-            PartialStateChange.DietChange(
-                diet = intent.value,
-            ).reduce(currentState)
+            PartialStateChange
+                .DietChange(
+                    diet = intent.value
+                ).reduce(currentState)
         }
     }
 
@@ -224,43 +224,50 @@ internal class WelcomeViewModel(
         val state = viewState.value
         val currentStep = state.currentStep
 
-        val validationResult = when (currentStep) {
-            1 -> {
-                val nameRes = validateNameUseCase(state.nameInput)
-                val dateRes = validateDateUseCase(state.dateInput)
-                if (nameRes is ValidationResult.Error || dateRes is ValidationResult.Error) {
-                    updateState { currentState ->
-                        PartialStateChange.ValidationErrors(
-                            nameErrorMessage = (nameRes as? ValidationResult.Error)?.exception?.toMessage(),
-                            dateErrorMessage = (dateRes as? ValidationResult.Error)?.exception?.toMessage(),
-                        ).reduce(currentState)
+        val validationResult =
+            when (currentStep) {
+                1 -> {
+                    val nameRes = validateNameUseCase(state.nameInput)
+                    val dateRes = validateDateUseCase(state.dateInput)
+                    if (nameRes is ValidationResult.Error || dateRes is ValidationResult.Error) {
+                        updateState { currentState ->
+                            PartialStateChange
+                                .ValidationErrors(
+                                    nameErrorMessage = (nameRes as? ValidationResult.Error)?.exception?.toMessage(),
+                                    dateErrorMessage = (dateRes as? ValidationResult.Error)?.exception?.toMessage()
+                                ).reduce(currentState)
+                        }
+                        ValidationResult.Error(AppException())
+                    } else {
+                        ValidationResult.Success
                     }
-                    ValidationResult.Error(AppException())
-                } else {
-                    ValidationResult.Success
                 }
+                2 ->
+                    validateWeightUseCase(state.weightInput.toDoubleOrNull()).onValidationError {
+                        updateState { currentState ->
+                            PartialStateChange.WeightInput.Error(it.toMessage()).reduce(currentState)
+                        }
+                    }
+                3 ->
+                    validateHeightUseCase(state.heightInput.toDoubleOrNull()).onValidationError {
+                        updateState { currentState ->
+                            PartialStateChange.HeightInput.Error(it.toMessage()).reduce(currentState)
+                        }
+                    }
+                4 ->
+                    validateGenderUseCase(state.gender).onValidationError {
+                        sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
+                    }
+                5 ->
+                    validateActivityLevelUseCase(state.activityLevel).onValidationError {
+                        sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
+                    }
+                6 ->
+                    validateDietUseCase(state.diet).onValidationError {
+                        sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
+                    }
+                else -> ValidationResult.Success
             }
-            2 -> validateWeightUseCase(state.weightInput.toDoubleOrNull()).onValidationError {
-                updateState { currentState ->
-                    PartialStateChange.WeightInput.Error(it.toMessage()).reduce(currentState)
-                }
-            }
-            3 -> validateHeightUseCase(state.heightInput.toDoubleOrNull()).onValidationError {
-                updateState { currentState ->
-                    PartialStateChange.HeightInput.Error(it.toMessage()).reduce(currentState)
-                }
-            }
-            4 -> validateGenderUseCase(state.gender).onValidationError {
-                sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
-            }
-            5 -> validateActivityLevelUseCase(state.activityLevel).onValidationError {
-                sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
-            }
-            6 -> validateDietUseCase(state.diet).onValidationError {
-                sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
-            }
-            else -> ValidationResult.Success
-        }
 
         if (validationResult is ValidationResult.Success) {
             if (currentStep < 6) {
@@ -284,22 +291,24 @@ internal class WelcomeViewModel(
 
         updateState { PartialStateChange.Loading(true).reduce(it) }
 
-        val user = UserDomainModel(
-            name = state.nameInput,
-            birthDate = birthDate,
-            height = state.heightInput.toDoubleOrNull() ?: 0.0,
-            weight = state.weightInput.toDoubleOrNull() ?: 0.0,
-            physicalActivity = activityLevel,
-            gender = gender,
-            diet = diet,
-        )
+        val user =
+            UserDomainModel(
+                name = state.nameInput,
+                birthDate = birthDate,
+                height = state.heightInput.toDoubleOrNull() ?: 0.0,
+                weight = state.weightInput.toDoubleOrNull() ?: 0.0,
+                physicalActivity = activityLevel,
+                gender = gender,
+                diet = diet
+            )
 
         coroutineScope {
             val saveUserTask = async { saveUserDataUseCase(user) }
-            val saveDailyNormTask = async {
-                val dailyNorm = calculateDailyNorm(user)
-                saveDailyNormUseCase(dailyNorm)
-            }
+            val saveDailyNormTask =
+                async {
+                    val dailyNorm = calculateDailyNorm(user)
+                    saveDailyNormUseCase(dailyNorm)
+                }
 
             val saveUserResult = saveUserTask.await()
             val saveDailyNormResult = saveDailyNormTask.await()
@@ -325,44 +334,47 @@ internal class WelcomeViewModel(
             age--
         }
 
-        val activityCoefficient = when (user.physicalActivity) {
-            ActivityLevelDomainModel.VERY_LOW -> 1.1
-            ActivityLevelDomainModel.LOW -> 1.3
-            ActivityLevelDomainModel.MEDIUM -> 1.5
-            ActivityLevelDomainModel.HIGH -> 1.7
-            ActivityLevelDomainModel.VERY_HIGH -> 1.9
-        }
+        val activityCoefficient =
+            when (user.physicalActivity) {
+                ActivityLevelDomainModel.VERY_LOW -> 1.1
+                ActivityLevelDomainModel.LOW -> 1.3
+                ActivityLevelDomainModel.MEDIUM -> 1.5
+                ActivityLevelDomainModel.HIGH -> 1.7
+                ActivityLevelDomainModel.VERY_HIGH -> 1.9
+            }
 
-        var calories = if (user.gender == GenderDomainModel.MALE) {
-            when (age) {
-                in 0..30 -> (0.0630 * user.weight + 2.8957) * 240
-                in 31..60 -> (0.0491 * user.weight + 2.4587) * 240
-                else -> (0.0491 * user.weight + 1.8988) * 240
+        var calories =
+            if (user.gender == GenderDomainModel.MALE) {
+                when (age) {
+                    in 0..30 -> (0.0630 * user.weight + 2.8957) * 240
+                    in 31..60 -> (0.0491 * user.weight + 2.4587) * 240
+                    else -> (0.0491 * user.weight + 1.8988) * 240
+                }
+            } else {
+                when (age) {
+                    in 0..30 -> (0.0621 * user.weight + 2.0357) * 240
+                    in 31..60 -> (0.0342 * user.weight + 3.5377) * 240
+                    else -> (0.0377 * user.weight + 2.7545) * 240
+                }
             }
-        } else {
-            when (age) {
-                in 0..30 -> (0.0621 * user.weight + 2.0357) * 240
-                in 31..60 -> (0.0342 * user.weight + 3.5377) * 240
-                else -> (0.0377 * user.weight + 2.7545) * 240
-            }
-        }
         calories *= activityCoefficient
 
-        val (proteinsCoefficient, fatsCoefficient, carbsCoefficient) = when (user.diet) {
-            DietDomainModel.BALANCED_DIET -> Triple(0.2, 0.2, 0.6)
-            DietDomainModel.WEIGHT_GAIN -> {
-                calories *= 1.1
-                Triple(0.28, 0.2, 0.52)
+        val (proteinsCoefficient, fatsCoefficient, carbsCoefficient) =
+            when (user.diet) {
+                DietDomainModel.BALANCED_DIET -> Triple(0.2, 0.2, 0.6)
+                DietDomainModel.WEIGHT_GAIN -> {
+                    calories *= 1.1
+                    Triple(0.28, 0.2, 0.52)
+                }
+                DietDomainModel.WEIGHT_LOSS -> {
+                    calories *= 0.8
+                    Triple(0.31, 0.29, 0.41)
+                }
+                DietDomainModel.CUTTING_DIET -> {
+                    calories *= 0.85
+                    Triple(0.5, 0.2, 0.3)
+                }
             }
-            DietDomainModel.WEIGHT_LOSS -> {
-                calories *= 0.8
-                Triple(0.31, 0.29, 0.41)
-            }
-            DietDomainModel.CUTTING_DIET -> {
-                calories *= 0.85
-                Triple(0.5, 0.2, 0.3)
-            }
-        }
 
         return DailyNormDomainModel(
             calories = calories,

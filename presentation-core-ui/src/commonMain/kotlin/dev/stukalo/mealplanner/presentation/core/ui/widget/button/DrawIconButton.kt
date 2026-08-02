@@ -74,9 +74,8 @@ fun DrawIconButton(
     minHeight: Dp,
     paddings: PaddingValues,
     isLoading: Boolean,
-    horizontalArrangement: Alignment = Alignment.Center,
+    horizontalArrangement: Alignment = Alignment.Center
 ) {
-
     //region core
     val composition by rememberLottieComposition {
         LottieCompositionSpec.JsonString(
@@ -86,56 +85,59 @@ fun DrawIconButton(
 
     val progress by animateLottieCompositionAsState(
         composition,
-        iterations = IterateForever,
+        iterations = IterateForever
     )
     //endregion core
 
-
     Box(
         modifier =
-            modifier
-                .animateContentSize(
-                    animationSpec =
-                        tween(
-                            durationMillis = AnimationConfiguration.Duration.DEFAULT,
-                            easing = LinearOutSlowInEasing,
-                        ),
-                ).border(
-                    width = borderSize,
-                    color = borderColor,
-                    shape = RoundedCornerShape(corner),
-                ).background(
-                    color = backgroundColor,
-                    shape = RoundedCornerShape(corner),
-                ).padding(paddings),
-        contentAlignment = horizontalArrangement,
+        modifier
+            .animateContentSize(
+                animationSpec =
+                tween(
+                    durationMillis = AnimationConfiguration.Duration.DEFAULT,
+                    easing = LinearOutSlowInEasing
+                )
+            ).border(
+                width = borderSize,
+                color = borderColor,
+                shape = RoundedCornerShape(corner)
+            ).background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(corner)
+            ).padding(paddings),
+        contentAlignment = horizontalArrangement
     ) {
         AnimatedContent(
             targetState = isLoading,
             transitionSpec = AnimationConfiguration.Transition.default(),
-            label = "DrawButton: AnimatedContent",
+            label = "DrawButton: AnimatedContent"
         ) {
             Box(
                 modifier =
-                    Modifier
-                        .wrapContentWidth()
-                        .wrapContentHeight(),
+                Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
             ) {
                 when {
-                    it -> Image(
-                        modifier = Modifier.size(loadingSize),
-                        painter = rememberLottiePainter(
-                            composition = composition, progress = {progress}, enableMergePaths = true,
-                        ),
-                        contentDescription = "Lottie animation"
-                    )
+                    it ->
+                        Image(
+                            modifier = Modifier.size(loadingSize),
+                            painter =
+                            rememberLottiePainter(
+                                composition = composition,
+                                progress = { progress },
+                                enableMergePaths = true
+                            ),
+                            contentDescription = "Lottie animation"
+                        )
 
                     !it ->
                         Icon(
                             imageVector = icon,
                             contentDescription = null,
                             tint = iconColor,
-                            modifier = Modifier.size(iconSize),
+                            modifier = Modifier.size(iconSize)
                         )
                 }
             }
@@ -161,7 +163,7 @@ private fun PreviewDrawIconButton() {
                 paddings = PaddingValues(all = 8.dp),
                 isLoading = false,
                 loadingSize = 0.dp,
-                horizontalArrangement = Alignment.TopStart,
+                horizontalArrangement = Alignment.TopStart
             )
         }
     }

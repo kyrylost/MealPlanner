@@ -4,7 +4,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface SettingsPreferencesDataSource {
     fun getColorPaletteName(): Flow<String?>
+
     suspend fun setColorPaletteName(name: String)
+
     fun getLocale(): Flow<String?>
+
     suspend fun setLocale(locale: String)
 }

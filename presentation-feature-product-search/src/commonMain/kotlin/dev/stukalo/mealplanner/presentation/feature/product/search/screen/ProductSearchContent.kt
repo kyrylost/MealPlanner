@@ -40,7 +40,7 @@ import org.jetbrains.compose.resources.stringResource
 
 /**
  * The content of the product search screen.
- * 
+ *
  * @param state The current view state.
  * @param products The paging items for the products list.
  * @param onIntent The callback for view intents.
@@ -49,7 +49,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun ProductSearchContent(
     state: ViewState,
     products: LazyPagingItems<ProductDomainModel>?,
-    onIntent: (ViewIntent) -> Unit,
+    onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
     var selectedProduct by remember { mutableStateOf<ProductDomainModel?>(null) }
@@ -78,7 +78,8 @@ internal fun ProductSearchContent(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
         ) {
@@ -116,7 +117,8 @@ internal fun ProductSearchContent(
             containerColor = Theme.color.primary,
             contentColor = Theme.color.textOnPrimary,
             shape = CircleShape,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .align(Alignment.BottomEnd)
                 .padding(Theme.spacing.space16)
                 .padding(bottom = LocalBottomBarHeight.current)

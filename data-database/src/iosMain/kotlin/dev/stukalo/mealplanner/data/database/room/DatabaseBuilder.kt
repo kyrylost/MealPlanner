@@ -8,10 +8,11 @@ import platform.Foundation.NSHomeDirectory
 
 fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = NSHomeDirectory() + "/my_room.db"
-    return Room.databaseBuilder<AppDatabase>(
-        name = dbFilePath,
-        factory = { AppDatabaseConstructor.initialize() }
-    ).fallbackToDestructiveMigration(
-        dropAllTables = true
-    )
+    return Room
+        .databaseBuilder<AppDatabase>(
+            name = dbFilePath,
+            factory = { AppDatabaseConstructor.initialize() }
+        ).fallbackToDestructiveMigration(
+            dropAllTables = true
+        )
 }

@@ -24,5 +24,5 @@ data class ButtonColorSet(
     val foregroundColorDefault: Color,
     val backgroundColorDisabled: Color,
     val backgroundColorPressed: Color,
-    val backgroundColorDefault: Color,
+    val backgroundColorDefault: Color
 )

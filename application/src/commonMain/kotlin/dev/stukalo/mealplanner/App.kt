@@ -29,7 +29,8 @@ import org.koin.dsl.koinConfiguration
 @Composable
 fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
     KoinApplication(
-        configuration = koinConfiguration(
+        configuration =
+        koinConfiguration(
             declaration = {
                 koinAppDeclaration?.invoke(this)
                 modules(
@@ -42,9 +43,7 @@ fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
                     dataRepositoryModule,
                     dataPreferencesModule,
                     platformDataPreferencesModule,
-
                     domainModule,
-
                     gatewayModule,
                     homeModule,
                     welcomeModule,
@@ -54,7 +53,7 @@ fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
                     statisticsModule,
                     filtersModule,
                     recipeDetailsModule,
-                    hostModule,
+                    hostModule
                 )
             }
         ),

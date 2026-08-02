@@ -6,5 +6,5 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewSta
 data class ViewState(
     val searchQuery: String = "",
     val filters: FilterDomainModel? = null,
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = false
 ) : MviViewState

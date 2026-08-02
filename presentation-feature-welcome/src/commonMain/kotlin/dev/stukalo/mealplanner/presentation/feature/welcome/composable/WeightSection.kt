@@ -24,11 +24,7 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.View
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun WeightSection(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun WeightSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modifier: Modifier = Modifier) {
     var showEditDialog by remember { mutableStateOf(false) }
     val weightValue = state.weightInput.toFloatOrNull() ?: 0f
 

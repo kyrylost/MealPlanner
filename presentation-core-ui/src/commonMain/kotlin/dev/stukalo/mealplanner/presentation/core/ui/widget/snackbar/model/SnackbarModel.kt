@@ -2,10 +2,7 @@ package dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model
 
 import org.jetbrains.compose.resources.StringResource
 
-data class SnackbarModel(
-    val message: SnackbarMessage,
-    val type: SnackbarType = SnackbarType.ERROR
-) {
+data class SnackbarModel(val message: SnackbarMessage, val type: SnackbarType = SnackbarType.ERROR) {
     constructor(
         message: StringResource,
         type: SnackbarType = SnackbarType.ERROR

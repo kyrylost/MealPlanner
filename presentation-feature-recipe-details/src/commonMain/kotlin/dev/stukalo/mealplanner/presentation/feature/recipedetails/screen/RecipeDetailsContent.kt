@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -54,7 +53,6 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
@@ -76,10 +74,7 @@ import org.jetbrains.compose.resources.stringResource
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun RecipeDetailsContent(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit
-) {
+internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     val uriHandler = LocalUriHandler.current
     val hazeState = rememberHazeState()
     var showWeightDialog by remember { mutableStateOf(false) }
@@ -113,16 +108,16 @@ internal fun RecipeDetailsContent(
             )
         } else if (state.recipe != null) {
             val currentRecipe = state.recipe
-            
+
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = LocalBottomBarHeight.current)
+                modifier = Modifier.fillMaxSize()
             ) {
                 item {
                     AsyncImage(
                         model = currentRecipe.product.imageUrl,
                         contentDescription = null,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .aspectRatio(Theme.aspect.recipeDetailsImage),
                         contentScale = ContentScale.Crop
@@ -131,7 +126,8 @@ internal fun RecipeDetailsContent(
 
                 item {
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .padding(Theme.spacing.space16),
                         verticalArrangement = Arrangement.spacedBy(Theme.spacing.space24)
@@ -142,26 +138,46 @@ internal fun RecipeDetailsContent(
                                 style = Theme.typography.bold36,
                                 color = Theme.color.textPrimary
                             )
-                            
+
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
                             ) {
                                 InfoChip(
                                     icon = IconClock,
-                                    text = currentRecipe.totalTime?.let { stringResource(Res.string.common_minutes_short, it) } ?: "--"
+                                    text =
+                                    currentRecipe.totalTime?.let {
+                                        stringResource(
+                                            Res.string.common_minutes_short,
+                                            it
+                                        )
+                                    }
+                                        ?: "--"
                                 )
                                 InfoChip(
-                                    text = currentRecipe.servings?.let { stringResource(Res.string.common_servings, it) } ?: "--"
+                                    text =
+                                    currentRecipe.servings?.let { stringResource(Res.string.common_servings, it) }
+                                        ?: "--"
                                 )
                             }
                         }
 
                         NutritionSummary(
                             calories = currentRecipe.product.caloriesTotal ?: 0f,
-                            protein = currentRecipe.product.nutrientsTotal?.find { it.nutrientType == NutrientTypeDomainModel.PROTEIN }?.amount ?: 0f,
-                            fats = currentRecipe.product.nutrientsTotal?.find { it.nutrientType == NutrientTypeDomainModel.FATS }?.amount ?: 0f,
-                            carbs = currentRecipe.product.nutrientsTotal?.find { it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES }?.amount ?: 0f,
+                            protein =
+                            currentRecipe.product.nutrientsTotal
+                                ?.find { it.nutrientType == NutrientTypeDomainModel.PROTEIN }
+                                ?.amount
+                                ?: 0f,
+                            fats =
+                            currentRecipe.product.nutrientsTotal
+                                ?.find { it.nutrientType == NutrientTypeDomainModel.FATS }
+                                ?.amount ?: 0f,
+                            carbs =
+                            currentRecipe.product.nutrientsTotal
+                                ?.find { it.nutrientType == NutrientTypeDomainModel.CARBOHYDRATES }
+                                ?.amount
+                                ?: 0f,
                             hazeState = hazeState
                         )
 
@@ -212,7 +228,8 @@ internal fun RecipeDetailsContent(
                         currentRecipe.url?.let { url ->
                             Text(
                                 text = stringResource(Res.string.recipe_details_view_prep),
-                                style = Theme.typography.bold14.copy(
+                                style =
+                                Theme.typography.bold14.copy(
                                     color = Theme.color.primary,
                                     textDecoration = TextDecoration.Underline
                                 ),
@@ -223,7 +240,12 @@ internal fun RecipeDetailsContent(
                 }
 
                 item {
-                    Spacer(modifier = Modifier.height(buttonHeight + Theme.spacing.space24))
+                    Spacer(
+                        modifier =
+                        Modifier
+                            .navigationBarsPadding()
+                            .height(buttonHeight + Theme.spacing.space24)
+                    )
                 }
             }
 
@@ -238,14 +260,15 @@ internal fun RecipeDetailsContent(
                 onClick = { showWeightDialog = true },
                 corner = Theme.radius.radius24,
                 textStyle = Theme.typography.bold14,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(Theme.spacing.space16)
                     .navigationBarsPadding()
                     .onGloballyPositioned {
                         buttonHeight = with(density) { it.size.height.toDp() }
-                    },
+                    }
             )
         } else {
             Text(
@@ -263,14 +286,18 @@ private fun RecipeDetailsContentPreview() {
     Theme {
         Surface(color = Theme.color.background) {
             RecipeDetailsContent(
-                state = ViewState(
-                    recipe = RecipeDomainModel(
+                state =
+                ViewState(
+                    recipe =
+                    RecipeDomainModel(
                         id = "1",
-                        product = ProductDomainModel(
+                        product =
+                        ProductDomainModel(
                             productName = "Healthy Salmon Salad",
                             imageUrl = "https://www.edamam.com/web-img/70a/70af3664d422998a449174092b37803f.jpg",
                             caloriesTotal = 450f,
-                            nutrientsTotal = listOf(
+                            nutrientsTotal =
+                            listOf(
                                 NutrientDomainModel(NutrientTypeDomainModel.PROTEIN, 35f),
                                 NutrientDomainModel(NutrientTypeDomainModel.FATS, 20f),
                                 NutrientDomainModel(NutrientTypeDomainModel.CARBOHYDRATES, 15f)
@@ -278,13 +305,15 @@ private fun RecipeDetailsContentPreview() {
                         ),
                         servings = 2,
                         totalTime = 25,
-                        ingredientLines = listOf(
+                        ingredientLines =
+                        listOf(
                             "200g Fresh Salmon",
                             "100g Mixed Greens",
                             "1 Avocado",
                             "Olive Oil"
                         ),
-                        instructionLines = listOf(
+                        instructionLines =
+                        listOf(
                             "Season the salmon with salt and pepper.",
                             "Pan-sear the salmon for 4 minutes on each side.",
                             "Toss the greens with avocado and olive oil.",

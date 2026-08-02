@@ -19,18 +19,17 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.Snackb
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun AppSnackbar(
-    model: SnackbarModel,
-    modifier: Modifier = Modifier
-) {
-    val backgroundColor = when (model.type) {
-        SnackbarType.SUCCESS -> Theme.color.success
-        SnackbarType.WARNING -> Theme.color.warning
-        SnackbarType.ERROR -> Theme.color.error
-    }
+fun AppSnackbar(model: SnackbarModel, modifier: Modifier = Modifier) {
+    val backgroundColor =
+        when (model.type) {
+            SnackbarType.SUCCESS -> Theme.color.success
+            SnackbarType.WARNING -> Theme.color.warning
+            SnackbarType.ERROR -> Theme.color.error
+        }
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(Theme.spacing.space16)
             .clip(RoundedCornerShape(Theme.radius.radius12))
@@ -38,12 +37,13 @@ fun AppSnackbar(
             .padding(Theme.spacing.space16)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            val text = when (val message = model.message) {
-                is SnackbarMessage.Resource -> stringResource(message.res)
-                is SnackbarMessage.Text -> message.value
-            }
+            val text =
+                when (val message = model.message) {
+                    is SnackbarMessage.Resource -> stringResource(message.res)
+                    is SnackbarMessage.Text -> message.value
+                }
             Text(
                 text = text,
                 style = Theme.typography.regular14,
@@ -58,7 +58,8 @@ fun AppSnackbar(
 private fun SuccessSnackbarPreview() {
     Theme {
         AppSnackbar(
-            model = SnackbarModel(
+            model =
+            SnackbarModel(
                 message = "Success message",
                 type = SnackbarType.SUCCESS
             )
@@ -71,7 +72,8 @@ private fun SuccessSnackbarPreview() {
 private fun WarningSnackbarPreview() {
     Theme {
         AppSnackbar(
-            model = SnackbarModel(
+            model =
+            SnackbarModel(
                 message = "Warning message",
                 type = SnackbarType.WARNING
             )
@@ -84,7 +86,8 @@ private fun WarningSnackbarPreview() {
 private fun ErrorSnackbarPreview() {
     Theme {
         AppSnackbar(
-            model = SnackbarModel(
+            model =
+            SnackbarModel(
                 message = "Error message",
                 type = SnackbarType.ERROR
             )

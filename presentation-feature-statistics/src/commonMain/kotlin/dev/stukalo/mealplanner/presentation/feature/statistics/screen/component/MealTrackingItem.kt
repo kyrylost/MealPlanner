@@ -31,13 +31,13 @@ fun MealTrackingItem(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .background(
                 color = Theme.color.backgroundSecondary,
                 shape = Theme.shape.normalRoundedCornerShape
-            )
-            .clickable { onMealClick() }
+            ).clickable { onMealClick() }
             .padding(Theme.spacing.space16),
         verticalAlignment = Alignment.CenterVertically
     ) {

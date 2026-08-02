@@ -24,18 +24,17 @@ import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.Vie
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun SettingsContent(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-) {
+internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .statusBarsPadding()
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
+            contentPadding =
+            PaddingValues(
                 start = Theme.spacing.space16,
                 end = Theme.spacing.space16,
                 top = Theme.spacing.space16,
@@ -50,7 +49,7 @@ internal fun SettingsContent(
                     color = Theme.color.textPrimary
                 )
             }
-            
+
             item {
                 Text(
                     text = stringResource(Res.string.settings_theme_choice),
@@ -58,7 +57,7 @@ internal fun SettingsContent(
                     color = Theme.color.textPrimary
                 )
             }
-            
+
             items(ColorPaletteDomainModel.entries) { palette ->
                 ThemeOption(
                     palette = palette,

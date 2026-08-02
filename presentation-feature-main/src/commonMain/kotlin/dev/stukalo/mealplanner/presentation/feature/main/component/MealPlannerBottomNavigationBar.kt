@@ -78,7 +78,8 @@ fun MealPlannerBottomNavigationBar(
     )
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .padding(Theme.spacing.space16)
             .navigationBarsPadding()
             .height(indicatorSize + verticalPadding * 2)
@@ -87,7 +88,8 @@ fun MealPlannerBottomNavigationBar(
     ) {
         // Blurred background layer
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .matchParentSize()
                 .blur(12.dp)
                 .hazeChild(
@@ -98,7 +100,8 @@ fun MealPlannerBottomNavigationBar(
 
         // Navigation Content layer
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .onGloballyPositioned { containerWidth = it.size.width }
         ) {
@@ -113,7 +116,8 @@ fun MealPlannerBottomNavigationBar(
                 val iconOnPrimaryColor = Theme.color.iconOnPrimary
 
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize()
                         .drawWithContent {
                             val indicatorSizePx = indicatorSize.toPx()
@@ -165,7 +169,8 @@ private fun NavigationTabRow(
     ) {
         MainTab.entries.forEach { tab ->
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .weight(1f)
                     .fillMaxHeight()
                     .then(
@@ -198,7 +203,8 @@ fun MealPlannerBottomNavigationBarPreview() {
     val hazeState = rememberHazeState()
     Theme {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .background(Theme.color.background)
         ) {

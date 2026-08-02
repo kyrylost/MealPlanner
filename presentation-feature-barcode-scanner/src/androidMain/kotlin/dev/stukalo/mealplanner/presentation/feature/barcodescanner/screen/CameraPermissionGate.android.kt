@@ -20,9 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 
 @Composable
-actual fun CameraPermissionGate(
-    content: @Composable () -> Unit,
-) {
+actual fun CameraPermissionGate(content: @Composable () -> Unit) {
     val context = LocalContext.current
     var hasPermission by remember {
         mutableStateOf(
@@ -33,11 +31,12 @@ actual fun CameraPermissionGate(
         )
     }
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        hasPermission = granted
-    }
+    val launcher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission()
+        ) { granted ->
+            hasPermission = granted
+        }
 
     if (hasPermission) {
         content()

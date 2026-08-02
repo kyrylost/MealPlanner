@@ -4,6 +4,4 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EdamamLinksNetModel(
-    @SerialName("next") val next: EdamamNextNetModel? = null,
-)
+data class EdamamLinksNetModel(@SerialName("next") val next: EdamamNextNetModel? = null)

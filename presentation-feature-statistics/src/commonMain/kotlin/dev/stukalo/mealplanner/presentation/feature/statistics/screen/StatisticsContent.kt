@@ -26,18 +26,17 @@ import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.V
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun StatisticsContent(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-) {
+internal fun StatisticsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .statusBarsPadding()
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(
+            contentPadding =
+            PaddingValues(
                 start = Theme.spacing.space16,
                 end = Theme.spacing.space16,
                 top = Theme.spacing.space16,
@@ -80,14 +79,16 @@ private fun StatisticsContentPreview() {
     Theme {
         Surface(color = Theme.color.background) {
             StatisticsContent(
-                state = ViewState(
-                    meals = listOf(
+                state =
+                ViewState(
+                    meals =
+                    listOf(
                         MealSlotProgress(1, "Breakfast", 500.0, 30.0, 15.0, 60.0, true),
                         MealSlotProgress(2, "Lunch", 800.0, 40.0, 25.0, 100.0, false),
-                        MealSlotProgress(3, "Dinner", 700.0, 35.0, 20.0, 80.0, false),
+                        MealSlotProgress(3, "Dinner", 700.0, 35.0, 20.0, 80.0, false)
                     )
                 ),
-                onIntent = {},
+                onIntent = {}
             )
         }
     }

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EdamamRecipeDetailsResponseNetModel(
     @SerialName("recipe") val recipe: EdamamRecipeNetModel? = null,
-    @SerialName("_links") val links: EdamamLinksNetModel? = null,
+    @SerialName("_links") val links: EdamamLinksNetModel? = null
 )

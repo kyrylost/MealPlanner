@@ -36,10 +36,11 @@ kotlin {
 }
 
 // Read the local.properties file
-val localProperties = Properties().apply {
-    val file = rootProject.file("local.properties")
-    if (file.exists()) load(file.inputStream())
-}
+val localProperties =
+    Properties().apply {
+        val file = rootProject.file("local.properties")
+        if (file.exists()) load(file.inputStream())
+    }
 
 abstract class GenerateSecretsTask : DefaultTask() {
     @get:Input
@@ -64,7 +65,8 @@ abstract class GenerateSecretsTask : DefaultTask() {
     fun generate() {
         val secretsFile = outputDirectory.get().file("ApiKeys.kt").asFile
         secretsFile.parentFile.mkdirs()
-        secretsFile.writeText("""
+        secretsFile.writeText(
+            """
             package dev.stukalo.mealplanner.data.network.core
             
             // This file is auto-generated. Do not edit.
@@ -75,19 +77,29 @@ abstract class GenerateSecretsTask : DefaultTask() {
                 const val EDAMAM_RECIPE_API_APP_KEY = "${edamamRecipeApiAppKey.get()}"
                 const val USDA_FDC_API_KEY = "${usdaFdcApiKey.get()}"
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
     }
 }
 
 // Create a task to generate a Kotlin file
-val generateSecrets = tasks.register<GenerateSecretsTask>("generateSecrets") {
-    edamamFoodApiAppId.set(localProperties.getProperty("EDAMAM_FOOD_API_APP_ID") ?: "MISSING_KEY")
-    edamamFoodApiAppKey.set(localProperties.getProperty("EDAMAM_FOOD_API_APP_KEY") ?: "MISSING_KEY")
-    edamamRecipeApiAppId.set(localProperties.getProperty("EDAMAM_RECIPE_API_APP_ID") ?: "MISSING_KEY")
-    edamamRecipeApiAppKey.set(localProperties.getProperty("EDAMAM_RECIPE_API_APP_KEY") ?: "MISSING_KEY")
-    usdaFdcApiKey.set(localProperties.getProperty("USDA_FDC_API_KEY") ?: "MISSING_KEY")
-    outputDirectory.set(layout.buildDirectory.dir("generated/secrets/src/commonMain/kotlin"))
-}
+val generateSecrets =
+    tasks.register<GenerateSecretsTask>("generateSecrets") {
+        edamamFoodApiAppId.set(
+            localProperties.getProperty("EDAMAM_FOOD_API_APP_ID") ?: "MISSING_KEY"
+        )
+        edamamFoodApiAppKey.set(
+            localProperties.getProperty("EDAMAM_FOOD_API_APP_KEY") ?: "MISSING_KEY"
+        )
+        edamamRecipeApiAppId.set(
+            localProperties.getProperty("EDAMAM_RECIPE_API_APP_ID") ?: "MISSING_KEY"
+        )
+        edamamRecipeApiAppKey.set(
+            localProperties.getProperty("EDAMAM_RECIPE_API_APP_KEY") ?: "MISSING_KEY"
+        )
+        usdaFdcApiKey.set(localProperties.getProperty("USDA_FDC_API_KEY") ?: "MISSING_KEY")
+        outputDirectory.set(layout.buildDirectory.dir("generated/secrets/src/commonMain/kotlin"))
+    }
 
 // Tell Kotlin to include this generated folder in commonMain
 kotlin {

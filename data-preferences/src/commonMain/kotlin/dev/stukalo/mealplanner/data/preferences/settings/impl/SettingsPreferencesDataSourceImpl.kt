@@ -8,10 +8,8 @@ import dev.stukalo.mealplanner.data.preferences.settings.SettingsPreferencesData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class SettingsPreferencesDataSourceImpl(
-    private val dataStore: DataStore<Preferences>
-) : SettingsPreferencesDataSource {
-
+class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Preferences>) :
+    SettingsPreferencesDataSource {
     private object PreferencesKeys {
         val COLOR_PALETTE = stringPreferencesKey("color_palette")
         val LOCALE = stringPreferencesKey("locale")

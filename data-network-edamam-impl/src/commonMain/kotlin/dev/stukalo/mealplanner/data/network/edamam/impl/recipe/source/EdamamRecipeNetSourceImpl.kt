@@ -9,10 +9,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
-internal class EdamamRecipeNetSourceImpl(
-    client: HttpClient,
-): BaseNetSource(client), EdamamRecipeNetSource {
-
+internal class EdamamRecipeNetSourceImpl(client: HttpClient) :
+    BaseNetSource(client),
+    EdamamRecipeNetSource {
     override suspend fun getRecipesByMacros(
         type: String,
         calories: String,
@@ -21,29 +20,23 @@ internal class EdamamRecipeNetSourceImpl(
         proteins: String,
         mealTypes: List<String>,
         query: String?
-    ): EdamamRecipeResponseNetModel {
-        return performRequest {
-            get(EdamamRecipeRoutes.Recipes.route) {
-                parameter("type", type)
-                parameter("q", query)
-                parameter("nutrients[ENERC_KCAL]", calories)
-                parameter("nutrients[CHOCDF]", carbohydrates)
-                parameter("nutrients[FAT]", fats)
-                parameter("nutrients[PROCNT]", proteins)
-                mealTypes.forEach { parameter("mealType", it) }
-            }
+    ): EdamamRecipeResponseNetModel = performRequest {
+        get(EdamamRecipeRoutes.Recipes.route) {
+            parameter("type", type)
+            parameter("q", query)
+            parameter("nutrients[ENERC_KCAL]", calories)
+            parameter("nutrients[CHOCDF]", carbohydrates)
+            parameter("nutrients[FAT]", fats)
+            parameter("nutrients[PROCNT]", proteins)
+            mealTypes.forEach { parameter("mealType", it) }
         }
     }
 
-    override suspend fun getRecipesByUrl(url: String): EdamamRecipeResponseNetModel {
-        return performRequest {
-            get(url)
-        }
+    override suspend fun getRecipesByUrl(url: String): EdamamRecipeResponseNetModel = performRequest {
+        get(url)
     }
 
-    override suspend fun getRecipeById(id: String): EdamamRecipeDetailsResponseNetModel {
-        return performRequest {
-            get("${EdamamRecipeRoutes.Recipes.route}/$id")
-        }
+    override suspend fun getRecipeById(id: String): EdamamRecipeDetailsResponseNetModel = performRequest {
+        get("${EdamamRecipeRoutes.Recipes.route}/$id")
     }
 }

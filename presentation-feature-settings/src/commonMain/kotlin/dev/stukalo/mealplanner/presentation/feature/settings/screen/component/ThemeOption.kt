@@ -27,25 +27,23 @@ import org.jetbrains.compose.resources.stringResource
 
 /**
  * A component representing a theme choice option.
- * 
+ *
  * @param palette The color palette to display.
  * @param onClick The callback for when the option is clicked.
  * @param modifier The modifier to apply to the component.
  */
 @Composable
-fun ThemeOption(
-    palette: ColorPaletteDomainModel,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val themeColorPalette = when (palette) {
-        ColorPaletteDomainModel.ORANGE -> ThemeColorPalette.ORANGE
-        ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
-    }
+fun ThemeOption(palette: ColorPaletteDomainModel, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val themeColorPalette =
+        when (palette) {
+            ColorPaletteDomainModel.ORANGE -> ThemeColorPalette.ORANGE
+            ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
+        }
     val primary = themeColorPalette.toPrimaryColor()
 
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .clip(Theme.shape.normalRoundedCornerShape)
             .background(Theme.color.backgroundSecondary)
@@ -55,13 +53,15 @@ fun ThemeOption(
         horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
     ) {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .size(40.dp)
                 .clip(CircleShape)
                 .background(primary)
         )
         Text(
-            text = when (palette) {
+            text =
+            when (palette) {
                 ColorPaletteDomainModel.ORANGE -> stringResource(Res.string.settings_theme_orange)
                 ColorPaletteDomainModel.GREEN -> stringResource(Res.string.settings_theme_green)
             },

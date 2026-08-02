@@ -75,11 +75,15 @@ fun RulerPicker(
 ) {
     val density = LocalDensity.current
     val lineSpacingPx = with(density) { lineSpacing.toPx() }
-    
+
     val totalSteps = ((range.endInclusive - range.start) / step).toInt()
-    
-    // Internal offset to track drag. 
-    var dragOffset by remember(value) { mutableFloatStateOf(-(value - range.start) / step * lineSpacingPx) }
+
+    // Internal offset to track drag.
+    var dragOffset by remember(value) {
+        mutableFloatStateOf(
+            -(value - range.start) / step * lineSpacingPx
+        )
+    }
 
     val textPrimaryColor = Theme.color.textPrimary
     val textSecondaryColor = Theme.color.textSecondary
@@ -89,7 +93,8 @@ fun RulerPicker(
     ) {
         // Header: Label and Value
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = Theme.spacing.space16),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -100,9 +105,15 @@ fun RulerPicker(
                 style = Theme.typography.bold16,
                 color = textPrimaryColor
             )
-            
+
             Row(verticalAlignment = Alignment.CenterVertically) {
-                val formattedValue = if (value % 1f == 0f) value.toInt().toString() else value.toString()
+                val formattedValue = if (value % 1f ==
+                    0f
+                ) {
+                    value.toInt().toString()
+                } else {
+                    value.toString()
+                }
                 Text(
                     text = formattedValue,
                     style = Theme.typography.bold16,
@@ -117,8 +128,10 @@ fun RulerPicker(
                 IconButton(
                     icon = IconEdit,
                     sizes = IconButtonSizeSet().small(),
-                    colors = IconButtonColor(
-                        buttonColorSet = iconButtonDefaultColorSet()
+                    colors =
+                    IconButtonColor(
+                        buttonColorSet =
+                        iconButtonDefaultColorSet()
                             .copy(
                                 foregroundColorDefault = Theme.color.primary
                             )
@@ -129,20 +142,23 @@ fun RulerPicker(
         }
 
         BoxWithConstraints(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .height(100.dp)
                 .draggable(
                     orientation = Orientation.Horizontal,
-                    state = rememberDraggableState { delta ->
+                    state =
+                    rememberDraggableState { delta ->
                         val newOffset = dragOffset + delta
                         val minValueOffset = -totalSteps * lineSpacingPx
                         val maxValueOffset = 0f
-                        
+
                         if (newOffset in minValueOffset..maxValueOffset) {
                             dragOffset = newOffset
                             val newValue = range.start + (-dragOffset / lineSpacingPx * step)
-                            val snappedValue = ((newValue - range.start) / step).roundToInt() * step + range.start
+                            val snappedValue =
+                                ((newValue - range.start) / step).roundToInt() * step + range.start
                             if (snappedValue != value) {
                                 onValueChange(snappedValue)
                             }
@@ -152,27 +168,27 @@ fun RulerPicker(
             contentAlignment = Alignment.Center
         ) {
             val centerPx = constraints.maxWidth / 2f
-            
+
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val canvasWidth = size.width
                 val canvasHeight = size.height
                 val yCenter = canvasHeight / 2
-                
+
                 val maxTickHeight = 60.dp.toPx()
                 val minTickHeight = 10.dp.toPx()
-                
+
                 for (i in 0..totalSteps) {
                     val x = centerPx + dragOffset + (i * lineSpacingPx)
-                    
+
                     if (x !in 0f..canvasWidth) continue
-                    
+
                     val distance = abs(x - centerPx)
                     val maxDistance = canvasWidth / 2
                     val ratio = (distance / maxDistance).coerceIn(0f, 1f)
-                    
+
                     val tickHeight = maxTickHeight - (maxTickHeight - minTickHeight) * ratio
                     val tickColor = lerp(centerTickColor, edgeTickColor, ratio)
-                    
+
                     drawLine(
                         color = tickColor,
                         start = Offset(x, yCenter - tickHeight / 2),

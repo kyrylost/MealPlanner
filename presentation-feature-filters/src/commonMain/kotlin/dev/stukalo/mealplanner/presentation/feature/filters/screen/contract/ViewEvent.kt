@@ -5,5 +5,6 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleE
 
 sealed interface ViewEvent : MviSingleEvent {
     data class ApplyFilters(val filters: FilterDomainModel) : ViewEvent
+
     data object NavigateBack : ViewEvent
 }

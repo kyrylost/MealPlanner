@@ -46,7 +46,7 @@ fun LinearScaleProgressBar(
     bottomPadding: Dp = Theme.spacing.space8,
     progressIndicatorWidth: Dp = 8.dp,
     progressIndicatorHeight: Dp = 24.dp,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val animatedProgress by animateFloatAsState(
         targetValue = if (progress.isNaN()) 0f else progress.coerceIn(0f, 1f),
@@ -85,7 +85,8 @@ fun LinearScaleProgressBar(
 
         // Progress Scale and Indicator
         Canvas(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .height(progressIndicatorHeight + (progressIndicatorHeight / 2) + 4.dp)
         ) {
@@ -112,8 +113,10 @@ fun LinearScaleProgressBar(
             // Draw Reversed Gradient fill behind the indicator
             if (progressX > 0) {
                 drawRect(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
+                    brush =
+                    Brush.horizontalGradient(
+                        colors =
+                        listOf(
                             Color.Transparent,
                             progressColor.copy(alpha = 0.25f)
                         ),
@@ -182,7 +185,8 @@ fun LinearScaleProgressBar(
 private fun LinearScaleProgressBarPreview() {
     Theme {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .background(Color.White)
                 .padding(24.dp)

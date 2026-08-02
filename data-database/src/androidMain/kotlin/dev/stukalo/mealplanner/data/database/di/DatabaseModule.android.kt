@@ -5,8 +5,9 @@ import dev.stukalo.mealplanner.data.database.AppDatabase
 import dev.stukalo.mealplanner.data.database.room.getDatabaseBuilder
 import org.koin.dsl.module
 
-actual val databaseBuilderModule = module {
-    single<RoomDatabase.Builder<AppDatabase>> {
-        getDatabaseBuilder(get())
+actual val databaseBuilderModule =
+    module {
+        single<RoomDatabase.Builder<AppDatabase>> {
+            getDatabaseBuilder(get())
+        }
     }
-}

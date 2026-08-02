@@ -6,15 +6,14 @@ import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.B
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 @Composable
-fun textButtonDefaultColorSet(): ButtonColorSet =
-    ButtonColorSet(
-        borderColorDisabled = Color.Unspecified,
-        borderColorPressed = Color.Unspecified,
-        borderColorDefault = Color.Transparent,
-        foregroundColorDisabled = Theme.color.iconDisabled,
-        foregroundColorPressed = Theme.color.primaryVariant,
-        foregroundColorDefault = Theme.color.primary,
-        backgroundColorDisabled = Color.Transparent,
-        backgroundColorPressed = Color.Transparent,
-        backgroundColorDefault = Color.Transparent,
-    )
+fun textButtonDefaultColorSet(): ButtonColorSet = ButtonColorSet(
+    borderColorDisabled = Color.Unspecified,
+    borderColorPressed = Color.Unspecified,
+    borderColorDefault = Color.Transparent,
+    foregroundColorDisabled = Theme.color.iconDisabled,
+    foregroundColorPressed = Theme.color.primaryVariant,
+    foregroundColorDefault = Theme.color.primary,
+    backgroundColorDisabled = Color.Transparent,
+    backgroundColorPressed = Color.Transparent,
+    backgroundColorDefault = Color.Transparent
+)

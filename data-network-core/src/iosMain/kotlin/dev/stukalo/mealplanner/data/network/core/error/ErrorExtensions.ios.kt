@@ -18,7 +18,8 @@ actual val Throwable?.isConnectionError: Boolean
                     NSURLErrorNotConnectedToInternet,
                     NSURLErrorTimedOut,
                     NSURLErrorCannotFindHost,
-                    NSURLErrorCannotConnectToHost -> true
+                    NSURLErrorCannotConnectToHost
+                    -> true
                     else -> false
                 }
             }

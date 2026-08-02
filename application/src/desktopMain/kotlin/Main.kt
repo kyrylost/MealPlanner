@@ -5,7 +5,7 @@ import dev.stukalo.mealplanner.App
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Meal Planner",
+        title = "Meal Planner"
     ) {
         App()
     }

@@ -38,7 +38,8 @@ fun ProductsList(
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
+        contentPadding =
+        PaddingValues(
             top = Theme.spacing.space8,
             start = Theme.spacing.space16,
             end = Theme.spacing.space16,
@@ -63,7 +64,8 @@ fun ProductsList(
         if (products.loadState.append is LoadState.Loading) {
             item {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(Theme.spacing.space16),
                     contentAlignment = Alignment.Center
@@ -76,7 +78,8 @@ fun ProductsList(
         if (products.loadState.refresh is LoadState.NotLoading && products.itemCount == 0) {
             item {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize()
                         .padding(top = Theme.spacing.space128),
                     contentAlignment = Alignment.Center
@@ -97,11 +100,12 @@ fun ProductsList(
 private fun ProductsListPreview() {
     Theme {
         ProductsList(
-            products = flowOf(
+            products =
+            flowOf(
                 PagingData.from(
                     listOf(
                         ProductDomainModel(id = "1", productName = "Apple", calories = 52f),
-                        ProductDomainModel(id = "2", productName = "Banana", calories = 89f),
+                        ProductDomainModel(id = "2", productName = "Banana", calories = 89f)
                     )
                 )
             ).collectAsLazyPagingItems(),

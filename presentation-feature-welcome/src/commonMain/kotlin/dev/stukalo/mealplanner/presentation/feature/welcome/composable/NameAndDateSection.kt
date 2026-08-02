@@ -21,11 +21,7 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.View
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun NameAndDateSection(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun NameAndDateSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.welcome_name_label),

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "Checking code style with ktlintCheck..."
+
+# First, check if there are any violations
+./gradlew ktlintCheck
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+    echo "Style violations found! Running ktlintFormat to fix them automatically..."
+
+    # Run format to help the user
+    ./gradlew ktlintFormat
+
+    echo "----------------------------------------------------------------------"
+    echo "FIXES APPLIED: ktlintFormat has modified your files to match the style."
+    echo "Please REVIEW the changes, STAGE them (git add .), and COMMIT again."
+    echo "----------------------------------------------------------------------"
+
+    # Block the commit so the user can review and add changed files
+    exit 1
+fi
+
+echo "Code style is perfect! Proceeding with commit..."
+exit 0

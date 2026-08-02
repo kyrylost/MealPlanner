@@ -12,10 +12,16 @@ plugins {
 
 configure<LibraryExtension> {
     namespace = "dev.stukalo.mealplanner.presentation.core.ui"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
     }
 
     buildTypes {
@@ -76,4 +82,3 @@ kotlin {
 dependencies {
     debugImplementation(libs.compose.ui.tooling)
 }
-

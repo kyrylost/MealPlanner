@@ -7,9 +7,7 @@ import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.core.navigation.ext.safeNavigation
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.GatewayScreen
 
-fun NavGraphBuilder.gatewayNavigationGraph(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.gatewayNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.Gateway> {
         GatewayScreen(
             onNavigateToMain = {

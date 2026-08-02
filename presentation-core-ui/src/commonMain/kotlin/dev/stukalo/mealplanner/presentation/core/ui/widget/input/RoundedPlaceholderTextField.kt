@@ -56,23 +56,27 @@ fun RoundedPlaceholderTextField(
     readOnly: Boolean = false,
     enabled: Boolean = true,
     error: String? = null,
-    onClick: () -> Unit = { },
+    onClick: () -> Unit = { }
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val borderColor by animateColorAsState(
-        targetValue = when {
+        targetValue =
+        when {
             error != null -> Theme.color.error
             isFocused -> activeColor
             else -> inactiveColor
         }
     )
-    val textColor by animateColorAsState(targetValue = if (isFocused) activeColor else inactiveColor)
+    val textColor by animateColorAsState(
+        targetValue = if (isFocused) activeColor else inactiveColor
+    )
 
     val interactionSource = remember { MutableInteractionSource() }
 
     Column(modifier = modifier.fillMaxWidth()) {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(cornerRadiusDp))
                 .background(backgroundColor)
@@ -80,8 +84,7 @@ fun RoundedPlaceholderTextField(
                     width = Theme.thickness.thickness1,
                     color = borderColor,
                     shape = RoundedCornerShape(cornerRadiusDp)
-                )
-                .padding(contentPaddingDp)
+                ).padding(contentPaddingDp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -102,23 +105,26 @@ fun RoundedPlaceholderTextField(
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
                         readOnly = readOnly,
                         enabled = enabled,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .clickable(
                                 interactionSource = interactionSource,
                                 indication = null
                             ) {
                                 onClick()
-                            }
-                            .onFocusChanged { focusState ->
+                            }.onFocusChanged { focusState ->
                                 isFocused = focusState.isFocused
                             }
                     )
 
                     if (value.text.isEmpty()) {
                         val placeholderColor =
-                            if (isFocused) inactiveColor.copy(alpha = 0.6f)
-                            else inactiveColor.copy(alpha = 0.8f)
+                            if (isFocused) {
+                                inactiveColor.copy(alpha = 0.6f)
+                            } else {
+                                inactiveColor.copy(alpha = 0.8f)
+                            }
                         Text(
                             text = placeholder,
                             style = textStyle.copy(color = placeholderColor),
@@ -165,7 +171,7 @@ fun RoundedPlaceholderTextField(
     readOnly: Boolean = false,
     enabled: Boolean = true,
     error: String? = null,
-    onClick: () -> Unit = { },
+    onClick: () -> Unit = { }
 ) {
     var textFieldValueState by remember {
         mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length)))
@@ -173,10 +179,11 @@ fun RoundedPlaceholderTextField(
 
     LaunchedEffect(value) {
         if (value != textFieldValueState.text) {
-            textFieldValueState = textFieldValueState.copy(
-                text = value,
-                selection = TextRange(value.length)
-            )
+            textFieldValueState =
+                textFieldValueState.copy(
+                    text = value,
+                    selection = TextRange(value.length)
+                )
         }
     }
 

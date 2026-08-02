@@ -9,24 +9,17 @@ import kotlinx.coroutines.flow.map
 
 internal class UserRepositoryImpl(
     private val userDatabaseSource: UserDatabaseSource,
-    private val userMapper: UserMapper,
+    private val userMapper: UserMapper
 ) : UserRepository {
+    override suspend fun insert(user: UserDomainModel): Result<Unit> =
+        userDatabaseSource.insert(userMapper.mapFrom(user))
 
-    override suspend fun insert(user: UserDomainModel): Result<Unit> {
-        return userDatabaseSource.insert(userMapper.mapFrom(user))
-    }
+    override suspend fun count(): Int = userDatabaseSource.count()
 
-    override suspend fun count(): Int {
-        return userDatabaseSource.count()
-    }
+    override suspend fun getUser(id: Long): UserDomainModel? =
+        userDatabaseSource.getUser(id)?.let { userMapper.mapTo(it) }
 
-    override suspend fun getUser(id: Long): UserDomainModel? {
-        return userDatabaseSource.getUser(id)?.let { userMapper.mapTo(it) }
-    }
-
-    override fun getAllAsFlow(): Flow<List<UserDomainModel>> {
-        return userDatabaseSource.getAllAsFlow().map { list ->
-            userMapper.mapListTo(list)
-        }
+    override fun getAllAsFlow(): Flow<List<UserDomainModel>> = userDatabaseSource.getAllAsFlow().map { list ->
+        userMapper.mapListTo(list)
     }
 }

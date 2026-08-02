@@ -27,5 +27,5 @@ data class ProductDomainModel(
     // Optional fields
     val weight: Float? = null,
     val caloriesTotal: Float? = null,
-    val nutrientsTotal: List<NutrientDomainModel>? = null,
+    val nutrientsTotal: List<NutrientDomainModel>? = null
 )

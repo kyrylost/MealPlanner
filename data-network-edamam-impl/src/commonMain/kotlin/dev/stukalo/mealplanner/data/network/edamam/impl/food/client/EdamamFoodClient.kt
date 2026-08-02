@@ -10,11 +10,11 @@ internal fun edamamFoodClient(client: HttpClient) = client.config {
             parameters.apply {
                 append(
                     name = "app_id",
-                    value= ApiKeys.EDAMAM_FOOD_API_APP_ID
+                    value = ApiKeys.EDAMAM_FOOD_API_APP_ID
                 )
                 append(
                     name = "app_key",
-                    value= ApiKeys.EDAMAM_FOOD_API_APP_KEY
+                    value = ApiKeys.EDAMAM_FOOD_API_APP_KEY
                 )
             }
         }

@@ -75,9 +75,8 @@ fun AnimateButton(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
     loadingSize: Dp,
-    horizontalArrangement: Alignment = Alignment.Center,
+    horizontalArrangement: Alignment = Alignment.Center
 ) {
-
     //region core
     val colorAnimationSpec =
         tween<Color>(durationMillis = animationDuration, easing = animationEasing)
@@ -85,26 +84,26 @@ fun AnimateButton(
     val animationBorderColor by animateColorAsState(
         animationSpec = colorAnimationSpec,
         targetValue = borderColor,
-        label = "AnimateButton: animationBorderColor",
+        label = "AnimateButton: animationBorderColor"
     )
     val animationBackgroundColor by animateColorAsState(
         animationSpec = colorAnimationSpec,
         targetValue = backgroundColor,
-        label = "AnimateButton: animationBackgroundColor",
+        label = "AnimateButton: animationBackgroundColor"
     )
     val animationForegroundColor by animateColorAsState(
         animationSpec = colorAnimationSpec,
         targetValue = foregroundColor,
-        label = "AnimateButton: animationForegroundColor",
+        label = "AnimateButton: animationForegroundColor"
     )
 
     val localModifier =
         modifier.animateContentSize(
             animationSpec =
-                tween(
-                    durationMillis = animationDuration,
-                    easing = animationEasing,
-                ),
+            tween(
+                durationMillis = animationDuration,
+                easing = animationEasing
+            )
         )
     //endregion core
 
@@ -125,7 +124,7 @@ fun AnimateButton(
         modifier = localModifier,
         isLoading = isLoading,
         loadingSize = loadingSize,
-        horizontalArrangement = horizontalArrangement,
+        horizontalArrangement = horizontalArrangement
     )
 }
 
@@ -151,7 +150,7 @@ private fun PreviewPreviewAnimateButton() {
                 animationDuration = 400,
                 animationEasing = EaseInBack,
                 isLoading = false,
-                loadingSize = 0.dp,
+                loadingSize = 0.dp
             )
         }
     }

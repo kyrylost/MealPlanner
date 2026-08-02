@@ -18,28 +18,25 @@ internal class SearchRepositoryImpl(
     private val fdcNetSource: FoodDataCentralNetSource,
     private val offNetSource: OpenFoodFactsNetSource,
     private val fdcProductMapper: FdcProductMapper,
-    private val offProductMapper: OffProductMapper,
+    private val offProductMapper: OffProductMapper
 ) : SearchRepository {
+    override suspend fun getAutoCompleteHints(query: String, limit: Int): List<String> =
+        edamamFoodNetSource.getAutoCompleteHints(query, limit.toString())
 
-    override suspend fun getAutoCompleteHints(query: String, limit: Int): List<String> {
-        return edamamFoodNetSource.getAutoCompleteHints(query, limit.toString())
-    }
-
-    override fun getProductsByQuery(query: String): Flow<PagingData<ProductDomainModel>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = PRODUCTS_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = {
-                ProductPagingSource(
-                    fdcNetSource = fdcNetSource,
-                    fdcProductMapper = fdcProductMapper,
-                    query = query
-                )
-            }
-        ).flow
-    }
+    override fun getProductsByQuery(query: String): Flow<PagingData<ProductDomainModel>> = Pager(
+        config =
+        PagingConfig(
+            pageSize = PRODUCTS_PAGE_SIZE,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = {
+            ProductPagingSource(
+                fdcNetSource = fdcNetSource,
+                fdcProductMapper = fdcProductMapper,
+                query = query
+            )
+        }
+    ).flow
 
     override suspend fun getProductByQrCode(qrCode: String): ProductDomainModel? {
         val response = offNetSource.getProductByBarcode(qrCode)

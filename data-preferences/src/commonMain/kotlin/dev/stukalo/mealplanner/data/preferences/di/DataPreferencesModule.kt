@@ -7,8 +7,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val dataPreferencesModule: Module = module {
-    singleOf(::SettingsPreferencesDataSourceImpl) bind SettingsPreferencesDataSource::class
-}
+val dataPreferencesModule: Module =
+    module {
+        singleOf(::SettingsPreferencesDataSourceImpl) bind SettingsPreferencesDataSource::class
+    }
 
 expect val platformDataPreferencesModule: Module

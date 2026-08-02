@@ -4,13 +4,9 @@ import androidx.room.TypeConverter
 import kotlinx.datetime.LocalDate
 
 class DateConverter {
-  @TypeConverter
-  fun fromEpochDays(value: Long?): LocalDate? {
-    return value?.let { LocalDate.fromEpochDays(it) }
-  }
+    @TypeConverter
+    fun fromEpochDays(value: Long?): LocalDate? = value?.let { LocalDate.fromEpochDays(it) }
 
-  @TypeConverter
-  fun dateToEpochDays(date: LocalDate?): Long? {
-    return date?.toEpochDays()
-  }
+    @TypeConverter
+    fun dateToEpochDays(date: LocalDate?): Long? = date?.toEpochDays()
 }

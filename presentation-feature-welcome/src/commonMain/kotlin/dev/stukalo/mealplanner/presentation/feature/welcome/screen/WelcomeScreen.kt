@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-internal fun WelcomeScreen(
-    onNavigateToMain: () -> Unit,
-) {
+internal fun WelcomeScreen(onNavigateToMain: () -> Unit) {
     val viewModel: WelcomeViewModel = koinViewModel()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -31,7 +29,8 @@ internal fun WelcomeScreen(
                     scope.launch {
                         snackbarHostState.showSnackbar(
                             AppSnackbarVisuals(
-                                model = SnackbarModel(
+                                model =
+                                SnackbarModel(
                                     message = event.message,
                                     type = event.type
                                 )
@@ -55,6 +54,6 @@ internal fun WelcomeScreen(
                     AppLoader()
                 }
             }
-        },
+        }
     )
 }

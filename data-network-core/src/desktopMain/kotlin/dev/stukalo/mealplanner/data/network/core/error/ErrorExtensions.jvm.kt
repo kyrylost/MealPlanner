@@ -6,7 +6,8 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 actual val Throwable?.isConnectionError: Boolean
-    get() = this is ConnectException ||
+    get() =
+        this is ConnectException ||
             this is UnknownHostException ||
             this is SocketException ||
             this is SocketTimeoutException ||

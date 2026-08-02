@@ -7,35 +7,46 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 
 internal class FdcProductMapper : BaseMapper<FDCFoodNetModel, ProductDomainModel> {
-
     override fun mapTo(model: FDCFoodNetModel): ProductDomainModel {
-        val nutrients = model.foodNutrients?.mapNotNull { nutrient ->
-            val type = when (nutrient.nutrientId) {
-                1003 -> NutrientTypeDomainModel.PROTEIN
-                1005 -> NutrientTypeDomainModel.CARBOHYDRATES
-                1004 -> NutrientTypeDomainModel.FATS
-                else -> null
+        val nutrients =
+            model.foodNutrients?.mapNotNull { nutrient ->
+                val type =
+                    when (nutrient.nutrientId) {
+                        1003 -> NutrientTypeDomainModel.PROTEIN
+                        1005 -> NutrientTypeDomainModel.CARBOHYDRATES
+                        1004 -> NutrientTypeDomainModel.FATS
+                        else -> null
+                    }
+                type?.let {
+                    NutrientDomainModel(
+                        nutrientType = it,
+                        amount = nutrient.value.toFloat()
+                    )
+                }
             }
-            type?.let {
-                NutrientDomainModel(
-                    nutrientType = it,
-                    amount = nutrient.value.toFloat()
-                )
-            }
-        }
 
-        val calories = model.foodNutrients?.find { it.nutrientId == 1008 }?.value?.toFloat()
+        val calories =
+            model.foodNutrients
+                ?.find { it.nutrientId == 1008 }
+                ?.value
+                ?.toFloat()
         val weight = model.servingSize?.toFloat()
 
-        val caloriesTotal = if (weight != null && calories != null) {
-            (calories * weight) / 100f
-        } else null
-
-        val nutrientsTotal = if (weight != null && nutrients != null) {
-            nutrients.map {
-                it.copy(amount = (it.amount ?: 0f) * weight / 100f)
+        val caloriesTotal =
+            if (weight != null && calories != null) {
+                (calories * weight) / 100f
+            } else {
+                null
             }
-        } else null
+
+        val nutrientsTotal =
+            if (weight != null && nutrients != null) {
+                nutrients.map {
+                    it.copy(amount = (it.amount ?: 0f) * weight / 100f)
+                }
+            } else {
+                null
+            }
 
         return ProductDomainModel(
             id = model.fdcId.toString(),

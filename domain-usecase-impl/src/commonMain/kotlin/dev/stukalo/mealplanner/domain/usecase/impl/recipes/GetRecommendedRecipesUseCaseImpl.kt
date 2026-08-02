@@ -25,9 +25,8 @@ class GetRecommendedRecipesUseCaseImpl(
     private val getDailyNormUseCase: GetDailyNormUseCase,
     private val getDailyProgressUseCase: GetDailyProgressUseCase,
     private val getRecipesUseCase: GetRecipesUseCase,
-    private val clock: Clock,
+    private val clock: Clock
 ) : GetRecommendedRecipesUseCase {
-
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun invoke(slot: MealSlotDomainModel?): Flow<PagingData<RecipeDomainModel>> {
         return getMealScheduleUseCase().flatMapLatest { slots ->
@@ -47,14 +46,43 @@ class GetRecommendedRecipesUseCaseImpl(
                 if (activeSlot == null) return@flatMapLatest flowOf(PagingData.empty())
 
                 val unconsumedSlots = data.slots.filter { !it.isConsumed }
-                
-                val pPool = if (unconsumedSlots.isEmpty()) activeSlot.proteinsPercentage.toDouble() else unconsumedSlots.sumOf { it.proteinsPercentage }.toDouble()
-                val fPool = if (unconsumedSlots.isEmpty()) activeSlot.fatsPercentage.toDouble() else unconsumedSlots.sumOf { it.fatsPercentage }.toDouble()
-                val cPool = if (unconsumedSlots.isEmpty()) activeSlot.carbsPercentage.toDouble() else unconsumedSlots.sumOf { it.carbsPercentage }.toDouble()
 
-                val remainingProteins = maxOf(0.0, norm.proteins - (data.progress?.consumedProteins ?: 0.0))
+                val pPool =
+                    if (unconsumedSlots.isEmpty()) {
+                        activeSlot.proteinsPercentage.toDouble()
+                    } else {
+                        unconsumedSlots
+                            .sumOf {
+                                it.proteinsPercentage
+                            }.toDouble()
+                    }
+                val fPool =
+                    if (unconsumedSlots.isEmpty()) {
+                        activeSlot.fatsPercentage.toDouble()
+                    } else {
+                        unconsumedSlots
+                            .sumOf { it.fatsPercentage }
+                            .toDouble()
+                    }
+                val cPool =
+                    if (unconsumedSlots.isEmpty()) {
+                        activeSlot.carbsPercentage.toDouble()
+                    } else {
+                        unconsumedSlots
+                            .sumOf {
+                                it.carbsPercentage
+                            }.toDouble()
+                    }
+
+                val remainingProteins = maxOf(
+                    0.0,
+                    norm.proteins - (data.progress?.consumedProteins ?: 0.0)
+                )
                 val remainingFats = maxOf(0.0, norm.fats - (data.progress?.consumedFats ?: 0.0))
-                val remainingCarbs = maxOf(0.0, norm.carbohydrates - (data.progress?.consumedCarbohydrates ?: 0.0))
+                val remainingCarbs = maxOf(
+                    0.0,
+                    norm.carbohydrates - (data.progress?.consumedCarbohydrates ?: 0.0)
+                )
 
                 val targetProteins = remainingProteins * (activeSlot.proteinsPercentage / pPool)
                 val targetFats = remainingFats * (activeSlot.fatsPercentage / fPool)
@@ -62,10 +90,14 @@ class GetRecommendedRecipesUseCaseImpl(
                 val targetCalories = (targetProteins * 4) + (targetFats * 9) + (targetCarbs * 4)
 
                 getRecipesUseCase(
-                    calories = (targetCalories.toInt() - CALORIE_TOLERANCE)..(targetCalories.toInt() + CALORIE_TOLERANCE),
-                    proteins = (targetProteins.toInt() - MACRO_TOLERANCE)..(targetProteins.toInt() + MACRO_TOLERANCE),
-                    fats = (targetFats.toInt() - MACRO_TOLERANCE)..(targetFats.toInt() + MACRO_TOLERANCE),
-                    carbohydrates = (targetCarbs.toInt() - MACRO_TOLERANCE)..(targetCarbs.toInt() + MACRO_TOLERANCE),
+                    calories =
+                    (targetCalories.toInt() - CALORIE_TOLERANCE)..(targetCalories.toInt() + CALORIE_TOLERANCE),
+                    proteins =
+                    (targetProteins.toInt() - MACRO_TOLERANCE)..(targetProteins.toInt() + MACRO_TOLERANCE),
+                    fats =
+                    (targetFats.toInt() - MACRO_TOLERANCE)..(targetFats.toInt() + MACRO_TOLERANCE),
+                    carbohydrates =
+                    (targetCarbs.toInt() - MACRO_TOLERANCE)..(targetCarbs.toInt() + MACRO_TOLERANCE),
                     mealTypes = activeSlot.mealTypes
                 )
             }
@@ -76,7 +108,7 @@ class GetRecommendedRecipesUseCaseImpl(
         val slots: List<MealSlotDomainModel>,
         val norm: DailyNormDomainModel?,
         val progress: DailyProgressDomainModel?,
-        val currentTime: LocalTime,
+        val currentTime: LocalTime
     )
 
     private fun findActiveSlot(slots: List<MealSlotDomainModel>, currentTime: LocalTime): MealSlotDomainModel? {

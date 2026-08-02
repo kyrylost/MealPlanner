@@ -18,60 +18,61 @@ import io.ktor.http.isSuccess
  *
  * @param httpClient An instance of [HttpClient] used to perform network requests.
  */
-abstract class BaseNetSource(
-    val httpClient: HttpClient,
-) {
-
+abstract class BaseNetSource(val httpClient: HttpClient) {
     protected suspend inline fun <reified T> performRequest(
-        errorTransformer: (requestUrl: String, httpCode: Int, cause: Exception?) -> Throwable = ::transformError,
-        request: HttpClient.() -> HttpResponse,
-    ): T {
-        return try {
-            val response = httpClient.request()
-            if (response.status.isSuccess()) {
-                if (T::class == String::class) {
-                    response.bodyAsText() as T
-                } else {
-                    response.body()
-                }
+        errorTransformer: (
+            requestUrl: String,
+            httpCode: Int,
+            cause: Exception?
+        ) -> Throwable = ::transformError,
+        request: HttpClient.() -> HttpResponse
+    ): T = try {
+        val response = httpClient.request()
+        if (response.status.isSuccess()) {
+            if (T::class == String::class) {
+                response.bodyAsText() as T
             } else {
-                val requestUrl = response.request.url.toString()
-                val httpCode = response.status.value
-                throw errorTransformer(requestUrl, httpCode, null)
+                response.body()
             }
-        } catch (e: Exception) {
-            val response = (e as? ResponseException)?.response
-            val requestUrl = response?.request?.url.toString()
-            val httpCode = response?.status?.value ?: -1
-            throw errorTransformer(requestUrl, httpCode, e)
+        } else {
+            val requestUrl = response.request.url.toString()
+            val httpCode = response.status.value
+            throw errorTransformer(requestUrl, httpCode, null)
         }
+    } catch (e: Exception) {
+        val response = (e as? ResponseException)?.response
+        val requestUrl = response?.request?.url.toString()
+        val httpCode = response?.status?.value ?: -1
+        throw errorTransformer(requestUrl, httpCode, e)
     }
 
-    open fun transformError(
-        requestUrl: String,
-        httpCode: Int,
-        cause: Exception?,
-    ): Throwable {
-        return when {
-            cause.isConnectionError -> ApiException.ConnectionApiException()
+    open fun transformError(requestUrl: String, httpCode: Int, cause: Exception?): Throwable = when {
+        cause.isConnectionError -> ApiException.ConnectionApiException()
 
-            httpCode == 401 || httpCode == 403 -> ApiException.ClientError.NotAuthorizedException(requestUrl)
+        httpCode == 401 || httpCode == 403 -> ApiException.ClientError.NotAuthorizedException(
+            requestUrl
+        )
 
-            httpCode == 404 -> ApiException.ClientError.NotFoundException(requestUrl)
+        httpCode == 404 -> ApiException.ClientError.NotFoundException(requestUrl)
 
-            httpCode == 422 -> ApiException.ClientError.UnprocessableEntityException(requestUrl)
+        httpCode == 422 -> ApiException.ClientError.UnprocessableEntityException(requestUrl)
 
-            httpCode in 400..499 -> ApiException.ClientError.UnknownClientApiException(requestUrl, httpCode)
+        httpCode in 400..499 -> ApiException.ClientError.UnknownClientApiException(
+            requestUrl,
+            httpCode
+        )
 
-            httpCode == 500 -> ApiException.ServerError.InternalServerError(requestUrl)
+        httpCode == 500 -> ApiException.ServerError.InternalServerError(requestUrl)
 
-            httpCode == 502 -> ApiException.ServerError.BadGatewayException(requestUrl)
+        httpCode == 502 -> ApiException.ServerError.BadGatewayException(requestUrl)
 
-            httpCode == 503 -> ApiException.ServerError.ServiceUnavailableException(requestUrl)
+        httpCode == 503 -> ApiException.ServerError.ServiceUnavailableException(requestUrl)
 
-            httpCode in 500..599 -> ApiException.ServerError.UnknownServerApiException(requestUrl, httpCode)
+        httpCode in 500..599 -> ApiException.ServerError.UnknownServerApiException(
+            requestUrl,
+            httpCode
+        )
 
-            else -> ApiException.UnknownApiException(httpCode)
-        }
+        else -> ApiException.UnknownApiException(httpCode)
     }
 }

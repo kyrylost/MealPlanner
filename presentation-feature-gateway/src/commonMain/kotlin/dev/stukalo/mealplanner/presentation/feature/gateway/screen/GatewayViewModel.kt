@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.first
 
 internal class GatewayViewModel(
     private val checkUserExistsUseCase: CheckUserExistsUseCase,
-    private val getColorPaletteUseCase: GetColorPaletteUseCase,
+    private val getColorPaletteUseCase: GetColorPaletteUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     override val initialState = ViewState()
 
     init {

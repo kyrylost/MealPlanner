@@ -5,11 +5,9 @@ import dev.stukalo.mealplanner.domain.model.exception.ValidationException
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDateUseCase
 
 internal class ValidateDateUseCaseImpl : ValidateDateUseCase {
-    override fun invoke(date: String?): ValidationResult {
-        return if (date.isNullOrBlank()) {
-            ValidationResult.Error(ValidationException.Date.Empty())
-        } else {
-            ValidationResult.Success
-        }
+    override fun invoke(date: String?): ValidationResult = if (date.isNullOrBlank()) {
+        ValidationResult.Error(ValidationException.Date.Empty())
+    } else {
+        ValidationResult.Success
     }
 }

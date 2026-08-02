@@ -7,56 +7,53 @@ import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.B
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSizeSet
 
 class TextButtonSizeSet : ButtonSizeSet {
+    override fun small(): ButtonSize = object : ButtonSize {
+        override val iconSize
+            @Composable
+            get() = 16.dp
+        override val borderSize
+            @Composable
+            get() = 0.dp
+        override val contentPadding
+            @Composable
+            get() =
+                PaddingValues(
+                    horizontal = 8.dp,
+                    vertical = 8.dp
+                )
+        override val spacing
+            @Composable
+            get() = 8.dp
+        override val minHeight
+            @Composable
+            get() = 32.dp
+        override val loadingSize
+            @Composable
+            get() = 16.dp
+    }
 
-    override fun small(): ButtonSize =
-        object : ButtonSize {
-            override val iconSize
-                @Composable
-                get() = 16.dp
-            override val borderSize
-                @Composable
-                get() = 0.dp
-            override val contentPadding
-                @Composable
-                get() =
-                    PaddingValues(
-                        horizontal = 8.dp,
-                        vertical = 8.dp,
-                    )
-            override val spacing
-                @Composable
-                get() = 8.dp
-            override val minHeight
-                @Composable
-                get() = 32.dp
-            override val loadingSize
-                @Composable
-                get() = 16.dp
-        }
-
-    override fun default(): ButtonSize =
-        object : ButtonSize {
-            override val iconSize
-                @Composable
-                get() = 16.dp
-            override val borderSize
-                @Composable
-                get() = 0.dp
-            override val contentPadding
-                @Composable
-                get() =
-                    PaddingValues(
-                        horizontal = 16.dp,
-                        vertical = 8.dp,
-                    )
-            override val spacing
-                @Composable
-                get() = 8.dp
-            override val minHeight
-                @Composable
-                get() = 40.dp
-            override val loadingSize
-                @Composable
-                get() = 16.dp
-        }
+    override fun default(): ButtonSize = object : ButtonSize {
+        override val iconSize
+            @Composable
+            get() = 16.dp
+        override val borderSize
+            @Composable
+            get() = 0.dp
+        override val contentPadding
+            @Composable
+            get() =
+                PaddingValues(
+                    horizontal = 16.dp,
+                    vertical = 8.dp
+                )
+        override val spacing
+            @Composable
+            get() = 8.dp
+        override val minHeight
+            @Composable
+            get() = 40.dp
+        override val loadingSize
+            @Composable
+            get() = 16.dp
+    }
 }

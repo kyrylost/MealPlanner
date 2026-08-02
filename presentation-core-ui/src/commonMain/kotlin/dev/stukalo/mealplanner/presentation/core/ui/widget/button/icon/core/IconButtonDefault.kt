@@ -17,11 +17,10 @@ object IconButtonDefault : IconButtonDefault {
     override fun buttonSizeSet() = IconButtonSizeSet()
 
     @Composable
-    override fun animation(): ButtonAnimation =
-        object : ButtonAnimation {
-            override val duration = AnimationConfiguration.Duration.DEFAULT
-            override val easing = LinearEasing
-        }
+    override fun animation(): ButtonAnimation = object : ButtonAnimation {
+        override val duration = AnimationConfiguration.Duration.DEFAULT
+        override val easing = LinearEasing
+    }
 
     @Composable
     override fun corner(): Dp = 0.dp

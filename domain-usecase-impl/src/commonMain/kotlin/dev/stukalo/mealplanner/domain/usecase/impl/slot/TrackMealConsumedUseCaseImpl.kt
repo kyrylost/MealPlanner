@@ -14,9 +14,8 @@ class TrackMealConsumedUseCaseImpl(
     private val getDailyProgressUseCase: GetDailyProgressUseCase,
     private val updateDailyProgressUseCase: UpdateDailyProgressUseCase,
     private val mealScheduleRepository: MealScheduleRepository,
-    private val clock: Clock,
+    private val clock: Clock
 ) : TrackMealConsumedUseCase {
-
     override suspend fun invoke(
         slotId: Int,
         calories: Double,
@@ -28,20 +27,22 @@ class TrackMealConsumedUseCaseImpl(
         val today = now.date
 
         // 1. Update Daily Progress
-        val currentProgress = getDailyProgressUseCase(today).firstOrNull() ?: DailyProgressDomainModel(
-            date = today,
-            consumedCalories = 0.0,
-            consumedProteins = 0.0,
-            consumedFats = 0.0,
-            consumedCarbohydrates = 0.0
-        )
+        val currentProgress =
+            getDailyProgressUseCase(today).firstOrNull() ?: DailyProgressDomainModel(
+                date = today,
+                consumedCalories = 0.0,
+                consumedProteins = 0.0,
+                consumedFats = 0.0,
+                consumedCarbohydrates = 0.0
+            )
 
-        val updatedProgress = currentProgress.copy(
-            consumedCalories = currentProgress.consumedCalories + calories,
-            consumedProteins = currentProgress.consumedProteins + proteins,
-            consumedFats = currentProgress.consumedFats + fats,
-            consumedCarbohydrates = currentProgress.consumedCarbohydrates + carbohydrates
-        )
+        val updatedProgress =
+            currentProgress.copy(
+                consumedCalories = currentProgress.consumedCalories + calories,
+                consumedProteins = currentProgress.consumedProteins + proteins,
+                consumedFats = currentProgress.consumedFats + fats,
+                consumedCarbohydrates = currentProgress.consumedCarbohydrates + carbohydrates
+            )
 
         updateDailyProgressUseCase(updatedProgress)
 

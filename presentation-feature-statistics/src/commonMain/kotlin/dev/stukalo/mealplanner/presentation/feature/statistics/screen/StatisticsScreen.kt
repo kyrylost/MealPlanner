@@ -5,16 +5,14 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun StatisticsScreen(
-    viewModel: StatisticsViewModel = koinViewModel()
-) {
+fun StatisticsScreen(viewModel: StatisticsViewModel = koinViewModel()) {
     MviScreen(
         viewModel = viewModel,
         onSingleEvent = {}
     ) { state ->
         StatisticsContent(
             state = state,
-            onIntent = viewModel::onIntent,
+            onIntent = viewModel::onIntent
         )
     }
 }

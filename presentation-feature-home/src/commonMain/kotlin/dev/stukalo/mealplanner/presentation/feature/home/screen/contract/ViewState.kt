@@ -16,5 +16,5 @@ internal data class ViewState(
     val carbsTarget: Float = 0f,
     val steps: Float = 0f,
     val stepsTarget: Float = 0f,
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = false
 ) : MviViewState

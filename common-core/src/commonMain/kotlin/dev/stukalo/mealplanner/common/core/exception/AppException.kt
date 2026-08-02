@@ -9,7 +9,4 @@ package dev.stukalo.mealplanner.common.core.exception
  * @param message The detail message for this exception, or `null` if none.
  * @param cause The cause of this exception, or `null` if none.
  */
-open class AppException(
-    message: String? = null,
-    cause: Throwable? = null,
-) : Exception(message, cause)
+open class AppException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)

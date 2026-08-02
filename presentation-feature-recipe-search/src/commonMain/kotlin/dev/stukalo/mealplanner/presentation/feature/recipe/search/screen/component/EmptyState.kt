@@ -18,12 +18,10 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun EmptyState(
-    onClearFilters: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun EmptyState(onClearFilters: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(vertical = Theme.spacing.space64),
         horizontalAlignment = Alignment.CenterHorizontally

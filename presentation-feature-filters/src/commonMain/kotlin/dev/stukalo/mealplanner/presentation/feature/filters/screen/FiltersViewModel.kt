@@ -6,7 +6,6 @@ import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.View
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewState
 
 class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     override val initialState = ViewState()
 
     override suspend fun processIntent(intent: ViewIntent) {
@@ -40,11 +39,12 @@ class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
             }
             is ViewIntent.OnToggleMealType -> {
                 val currentTypes = viewState.value.filters.mealTypes
-                val newTypes = if (currentTypes.contains(intent.type)) {
-                    currentTypes - intent.type
-                } else {
-                    currentTypes + intent.type
-                }
+                val newTypes =
+                    if (currentTypes.contains(intent.type)) {
+                        currentTypes - intent.type
+                    } else {
+                        currentTypes + intent.type
+                    }
                 updateState { it.copy(filters = it.filters.copy(mealTypes = newTypes)) }
             }
             ViewIntent.OnApplyClick -> {

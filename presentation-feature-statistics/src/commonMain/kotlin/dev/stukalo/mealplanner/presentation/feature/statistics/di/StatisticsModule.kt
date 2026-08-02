@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.presentation.feature.statistics.screen.Statistics
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val statisticsModule = module {
-    viewModelOf(::StatisticsViewModel)
-}
+val statisticsModule =
+    module {
+        viewModelOf(::StatisticsViewModel)
+    }

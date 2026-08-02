@@ -4,6 +4,4 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 
 @Immutable
-data class Size(
-    val compactScreenWidth: Dp,
-)
+data class Size(val compactScreenWidth: Dp)

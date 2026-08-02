@@ -41,7 +41,8 @@ fun NutritionSummary(
         hazeState = hazeState
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(Theme.spacing.space16),
             horizontalArrangement = Arrangement.SpaceBetween,

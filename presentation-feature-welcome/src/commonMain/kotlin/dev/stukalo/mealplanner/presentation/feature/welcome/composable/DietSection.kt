@@ -27,11 +27,7 @@ import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.View
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun DietSection(
-    state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-    modifier: Modifier = Modifier
-) {
+internal fun DietSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(
             text = stringResource(Res.string.welcome_diet_label),
@@ -40,22 +36,32 @@ internal fun DietSection(
         )
 
         DietDomainModel.entries.forEach { diet ->
-            val nameRes = when (diet) {
-                DietDomainModel.BALANCED_DIET -> Res.string.welcome_diet_balanced
-                DietDomainModel.WEIGHT_GAIN -> Res.string.welcome_diet_weight_gain
-                DietDomainModel.WEIGHT_LOSS -> Res.string.welcome_diet_weight_loss
-                DietDomainModel.CUTTING_DIET -> Res.string.welcome_diet_cutting
-            }
+            val nameRes =
+                when (diet) {
+                    DietDomainModel.BALANCED_DIET -> Res.string.welcome_diet_balanced
+                    DietDomainModel.WEIGHT_GAIN -> Res.string.welcome_diet_weight_gain
+                    DietDomainModel.WEIGHT_LOSS -> Res.string.welcome_diet_weight_loss
+                    DietDomainModel.CUTTING_DIET -> Res.string.welcome_diet_cutting
+                }
 
             val isSelected = state.diet == diet
             Card(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(vertical = Theme.spacing.space4)
                     .clip(RoundedCornerShape(Theme.spacing.space16))
                     .clickable { onIntent(ViewIntent.OnChangeDietInputIntent(diet)) },
-                colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) Theme.color.primary else Theme.color.backgroundSecondary.copy(alpha = 0.1f)
+                colors =
+                CardDefaults.cardColors(
+                    containerColor =
+                    if (isSelected) {
+                        Theme.color.primary
+                    } else {
+                        Theme.color.backgroundSecondary.copy(
+                            alpha = 0.1f
+                        )
+                    }
                 )
             ) {
                 Box(modifier = Modifier.padding(Theme.spacing.space16), contentAlignment = Alignment.CenterStart) {

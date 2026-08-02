@@ -23,7 +23,8 @@ fun BlurredCard(
 ) {
     Box(modifier = modifier.clip(shape)) {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .matchParentSize()
                 .hazeChild(state = hazeState, tint = tint)
                 .blur(12.dp)

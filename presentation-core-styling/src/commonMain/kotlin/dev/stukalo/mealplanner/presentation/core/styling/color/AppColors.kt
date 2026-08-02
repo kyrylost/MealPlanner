@@ -20,5 +20,5 @@ data class AppColors(
     val iconDisabled: Color,
     val error: Color,
     val warning: Color,
-    val success: Color,
+    val success: Color
 )

@@ -17,13 +17,10 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.input.RoundedPlacehol
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ProductSearchBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun ProductSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(vertical = Theme.spacing.space8),
         verticalAlignment = Alignment.CenterVertically
@@ -43,7 +40,7 @@ fun ProductSearchBar(
             modifier = Modifier.weight(1f),
             backgroundColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f),
             cornerRadiusDp = Theme.radius.radius16,
-            contentPaddingDp = Theme.spacing.space12,
+            contentPaddingDp = Theme.spacing.space12
         )
     }
 }

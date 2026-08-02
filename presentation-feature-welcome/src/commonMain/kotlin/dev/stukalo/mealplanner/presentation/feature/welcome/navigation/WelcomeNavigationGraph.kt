@@ -7,14 +7,12 @@ import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.core.navigation.ext.safeNavigation
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.WelcomeScreen
 
-fun NavGraphBuilder.welcomeNavigationGraph(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.welcomeNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.Welcome> {
         WelcomeScreen(
             onNavigateToMain = {
                 navController.safeNavigation(NavigationDirection.Home)
-            },
+            }
         )
     }
 }

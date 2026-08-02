@@ -13,7 +13,7 @@ interface RecipeRepository {
         fats: IntRange,
         proteins: IntRange,
         mealTypes: List<MealTypeDomainModel>,
-        query: String? = null,
+        query: String? = null
     ): Flow<PagingData<RecipeDomainModel>>
 
     suspend fun getRecipeById(id: String): Result<RecipeDomainModel>

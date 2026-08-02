@@ -11,7 +11,6 @@ import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 
 internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
-
     override fun mapTo(model: UserDatabaseModel): UserDomainModel = with(model) {
         UserDomainModel(
             id = id,

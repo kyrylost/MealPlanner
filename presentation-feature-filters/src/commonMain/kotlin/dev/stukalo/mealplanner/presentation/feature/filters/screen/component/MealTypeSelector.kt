@@ -17,7 +17,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 fun MealTypeSelector(
     selectedTypes: List<MealTypeDomainModel>,
     onToggleType: (MealTypeDomainModel) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     FlowRow(
         modifier = modifier.fillMaxWidth(),
@@ -34,7 +34,8 @@ fun MealTypeSelector(
                         style = if (isSelected) Theme.typography.bold14 else Theme.typography.regular14
                     )
                 },
-                colors = FilterChipDefaults.filterChipColors(
+                colors =
+                FilterChipDefaults.filterChipColors(
                     selectedContainerColor = Theme.color.primary,
                     selectedLabelColor = Theme.color.textOnPrimary,
                     labelColor = Theme.color.textPrimary,

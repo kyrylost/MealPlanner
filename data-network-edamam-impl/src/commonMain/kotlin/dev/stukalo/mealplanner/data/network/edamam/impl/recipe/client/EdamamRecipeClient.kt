@@ -10,17 +10,17 @@ internal fun edamamRecipeClient(client: HttpClient) = client.config {
             parameters.apply {
                 append(
                     name = "app_id",
-                    value= ApiKeys.EDAMAM_RECIPE_API_APP_ID,
+                    value = ApiKeys.EDAMAM_RECIPE_API_APP_ID
                 )
                 append(
                     name = "app_key",
-                    value= ApiKeys.EDAMAM_RECIPE_API_APP_KEY,
+                    value = ApiKeys.EDAMAM_RECIPE_API_APP_KEY
                 )
             }
 
             headers.append(
                 name = "Edamam-Account-User",
-                value = "kyrylost",
+                value = "kyrylost"
             )
         }
     }

@@ -28,15 +28,17 @@ fun BarcodeScannerScreen() {
     var resultText by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
     ) {
         Text("Barcode Scanner")
 
         CameraPermissionGate {
             BarcodeScannerView(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .height(300.dp)
                     .padding(vertical = 8.dp),
@@ -60,7 +62,7 @@ fun BarcodeScannerScreen() {
                         println("Scanning barcode: $barcode")
                         val response = openFoodFactsNetSource.getProductByBarcode(barcode)
                         println("Scanned data: $response")
-                        resultText = "Product: ${response}"
+                        resultText = "Product: $response"
                     } catch (e: Exception) {
                         resultText = "Error: ${e.message}"
                         e.printStackTrace()

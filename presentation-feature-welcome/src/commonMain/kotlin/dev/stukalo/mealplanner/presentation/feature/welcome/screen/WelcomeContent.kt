@@ -30,7 +30,7 @@ internal fun WelcomeContent(
     windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
     state: ViewState,
     snackbarHostState: SnackbarHostState,
-    onIntent: (ViewIntent) -> Unit = {},
+    onIntent: (ViewIntent) -> Unit = {}
 ) {
     val divideTitleAndData =
         windowSizeClass
@@ -39,17 +39,20 @@ internal fun WelcomeContent(
             )
 
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier =
+        Modifier
+            .fillMaxSize()
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (divideTitleAndData) {
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .background(color = Theme.color.backgroundSecondary)
                 ) {
                     WelcomeHeader(
@@ -65,7 +68,8 @@ internal fun WelcomeContent(
                 }
             } else {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .background(color = Theme.color.backgroundSecondary)
                 ) {
                     WelcomeHeader(
@@ -76,7 +80,8 @@ internal fun WelcomeContent(
                     WelcomeData(
                         state = state,
                         onIntent = onIntent,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxHeight()
                             .clip(
                                 RoundedCornerShape(
@@ -89,14 +94,14 @@ internal fun WelcomeContent(
             }
         }
 
-
         if (state.isLoading) {
             AppLoader()
         }
 
         AppSnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .statusBarsPadding()
                 .align(Alignment.TopCenter)
         )

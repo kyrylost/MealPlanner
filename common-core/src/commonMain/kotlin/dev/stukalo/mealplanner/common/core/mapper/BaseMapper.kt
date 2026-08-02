@@ -12,7 +12,6 @@ package dev.stukalo.mealplanner.common.core.mapper
  * The `mapTo` and `mapFrom` methods are expected to be implemented in subclasses or throw a `NotImplementedError`.
  */
 interface BaseMapper<In : Any, Out : Any> {
-
     /**
      * Maps an input model of type [In] to an output model of type [Out].
      *
@@ -23,10 +22,9 @@ interface BaseMapper<In : Any, Out : Any> {
      * @return A mapped output model of type [Out].
      * @throws NotImplementedError If not overridden by a subclass.
      */
-    fun mapTo(model: In): Out =
-        throw NotImplementedError(
-            "${this::class.simpleName} function mapTo function for class ${model::class.simpleName} is not implemented",
-        )
+    fun mapTo(model: In): Out = throw NotImplementedError(
+        "${this::class.simpleName} function mapTo function for class ${model::class.simpleName} is not implemented"
+    )
 
     /**
      * Maps an output model of type [Out] to an input model of type [In].
@@ -38,10 +36,9 @@ interface BaseMapper<In : Any, Out : Any> {
      * @return A mapped input model of type [In].
      * @throws NotImplementedError If not overridden by a subclass.
      */
-    fun mapFrom(model: Out): In =
-        throw NotImplementedError(
-            "${this::class.simpleName} function mapFrom function for class ${model::class.simpleName} is not implemented",
-        )
+    fun mapFrom(model: Out): In = throw NotImplementedError(
+        "${this::class.simpleName} function mapFrom function for class ${model::class.simpleName} is not implemented"
+    )
 
     /**
      * Maps a list of input models of type [In] to a list of output models of type [Out].

@@ -6,11 +6,11 @@ import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateActivityLevelUseCase
 
 internal class ValidateActivityLevelUseCaseImpl : ValidateActivityLevelUseCase {
-    override fun invoke(activityLevel: ActivityLevelDomainModel?): ValidationResult {
-        return if (activityLevel == null) {
-            ValidationResult.Error(ValidationException.ActivityLevel.NotSelected())
-        } else {
-            ValidationResult.Success
-        }
+    override fun invoke(activityLevel: ActivityLevelDomainModel?): ValidationResult = if (activityLevel ==
+        null
+    ) {
+        ValidationResult.Error(ValidationException.ActivityLevel.NotSelected())
+    } else {
+        ValidationResult.Success
     }
 }

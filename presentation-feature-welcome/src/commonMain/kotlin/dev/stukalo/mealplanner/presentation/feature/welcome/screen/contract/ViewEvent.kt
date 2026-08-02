@@ -5,10 +5,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.Snackb
 import org.jetbrains.compose.resources.StringResource
 
 internal sealed interface ViewEvent : MviSingleEvent {
-    data class ShowSnackbar(
-        val message: StringResource,
-        val type: SnackbarType,
-    ) : ViewEvent
+    data class ShowSnackbar(val message: StringResource, val type: SnackbarType) : ViewEvent
 
     data object NavigateToMainScreen : ViewEvent
 }

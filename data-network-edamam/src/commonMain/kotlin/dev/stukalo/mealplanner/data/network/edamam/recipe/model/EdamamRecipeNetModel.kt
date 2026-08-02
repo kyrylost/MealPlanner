@@ -21,5 +21,5 @@ data class EdamamRecipeNetModel(
     @SerialName("dishType") val dishType: List<String>? = null,
     @SerialName("dietLabels") val dietLabels: List<String>? = null,
     @SerialName("healthLabels") val healthLabels: List<String>? = null,
-    @SerialName("instructionLines") val instructionLines: List<String>? = null,
+    @SerialName("instructionLines") val instructionLines: List<String>? = null
 )

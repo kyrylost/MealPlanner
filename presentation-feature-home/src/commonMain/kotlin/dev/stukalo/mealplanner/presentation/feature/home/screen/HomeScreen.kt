@@ -7,10 +7,7 @@ import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewEve
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HomeScreen(
-    onNavigateToRecipeDetails: (String) -> Unit,
-    onNavigateToRecipeSearch: () -> Unit,
-) {
+fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateToRecipeSearch: () -> Unit) {
     val viewModel: HomeViewModel = koinViewModel()
     val recommendedRecipes = viewModel.recommendedRecipes.collectAsLazyPagingItems()
 

@@ -55,7 +55,7 @@ fun SemiCircularProgressBar(
     sideSubtitleColor: Color = Theme.color.textSecondary,
     labelPadding: Dp = 0.dp,
     labelPosition: LabelPosition = LabelPosition.Top,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val animatedProgress by animateFloatAsState(
         targetValue = if (progress.isNaN()) 0f else progress,
@@ -67,7 +67,8 @@ fun SemiCircularProgressBar(
 
         // Progress Arc Box
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .aspectRatio(2f)
         ) {
@@ -76,7 +77,8 @@ fun SemiCircularProgressBar(
                 // Left Side Text
                 if (leftTitle != null || leftSubtitle != null) {
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .align(Alignment.TopStart)
                             .padding(start = horizontalPadding + labelPadding, top = labelPadding),
                         horizontalAlignment = Alignment.Start
@@ -101,7 +103,8 @@ fun SemiCircularProgressBar(
                 // Right Side Text
                 if (rightTitle != null || rightSubtitle != null) {
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .align(Alignment.TopEnd)
                             .padding(end = horizontalPadding + labelPadding, top = labelPadding),
                         horizontalAlignment = Alignment.End
@@ -155,7 +158,8 @@ fun SemiCircularProgressBar(
 
             // Center Text
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(top = thickness)
                     .align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -174,10 +178,18 @@ fun SemiCircularProgressBar(
         }
 
         // Bottom Labels (if position is Bottom)
-        if (labelPosition == LabelPosition.Bottom && (leftTitle != null || leftSubtitle != null || rightTitle != null || rightSubtitle != null)) {
+        if (labelPosition == LabelPosition.Bottom &&
+            (
+                leftTitle != null ||
+                    leftSubtitle != null ||
+                    rightTitle != null ||
+                    rightSubtitle != null
+                )
+        ) {
             Spacer(modifier = Modifier.height(labelPadding))
             Row(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(horizontal = horizontalPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -270,7 +282,8 @@ private fun SemiCircularProgressBarGradientPreview() {
         Box(modifier = Modifier.background(Theme.color.iconDisabled).padding(32.dp)) {
             SemiCircularProgressBar(
                 progress = 0.75f,
-                progressBrush = Brush.horizontalGradient(
+                progressBrush =
+                Brush.horizontalGradient(
                     colors = listOf(Theme.color.primary, Theme.color.secondary)
                 ),
                 centerTitle = "180",
@@ -284,4 +297,3 @@ private fun SemiCircularProgressBarGradientPreview() {
         }
     }
 }
-

@@ -4,6 +4,8 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleE
 
 sealed interface ViewEvent : MviSingleEvent {
     data class NavigateToRecipeDetails(val recipeId: String) : ViewEvent
+
     data object NavigateToFilters : ViewEvent
+
     data object NavigateBack : ViewEvent
 }

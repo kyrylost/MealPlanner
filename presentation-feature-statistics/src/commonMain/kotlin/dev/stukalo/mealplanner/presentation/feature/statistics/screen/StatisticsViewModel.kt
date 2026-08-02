@@ -16,9 +16,8 @@ import kotlinx.coroutines.launch
 class StatisticsViewModel(
     private val getMealScheduleUseCase: GetMealScheduleUseCase,
     private val getDailyNormUseCase: GetDailyNormUseCase,
-    private val trackMealConsumedUseCase: TrackMealConsumedUseCase,
+    private val trackMealConsumedUseCase: TrackMealConsumedUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     override val initialState = ViewState()
 
     init {

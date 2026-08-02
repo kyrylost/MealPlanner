@@ -15,5 +15,5 @@ data class Radius(
     val radius28: Dp,
     val radius32: Dp,
     val radius48: Dp,
-    val radius64: Dp,
+    val radius64: Dp
 )

@@ -12,9 +12,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.AppLoader
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.ViewState
 
 @Composable
-internal fun GatewayContent(
-    state: ViewState
-) {
+internal fun GatewayContent(state: ViewState) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

@@ -18,7 +18,7 @@ fun <T : Any> NavHostController.safeNavigation(
     route: T,
     navOptions: NavOptions? = null,
     navigatorExtras: Navigator.Extras? = null,
-    cleanBackStack: Boolean = false,
+    cleanBackStack: Boolean = false
 ) {
     try {
         if (cleanBackStack) {
@@ -37,10 +37,7 @@ fun <T : Any> NavHostController.safeNavigation(
  * @param route The route to navigate to.
  * @param builder A lambda function to build [NavOptions].
  */
-fun <T : Any> NavHostController.safeNavigation(
-    route: T,
-    builder: NavOptionsBuilder.() -> Unit
-) {
+fun <T : Any> NavHostController.safeNavigation(route: T, builder: NavOptionsBuilder.() -> Unit) {
     try {
         this.navigate(route, builder)
     } catch (ex: Exception) {

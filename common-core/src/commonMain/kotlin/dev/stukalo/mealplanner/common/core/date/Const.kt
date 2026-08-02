@@ -9,6 +9,7 @@ private const val DAY_MONTH_YEAR_FORMAT = "dd/MM/yyyy"
 
 // Define your default format using the kotlinx-datetime format builder
 @OptIn(FormatStringsInDatetimeFormats::class)
-val dayMonthYearFormat: DateTimeFormat<LocalDate> = LocalDate.Format {
-    byUnicodePattern(DAY_MONTH_YEAR_FORMAT)
-}
+val dayMonthYearFormat: DateTimeFormat<LocalDate> =
+    LocalDate.Format {
+        byUnicodePattern(DAY_MONTH_YEAR_FORMAT)
+    }

@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class EdamamNutrientNetModel(
     @SerialName("label") val label: String? = null,
     @SerialName("quantity") val quantity: Double? = null,
-    @SerialName("unit") val unit: String? = null,
+    @SerialName("unit") val unit: String? = null
 )

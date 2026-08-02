@@ -5,5 +5,5 @@ enum class MealTypeDatabaseModel {
     LUNCH,
     DINNER,
     SNACK,
-    TEATIME,
+    TEATIME
 }

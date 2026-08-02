@@ -8,5 +8,5 @@ data class AppSnackbarVisuals(
     override val actionLabel: String? = null,
     override val duration: SnackbarDuration = SnackbarDuration.Short,
     override val message: String = "",
-    override val withDismissAction: Boolean = false,
+    override val withDismissAction: Boolean = false
 ) : SnackbarVisuals

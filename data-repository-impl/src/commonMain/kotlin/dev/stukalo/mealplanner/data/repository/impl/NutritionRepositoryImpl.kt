@@ -15,35 +15,28 @@ internal class NutritionRepositoryImpl(
     private val dailyNormDatabaseSource: DailyNormDatabaseSource,
     private val dailyProgressDatabaseSource: DailyProgressDatabaseSource,
     private val dailyNormMapper: DailyNormMapper,
-    private val dailyProgressMapper: DailyProgressMapper,
+    private val dailyProgressMapper: DailyProgressMapper
 ) : NutritionRepository {
+    override suspend fun saveDailyNorm(dailyNorm: DailyNormDomainModel): Result<Unit> =
+        dailyNormDatabaseSource.insert(dailyNormMapper.mapFrom(dailyNorm))
 
-    override suspend fun saveDailyNorm(dailyNorm: DailyNormDomainModel): Result<Unit> {
-        return dailyNormDatabaseSource.insert(dailyNormMapper.mapFrom(dailyNorm))
+    override suspend fun saveDailyProgress(progress: DailyProgressDomainModel): Result<Unit> =
+        dailyProgressDatabaseSource.insert(dailyProgressMapper.mapFrom(progress))
+
+    override fun getDailyNormAsFlow(): Flow<DailyNormDomainModel?> = dailyNormDatabaseSource.getDailyNormAsFlow().map {
+        it?.let { dailyNormMapper.mapTo(it) }
     }
 
-    override suspend fun saveDailyProgress(progress: DailyProgressDomainModel): Result<Unit> {
-        return dailyProgressDatabaseSource.insert(dailyProgressMapper.mapFrom(progress))
-    }
-
-    override fun getDailyNormAsFlow(): Flow<DailyNormDomainModel?> {
-        return dailyNormDatabaseSource.getDailyNormAsFlow().map {
-            it?.let { dailyNormMapper.mapTo(it) }
-        }
-    }
-
-    override fun getDailyProgressAsFlow(date: LocalDate): Flow<DailyProgressDomainModel?> {
-        return dailyProgressDatabaseSource.getProgressByDateAsFlow(date).map {
+    override fun getDailyProgressAsFlow(date: LocalDate): Flow<DailyProgressDomainModel?> =
+        dailyProgressDatabaseSource.getProgressByDateAsFlow(date).map {
             it?.let { dailyProgressMapper.mapTo(it) }
         }
-    }
 
     override fun getProgressByPeriodAsFlow(
         startDate: LocalDate,
         endDate: LocalDate
-    ): Flow<List<DailyProgressDomainModel>> {
-        return dailyProgressDatabaseSource.getProgressByPeriodAsFlow(startDate, endDate).map { list ->
+    ): Flow<List<DailyProgressDomainModel>> =
+        dailyProgressDatabaseSource.getProgressByPeriodAsFlow(startDate, endDate).map { list ->
             dailyProgressMapper.mapListTo(list)
         }
-    }
 }

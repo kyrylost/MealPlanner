@@ -91,7 +91,7 @@ fun DrawButton(
     paddings: PaddingValues,
     textStyle: TextStyle,
     isLoading: Boolean,
-    horizontalArrangement: Alignment = Alignment.Center,
+    horizontalArrangement: Alignment = Alignment.Center
 ) {
     //region core
     val composition by rememberLottieComposition {
@@ -102,48 +102,51 @@ fun DrawButton(
 
     val progress by animateLottieCompositionAsState(
         composition,
-        iterations = IterateForever,
+        iterations = IterateForever
     )
     //endregion core
 
     Box(
         modifier =
-            modifier
-                .animateContentSize(
-                    animationSpec =
-                        tween(
-                            durationMillis = AnimationConfiguration.Duration.DEFAULT,
-                            easing = LinearOutSlowInEasing,
-                        ),
-                ).border(
-                    width = borderSize,
-                    color = borderColor,
-                    shape = RoundedCornerShape(corner),
-                ).background(
-                    color = backgroundColor,
-                    shape = RoundedCornerShape(corner),
-                ).padding(paddings),
-        contentAlignment = horizontalArrangement,
+        modifier
+            .animateContentSize(
+                animationSpec =
+                tween(
+                    durationMillis = AnimationConfiguration.Duration.DEFAULT,
+                    easing = LinearOutSlowInEasing
+                )
+            ).border(
+                width = borderSize,
+                color = borderColor,
+                shape = RoundedCornerShape(corner)
+            ).background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(corner)
+            ).padding(paddings),
+        contentAlignment = horizontalArrangement
     ) {
         AnimatedContent(
             targetState = isLoading,
             transitionSpec = AnimationConfiguration.Transition.default(),
-            label = "DrawButton: AnimatedContent",
+            label = "DrawButton: AnimatedContent"
         ) {
             Row(
                 modifier =
-                    Modifier
-                        .wrapContentWidth()
-                        .wrapContentHeight(),
+                Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.Center
             ) {
                 when {
                     it ->
                         Image(
                             modifier = Modifier.size(loadingSize),
-                            painter = rememberLottiePainter(
-                                composition = composition, progress = {progress}, enableMergePaths = true,
+                            painter =
+                            rememberLottiePainter(
+                                composition = composition,
+                                progress = { progress },
+                                enableMergePaths = true
                             ),
                             contentDescription = "Lottie animation"
                         )
@@ -154,22 +157,22 @@ fun DrawButton(
                                 imageVector = startIcon,
                                 contentDescription = null,
                                 tint = foregroundColor,
-                                modifier = Modifier.size(iconSize),
+                                modifier = Modifier.size(iconSize)
                             )
                             Spacer(modifier = Modifier.width(spacing))
                         }
                         Text(
                             modifier =
-                                Modifier
-                                    .defaultMinSize(
-                                        minHeight = loadingSize,
-                                    ).wrapContentHeight(align = Alignment.CenterVertically),
+                            Modifier
+                                .defaultMinSize(
+                                    minHeight = loadingSize
+                                ).wrapContentHeight(align = Alignment.CenterVertically),
                             text = text,
                             color = foregroundColor,
                             style = textStyle,
                             maxLines = 1,
                             textAlign = TextAlign.Center,
-                            overflow = TextOverflow.Ellipsis,
+                            overflow = TextOverflow.Ellipsis
                         )
                         if (endIcon != null) {
                             Spacer(modifier = Modifier.width(spacing))
@@ -177,7 +180,7 @@ fun DrawButton(
                                 imageVector = endIcon,
                                 contentDescription = null,
                                 tint = foregroundColor,
-                                modifier = Modifier.size(iconSize),
+                                modifier = Modifier.size(iconSize)
                             )
                         }
                     }
@@ -209,7 +212,7 @@ private fun PreviewDrawButton() {
                 textStyle = Theme.typography.regular12,
                 isLoading = false,
                 loadingSize = 0.dp,
-                horizontalArrangement = Alignment.TopStart,
+                horizontalArrangement = Alignment.TopStart
             )
         }
     }

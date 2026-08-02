@@ -17,5 +17,5 @@ data class Typography(
     val regular14: TextStyle,
     val regular12: TextStyle,
     val handwrittenRegular64: TextStyle,
-    val handwrittenSemibold64: TextStyle,
+    val handwrittenSemibold64: TextStyle
 )

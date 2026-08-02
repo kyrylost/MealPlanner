@@ -44,14 +44,15 @@ import org.jetbrains.compose.resources.stringResource
 internal fun RecipeSearchContent(
     state: ViewState,
     recipes: LazyPagingItems<RecipeDomainModel>,
-    onIntent: (ViewIntent) -> Unit,
+    onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = Theme.size.compactScreenWidth),
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
+        contentPadding =
+        PaddingValues(
             bottom = Theme.spacing.space16 + (BottomBarHeight.current)
         ),
         horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
@@ -96,7 +97,8 @@ internal fun RecipeSearchContent(
         if (recipes.loadState.refresh is LoadState.Loading && recipes.itemCount == 0) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(vertical = Theme.spacing.space32),
                     contentAlignment = Alignment.Center
@@ -121,13 +123,14 @@ internal fun RecipeSearchContent(
                         imageUrl = recipe.product.imageUrl,
                         timeText = recipe.totalTime?.let { stringResource(Res.string.common_minutes_short, it) },
                         healthLabels = recipe.healthLabels,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Theme.spacing.space16),
                         hazeState = hazeState,
                         onClick = {
                             onIntent(ViewIntent.OnRecipeClick(recipe.id.orEmpty()))
-                        }
+                        },
+                        modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = Theme.spacing.space16)
                     )
                 }
             }
@@ -135,7 +138,8 @@ internal fun RecipeSearchContent(
             if (recipes.loadState.append is LoadState.Loading) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .padding(vertical = Theme.spacing.space16),
                         contentAlignment = Alignment.Center

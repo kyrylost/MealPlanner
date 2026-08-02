@@ -4,6 +4,4 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EdamamNextNetModel(
-    @SerialName("href") val href: String? = null,
-)
+data class EdamamNextNetModel(@SerialName("href") val href: String? = null)

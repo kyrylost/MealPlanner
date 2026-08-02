@@ -7,9 +7,7 @@ import androidx.navigation.toRoute
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.RecipeDetailsScreen
 
-fun NavGraphBuilder.recipeDetailsNavigationGraph(
-    navController: NavHostController,
-) {
+fun NavGraphBuilder.recipeDetailsNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.RecipeDetails> { backStackEntry ->
         val recipeDetails: NavigationDirection.RecipeDetails = backStackEntry.toRoute()
         RecipeDetailsScreen(

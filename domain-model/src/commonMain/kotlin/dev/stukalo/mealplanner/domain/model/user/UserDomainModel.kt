@@ -10,5 +10,5 @@ data class UserDomainModel(
     val weight: Double,
     val physicalActivity: ActivityLevelDomainModel,
     val gender: GenderDomainModel,
-    val diet: DietDomainModel,
+    val diet: DietDomainModel
 )

@@ -11,7 +11,7 @@ interface EdamamRecipeNetSource {
         fats: String,
         proteins: String,
         mealTypes: List<String>,
-        query: String? = null,
+        query: String? = null
     ): EdamamRecipeResponseNetModel
 
     suspend fun getRecipesByUrl(url: String): EdamamRecipeResponseNetModel

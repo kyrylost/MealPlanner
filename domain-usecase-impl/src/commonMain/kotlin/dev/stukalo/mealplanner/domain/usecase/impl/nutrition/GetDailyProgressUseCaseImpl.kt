@@ -6,10 +6,7 @@ import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyProgressUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDate
 
-class GetDailyProgressUseCaseImpl(
-    private val nutritionRepository: NutritionRepository
-) : GetDailyProgressUseCase {
-    override fun invoke(date: LocalDate): Flow<DailyProgressDomainModel?> {
-        return nutritionRepository.getDailyProgressAsFlow(date)
-    }
+class GetDailyProgressUseCaseImpl(private val nutritionRepository: NutritionRepository) : GetDailyProgressUseCase {
+    override fun invoke(date: LocalDate): Flow<DailyProgressDomainModel?> =
+        nutritionRepository.getDailyProgressAsFlow(date)
 }

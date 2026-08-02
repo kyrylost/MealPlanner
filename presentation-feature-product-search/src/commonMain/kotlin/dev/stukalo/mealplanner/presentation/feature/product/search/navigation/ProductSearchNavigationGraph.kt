@@ -6,10 +6,7 @@ import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.ProductSearchScreen
 
-fun NavGraphBuilder.productSearchNavigationGraph(
-    navController: NavController,
-    appNavController: NavController,
-) {
+fun NavGraphBuilder.productSearchNavigationGraph(navController: NavController, appNavController: NavController) {
     composable<NavigationDirection.ProductSearch> {
         ProductSearchScreen(
             onBackClick = { navController.popBackStack() },

@@ -5,7 +5,5 @@ import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface GetProductsByQueryUseCase {
-     suspend operator fun invoke(
-        query: String,
-    ): Flow<PagingData<ProductDomainModel>>
+    suspend operator fun invoke(query: String): Flow<PagingData<ProductDomainModel>>
 }

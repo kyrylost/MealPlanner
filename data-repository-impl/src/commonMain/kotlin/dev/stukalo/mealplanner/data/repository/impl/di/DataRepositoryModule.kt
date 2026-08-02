@@ -25,25 +25,26 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val dataRepositoryModule = module {
-    singleOf(::SettingsRepositoryImpl) bind SettingsRepository::class
+val dataRepositoryModule =
+    module {
+        singleOf(::SettingsRepositoryImpl) bind SettingsRepository::class
 
-    singleOf(::UserMapper)
-    singleOf(::UserRepositoryImpl) bind UserRepository::class
+        singleOf(::UserMapper)
+        singleOf(::UserRepositoryImpl) bind UserRepository::class
 
-    singleOf(::DailyNormMapper)
-    singleOf(::DailyProgressMapper)
-    singleOf(::NutritionRepositoryImpl) bind NutritionRepository::class
+        singleOf(::DailyNormMapper)
+        singleOf(::DailyProgressMapper)
+        singleOf(::NutritionRepositoryImpl) bind NutritionRepository::class
 
-    singleOf(::EdamamRecipeToProductMapper)
-    singleOf(::RecipeMapper)
-    singleOf(::RecipeRepositoryImpl) bind RecipeRepository::class
+        singleOf(::EdamamRecipeToProductMapper)
+        singleOf(::RecipeMapper)
+        singleOf(::RecipeRepositoryImpl) bind RecipeRepository::class
 
-    singleOf(::MealTypeMapper)
-    singleOf(::MealSlotMapper)
-    singleOf(::MealScheduleRepositoryImpl) bind MealScheduleRepository::class
+        singleOf(::MealTypeMapper)
+        singleOf(::MealSlotMapper)
+        singleOf(::MealScheduleRepositoryImpl) bind MealScheduleRepository::class
 
-    singleOf(::FdcProductMapper)
-    singleOf(::OffProductMapper)
-    singleOf(::SearchRepositoryImpl) bind SearchRepository::class
-}
+        singleOf(::FdcProductMapper)
+        singleOf(::OffProductMapper)
+        singleOf(::SearchRepositoryImpl) bind SearchRepository::class
+    }

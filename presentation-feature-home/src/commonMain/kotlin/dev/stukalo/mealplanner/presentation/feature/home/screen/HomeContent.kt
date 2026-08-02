@@ -41,6 +41,7 @@ import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.core.localization.common_show_all
 import dev.stukalo.mealplanner.core.localization.common_unit_grams
+import dev.stukalo.mealplanner.core.localization.common_value_placeholder
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_title
 import dev.stukalo.mealplanner.core.localization.home_recommended_for_today
@@ -66,7 +67,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun HomeContent(
     state: ViewState,
     recommendedRecipes: LazyPagingItems<RecipeDomainModel>,
-    onIntent: (ViewIntent) -> Unit,
+    onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
     var activeNutrientType by remember { mutableStateOf<NutrientType?>(null) }
@@ -82,7 +83,7 @@ internal fun HomeContent(
             },
             title = stringResource(Res.string.home_consumed_amount_title),
             message = stringResource(Res.string.home_consumed_amount_subtitle),
-            placeholder = "0.0",
+            placeholder = stringResource(Res.string.common_value_placeholder),
             confirmLabel = stringResource(Res.string.common_ok),
             dismissLabel = stringResource(Res.string.common_cancel)
         )
@@ -94,12 +95,14 @@ internal fun HomeContent(
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = Theme.size.compactScreenWidth),
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
+            contentPadding =
+            PaddingValues(
                 start = Theme.spacing.space16,
                 end = Theme.spacing.space16,
                 bottom = Theme.spacing.space16
             ),
             horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
+            verticalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
         ) {
             item(
                 span = {
@@ -147,7 +150,8 @@ internal fun HomeContent(
                 }
             ) {
                 FlowRow(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .padding(top = Theme.spacing.space24),
                     horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
@@ -235,9 +239,14 @@ internal fun HomeContent(
 
             // Recommended Recipes
             if (recommendedRecipes.loadState.refresh is LoadState.Loading && recommendedRecipes.itemCount == 0) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
+                item(
+                    span = {
+                        GridItemSpan(maxLineSpan)
+                    }
+                ) {
                     Box(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .padding(vertical = Theme.spacing.space32),
                         contentAlignment = Alignment.Center
@@ -249,7 +258,7 @@ internal fun HomeContent(
                 items(
                     count = recommendedRecipes.itemCount,
                     key = recommendedRecipes.itemKey { it.id.orEmpty() },
-                    contentType = recommendedRecipes.itemContentType { "recipe" },
+                    contentType = recommendedRecipes.itemContentType { "recipe" }
                 ) { index ->
                     val recipe = recommendedRecipes[index]
                     if (recipe != null) {
@@ -258,17 +267,28 @@ internal fun HomeContent(
                             imageUrl = recipe.product.imageUrl,
                             timeText = recipe.totalTime?.let { stringResource(Res.string.common_minutes_short, it) },
                             healthLabels = recipe.healthLabels,
-                            modifier = Modifier.fillMaxWidth(),
                             hazeState = hazeState,
-                            onClick = { onIntent(ViewIntent.OnRecipeClick(recipe.id.orEmpty())) }
+                            onClick = {
+                                onIntent(
+                                    ViewIntent.OnRecipeClick(recipe.id.orEmpty())
+                                )
+                            },
+                            modifier =
+                            Modifier
+                                .fillMaxWidth()
                         )
                     }
                 }
 
                 if (recommendedRecipes.loadState.append is LoadState.Loading) {
-                    item(span = { GridItemSpan(maxLineSpan) }) {
+                    item(
+                        span = {
+                            GridItemSpan(maxLineSpan)
+                        }
+                    ) {
                         Box(
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = Theme.spacing.space16),
                             contentAlignment = Alignment.Center
@@ -297,7 +317,8 @@ private fun HomeContentPreview() {
         Surface(color = Theme.color.background) {
             HomeContent(
                 state = ViewState(userName = "User"),
-                recommendedRecipes = flowOf(
+                recommendedRecipes =
+                flowOf(
                     PagingData.from(
                         listOf(
                             RecipeDomainModel(product = ProductDomainModel(productName = "Salmon Salad")),

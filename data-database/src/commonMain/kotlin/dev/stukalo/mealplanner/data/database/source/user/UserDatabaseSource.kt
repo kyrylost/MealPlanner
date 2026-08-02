@@ -4,9 +4,7 @@ import dev.stukalo.mealplanner.data.database.dao.user.UserDao
 import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
 import kotlinx.coroutines.flow.Flow
 
-class UserDatabaseSource(
-    private val dao: UserDao
-) {
+class UserDatabaseSource(private val dao: UserDao) {
     suspend fun insert(user: UserDatabaseModel): Result<Unit> = runCatching {
         dao.insert(user)
     }

@@ -19,9 +19,7 @@ import dev.stukalo.mealplanner.presentation.feature.recipedetails.navigation.rec
 import dev.stukalo.mealplanner.presentation.feature.welcome.navigation.welcomeNavigationGraph
 
 @Composable
-internal fun AppNavHost(
-    navController: NavHostController,
-) {
+internal fun AppNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = NavigationDirection.Gateway,
@@ -52,7 +50,7 @@ internal fun AppNavHost(
             } else {
                 ExitTransition.None
             }
-        },
+        }
     ) {
         gatewayNavigationGraph(
             navController = navController
@@ -86,13 +84,14 @@ internal fun AppNavHost(
 
 private fun isDrillDown(navBackStackEntry: NavBackStackEntry): Boolean {
     val destination = navBackStackEntry.destination
-    
+
     // Screens that are NOT drill-down (usually main tabs or entry screens)
-    val rootRoutes = listOf(
-        NavigationDirection.Gateway::class,
-        NavigationDirection.Welcome::class,
-        NavigationDirection.Onboarding::class,
-    ) + MainTab.entries.map { it.route::class }
+    val rootRoutes =
+        listOf(
+            NavigationDirection.Gateway::class,
+            NavigationDirection.Welcome::class,
+            NavigationDirection.Onboarding::class
+        ) + MainTab.entries.map { it.route::class }
 
     return rootRoutes.none { destination.hasRoute(it) }
 }

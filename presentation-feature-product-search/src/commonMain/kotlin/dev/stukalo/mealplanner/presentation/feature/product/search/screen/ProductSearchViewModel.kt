@@ -23,9 +23,8 @@ import kotlin.time.Duration.Companion.milliseconds
 class ProductSearchViewModel(
     private val getProductsByQueryUseCase: GetProductsByQueryUseCase,
     private val getAutoCompleteHintsUseCase: GetAutoCompleteHintsUseCase,
-    private val logProductConsumedUseCase: LogProductConsumedUseCase,
+    private val logProductConsumedUseCase: LogProductConsumedUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-
     override val initialState = ViewState()
 
     private val queryFlow = MutableStateFlow("")
@@ -37,8 +36,7 @@ class ProductSearchViewModel(
             .filter { it.isNotBlank() }
             .onEach { query ->
                 loadSuggestions(query)
-            }
-            .launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
     }
 
     override suspend fun processIntent(intent: ViewIntent) {
@@ -91,13 +89,14 @@ class ProductSearchViewModel(
     private fun logProduct(product: ProductDomainModel, weight: Float) {
         viewModelScope.launch {
             updateState { it.copy(isLoading = true) }
-            logProductConsumedUseCase(product, weight).onSuccess {
-                updateState { it.copy(isLoading = false) }
-                // Maybe show success or navigate back?
-                // The user said "on click show add to consumed dialog", so probably just log it.
-            }.onFailure {
-                updateState { it.copy(isLoading = false) }
-            }
+            logProductConsumedUseCase(product, weight)
+                .onSuccess {
+                    updateState { it.copy(isLoading = false) }
+                    // Maybe show success or navigate back?
+                    // The user said "on click show add to consumed dialog", so probably just log it.
+                }.onFailure {
+                    updateState { it.copy(isLoading = false) }
+                }
         }
     }
 

@@ -13,12 +13,11 @@ import kotlinx.datetime.LocalTime
 
 internal class MealScheduleRepositoryImpl(
     private val mealSlotDatabaseSource: MealSlotDatabaseSource,
-    private val mealSlotMapper: MealSlotMapper,
+    private val mealSlotMapper: MealSlotMapper
 ) : MealScheduleRepository {
-
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>> {
-        return mealSlotDatabaseSource.getAllSlotsAsFlow().flatMapLatest { slots ->
+    override fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>> =
+        mealSlotDatabaseSource.getAllSlotsAsFlow().flatMapLatest { slots ->
             if (slots.isEmpty()) {
                 flow {
                     val defaults = getDefaultSlots()
@@ -30,15 +29,11 @@ internal class MealScheduleRepositoryImpl(
                 }
             }
         }
-    }
 
-    override suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit> {
-        return mealSlotDatabaseSource.updateConsumedStatus(id, isConsumed)
-    }
+    override suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit> =
+        mealSlotDatabaseSource.updateConsumedStatus(id, isConsumed)
 
-    override suspend fun resetDailyConsumedStatus(): Result<Unit> {
-        return mealSlotDatabaseSource.resetAllConsumedStatus()
-    }
+    override suspend fun resetDailyConsumedStatus(): Result<Unit> = mealSlotDatabaseSource.resetAllConsumedStatus()
 
     private fun getDefaultSlots(): List<MealSlotDomainModel> = listOf(
         MealSlotDomainModel(
