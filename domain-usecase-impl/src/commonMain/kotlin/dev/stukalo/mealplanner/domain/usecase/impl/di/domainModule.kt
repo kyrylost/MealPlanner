@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.domain.usecase.impl.di
 
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyNormUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyProgressUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.LogProductConsumedUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.LogRecipeConsumedUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.UpdateDailyProgressUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.UpdateNutrientProgressUseCaseImpl
@@ -35,6 +36,7 @@ import dev.stukalo.mealplanner.domain.usecase.nutrition.UpdateNutrientProgressUs
 import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
+import dev.stukalo.mealplanner.domain.usecase.products.LogProductConsumedUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipeByIdUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecommendedRecipesUseCase
@@ -86,6 +88,7 @@ val domainModule = module {
     singleOf(::UpdateDailyProgressUseCaseImpl) bind UpdateDailyProgressUseCase::class
     singleOf(::UpdateNutrientProgressUseCaseImpl) bind UpdateNutrientProgressUseCase::class
     singleOf(::LogRecipeConsumedUseCaseImpl) bind LogRecipeConsumedUseCase::class
+    singleOf(::LogProductConsumedUseCaseImpl) bind LogProductConsumedUseCase::class
 
     singleOf(::GetMealScheduleUseCaseImpl) bind GetMealScheduleUseCase::class
     singleOf(::TrackMealConsumedUseCaseImpl) bind TrackMealConsumedUseCase::class

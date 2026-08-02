@@ -1,19 +1,30 @@
 package dev.stukalo.mealplanner.presentation.feature.product.search.screen
 
 import androidx.compose.runtime.Composable
+import androidx.paging.compose.collectAsLazyPagingItems
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
+import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.ViewEvent
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ProductSearchScreen() {
+fun ProductSearchScreen(
+    onBackClick: () -> Unit,
+) {
     val viewModel: ProductSearchViewModel = koinViewModel()
 
     MviScreen(
         viewModel = viewModel,
-        onSingleEvent = { /* Handle events */ }
+        onSingleEvent = { event ->
+            when (event) {
+                ViewEvent.NavigateBack -> onBackClick()
+            }
+        }
     ) { state ->
+        val products = state.productsFlow?.collectAsLazyPagingItems()
+
         ProductSearchContent(
             state = state,
+            products = products,
             onIntent = viewModel::onIntent
         )
     }

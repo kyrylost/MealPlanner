@@ -8,7 +8,7 @@ import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 
-internal class EdamamProductMapper : BaseMapper<EdamamRecipeNetModel, ProductDomainModel> {
+internal class EdamamRecipeToProductMapper : BaseMapper<EdamamRecipeNetModel, ProductDomainModel> {
 
     override fun mapTo(model: EdamamRecipeNetModel): ProductDomainModel {
         val totalNutrients = mapNutrients(model.totalNutrients)
@@ -24,6 +24,7 @@ internal class EdamamProductMapper : BaseMapper<EdamamRecipeNetModel, ProductDom
         }
 
         return ProductDomainModel(
+            id = model.uri?.substringAfterLast("_"),
             imageUrl = model.image,
             productName = model.label,
             nutrients = nutrientsPer100g,

@@ -17,7 +17,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.input.RoundedPlacehol
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RecipeSearchHeader(
+fun RecipeSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -50,9 +50,9 @@ fun RecipeSearchHeader(
 
 @Preview
 @Composable
-private fun RecipeSearchHeaderPreview() {
+private fun RecipeSearchBarPreview() {
     Theme {
-        RecipeSearchHeader(
+        RecipeSearchBar(
             query = "",
             onQueryChange = {}
         )

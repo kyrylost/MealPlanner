@@ -11,6 +11,8 @@ internal class GetAutoCompleteHintsUseCaseImpl(
     ): Result<List<String>> = runCatching {
         searchRepository.getAutoCompleteHints(query, HINTS_LIMIT)
     }
-}
 
-private const val HINTS_LIMIT = 10
+    companion object {
+        private const val HINTS_LIMIT = 10
+    }
+}

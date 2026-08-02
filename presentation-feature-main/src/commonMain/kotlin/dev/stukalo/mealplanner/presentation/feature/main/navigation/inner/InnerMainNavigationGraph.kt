@@ -32,7 +32,9 @@ internal fun InnerMainNavigationGraph(
             appNavController = appNavController
         )
 
-        productSearchNavigationGraph()
+        productSearchNavigationGraph(
+            navController = mainNavController
+        )
 
         statisticsNavigationGraph(
             navController = appNavController

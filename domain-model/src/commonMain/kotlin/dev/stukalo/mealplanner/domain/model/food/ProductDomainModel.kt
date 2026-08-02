@@ -19,6 +19,7 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
  * @property nutrientsTotal The list of nutrients for the entire product weight.
  */
 data class ProductDomainModel(
+    val id: String? = null,
     val imageUrl: String? = null,
     val productName: String? = null,
     val nutrients: List<NutrientDomainModel>? = null,

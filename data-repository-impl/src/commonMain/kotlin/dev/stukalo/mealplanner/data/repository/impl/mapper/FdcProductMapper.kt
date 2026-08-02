@@ -25,12 +25,26 @@ internal class FdcProductMapper : BaseMapper<FDCFoodNetModel, ProductDomainModel
         }
 
         val calories = model.foodNutrients?.find { it.nutrientId == 1008 }?.value?.toFloat()
+        val weight = model.servingSize?.toFloat()
+
+        val caloriesTotal = if (weight != null && calories != null) {
+            (calories * weight) / 100f
+        } else null
+
+        val nutrientsTotal = if (weight != null && nutrients != null) {
+            nutrients.map {
+                it.copy(amount = (it.amount ?: 0f) * weight / 100f)
+            }
+        } else null
 
         return ProductDomainModel(
+            id = model.fdcId.toString(),
             productName = model.description,
             nutrients = nutrients,
             calories = calories,
-            weight = model.servingSize?.toFloat()
+            weight = weight,
+            caloriesTotal = caloriesTotal,
+            nutrientsTotal = nutrientsTotal
         )
     }
 }

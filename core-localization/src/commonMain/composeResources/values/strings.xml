@@ -79,10 +79,14 @@
     <string name="common_fats">Fats</string>
     <string name="common_carbs">Carbs</string>
     <string name="common_kcal">%1$d kcal</string>
+    <string name="common_grams_value">%1$d g</string>
     <string name="common_kcal_short">kcal</string>
     <string name="common_grams_short">g</string>
     <string name="common_unit_kcal">kcal</string>
     <string name="common_unit_grams">g</string>
+    <string name="common_nutrient_with_unit">%1$s (%2$s)</string>
+    <string name="common_bullet_item">• %1$s</string>
+    <string name="common_numbered_item">%1$d. %2$s</string>
     <string name="common_close">Close</string>
 
     <string name="recipe_details_ingredients">Ingredients</string>

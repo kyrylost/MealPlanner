@@ -24,9 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.haze.HazeState
+import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
 import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
 
@@ -35,7 +37,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
 fun RecipeCard(
     title: String,
     imageUrl: String?,
-    totalTime: Int?,
+    timeText: String?,
     healthLabels: List<String>?,
     hazeState: HazeState,
     modifier: Modifier = Modifier,
@@ -55,7 +57,7 @@ fun RecipeCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1.8f)
+                    .aspectRatio(Theme.aspect.recipeCard)
                     .background(Theme.color.textSecondary.copy(alpha = 0.1f))
             ) {
                 AsyncImage(
@@ -111,7 +113,7 @@ fun RecipeCard(
                     )
                     Spacer(modifier = Modifier.width(Theme.spacing.space4))
                     Text(
-                        text = totalTime?.let { "${it}m" } ?: "--",
+                        text = timeText ?: "--",
                         style = Theme.typography.regular12,
                         color = Theme.color.textSecondary
                     )
@@ -132,6 +134,21 @@ private fun HealthLabel(label: String) {
             style = Theme.typography.bold12,
             color = Color.White,
             modifier = Modifier.padding(horizontal = Theme.spacing.space8, vertical = Theme.spacing.space2)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun RecipeCardPreview() {
+    Theme {
+        RecipeCard(
+            title = "Healthy Salmon Salad",
+            imageUrl = null,
+            timeText = "25m",
+            healthLabels = listOf("Keto", "Low-Carb"),
+            hazeState = rememberHazeState(),
+            onClick = {}
         )
     }
 }

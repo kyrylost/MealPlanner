@@ -1,12 +1,13 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
+import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.database.model.slot.MealSlotDatabaseModel
 import dev.stukalo.mealplanner.domain.model.slot.MealSlotDomainModel
 
 internal class MealSlotMapper(
     private val mealTypeMapper: MealTypeMapper,
-) {
-    fun mapTo(model: MealSlotDatabaseModel): MealSlotDomainModel {
+) : BaseMapper<MealSlotDatabaseModel, MealSlotDomainModel> {
+    override fun mapTo(model: MealSlotDatabaseModel): MealSlotDomainModel {
         return MealSlotDomainModel(
             id = model.id,
             name = model.name,
@@ -19,7 +20,7 @@ internal class MealSlotMapper(
         )
     }
 
-    fun mapFrom(model: MealSlotDomainModel): MealSlotDatabaseModel {
+    override fun mapFrom(model: MealSlotDomainModel): MealSlotDatabaseModel {
         return MealSlotDatabaseModel(
             id = model.id,
             name = model.name,

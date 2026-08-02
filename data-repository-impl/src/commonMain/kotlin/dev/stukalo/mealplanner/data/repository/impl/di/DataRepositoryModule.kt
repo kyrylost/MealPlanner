@@ -7,7 +7,7 @@ import dev.stukalo.mealplanner.data.repository.impl.SearchRepositoryImpl
 import dev.stukalo.mealplanner.data.repository.impl.UserRepositoryImpl
 import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyNormMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyProgressMapper
-import dev.stukalo.mealplanner.data.repository.impl.mapper.EdamamProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.mapper.EdamamRecipeToProductMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.FdcProductMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.MealSlotMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.MealTypeMapper
@@ -35,7 +35,7 @@ val dataRepositoryModule = module {
     singleOf(::DailyProgressMapper)
     singleOf(::NutritionRepositoryImpl) bind NutritionRepository::class
 
-    singleOf(::EdamamProductMapper)
+    singleOf(::EdamamRecipeToProductMapper)
     singleOf(::RecipeMapper)
     singleOf(::RecipeRepositoryImpl) bind RecipeRepository::class
 

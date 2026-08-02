@@ -20,7 +20,9 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.ColorLight
 import dev.stukalo.mealplanner.presentation.core.styling.color.LocalColor
 import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
 import dev.stukalo.mealplanner.presentation.core.styling.color.animateColors
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.AspectRatio
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.Elevation
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalAspectRatio
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalElevation
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalRadius
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalSize
@@ -204,6 +206,12 @@ fun Theme(
         thickness4 = 4.dp,
     )
 
+    val aspect = AspectRatio(
+        productCard = 1.8f,
+        recipeCard = 1.8f,
+        recipeDetailsImage = 1.2f,
+    )
+
     val shape = Shape(
         largeRoundedCornerShape = RoundedCornerShape(radius.radius24),
         normalRoundedCornerShape = RoundedCornerShape(radius.radius16),
@@ -218,6 +226,7 @@ fun Theme(
         LocalSize provides size,
         LocalRadius provides radius,
         LocalThickness provides thickness,
+        LocalAspectRatio provides aspect,
         content = content
     )
 }
@@ -247,6 +256,9 @@ object Theme {
     val thickness: Thickness
         @Composable
         get() = LocalThickness.current
+    val aspect: AspectRatio
+        @Composable
+        get() = LocalAspectRatio.current
 }
 
 @Preview

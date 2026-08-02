@@ -28,11 +28,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_bullet_item
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_minutes_short
+import dev.stukalo.mealplanner.core.localization.common_numbered_item
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.common_servings
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
@@ -47,6 +48,7 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
@@ -102,7 +104,7 @@ internal fun RecipeDetailsContent(
             
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 120.dp)
+                contentPadding = PaddingValues(bottom = LocalBottomBarHeight.current)
             ) {
                 item {
                     AsyncImage(
@@ -110,7 +112,7 @@ internal fun RecipeDetailsContent(
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .aspectRatio(1.2f),
+                            .aspectRatio(Theme.aspect.recipeDetailsImage),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -171,7 +173,7 @@ internal fun RecipeDetailsContent(
                             )
                             currentRecipe.ingredientLines?.forEach { line ->
                                 Text(
-                                    text = "• $line",
+                                    text = stringResource(Res.string.common_bullet_item, line),
                                     style = Theme.typography.regular14,
                                     color = Theme.color.textSecondary
                                 )
@@ -187,7 +189,7 @@ internal fun RecipeDetailsContent(
                                 )
                                 instructions.forEachIndexed { index, line ->
                                     Text(
-                                        text = "${index + 1}. $line",
+                                        text = stringResource(Res.string.common_numbered_item, index + 1, line),
                                         style = Theme.typography.regular14,
                                         color = Theme.color.textSecondary
                                     )

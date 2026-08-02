@@ -5,7 +5,7 @@ These rules apply to all developers and AI assistants working on this project.
 ## General Rules
 - **No Wildcard Imports**: Explicitly list all imports in the import section. NEVER use `import package.*`.
 - **Imports vs FQN**: Always use the `import` section at the top of the file. Do not use Fully Qualified Names (e.g., `androidx.compose.ui.Modifier`) directly in the code unless there is a naming conflict.
-- **One Class per File**: Keep every class, interface, or top-level object in its own separate file.
+- **One Class per File**: Keep every class, interface, top-level object, or top-level @Composable function in its own separate file. Private helper functions or private Composables can remain in the same file as their parent.
 - **Organization**: If creating helper functions or utility classes, create a dedicated package to keep related code together.
 - **KDoc**: Provide documentation for all public classes and complex functions.
 

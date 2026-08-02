@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OFFProductNetModel(
+    @SerialName("code") val code: String? = null,
     @SerialName("image_url") val imageUrl: String? = null,
     @SerialName("nutriments") val nutriments: OFFNutrimentsNetModel? = null,
     @SerialName("nutrition_data") val nutritionData: String? = null,

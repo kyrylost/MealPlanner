@@ -1,10 +1,11 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
+import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.database.model.slot.MealTypeDatabaseModel
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 
-internal class MealTypeMapper {
-    fun mapTo(model: MealTypeDatabaseModel): MealTypeDomainModel {
+internal class MealTypeMapper : BaseMapper<MealTypeDatabaseModel, MealTypeDomainModel> {
+    override fun mapTo(model: MealTypeDatabaseModel): MealTypeDomainModel {
         return when (model) {
             MealTypeDatabaseModel.BREAKFAST -> MealTypeDomainModel.BREAKFAST
             MealTypeDatabaseModel.LUNCH -> MealTypeDomainModel.LUNCH
@@ -14,7 +15,7 @@ internal class MealTypeMapper {
         }
     }
 
-    fun mapFrom(model: MealTypeDomainModel): MealTypeDatabaseModel {
+    override fun mapFrom(model: MealTypeDomainModel): MealTypeDatabaseModel {
         return when (model) {
             MealTypeDomainModel.BREAKFAST -> MealTypeDatabaseModel.BREAKFAST
             MealTypeDomainModel.LUNCH -> MealTypeDatabaseModel.LUNCH

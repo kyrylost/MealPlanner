@@ -3,30 +3,26 @@ package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_clear_filters
-import dev.stukalo.mealplanner.core.localization.common_no_results
+import dev.stukalo.mealplanner.core.localization.common_minutes_short
 import dev.stukalo.mealplanner.core.localization.common_recipe_search
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -37,9 +33,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.icons.IconFilter
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.recipe.RecipeCard
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.ActiveFilterChips
-import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.RecipeSearchHeader
+import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.EmptyState
+import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.RecipeSearchBar
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
+import kotlinx.coroutines.flow.flowOf
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -74,7 +72,7 @@ internal fun RecipeSearchContent(
         }
 
         item(span = { GridItemSpan(maxLineSpan) }) {
-            RecipeSearchHeader(
+            RecipeSearchBar(
                 query = state.searchQuery,
                 onQueryChange = { onIntent(ViewIntent.OnSearchQueryChange(it)) },
                 modifier = Modifier.padding(horizontal = Theme.spacing.space16)
@@ -123,7 +121,7 @@ internal fun RecipeSearchContent(
                     RecipeCard(
                         title = recipe.product.productName.orEmpty(),
                         imageUrl = recipe.product.imageUrl,
-                        totalTime = recipe.totalTime,
+                        timeText = recipe.totalTime?.let { stringResource(Res.string.common_minutes_short, it) },
                         healthLabels = recipe.healthLabels,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -151,32 +149,15 @@ internal fun RecipeSearchContent(
         }
     }
 }
-// core ui title desc and img(optional)
-@Composable
-private fun EmptyState(
-    onClearFilters: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = Theme.spacing.space64),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(Res.string.common_no_results),
-            style = Theme.typography.bold16,
-            color = Theme.color.textSecondary
-        )
-        Spacer(modifier = Modifier.height(Theme.spacing.space16))
-        Button(onClick = onClearFilters) {
-            Text(stringResource(Res.string.common_clear_filters))
-        }
-    }
-}
 
 @Preview
 @Composable
 private fun RecipeSearchContentPreview() {
     Theme {
+        RecipeSearchContent(
+            state = ViewState(),
+            recipes = flowOf(PagingData.from(emptyList<RecipeDomainModel>())).collectAsLazyPagingItems(),
+            onIntent = {}
+        )
     }
 }

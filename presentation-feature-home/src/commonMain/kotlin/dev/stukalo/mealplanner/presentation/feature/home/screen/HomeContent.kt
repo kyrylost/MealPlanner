@@ -35,6 +35,7 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_carbs
 import dev.stukalo.mealplanner.core.localization.common_fats
+import dev.stukalo.mealplanner.core.localization.common_minutes_short
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.core.localization.common_show_all
@@ -254,7 +255,7 @@ internal fun HomeContent(
                         RecipeCard(
                             title = recipe.product.productName.orEmpty(),
                             imageUrl = recipe.product.imageUrl,
-                            totalTime = recipe.totalTime,
+                            timeText = recipe.totalTime?.let { stringResource(Res.string.common_minutes_short, it) },
                             healthLabels = recipe.healthLabels,
                             modifier = Modifier.fillMaxWidth(),
                             hazeState = hazeState,

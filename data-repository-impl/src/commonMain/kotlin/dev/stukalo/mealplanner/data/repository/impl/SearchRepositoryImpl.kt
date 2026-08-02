@@ -43,8 +43,10 @@ internal class SearchRepositoryImpl(
 
     override suspend fun getProductByQrCode(qrCode: String): ProductDomainModel? {
         val response = offNetSource.getProductByBarcode(qrCode)
-        return response.product?.let { offProductMapper.mapTo(it) }
+        return if (response.status == 1) offProductMapper.mapTo(response) else null
+    }
+
+    companion object {
+        private const val PRODUCTS_PAGE_SIZE = 20
     }
 }
-
-private const val PRODUCTS_PAGE_SIZE = 20

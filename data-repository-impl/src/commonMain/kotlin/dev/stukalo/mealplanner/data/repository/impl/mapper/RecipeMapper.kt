@@ -6,12 +6,12 @@ import dev.stukalo.mealplanner.domain.model.recipe.IngredientDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 
 internal class RecipeMapper(
-    private val edamamProductMapper: EdamamProductMapper,
+    private val edamamRecipeToProductMapper: EdamamRecipeToProductMapper,
 ) : BaseMapper<EdamamRecipeNetModel, RecipeDomainModel> {
 
     override fun mapTo(model: EdamamRecipeNetModel): RecipeDomainModel {
         return RecipeDomainModel(
-            product = edamamProductMapper.mapTo(model),
+            product = edamamRecipeToProductMapper.mapTo(model),
             servings = model.yield?.toInt(),
             totalTime = model.totalTime?.toInt(),
             ingredients = model.ingredients?.map {
