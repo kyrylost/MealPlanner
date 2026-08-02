@@ -9,19 +9,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_calories
 import dev.stukalo.mealplanner.core.localization.common_carbs
 import dev.stukalo.mealplanner.core.localization.common_close
 import dev.stukalo.mealplanner.core.localization.common_fats
+import dev.stukalo.mealplanner.core.localization.common_grams_value
 import dev.stukalo.mealplanner.core.localization.common_kcal
 import dev.stukalo.mealplanner.core.localization.common_proteins
-import dev.stukalo.mealplanner.core.localization.common_unit_grams
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.text.TextButton
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.MealSlotProgress
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * A dialog displaying detailed information about a meal slot.
+ * 
+ * @param meal The meal slot progress to display.
+ * @param onDismissRequest The callback for dismissing the dialog.
+ */
 @Composable
 fun MealDetailsDialog(
     meal: MealSlotProgress,
@@ -47,15 +54,15 @@ fun MealDetailsDialog(
                 )
                 NutrientRow(
                     label = stringResource(Res.string.common_proteins),
-                    value = "${meal.proteins.toInt()} ${stringResource(Res.string.common_unit_grams)}"
+                    value = stringResource(Res.string.common_grams_value, meal.proteins.toInt())
                 )
                 NutrientRow(
                     label = stringResource(Res.string.common_fats),
-                    value = "${meal.fats.toInt()} ${stringResource(Res.string.common_unit_grams)}"
+                    value = stringResource(Res.string.common_grams_value, meal.fats.toInt())
                 )
                 NutrientRow(
                     label = stringResource(Res.string.common_carbs),
-                    value = "${meal.carbohydrates.toInt()} ${stringResource(Res.string.common_unit_grams)}"
+                    value = stringResource(Res.string.common_grams_value, meal.carbohydrates.toInt())
                 )
             }
         },
@@ -91,6 +98,25 @@ private fun NutrientRow(
             text = value,
             style = Theme.typography.bold14,
             color = Theme.color.textPrimary
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun MealDetailsDialogPreview() {
+    Theme {
+        MealDetailsDialog(
+            meal = MealSlotProgress(
+                id = 1,
+                name = "Lunch",
+                calories = 750.0,
+                proteins = 35.0,
+                fats = 25.0,
+                carbohydrates = 90.0,
+                isConsumed = false
+            ),
+            onDismissRequest = {}
         )
     }
 }

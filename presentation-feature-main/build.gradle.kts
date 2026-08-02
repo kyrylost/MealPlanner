@@ -70,6 +70,7 @@ kotlin {
             implementation(projects.presentationFeatureBarcodeScanner)
             implementation(projects.presentationFeatureHome)
             implementation(projects.presentationFeatureStatistics)
+            implementation(projects.presentationFeatureSettings)
             implementation(projects.presentationFeatureRecipeDetails)
             implementation(projects.dataNetworkEdamam)
             implementation(projects.dataNetworkOpenfoodfacts)

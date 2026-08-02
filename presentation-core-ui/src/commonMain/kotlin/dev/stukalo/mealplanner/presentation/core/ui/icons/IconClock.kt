@@ -21,7 +21,7 @@ val IconClock: ImageVector
             viewportHeight = 24f
         ).apply {
             path(
-                stroke = SolidColor(Color(0xFF292D32)),
+                stroke = SolidColor(Color.Black),
                 strokeLineWidth = 1.5f,
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round
@@ -34,7 +34,7 @@ val IconClock: ImageVector
                 close()
             }
             path(
-                stroke = SolidColor(Color(0xFF292D32)),
+                stroke = SolidColor(Color.Black),
                 strokeLineWidth = 1.5f,
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round

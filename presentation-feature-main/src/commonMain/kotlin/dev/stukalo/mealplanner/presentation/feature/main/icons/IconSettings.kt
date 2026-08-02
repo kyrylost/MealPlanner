@@ -15,59 +15,64 @@ val NavigationBarIcons.IconSettings: ImageVector
         }
         _IconSettings = ImageVector.Builder(
             name = "IconSettings",
-            defaultWidth = 48.dp,
-            defaultHeight = 48.dp,
-            viewportWidth = 48f,
-            viewportHeight = 48f
+            defaultWidth = 32.dp,
+            defaultHeight = 32.dp,
+            viewportWidth = 32f,
+            viewportHeight = 32f
         ).apply {
             path(
                 stroke = SolidColor(Color.Black),
-                strokeLineWidth = 1f,
+                strokeLineWidth = 2f,
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(39.23f, 26f)
-                arcToRelative(16.52f, 16.52f, 0f, isMoreThanHalf = false, isPositiveArc = false, 0.14f, -2f)
-                arcToRelative(16.52f, 16.52f, 0f, isMoreThanHalf = false, isPositiveArc = false, -0.14f, -2f)
-                lineToRelative(4.33f, -3.39f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, 0.25f, -1.31f)
-                lineToRelative(-4.1f, -7.11f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, -1.25f, -0.44f)
-                lineToRelative(-5.11f, 2.06f)
-                arcToRelative(15.68f, 15.68f, 0f, isMoreThanHalf = false, isPositiveArc = false, -3.46f, -2f)
-                lineToRelative(-0.77f, -5.43f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, -1f, -0.86f)
-                horizontalLineTo(19.9f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, -1f, 0.86f)
-                lineToRelative(-0.77f, 5.43f)
-                arcToRelative(15.36f, 15.36f, 0f, isMoreThanHalf = false, isPositiveArc = false, -3.46f, 2f)
-                lineTo(9.54f, 9.75f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, -1.25f, 0.44f)
-                lineTo(4.19f, 17.3f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, 0.25f, 1.31f)
-                lineTo(8.76f, 22f)
-                arcToRelative(16.66f, 16.66f, 0f, isMoreThanHalf = false, isPositiveArc = false, -0.14f, 2f)
-                arcToRelative(16.52f, 16.52f, 0f, isMoreThanHalf = false, isPositiveArc = false, 0.14f, 2f)
-                lineTo(4.44f, 29.39f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, -0.25f, 1.31f)
-                lineToRelative(4.1f, 7.11f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, 1.25f, 0.44f)
-                lineToRelative(5.11f, -2.06f)
-                arcToRelative(15.68f, 15.68f, 0f, isMoreThanHalf = false, isPositiveArc = false, 3.46f, 2f)
-                lineToRelative(0.77f, 5.43f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, 1f, 0.86f)
-                horizontalLineToRelative(8.2f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, 1f, -0.86f)
-                lineToRelative(0.77f, -5.43f)
-                arcToRelative(15.36f, 15.36f, 0f, isMoreThanHalf = false, isPositiveArc = false, 3.46f, -2f)
-                lineToRelative(5.11f, 2.06f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, 1.25f, -0.44f)
-                lineToRelative(4.1f, -7.11f)
-                arcToRelative(1f, 1f, 0f, isMoreThanHalf = false, isPositiveArc = false, -0.25f, -1.31f)
-                close()
-                moveTo(24f, 31.18f)
-                arcTo(7.18f, 7.18f, 0f, isMoreThanHalf = true, isPositiveArc = true, 31.17f, 24f)
-                arcTo(7.17f, 7.17f, 0f, isMoreThanHalf = false, isPositiveArc = true, 24f, 31.18f)
+                moveTo(16f, 12f)
+                arcTo(4f, 4f, 0f, isMoreThanHalf = true, isPositiveArc = true, 16f, 20f)
+                arcTo(4f, 4f, 0f, isMoreThanHalf = true, isPositiveArc = true, 16f, 12f)
+            }
+            path(
+                stroke = SolidColor(Color.Black),
+                strokeLineWidth = 2f,
+                strokeLineCap = StrokeCap.Round,
+                strokeLineJoin = StrokeJoin.Round
+            ) {
+                moveTo(27.758f, 10.366f)
+                lineToRelative(-1.0f, -1.732f)
+                curveToRelative(-0.552f, -0.957f, -1.775f, -1.284f, -2.732f, -0.732f)
+                lineToRelative(-0.526f, 0.304f)
+                curveToRelative(-2.0f, 1.154f, -4.5f, -0.289f, -4.5f, -2.598f)
+                verticalLineTo(5.0f)
+                curveToRelative(0.0f, -1.105f, -0.895f, -2.0f, -2.0f, -2.0f)
+                horizontalLineToRelative(-2.0f)
+                curveToRelative(-1.105f, 0.0f, -2.0f, 0.895f, -2.0f, 2.0f)
+                verticalLineToRelative(0.608f)
+                curveToRelative(0.0f, 2.309f, -2.5f, 3.753f, -4.5f, 2.598f)
+                lineTo(7.974f, 7.902f)
+                curveTo(7.017f, 7.35f, 5.794f, 7.677f, 5.242f, 8.634f)
+                lineToRelative(-1.0f, 1.732f)
+                curveToRelative(-0.552f, 0.957f, -0.225f, 2.18f, 0.732f, 2.732f)
+                lineTo(5.5f, 13.402f)
+                curveToRelative(2.0f, 1.155f, 2.0f, 4.041f, 0.0f, 5.196f)
+                lineToRelative(-0.526f, 0.304f)
+                curveToRelative(-0.957f, 0.552f, -1.284f, 1.775f, -0.732f, 2.732f)
+                lineToRelative(1.0f, 1.732f)
+                curveToRelative(0.552f, 0.957f, 1.775f, 1.284f, 2.732f, 0.732f)
+                lineTo(8.5f, 23.794f)
+                curveToRelative(2.0f, -1.155f, 4.5f, 0.289f, 4.5f, 2.598f)
+                verticalLineTo(27.0f)
+                curveToRelative(0.0f, 1.105f, 0.895f, 2.0f, 2.0f, 2.0f)
+                horizontalLineToRelative(2.0f)
+                curveToRelative(1.105f, 0.0f, 2.0f, -0.895f, 2.0f, -2.0f)
+                verticalLineToRelative(-0.608f)
+                curveToRelative(0.0f, -2.309f, 2.5f, -3.753f, 4.5f, -2.598f)
+                lineToRelative(0.526f, 0.304f)
+                curveToRelative(0.957f, 0.552f, 2.18f, 0.225f, 2.732f, -0.732f)
+                lineToRelative(1.0f, -1.732f)
+                curveToRelative(0.552f, -0.957f, 0.225f, -2.18f, -0.732f, -2.732f)
+                lineTo(26.5f, 18.598f)
+                curveToRelative(-2.0f, -1.155f, -2.0f, -4.041f, 0.0f, -5.196f)
+                lineToRelative(0.526f, -0.304f)
+                curveTo(27.983f, 12.546f, 28.311f, 11.323f, 27.758f, 10.366f)
                 close()
             }
         }.build()

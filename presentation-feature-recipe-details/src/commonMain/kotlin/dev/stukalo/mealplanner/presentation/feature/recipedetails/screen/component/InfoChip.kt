@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
 
 @Composable
 fun InfoChip(
@@ -34,6 +36,17 @@ fun InfoChip(
             text = text,
             style = Theme.typography.regular14,
             color = Theme.color.textSecondary
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun InfoChipPreview() {
+    Theme {
+        InfoChip(
+            text = "25 min",
+            icon = IconClock
         )
     }
 }

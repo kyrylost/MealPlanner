@@ -88,6 +88,7 @@
     <string name="common_bullet_item">• %1$s</string>
     <string name="common_numbered_item">%1$d. %2$s</string>
     <string name="common_close">Close</string>
+    <string name="common_value_placeholder">0.0</string>
 
     <string name="recipe_details_ingredients">Ingredients</string>
     <string name="recipe_details_instructions">Instructions</string>
@@ -98,6 +99,8 @@
     <string name="settings_meal_config">Meal Configuration</string>
     <string name="settings_meal_schedule">Meal Schedule</string>
     <string name="settings_theme_choice">Theme Choice</string>
+    <string name="settings_theme_orange">Orange</string>
+    <string name="settings_theme_green">Green</string>
 
     <string name="meal_schedule_auto_calculate">Auto-Calculate</string>
     <string name="meal_schedule_total_percentage">Total Percentage: %1$d%%</string>

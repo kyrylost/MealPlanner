@@ -6,16 +6,14 @@ import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.Vie
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun SettingsScreen(
-    onBackClick: () -> Unit,
-) {
+fun SettingsScreen() {
     val viewModel: SettingsViewModel = koinViewModel()
 
     MviScreen(
         viewModel = viewModel,
         onSingleEvent = { event ->
             when (event) {
-                ViewEvent.NavigateBack -> onBackClick()
+                ViewEvent.NavigateBack -> { /* No back in tab */ }
             }
         }
     ) { state ->

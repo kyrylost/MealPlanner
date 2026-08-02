@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,9 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_bullet_item
@@ -36,6 +41,7 @@ import dev.stukalo.mealplanner.core.localization.common_minutes_short
 import dev.stukalo.mealplanner.core.localization.common_numbered_item
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.common_servings
+import dev.stukalo.mealplanner.core.localization.common_value_placeholder
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_title
 import dev.stukalo.mealplanner.core.localization.recipe_details_ingredients
@@ -62,6 +68,12 @@ import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contrac
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * Stateless content for the Recipe Details screen.
+ *
+ * @param state Current view state.
+ * @param onIntent Callback to handle user intents.
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun RecipeDetailsContent(
@@ -71,6 +83,8 @@ internal fun RecipeDetailsContent(
     val uriHandler = LocalUriHandler.current
     val hazeState = rememberHazeState()
     var showWeightDialog by remember { mutableStateOf(false) }
+    var buttonHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
 
     if (showWeightDialog) {
         ValueEditDialog(
@@ -83,7 +97,7 @@ internal fun RecipeDetailsContent(
             },
             title = stringResource(Res.string.home_consumed_amount_title),
             message = stringResource(Res.string.home_consumed_amount_subtitle),
-            placeholder = "0.0",
+            placeholder = stringResource(Res.string.common_value_placeholder),
             confirmLabel = stringResource(Res.string.common_ok),
             dismissLabel = stringResource(Res.string.common_cancel)
         )
@@ -209,6 +223,10 @@ internal fun RecipeDetailsContent(
                         }
                     }
                 }
+
+                item {
+                    Spacer(modifier = Modifier.height(buttonHeight + Theme.spacing.space24))
+                }
             }
 
             CommonHeader(
@@ -226,7 +244,10 @@ internal fun RecipeDetailsContent(
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(Theme.spacing.space16)
-                    .navigationBarsPadding(),
+                    .navigationBarsPadding()
+                    .onGloballyPositioned {
+                        buttonHeight = with(density) { it.size.height.toDp() }
+                    },
             )
         } else {
             Text(

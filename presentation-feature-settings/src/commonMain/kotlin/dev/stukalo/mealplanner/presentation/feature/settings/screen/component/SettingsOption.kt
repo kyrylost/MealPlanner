@@ -11,8 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
+/**
+ * A generic settings option component.
+ * 
+ * @param title The title of the option.
+ * @param onClick The callback for when the option is clicked.
+ * @param modifier The modifier to apply to the component.
+ */
 @Composable
 fun SettingsOption(
     title: String,
@@ -34,6 +42,17 @@ fun SettingsOption(
             style = Theme.typography.regular14,
             color = Theme.color.textPrimary,
             modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SettingsOptionPreview() {
+    Theme {
+        SettingsOption(
+            title = "Meal Schedule",
+            onClick = {}
         )
     }
 }

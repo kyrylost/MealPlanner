@@ -9,6 +9,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun ProductSearchScreen(
     onBackClick: () -> Unit,
+    onNavigateToBarcodeScanner: () -> Unit,
 ) {
     val viewModel: ProductSearchViewModel = koinViewModel()
 
@@ -17,6 +18,7 @@ fun ProductSearchScreen(
         onSingleEvent = { event ->
             when (event) {
                 ViewEvent.NavigateBack -> onBackClick()
+                ViewEvent.NavigateToBarcodeScanner -> onNavigateToBarcodeScanner()
             }
         }
     ) { state ->

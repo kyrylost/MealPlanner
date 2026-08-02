@@ -8,10 +8,14 @@ import dev.stukalo.mealplanner.presentation.feature.product.search.screen.Produc
 
 fun NavGraphBuilder.productSearchNavigationGraph(
     navController: NavController,
+    appNavController: NavController,
 ) {
     composable<NavigationDirection.ProductSearch> {
         ProductSearchScreen(
-            onBackClick = { navController.popBackStack() }
+            onBackClick = { navController.popBackStack() },
+            onNavigateToBarcodeScanner = {
+                appNavController.navigate(NavigationDirection.BarcodeScanner)
+            }
         )
     }
 }

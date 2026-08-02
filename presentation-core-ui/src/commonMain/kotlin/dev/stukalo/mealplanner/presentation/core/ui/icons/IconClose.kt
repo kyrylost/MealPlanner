@@ -18,7 +18,7 @@ val IconClose: ImageVector
             viewportWidth = 24f,
             viewportHeight = 24f
         ).apply {
-            path(fill = SolidColor(Color(0xFF000000))) {
+            path(fill = SolidColor(Color.Black)) {
                 moveTo(19f, 6.41f)
                 lineTo(17.59f, 5f)
                 lineTo(12f, 10.59f)

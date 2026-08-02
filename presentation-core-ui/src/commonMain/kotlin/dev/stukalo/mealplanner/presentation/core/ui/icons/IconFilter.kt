@@ -18,7 +18,7 @@ val IconFilter: ImageVector
             viewportWidth = 24f,
             viewportHeight = 24f
         ).apply {
-            path(fill = SolidColor(Color(0xFF000000))) {
+            path(fill = SolidColor(Color.Black)) {
                 moveTo(10f, 18f)
                 horizontalLineToRelative(4f)
                 verticalLineToRelative(-2f)

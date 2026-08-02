@@ -6,7 +6,6 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun StatisticsScreen(
-    onSettingsClick: () -> Unit,
     viewModel: StatisticsViewModel = koinViewModel()
 ) {
     MviScreen(
@@ -16,7 +15,6 @@ fun StatisticsScreen(
         StatisticsContent(
             state = state,
             onIntent = viewModel::onIntent,
-            onSettingsClick = onSettingsClick
         )
     }
 }

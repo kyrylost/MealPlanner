@@ -4,4 +4,5 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleE
 
 sealed interface ViewEvent : MviSingleEvent {
     data object NavigateBack : ViewEvent
+    data object NavigateToBarcodeScanner : ViewEvent
 }

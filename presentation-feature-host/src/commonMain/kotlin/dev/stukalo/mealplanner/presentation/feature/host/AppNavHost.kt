@@ -12,7 +12,6 @@ import dev.stukalo.mealplanner.presentation.feature.main.navigation.mainFlowRout
 import dev.stukalo.mealplanner.presentation.feature.onboarding.navigation.onboardingNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.navigation.recipeSearchNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.navigation.recipeDetailsNavigationGraph
-import dev.stukalo.mealplanner.presentation.feature.settings.navigation.settingsNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.welcome.navigation.welcomeNavigationGraph
 
 @Composable
@@ -40,10 +39,6 @@ internal fun AppNavHost(
         )
 
         recipeDetailsNavigationGraph(
-            navController = navController
-        )
-
-        settingsNavigationGraph(
             navController = navController
         )
 

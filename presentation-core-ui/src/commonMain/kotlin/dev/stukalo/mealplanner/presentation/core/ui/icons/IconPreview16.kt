@@ -18,7 +18,7 @@ val IconPreview16: ImageVector
             viewportWidth = 16f,
             viewportHeight = 16f
         ).apply {
-            path(fill = SolidColor(Color(0xFFCD4631))) {
+            path(fill = SolidColor(Color.Black)) {
                 moveTo(9.713f, 3.651f)
                 curveTo(9.675f, 3.65f, 9.637f, 3.641f, 9.602f, 3.625f)
                 curveTo(9.568f, 3.609f, 9.537f, 3.586f, 9.511f, 3.558f)

@@ -66,6 +66,9 @@ class ProductSearchViewModel(
             is ViewIntent.OnLogProduct -> {
                 logProduct(intent.product, intent.weight)
             }
+            ViewIntent.OnBarcodeScannerClick -> {
+                sendEvent(ViewEvent.NavigateToBarcodeScanner)
+            }
         }
     }
 

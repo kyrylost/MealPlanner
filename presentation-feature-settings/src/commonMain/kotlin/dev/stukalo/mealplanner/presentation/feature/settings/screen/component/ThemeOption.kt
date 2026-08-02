@@ -14,12 +14,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.settings_theme_green
+import dev.stukalo.mealplanner.core.localization.settings_theme_orange
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
 import dev.stukalo.mealplanner.presentation.core.styling.color.toPrimaryColor
+import org.jetbrains.compose.resources.stringResource
 
+/**
+ * A component representing a theme choice option.
+ * 
+ * @param palette The color palette to display.
+ * @param onClick The callback for when the option is clicked.
+ * @param modifier The modifier to apply to the component.
+ */
 @Composable
 fun ThemeOption(
     palette: ColorPaletteDomainModel,
@@ -49,9 +61,23 @@ fun ThemeOption(
                 .background(primary)
         )
         Text(
-            text = palette.name.lowercase().replaceFirstChar { it.uppercase() },
+            text = when (palette) {
+                ColorPaletteDomainModel.ORANGE -> stringResource(Res.string.settings_theme_orange)
+                ColorPaletteDomainModel.GREEN -> stringResource(Res.string.settings_theme_green)
+            },
             style = Theme.typography.regular14,
             color = Theme.color.textPrimary
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ThemeOptionPreview() {
+    Theme {
+        ThemeOption(
+            palette = ColorPaletteDomainModel.ORANGE,
+            onClick = {}
         )
     }
 }

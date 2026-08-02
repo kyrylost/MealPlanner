@@ -18,7 +18,7 @@ val IconSearch: ImageVector
             viewportWidth = 1024f,
             viewportHeight = 1024f
         ).apply {
-            path(fill = SolidColor(Color(0xFF000000))) {
+            path(fill = SolidColor(Color.Black)) {
                 moveTo(398.9f, 735.5f)
                 curveToRelative(-185.4f, 0f, -336.3f, -150.9f, -336.3f, -336.3f)
                 curveTo(62.7f, 213.9f, 213.5f, 63f, 398.9f, 63f)
@@ -30,7 +30,7 @@ val IconSearch: ImageVector
                 curveToRelative(144.2f, 0f, 261.5f, -117.3f, 261.5f, -261.5f)
                 curveToRelative(0.1f, -144.2f, -117.3f, -261.5f, -261.5f, -261.5f)
             }
-            path(fill = SolidColor(Color(0xFF000000))) {
+            path(fill = SolidColor(Color.Black)) {
                 moveTo(865.9f, 959.6f)
                 curveToRelative(-23.9f, 0f, -47.8f, -9.1f, -66f, -27.3f)
                 lineTo(540.3f, 672.6f)

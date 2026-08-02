@@ -3,9 +3,11 @@ package dev.stukalo.mealplanner.presentation.feature.statistics.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -15,8 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.statistics_meal_tracking
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSettings
-import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
+import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.component.MealDetailsDialog
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.component.MealTrackingItem
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.MealSlotProgress
@@ -28,23 +29,21 @@ import org.jetbrains.compose.resources.stringResource
 internal fun StatisticsContent(
     state: ViewState,
     onIntent: (ViewIntent) -> Unit,
-    onSettingsClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Theme.color.background)
+            .statusBarsPadding()
     ) {
-        CommonHeader(
-            title = "",
-            rightIcon = IconSettings,
-            onRightIconClick = onSettingsClick
-        )
-
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Theme.spacing.space16),
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(
+                start = Theme.spacing.space16,
+                end = Theme.spacing.space16,
+                top = Theme.spacing.space16,
+                bottom = Theme.spacing.space16 + LocalBottomBarHeight.current
+            ),
             verticalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
         ) {
             item {
@@ -89,7 +88,6 @@ private fun StatisticsContentPreview() {
                 )
             ),
             onIntent = {},
-            onSettingsClick = {}
         )
     }
 }
