@@ -2,9 +2,10 @@ package dev.stukalo.mealplanner.presentation.feature.product.search.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -22,6 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_ok
+import dev.stukalo.mealplanner.core.localization.common_product_search
 import dev.stukalo.mealplanner.core.localization.common_value_placeholder
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_title
@@ -30,6 +32,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBarcodeScanner
+import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.ProductSearchBar
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.ProductsList
@@ -81,8 +84,13 @@ internal fun ProductSearchContent(
             modifier =
             Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
         ) {
+            CommonHeader(
+                title = stringResource(Res.string.common_product_search)
+            )
+
+            Spacer(modifier = Modifier.height(Theme.spacing.space16))
+
             ProductSearchBar(
                 query = state.query,
                 onQueryChange = { onIntent(ViewIntent.OnQueryChange(it)) },

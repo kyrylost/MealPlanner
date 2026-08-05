@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
@@ -15,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_statistics
 import dev.stukalo.mealplanner.core.localization.statistics_meal_tracking
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
+import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.component.MealDetailsDialog
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.component.MealTrackingItem
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.MealSlotProgress
@@ -31,8 +32,11 @@ internal fun StatisticsContent(state: ViewState, onIntent: (ViewIntent) -> Unit)
         modifier =
         Modifier
             .fillMaxSize()
-            .statusBarsPadding()
     ) {
+        CommonHeader(
+            title = stringResource(Res.string.common_statistics)
+        )
+
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding =

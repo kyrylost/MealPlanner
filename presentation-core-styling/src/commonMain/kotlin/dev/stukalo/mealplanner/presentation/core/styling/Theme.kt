@@ -216,7 +216,8 @@ fun Theme(
 
     val size =
         Size(
-            compactScreenWidth = 328.dp
+            compactScreenWidth = 328.dp,
+            clickableIconArea = 40.dp
         )
 
     val thickness =

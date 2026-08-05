@@ -34,6 +34,7 @@
     <string name="common_servings">%1$d порцій</string>
     <string name="common_filters">Фільтри</string>
     <string name="common_settings">Налаштування</string>
+    <string name="common_statistics">Статистика</string>
     <string name="common_meal_types">Типи страв</string>
     <string name="common_product_search">Пошук продуктів</string>
     <string name="common_recipe_search">Пошук рецептів</string>

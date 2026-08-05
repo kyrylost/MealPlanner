@@ -40,12 +40,12 @@ fun ProductsList(
         modifier = Modifier.fillMaxSize(),
         contentPadding =
         PaddingValues(
-            top = Theme.spacing.space8,
+            top = Theme.spacing.space16,
             start = Theme.spacing.space16,
             end = Theme.spacing.space16,
             bottom = Theme.spacing.space16 + LocalBottomBarHeight.current
         ),
-        verticalArrangement = Arrangement.spacedBy(Theme.spacing.space12)
+        verticalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
     ) {
         items(
             count = products.itemCount,

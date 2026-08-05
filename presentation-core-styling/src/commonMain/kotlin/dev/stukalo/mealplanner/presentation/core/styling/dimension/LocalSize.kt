@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.Dp
 val LocalSize =
     staticCompositionLocalOf {
         Size(
-            compactScreenWidth = Dp.Unspecified
+            compactScreenWidth = Dp.Unspecified,
+            clickableIconArea = Dp.Unspecified
         )
     }
