@@ -22,6 +22,7 @@ import dev.stukalo.mealplanner.domain.usecase.impl.statistics.CalculateStreakUse
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.GetStatisticsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.GetWeightHistoryUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.SaveWeightUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.user.CalculateDailyNormUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.CheckUserExistsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.GetUserUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveDailyNormUseCaseImpl
@@ -55,6 +56,7 @@ import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.GetStatisticsUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.GetWeightHistoryUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.SaveWeightUseCase
+import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CheckUserExistsUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
@@ -90,6 +92,7 @@ val domainModule =
         singleOf(::SaveDailyNormUseCaseImpl) bind SaveDailyNormUseCase::class
         singleOf(::CheckUserExistsUseCaseImpl) bind CheckUserExistsUseCase::class
         singleOf(::GetUserUseCaseImpl) bind GetUserUseCase::class
+        singleOf(::CalculateDailyNormUseCaseImpl) bind CalculateDailyNormUseCase::class
 
         singleOf(::GetDailyNormUseCaseImpl) bind GetDailyNormUseCase::class
         singleOf(::GetDailyProgressUseCaseImpl) bind GetDailyProgressUseCase::class

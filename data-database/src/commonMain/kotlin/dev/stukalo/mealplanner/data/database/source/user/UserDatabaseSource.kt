@@ -11,7 +11,7 @@ class UserDatabaseSource(private val dao: UserDao) {
 
     suspend fun count() = dao.count()
 
-    suspend fun getUser(id: Long): UserDatabaseModel? = dao.getUser(id)
+    suspend fun getUser(): UserDatabaseModel? = dao.getUser()
 
-    fun getAllAsFlow(): Flow<List<UserDatabaseModel>> = dao.getAllAsFlow()
+    fun getUserAsFlow(): Flow<UserDatabaseModel?> = dao.getUserAsFlow()
 }

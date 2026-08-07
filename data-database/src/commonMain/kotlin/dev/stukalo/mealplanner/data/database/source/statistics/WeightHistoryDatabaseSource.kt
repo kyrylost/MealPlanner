@@ -14,4 +14,8 @@ class WeightHistoryDatabaseSource(private val weightHistoryDao: WeightHistoryDao
 
     fun getByPeriodAsFlow(startDate: LocalDate, endDate: LocalDate): Flow<List<WeightHistoryDatabaseModel>> =
         weightHistoryDao.getByPeriodAsFlow(startDate, endDate)
+
+    fun getLatestWeightAsFlow(): Flow<WeightHistoryDatabaseModel?> = weightHistoryDao.getLatestWeightAsFlow()
+
+    suspend fun getLatestWeight(): WeightHistoryDatabaseModel? = weightHistoryDao.getLatestWeight()
 }

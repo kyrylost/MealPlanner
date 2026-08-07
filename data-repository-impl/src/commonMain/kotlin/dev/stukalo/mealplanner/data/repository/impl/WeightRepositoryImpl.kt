@@ -8,6 +8,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
 
+/**
+ * Implementation of [WeightRepository].
+ *
+ * @property weightHistoryDatabaseSource Data source for weight history.
+ * @property weightHistoryMapper Mapper for weight history models.
+ */
 internal class WeightRepositoryImpl(
     private val weightHistoryDatabaseSource: WeightHistoryDatabaseSource,
     private val weightHistoryMapper: WeightHistoryMapper

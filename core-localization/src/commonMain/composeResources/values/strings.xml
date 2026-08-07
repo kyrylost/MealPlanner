@@ -9,8 +9,10 @@
     <string name="welcome_gender_placeholder">Gender</string>
     <string name="welcome_height_label">Height</string>
     <string name="welcome_height_unit_cm">Cm</string>
+    <string name="welcome_height_default" translatable="false">170</string>
     <string name="welcome_weight_label">Weight</string>
     <string name="welcome_weight_unit_kg">Kg</string>
+    <string name="welcome_weight_default" translatable="false">70</string>
     <string name="welcome_continue_button">Continue</string>
     <string name="welcome_back_button">Back</string>
     <string name="welcome_gender_male">Male</string>

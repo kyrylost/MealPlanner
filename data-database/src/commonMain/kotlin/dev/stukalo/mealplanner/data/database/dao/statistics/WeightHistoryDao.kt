@@ -18,4 +18,10 @@ interface WeightHistoryDao {
 
     @Query("SELECT * FROM WeightHistoryDatabaseModel WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
     fun getByPeriodAsFlow(startDate: LocalDate, endDate: LocalDate): Flow<List<WeightHistoryDatabaseModel>>
+
+    @Query("SELECT * FROM WeightHistoryDatabaseModel ORDER BY date DESC LIMIT 1")
+    fun getLatestWeightAsFlow(): Flow<WeightHistoryDatabaseModel?>
+
+    @Query("SELECT * FROM WeightHistoryDatabaseModel ORDER BY date DESC LIMIT 1")
+    suspend fun getLatestWeight(): WeightHistoryDatabaseModel?
 }

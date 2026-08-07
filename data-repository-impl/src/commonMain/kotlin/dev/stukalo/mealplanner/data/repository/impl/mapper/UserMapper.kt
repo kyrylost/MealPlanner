@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
-import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.database.model.user.ActivityLevelDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.user.DietDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.user.GenderDatabaseModel
@@ -10,8 +9,19 @@ import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 
-internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
-    override fun mapTo(model: UserDatabaseModel): UserDomainModel = with(model) {
+/**
+ * Mapper for [UserDatabaseModel] and [UserDomainModel].
+ * Weight is handled externally because it resides in a separate table.
+ */
+internal class UserMapper {
+    /**
+     * Maps database model to domain model.
+     *
+     * @param model The database model.
+     * @param weight The current weight of the user (from weight history).
+     * @return The domain model.
+     */
+    fun mapTo(model: UserDatabaseModel, weight: Double): UserDomainModel = with(model) {
         UserDomainModel(
             id = id,
             name = name,
@@ -24,13 +34,18 @@ internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
         )
     }
 
-    override fun mapFrom(model: UserDomainModel): UserDatabaseModel = with(model) {
+    /**
+     * Maps domain model to database model.
+     *
+     * @param model The domain model.
+     * @return The database model (weight is ignored).
+     */
+    fun mapFrom(model: UserDomainModel): UserDatabaseModel = with(model) {
         UserDatabaseModel(
             id = id,
             name = name,
             birthDate = birthDate,
             height = height,
-            weight = weight,
             physicalActivity = physicalActivity.toData(),
             gender = gender.toData(),
             diet = diet.toData()
