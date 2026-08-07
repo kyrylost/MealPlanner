@@ -71,6 +71,7 @@ kotlin {
             implementation("io.github.alexzhirkevich:compottie:2.0.0")
             implementation(projects.commonCore)
             implementation(projects.presentationCoreStyling)
+            implementation(projects.coreLocalization)
             implementation(projects.domainModel)
         }
         desktopMain.dependencies {

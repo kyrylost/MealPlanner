@@ -67,6 +67,7 @@ kotlin {
             implementation(projects.domainRepository)
             implementation(projects.domainUsecase)
             implementation(projects.domainUsecaseImpl)
+            implementation(projects.coreLocalization)
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationCoreUi)
             implementation(projects.presentationFeatureHost)

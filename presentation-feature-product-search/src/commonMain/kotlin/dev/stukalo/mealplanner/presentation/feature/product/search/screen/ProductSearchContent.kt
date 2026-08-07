@@ -32,8 +32,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBarcodeScanner
+import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
-import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.ProductSearchBar
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.ProductsList
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.SuggestionsList

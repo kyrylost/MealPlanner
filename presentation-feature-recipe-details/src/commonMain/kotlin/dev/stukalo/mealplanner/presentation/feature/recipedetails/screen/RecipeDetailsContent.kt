@@ -57,8 +57,8 @@ import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
-import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.HealthLabelChip
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.InfoChip
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.NutritionSummary

@@ -17,6 +17,7 @@ import dev.stukalo.mealplanner.core.localization.common_close
 import dev.stukalo.mealplanner.core.localization.common_fats
 import dev.stukalo.mealplanner.core.localization.common_grams_value
 import dev.stukalo.mealplanner.core.localization.common_kcal
+import dev.stukalo.mealplanner.core.localization.common_lunch
 import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.text.TextButton
@@ -104,7 +105,7 @@ private fun MealDetailsDialogPreview() {
             meal =
             MealSlotProgress(
                 id = 1,
-                name = "Lunch",
+                name = stringResource(Res.string.common_lunch),
                 calories = 750.0,
                 proteins = 35.0,
                 fats = 25.0,

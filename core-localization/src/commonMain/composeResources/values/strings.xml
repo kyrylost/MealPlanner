@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name" translatable="false">Meal Planner</string>
+
     <string name="welcome_name_label">Name</string>
     <string name="welcome_name_placeholder">Example name</string>
     <string name="welcome_birth_date_label">Birth date</string>
@@ -66,6 +68,9 @@
     <string name="common_grams">g</string>
     <string name="common_minutes_short">%1$dm</string>
     <string name="common_servings">%1$d servings</string>
+    <string name="common_breakfast">Breakfast</string>
+    <string name="common_lunch">Lunch</string>
+    <string name="common_dinner">Dinner</string>
     <string name="common_filters">Filters</string>
     <string name="common_settings">Settings</string>
     <string name="common_statistics">Statistics</string>
@@ -85,11 +90,14 @@
     <string name="common_grams_short">g</string>
     <string name="common_unit_kcal">kcal</string>
     <string name="common_unit_grams">g</string>
-    <string name="common_nutrient_with_unit">%1$s (%2$s)</string>
-    <string name="common_bullet_item">• %1$s</string>
-    <string name="common_numbered_item">%1$d. %2$s</string>
+    <string name="common_nutrient_with_unit" translatable="false">%1$s (%2$s)</string>
+    <string name="common_bullet_item" translatable="false">• %1$s</string>
+    <string name="common_numbered_item" translatable="false">%1$d. %2$s</string>
     <string name="common_close">Close</string>
-    <string name="common_value_placeholder">0.0</string>
+    <string name="common_value_placeholder" translatable="false">0.0</string>
+    <string name="common_kcal_left">Kkal left</string>
+    <string name="common_eaten">Eaten</string>
+    <string name="common_burned">Burned</string>
 
     <string name="recipe_details_ingredients">Ingredients</string>
     <string name="recipe_details_instructions">Instructions</string>
@@ -110,4 +118,21 @@
     <string name="statistics_coming_soon">Statistics coming soon</string>
     <string name="statistics_meal_tracking">Meal Tracking</string>
     <string name="statistics_mark_as_consumed">Mark as consumed</string>
+    <string name="statistics_nutrition_statistics">Nutrition Statistics</string>
+    <string name="statistics_streak">Streak</string>
+    <string name="statistics_streak_days">%1$d days</string>
+    <string name="statistics_weight_history">Weight History</string>
+    <string name="statistics_add_weight">Add Weight</string>
+    <string name="statistics_week">Week</string>
+    <string name="statistics_month">Month</string>
+    <string name="statistics_year">Year</string>
+    <string name="statistics_no_data">No data for this period</string>
+
+    <string name="barcode_scanner_title">Barcode Scanner</string>
+    <string name="barcode_scanner_enter_barcode">Enter Barcode</string>
+    <string name="barcode_scanner_product_result">Product: %1$s</string>
+    <string name="barcode_scanner_error_result">Error: %1$s</string>
+    <string name="barcode_scanner_not_supported_desktop">Barcode scanner not supported on Desktop</string>
+    <string name="barcode_scanner_not_supported_ios">Barcode scanner not supported on iOS yet</string>
+    <string name="barcode_scanner_grant_permission">Grant Camera Permission</string>
 </resources>

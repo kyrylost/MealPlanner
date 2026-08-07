@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_kcal
+import dev.stukalo.mealplanner.core.localization.common_lunch
 import dev.stukalo.mealplanner.core.localization.statistics_mark_as_consumed
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconCheck
@@ -73,7 +74,7 @@ fun MealTrackingItem(
 private fun MealTrackingItemPreview() {
     Theme {
         MealTrackingItem(
-            name = "Lunch",
+            name = stringResource(Res.string.common_lunch),
             calories = 750.0,
             isConsumed = false,
             onConsumedClick = {},

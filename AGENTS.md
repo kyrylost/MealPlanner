@@ -26,6 +26,7 @@ When creating or modifying UI elements:
 ### 3. Refactoring & Logic Updates
 - **Impact Analysis**: Use `find_usages` to understand how your changes affect the rest of the codebase.
 - **Constants**: Encapsulate logic-related constants in `companion object` blocks within the relevant class.
+- **KDoc**: Provide documentation for all public classes and complex functions.
 
 ## Quick Reference: Module Roles
 - **Navigation**: See `:presentation-core-navigation` for routing logic.

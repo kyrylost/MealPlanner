@@ -77,6 +77,7 @@ kotlin {
 
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
+            implementation(projects.coreLocalization)
             implementation(projects.dataNetworkOpenfoodfacts)
             implementation(projects.domainUsecase)
         }

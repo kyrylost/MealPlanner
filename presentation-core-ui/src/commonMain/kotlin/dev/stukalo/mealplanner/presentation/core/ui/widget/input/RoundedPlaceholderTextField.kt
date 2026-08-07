@@ -55,6 +55,7 @@ fun RoundedPlaceholderTextField(
     cursorColor: Color = Theme.color.textPrimary,
     readOnly: Boolean = false,
     enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
     error: String? = null,
     onClick: () -> Unit = { }
 ) {
@@ -102,7 +103,7 @@ fun RoundedPlaceholderTextField(
                         singleLine = singleLine,
                         textStyle = textStyle.copy(color = textColor),
                         cursorBrush = SolidColor(cursorColor),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
+                        keyboardOptions = keyboardOptions,
                         readOnly = readOnly,
                         enabled = enabled,
                         modifier =
@@ -170,6 +171,7 @@ fun RoundedPlaceholderTextField(
     cursorColor: Color = Theme.color.textPrimary,
     readOnly: Boolean = false,
     enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
     error: String? = null,
     onClick: () -> Unit = { }
 ) {
@@ -208,6 +210,7 @@ fun RoundedPlaceholderTextField(
         cursorColor = cursorColor,
         readOnly = readOnly,
         enabled = enabled,
+        keyboardOptions = keyboardOptions,
         error = error,
         onClick = onClick
     )

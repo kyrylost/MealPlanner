@@ -16,8 +16,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.barcode_scanner_enter_barcode
+import dev.stukalo.mealplanner.core.localization.barcode_scanner_error_result
+import dev.stukalo.mealplanner.core.localization.barcode_scanner_product_result
+import dev.stukalo.mealplanner.core.localization.barcode_scanner_title
 import dev.stukalo.mealplanner.data.network.openfoodfacts.source.OpenFoodFactsNetSource
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -33,7 +40,7 @@ fun BarcodeScannerScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text("Barcode Scanner")
+        Text(stringResource(Res.string.barcode_scanner_title))
 
         CameraPermissionGate {
             BarcodeScannerView(
@@ -51,7 +58,7 @@ fun BarcodeScannerScreen() {
         OutlinedTextField(
             value = barcode,
             onValueChange = { barcode = it },
-            label = { Text("Enter Barcode") },
+            label = { Text(stringResource(Res.string.barcode_scanner_enter_barcode)) },
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
@@ -62,9 +69,9 @@ fun BarcodeScannerScreen() {
                         println("Scanning barcode: $barcode")
                         val response = openFoodFactsNetSource.getProductByBarcode(barcode)
                         println("Scanned data: $response")
-                        resultText = "Product: $response"
+                        resultText = getString(Res.string.barcode_scanner_product_result, response.toString())
                     } catch (e: Exception) {
-                        resultText = "Error: ${e.message}"
+                        resultText = getString(Res.string.barcode_scanner_error_result, e.message ?: "")
                         e.printStackTrace()
                     }
                 }

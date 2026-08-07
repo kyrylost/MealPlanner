@@ -1,8 +1,9 @@
-package dev.stukalo.mealplanner.presentation.core.ui.widget.picker
+package dev.stukalo.mealplanner.presentation.core.ui.widget.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,8 @@ fun ValueEditDialog(
     placeholder: String,
     confirmLabel: String,
     dismissLabel: String,
-    message: String? = null
+    message: String? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     var textValue by remember { mutableStateOf(initialValue) }
 
@@ -52,6 +54,7 @@ fun ValueEditDialog(
                 onValueChange = { textValue = it },
                 placeholder = placeholder,
                 textStyle = Theme.typography.regular12,
+                keyboardOptions = keyboardOptions,
                 modifier =
                 Modifier
                     .fillMaxWidth()

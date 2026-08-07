@@ -17,8 +17,8 @@ import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.welcome_height_label
 import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
-import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource

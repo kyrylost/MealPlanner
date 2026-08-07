@@ -1,5 +1,5 @@
 <resources>
-    <string name="welcome_name_label">Ім'я</string>
+    <string name="welcome_name_label">Ім\'я</string>
     <string name="welcome_name_placeholder">Приклад імені</string>
     <string name="welcome_birth_date_label">Дата народження</string>
     <string name="welcome_birth_date_placeholder">дд/мм/рррр</string>
@@ -10,19 +10,53 @@
     <string name="welcome_weight_label">Вага</string>
     <string name="welcome_weight_unit_kg">кг</string>
     <string name="welcome_continue_button">Продовжити</string>
+    <string name="welcome_back_button">Назад</string>
     <string name="welcome_gender_male">Чоловік</string>
     <string name="welcome_gender_female">Жінка</string>
+
+    <string name="welcome_activity_label">Фізична активність</string>
+    <string name="welcome_activity_very_low_name">Дуже низька</string>
+    <string name="welcome_activity_very_low_desc">Сидяча робота, без тренувань</string>
+    <string name="welcome_activity_low_name">Низька</string>
+    <string name="welcome_activity_low_desc">Сидяча робота, 1-2 тренування</string>
+    <string name="welcome_activity_medium_name">Середня</string>
+    <string name="welcome_activity_medium_desc">Сидяча робота 3-4 тренування, або активна робота без тренувань</string>
+    <string name="welcome_activity_high_name">Висока</string>
+    <string name="welcome_activity_high_desc">Сидяча робота 4-7 тренувань на тиждень або активна робота з 1-3 тренуваннями</string>
+    <string name="welcome_activity_very_high_name">Дуже висока</string>
+    <string name="welcome_activity_very_high_desc">Сидяча та 7+ тренувань, або активна робота 4+ тренувань</string>
+
+    <string name="welcome_diet_label">Дієта</string>
+    <string name="welcome_diet_balanced">Збалансована дієта</string>
+    <string name="welcome_diet_weight_gain">Набір ваги</string>
+    <string name="welcome_diet_weight_loss">Схуднення</string>
+    <string name="welcome_diet_cutting">Сушка</string>
+    <string name="welcome_step_x_of_y">Крок %1$d з %2$d</string>
+
     <string name="welcome_title">Вітаємо!</string>
     <string name="welcome_subtitle">Давайте розпочнемо подорож у таємниці їжі</string>
     <string name="common_ok">ОК</string>
     <string name="common_cancel">Скасувати</string>
+
+    <string name="validation_error_name_empty">Ім\'я не може бути порожнім</string>
+    <string name="validation_error_name_too_short">Ім\'я занадто коротке</string>
+    <string name="validation_error_date_empty">Дата народження не може бути порожньою</string>
+    <string name="validation_error_date_invalid">Неправильний формат дати</string>
+    <string name="validation_error_height_empty">Зріст не може бути порожнім</string>
+    <string name="validation_error_height_invalid">Неправильний зріст</string>
+    <string name="validation_error_weight_empty">Вага не може бути порожньою</string>
+    <string name="validation_error_weight_invalid">Неправильна вага</string>
+    <string name="validation_error_gender_empty">Будь ласка, оберіть стать</string>
+    <string name="validation_error_activity_empty">Будь ласка, оберіть рівень активності</string>
+    <string name="validation_error_diet_empty">Будь ласка, оберіть дієту</string>
+    <string name="error_unknown">Сталася неочікувана помилка</string>
 
     <string name="home_hello">Привіт</string>
     <string name="home_hello_name">%1$s!</string>
     <string name="home_steps">Кроки</string>
     <string name="home_recommended_for_today">Рекомендовано на сьогодні</string>
     <string name="home_consumed_amount_title">Вага порції</string>
-    <string name="home_consumed_amount_subtitle">Скільки грам цього продукту ви з'їли?</string>
+    <string name="home_consumed_amount_subtitle">Скільки грам цього продукту ви з\'їли?</string>
 
     <string name="common_back">Назад</string>
     <string name="common_apply">Застосувати</string>
@@ -32,6 +66,9 @@
     <string name="common_grams">г</string>
     <string name="common_minutes_short">%1$d хв</string>
     <string name="common_servings">%1$d порцій</string>
+    <string name="common_breakfast">Сніданок</string>
+    <string name="common_lunch">Обід</string>
+    <string name="common_dinner">Вечеря</string>
     <string name="common_filters">Фільтри</string>
     <string name="common_settings">Налаштування</string>
     <string name="common_statistics">Статистика</string>
@@ -46,8 +83,15 @@
     <string name="common_fats">Жири</string>
     <string name="common_carbs">Вуглеводи</string>
     <string name="common_kcal">%1$d ккал</string>
+    <string name="common_grams_value">%1$d г</string>
+    <string name="common_kcal_short">ккал</string>
+    <string name="common_grams_short">г</string>
     <string name="common_unit_kcal">ккал</string>
     <string name="common_unit_grams">г</string>
+    <string name="common_close">Закрити</string>
+    <string name="common_kcal_left">Залишилось ккал</string>
+    <string name="common_eaten">З\'їдено</string>
+    <string name="common_burned">Спалено</string>
 
     <string name="recipe_details_ingredients">Інгредієнти</string>
     <string name="recipe_details_instructions">Інструкції</string>
@@ -58,9 +102,31 @@
     <string name="settings_meal_config">Конфігурація харчування</string>
     <string name="settings_meal_schedule">Розклад харчування</string>
     <string name="settings_theme_choice">Вибір теми</string>
+    <string name="settings_theme_orange">Помаранчева</string>
+    <string name="settings_theme_green">Зелена</string>
 
     <string name="meal_schedule_auto_calculate">Автоматичний розрахунок</string>
     <string name="meal_schedule_total_percentage">Загальний відсоток: %1$d%%</string>
     <string name="meal_schedule_total_error">Сума повинна бути 100%</string>
     <string name="meal_schedule_percentage">Відсоток:</string>
+    <string name="statistics_coming_soon">Статистика незабаром</string>
+    <string name="statistics_meal_tracking">Відстеження їжі</string>
+    <string name="statistics_mark_as_consumed">Відмітити як з\'їдене</string>
+    <string name="statistics_nutrition_statistics">Статистика харчування</string>
+    <string name="statistics_streak">Страйк</string>
+    <string name="statistics_streak_days">%1$d днів</string>
+    <string name="statistics_weight_history">Історія ваги</string>
+    <string name="statistics_add_weight">Додати вагу</string>
+    <string name="statistics_week">Тиждень</string>
+    <string name="statistics_month">Місяць</string>
+    <string name="statistics_year">Рік</string>
+    <string name="statistics_no_data">Немає даних за цей період</string>
+
+    <string name="barcode_scanner_title">Сканер штрих-кодів</string>
+    <string name="barcode_scanner_enter_barcode">Введіть штрих-код</string>
+    <string name="barcode_scanner_product_result">Продукт: %1$s</string>
+    <string name="barcode_scanner_error_result">Помилка: %1$s</string>
+    <string name="barcode_scanner_not_supported_desktop">Сканер штрих-кодів не підтримується на Desktop</string>
+    <string name="barcode_scanner_not_supported_ios">Сканер штрих-кодів ще не підтримується на iOS</string>
+    <string name="barcode_scanner_grant_permission">Надати дозвіл на камеру</string>
 </resources>

@@ -18,6 +18,10 @@ import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemePaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.GetMealScheduleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.TrackMealConsumedUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.statistics.CalculateStreakUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.statistics.GetStatisticsUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.statistics.GetWeightHistoryUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.statistics.SaveWeightUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.CheckUserExistsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.GetUserUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.user.SaveDailyNormUseCaseImpl
@@ -47,6 +51,10 @@ import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemePaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.GetMealScheduleUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
+import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
+import dev.stukalo.mealplanner.domain.usecase.statistics.GetStatisticsUseCase
+import dev.stukalo.mealplanner.domain.usecase.statistics.GetWeightHistoryUseCase
+import dev.stukalo.mealplanner.domain.usecase.statistics.SaveWeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CheckUserExistsUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
@@ -61,11 +69,10 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import kotlin.time.Clock
 
 val domainModule =
     module {
-        single<Clock> { Clock.System }
+        single<kotlin.time.Clock> { kotlin.time.Clock.System }
 
         singleOf(::GetColorPaletteUseCaseImpl) bind GetColorPaletteUseCase::class
         singleOf(::SetThemePaletteUseCaseImpl) bind SetThemePaletteUseCase::class
@@ -93,6 +100,11 @@ val domainModule =
 
         singleOf(::GetMealScheduleUseCaseImpl) bind GetMealScheduleUseCase::class
         singleOf(::TrackMealConsumedUseCaseImpl) bind TrackMealConsumedUseCase::class
+
+        singleOf(::GetStatisticsUseCaseImpl) bind GetStatisticsUseCase::class
+        singleOf(::GetWeightHistoryUseCaseImpl) bind GetWeightHistoryUseCase::class
+        singleOf(::CalculateStreakUseCaseImpl) bind CalculateStreakUseCase::class
+        singleOf(::SaveWeightUseCaseImpl) bind SaveWeightUseCase::class
 
         singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
         singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class

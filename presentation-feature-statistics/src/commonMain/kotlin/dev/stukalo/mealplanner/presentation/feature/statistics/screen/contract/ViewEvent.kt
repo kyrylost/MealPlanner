@@ -2,4 +2,7 @@ package dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract
 
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleEvent
 
+/**
+ * Represents single events emitted by the Statistics screen (e.g., navigation, toast).
+ */
 sealed interface ViewEvent : MviSingleEvent
