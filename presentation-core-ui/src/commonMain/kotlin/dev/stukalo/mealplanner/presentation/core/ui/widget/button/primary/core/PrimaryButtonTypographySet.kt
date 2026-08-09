@@ -7,8 +7,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 class PrimaryButtonTypographySet : ButtonTypographySet {
     @Composable
-    override fun small(): TextStyle = Theme.typography.regular12
+    override fun small(): TextStyle = Theme.typography.bold12
 
     @Composable
-    override fun default(): TextStyle = Theme.typography.regular14
+    override fun default(): TextStyle = Theme.typography.bold14
 }

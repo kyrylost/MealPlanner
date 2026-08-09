@@ -3,11 +3,11 @@ package dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColorSet
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonDefault
 import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonTypographySet
+import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 
 object PrimaryButtonDefault : ButtonDefault {
@@ -24,7 +24,7 @@ object PrimaryButtonDefault : ButtonDefault {
     }
 
     @Composable
-    override fun corner(): Dp = 0.dp
+    override fun corner(): Dp = Theme.radius.radius24
 
     @Composable
     override fun typography(): ButtonTypographySet = PrimaryButtonTypographySet()

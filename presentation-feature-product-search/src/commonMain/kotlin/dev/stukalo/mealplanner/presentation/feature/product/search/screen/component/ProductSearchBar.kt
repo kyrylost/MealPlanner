@@ -8,6 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_product_search
@@ -17,7 +18,12 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.input.RoundedPlacehol
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ProductSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
+fun ProductSearchBar(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onAction: () -> Unit = { },
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier =
         modifier
@@ -29,6 +35,8 @@ fun ProductSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: M
             value = query,
             onValueChange = onQueryChange,
             placeholder = stringResource(Res.string.common_product_search),
+            imeAction = ImeAction.Search,
+            onAction = onAction,
             leadingIcon = {
                 Icon(
                     imageVector = IconSearch,
@@ -37,10 +45,10 @@ fun ProductSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: M
                     modifier = Modifier.size(Theme.spacing.space20)
                 )
             },
-            modifier = Modifier.weight(1f),
             backgroundColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f),
             cornerRadiusDp = Theme.radius.radius16,
-            contentPaddingDp = Theme.spacing.space12
+            contentPaddingDp = Theme.spacing.space12,
+            modifier = Modifier.weight(1f)
         )
     }
 }

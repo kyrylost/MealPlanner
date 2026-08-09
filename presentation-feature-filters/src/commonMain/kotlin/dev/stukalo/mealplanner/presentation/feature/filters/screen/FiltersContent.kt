@@ -137,8 +137,6 @@ internal fun FiltersContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
         PrimaryButton(
             text = stringResource(Res.string.common_apply),
             onClick = { onIntent(ViewIntent.OnApplyClick) },
-            corner = Theme.radius.radius24,
-            textStyle = Theme.typography.bold14,
             modifier =
             Modifier
                 .align(Alignment.BottomCenter)

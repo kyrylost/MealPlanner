@@ -12,6 +12,9 @@ fun NavGraphBuilder.productSearchNavigationGraph(navController: NavController, a
             onBackClick = { navController.popBackStack() },
             onNavigateToBarcodeScanner = {
                 appNavController.navigate(NavigationDirection.BarcodeScanner)
+            },
+            onNavigateToProductDetails = { productId ->
+                appNavController.navigate(NavigationDirection.ProductDetails(productId = productId))
             }
         )
     }

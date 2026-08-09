@@ -17,7 +17,9 @@ These rules apply to all developers and AI assistants working on this project.
 - **Components**: Check `:presentation-core-ui` for reusable widgets (Buttons, Cards, Inputs) before creating new ones.
 
 ## Logic & Data
-- **Clock**: Use `kotlin.time.Clock` for all time-related operations and inject it via constructor.
+- **Clock**: Use `kotlin.time.Clock` from the Kotlin standard library for all time-related operations.
+- **Injection**: ALWAYS inject `Clock` via constructor in ViewModels, Repositories, or UseCases.
+- **Strict Prohibition**: NEVER use static time providers like `Clock.System`, `System.currentTimeMillis()`, or the deprecated `kotlinx.datetime.Clock.System`.
 - **Magic Numbers**: Avoid magic numbers. Use named constants (val/const) to explain the purpose of values.
 
 ## Localization

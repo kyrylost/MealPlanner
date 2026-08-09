@@ -92,19 +92,25 @@ fun StatisticsChart(
             }
 
             // Adjust max value to include target and provide padding
-            val effectiveMax = if (style == ChartStyle.BAR) {
-                maxOf(maxDataValue, target * BAR_CHART_TARGET_MULTIPLIER)
-            } else {
-                maxOf(maxDataValue, target) + (maxDataValue - minDataValue) * LINE_CHART_PADDING_FACTOR
-            }
-
-            val effectiveMin = if (style == ChartStyle.LINE) {
-                minOf(minDataValue, target) - (maxDataValue - minDataValue) * LINE_CHART_PADDING_FACTOR
+            val rangePadding = if (style == ChartStyle.LINE) {
+                (maxDataValue - minDataValue).coerceAtLeast(maxDataValue * 0.1) * LINE_CHART_PADDING_FACTOR
             } else {
                 0.0
             }
 
-            val valueRange = effectiveMax - effectiveMin
+            val effectiveMax = if (style == ChartStyle.BAR) {
+                maxOf(maxDataValue, target * BAR_CHART_TARGET_MULTIPLIER)
+            } else {
+                maxOf(maxDataValue, target) + rangePadding
+            }
+
+            val effectiveMin = if (style == ChartStyle.LINE) {
+                minOf(minDataValue, target) - rangePadding
+            } else {
+                0.0
+            }
+
+            val valueRange = (effectiveMax - effectiveMin).coerceAtLeast(1.0)
             val itemWidth = chartWidth / points.size
             val radiusPx = radius.toPx()
 

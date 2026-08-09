@@ -60,7 +60,7 @@ fun RecipeCard(
                 Modifier
                     .fillMaxWidth()
                     .aspectRatio(Theme.aspect.recipeCard)
-                    .background(Theme.color.textSecondary.copy(alpha = 0.1f))
+                    .background(Theme.color.backgroundSecondary)
             ) {
                 AsyncImage(
                     model = imageUrl,

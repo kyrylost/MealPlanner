@@ -6,8 +6,20 @@ import androidx.navigation.compose.composable
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.BarcodeScannerScreen
 
+/**
+ * Adds the Barcode Scanner screen to the navigation graph.
+ *
+ * @param navController The root navigation controller for cross-feature navigation.
+ */
 fun NavGraphBuilder.barcodeScannerNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.BarcodeScanner> {
-        BarcodeScannerScreen()
+        BarcodeScannerScreen(
+            onBackClick = { navController.popBackStack() },
+            onNavigateToProductDetails = { barcode ->
+                navController.navigate(NavigationDirection.ProductDetails(barcode = barcode)) {
+                    launchSingleTop = true
+                }
+            }
+        )
     }
 }

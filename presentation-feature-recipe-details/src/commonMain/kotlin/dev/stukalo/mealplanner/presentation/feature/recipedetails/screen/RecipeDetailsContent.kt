@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,7 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_bullet_item
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_minutes_short
+import dev.stukalo.mealplanner.core.localization.common_not_available
 import dev.stukalo.mealplanner.core.localization.common_numbered_item
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.common_servings
@@ -57,11 +59,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClock
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.chip.InfoChip
 import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
+import dev.stukalo.mealplanner.presentation.core.ui.widget.nutrition.NutritionSummary
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.HealthLabelChip
-import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.InfoChip
-import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component.NutritionSummary
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource
@@ -119,7 +121,8 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                         modifier =
                         Modifier
                             .fillMaxWidth()
-                            .aspectRatio(Theme.aspect.recipeDetailsImage),
+                            .aspectRatio(Theme.aspect.recipeDetailsImage)
+                            .background(Theme.color.backgroundSecondary),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -151,13 +154,12 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                                             Res.string.common_minutes_short,
                                             it
                                         )
-                                    }
-                                        ?: "--"
+                                    } ?: stringResource(Res.string.common_not_available)
                                 )
                                 InfoChip(
                                     text =
                                     currentRecipe.servings?.let { stringResource(Res.string.common_servings, it) }
-                                        ?: "--"
+                                        ?: stringResource(Res.string.common_not_available)
                                 )
                             }
                         }
@@ -258,8 +260,6 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
             PrimaryButton(
                 text = stringResource(Res.string.recipe_details_log_meal),
                 onClick = { showWeightDialog = true },
-                corner = Theme.radius.radius24,
-                textStyle = Theme.typography.bold14,
                 modifier =
                 Modifier
                     .align(Alignment.BottomCenter)

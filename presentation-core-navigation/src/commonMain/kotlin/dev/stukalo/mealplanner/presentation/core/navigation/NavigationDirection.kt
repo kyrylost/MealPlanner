@@ -2,6 +2,9 @@ package dev.stukalo.mealplanner.presentation.core.navigation
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Defines all possible navigation destinations in the application.
+ */
 @Serializable
 sealed interface NavigationDirection {
     @Serializable
@@ -39,4 +42,7 @@ sealed interface NavigationDirection {
 
     @Serializable
     data class RecipeDetails(val recipeId: String) : NavigationDirection
+
+    @Serializable
+    data class ProductDetails(val productId: String? = null, val barcode: String? = null) : NavigationDirection
 }

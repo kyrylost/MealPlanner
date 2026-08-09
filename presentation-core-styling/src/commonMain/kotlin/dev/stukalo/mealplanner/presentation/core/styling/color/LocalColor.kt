@@ -3,6 +3,9 @@ package dev.stukalo.mealplanner.presentation.core.styling.color
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
+/**
+ * CompositionLocal for [AppColors] to provide theme colors throughout the hierarchy.
+ */
 val LocalColor =
     staticCompositionLocalOf {
         AppColors(
@@ -19,6 +22,8 @@ val LocalColor =
             iconPrimary = Color.Unspecified,
             iconOnPrimary = Color.Unspecified,
             iconDisabled = Color.Unspecified,
+            fixedLight = Color.Unspecified,
+            fixedDark = Color.Unspecified,
             error = Color.Unspecified,
             warning = Color.Unspecified,
             success = Color.Unspecified

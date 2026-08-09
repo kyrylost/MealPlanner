@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,16 +17,20 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
-import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_no_results
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.HazeState
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import kotlinx.coroutines.flow.flowOf
-import org.jetbrains.compose.resources.stringResource
 
+/**
+ * A component that displays a list of products with paging support.
+ *
+ * @param products The paging items for the products list.
+ * @param hazeState The state for the haze effect (blur).
+ * @param onProductClick The callback for when a product is clicked.
+ */
 @Composable
 fun ProductsList(
     products: LazyPagingItems<ProductDomainModel>?,
@@ -71,24 +74,6 @@ fun ProductsList(
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(color = Theme.color.primary)
-                }
-            }
-        }
-
-        if (products.loadState.refresh is LoadState.NotLoading && products.itemCount == 0) {
-            item {
-                Box(
-                    modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(top = Theme.spacing.space128),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(Res.string.common_no_results),
-                        style = Theme.typography.regular14,
-                        color = Theme.color.textSecondary
-                    )
                 }
             }
         }

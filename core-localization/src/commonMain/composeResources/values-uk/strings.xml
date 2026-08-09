@@ -77,6 +77,9 @@
     <string name="common_recipe_search">Пошук рецептів</string>
     <string name="common_search">Пошук</string>
     <string name="common_no_results">Нічого не знайдено</string>
+    <string name="common_no_results_desc">Спробуйте змінити пошуковий запит, щоб знайти те, що ви шукаєте</string>
+    <string name="product_search_initial_title">Знайдіть ваші улюблені продукти</string>
+    <string name="product_search_initial_desc">Шукайте за назвою або скануйте штрих-код, щоб побачити харчову цінність</string>
     <string name="common_clear_filters">Скинути фільтри</string>
     <string name="common_calories">Калорії</string>
     <string name="common_proteins">Білки</string>
@@ -92,6 +95,8 @@
     <string name="common_kcal_left">Залишилось ккал</string>
     <string name="common_eaten">З\'їдено</string>
     <string name="common_burned">Спалено</string>
+    <string name="common_not_available" translatable="false">--</string>
+    <string name="common_nutrient_value_with_label" translatable="false">%1$s: %2$s</string>
 
     <string name="recipe_details_ingredients">Інгредієнти</string>
     <string name="recipe_details_instructions">Інструкції</string>
@@ -124,9 +129,20 @@
 
     <string name="barcode_scanner_title">Сканер штрих-кодів</string>
     <string name="barcode_scanner_enter_barcode">Введіть штрих-код</string>
-    <string name="barcode_scanner_product_result">Продукт: %1$s</string>
-    <string name="barcode_scanner_error_result">Помилка: %1$s</string>
+    <string name="barcode_scanner_not_found">Продукт не знайдено. Спробуйте відсканувати інший або введіть вручну.</string>
+    <string name="barcode_scanner_manual_entry">Ввести вручну</string>
     <string name="barcode_scanner_not_supported_desktop">Сканер штрих-кодів не підтримується на Desktop</string>
     <string name="barcode_scanner_not_supported_ios">Сканер штрих-кодів ще не підтримується на iOS</string>
     <string name="barcode_scanner_grant_permission">Надати дозвіл на камеру</string>
+
+    <string name="product_details_title">Деталі продукту</string>
+    <string name="product_details_ingredients">Склад</string>
+    <string name="product_details_serving_size">Розмір порції</string>
+    <string name="product_details_serving_size_value">Розмір порції: %1$s</string>
+    <string name="product_details_nutriscore_label">Nutri-Score %1$s</string>
+    <string name="product_details_nova_label">NOVA %1$s</string>
+    <string name="product_details_not_found">Продукт не знайдено</string>
+    <string name="product_details_add_to_diary">Додати до щоденника</string>
+    <string name="product_details_kcal_per_100g">%1$.1f ккал / 100г</string>
+    <string name="product_details_success_added">Продукт додано до вашого прогресу!</string>
 </resources>

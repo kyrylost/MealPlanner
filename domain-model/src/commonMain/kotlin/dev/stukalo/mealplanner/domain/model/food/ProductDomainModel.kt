@@ -1,5 +1,7 @@
 package dev.stukalo.mealplanner.domain.model.food
 
+import dev.stukalo.mealplanner.domain.model.food.quality.NovaGroup
+import dev.stukalo.mealplanner.domain.model.food.quality.NutriScore
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
 
 /**
@@ -17,6 +19,11 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel
  * @property weight The total weight of the product in grams.
  * @property caloriesTotal The total energy value (in kcal) for the entire product weight.
  * @property nutrientsTotal The list of nutrients for the entire product weight.
+ * @property brand The brand name of the product.
+ * @property ingredients The full ingredients list.
+ * @property servingSize Recommended serving size as a display string.
+ * @property nutriScore The calculated Nutri-Score (A-E).
+ * @property novaGroup The calculated NOVA processing group (1-4).
  */
 data class ProductDomainModel(
     val id: String? = null,
@@ -27,5 +34,10 @@ data class ProductDomainModel(
     // Optional fields
     val weight: Float? = null,
     val caloriesTotal: Float? = null,
-    val nutrientsTotal: List<NutrientDomainModel>? = null
+    val nutrientsTotal: List<NutrientDomainModel>? = null,
+    val brand: String? = null,
+    val ingredients: String? = null,
+    val servingSize: String? = null,
+    val nutriScore: NutriScore? = null,
+    val novaGroup: NovaGroup? = null
 )

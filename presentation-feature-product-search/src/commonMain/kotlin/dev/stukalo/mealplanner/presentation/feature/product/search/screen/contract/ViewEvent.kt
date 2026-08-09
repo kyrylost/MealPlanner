@@ -6,4 +6,6 @@ sealed interface ViewEvent : MviSingleEvent {
     data object NavigateBack : ViewEvent
 
     data object NavigateToBarcodeScanner : ViewEvent
+
+    data class NavigateToProductDetails(val productId: String) : ViewEvent
 }

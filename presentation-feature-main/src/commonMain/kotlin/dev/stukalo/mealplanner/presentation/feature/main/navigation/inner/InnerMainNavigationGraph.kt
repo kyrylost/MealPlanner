@@ -14,6 +14,14 @@ import dev.stukalo.mealplanner.presentation.feature.product.search.navigation.pr
 import dev.stukalo.mealplanner.presentation.feature.settings.navigation.settingsNavigationGraph
 import dev.stukalo.mealplanner.presentation.feature.statistics.navigation.statisticsNavigationGraph
 
+/**
+ * Defines the inner navigation graph for the main flow, containing tabs and related screens.
+ *
+ * @param mainNavController The navigation controller for the inner graph.
+ * @param appNavController The root navigation controller for cross-feature navigation.
+ * @param startDestination The initial destination to show in the inner graph.
+ * @param modifier The modifier to be applied to the NavHost.
+ */
 @Composable
 internal fun InnerMainNavigationGraph(
     mainNavController: NavHostController,

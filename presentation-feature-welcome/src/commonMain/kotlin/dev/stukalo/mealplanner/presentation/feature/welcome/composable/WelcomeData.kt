@@ -119,8 +119,6 @@ internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onInte
                     onIntent(ViewIntent.OnContinueClickIntent)
                     focusManager.clearFocus()
                 },
-                corner = Theme.radius.radius24,
-                textStyle = Theme.typography.bold14,
                 modifier = Modifier.weight(1f)
             )
         }

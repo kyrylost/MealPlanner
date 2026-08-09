@@ -28,10 +28,10 @@ fun NavGraphBuilder.mainFlowRoute(navController: NavHostController) {
         )
     }
 
-    composable<NavigationDirection.BarcodeScanner> {
+    composable<NavigationDirection.Settings> {
         MainFlowScreen(
             appNavController = navController,
-            initialTab = NavigationDirection.BarcodeScanner
+            initialTab = NavigationDirection.Settings
         )
     }
 }

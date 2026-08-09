@@ -231,7 +231,8 @@ fun Theme(
         AspectRatio(
             productCard = 1.8f,
             recipeCard = 1.8f,
-            recipeDetailsImage = 1.2f
+            recipeDetailsImage = 1.2f,
+            productDetailsImage = 1.2f
         )
 
     val shape =

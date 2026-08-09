@@ -19,9 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.barcode_scanner_title
+import dev.stukalo.mealplanner.core.localization.common_back
+import dev.stukalo.mealplanner.core.localization.common_settings
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSettings
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * A common header component used across different screens.
@@ -40,7 +45,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSettings
 @Composable
 fun CommonHeader(
     title: String,
-    modifier: Modifier = Modifier,
+    titleColor: Color = Theme.color.textPrimary,
     leftIcon: ImageVector? = null,
     leftIconTint: Color = Theme.color.iconPrimary,
     leftIconContentDescription: String? = null,
@@ -48,7 +53,8 @@ fun CommonHeader(
     rightIcon: ImageVector? = null,
     rightIconTint: Color = Theme.color.iconPrimary,
     rightIconContentDescription: String? = null,
-    onRightIconClick: (() -> Unit)? = null
+    onRightIconClick: (() -> Unit)? = null,
+    modifier: Modifier = Modifier
 ) {
     val iconClickableAreaSize = Theme.size.clickableIconArea
 
@@ -86,7 +92,7 @@ fun CommonHeader(
         Text(
             text = title,
             style = Theme.typography.bold16,
-            color = Theme.color.textPrimary,
+            color = titleColor,
             textAlign = TextAlign.Start,
             modifier =
             Modifier
@@ -124,12 +130,12 @@ private fun CommonHeaderPreview() {
                 .background(Theme.color.background)
         ) {
             CommonHeader(
-                title = "Title",
+                title = stringResource(Res.string.barcode_scanner_title),
                 leftIcon = IconBack,
-                leftIconContentDescription = "Back",
+                leftIconContentDescription = stringResource(Res.string.common_back),
                 onLeftIconClick = {},
                 rightIcon = IconSettings,
-                rightIconContentDescription = "Settings",
+                rightIconContentDescription = stringResource(Res.string.common_settings),
                 onRightIconClick = {}
             )
         }
@@ -147,9 +153,9 @@ private fun CommonHeaderNoLeftIconPreview() {
                 .background(Theme.color.background)
         ) {
             CommonHeader(
-                title = "Title Without Left Icon",
+                title = stringResource(Res.string.barcode_scanner_title),
                 rightIcon = IconSettings,
-                rightIconContentDescription = "Settings",
+                rightIconContentDescription = stringResource(Res.string.common_settings),
                 onRightIconClick = {}
             )
         }

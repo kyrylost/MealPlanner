@@ -67,6 +67,7 @@ include(":presentation-feature-recipe-search")
 include(":presentation-feature-statistics")
 include(":presentation-feature-settings")
 include(":presentation-feature-recipe-details")
+include(":presentation-feature-product-details")
 include(":presentation-feature-filters")
 
 

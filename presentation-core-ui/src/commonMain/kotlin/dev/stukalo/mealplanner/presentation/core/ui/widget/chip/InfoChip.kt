@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.component
+package dev.stukalo.mealplanner.presentation.core.ui.widget.chip
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

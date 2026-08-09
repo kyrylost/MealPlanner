@@ -22,7 +22,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_clear_filters
 import dev.stukalo.mealplanner.core.localization.common_minutes_short
+import dev.stukalo.mealplanner.core.localization.common_no_results
+import dev.stukalo.mealplanner.core.localization.common_no_results_desc
 import dev.stukalo.mealplanner.core.localization.common_recipe_search
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -30,10 +33,11 @@ import dev.stukalo.mealplanner.presentation.core.styling.dimension.BottomBarHeig
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconFilter
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
+import dev.stukalo.mealplanner.presentation.core.ui.widget.empty.CommonEmptyState
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.recipe.RecipeCard
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.ActiveFilterChips
-import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.EmptyState
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.component.RecipeSearchBar
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
@@ -108,7 +112,13 @@ internal fun RecipeSearchContent(
             }
         } else if (recipes.loadState.refresh is LoadState.NotLoading && recipes.itemCount == 0) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                EmptyState(onClearFilters = { onIntent(ViewIntent.OnClearFilters) })
+                CommonEmptyState(
+                    title = stringResource(Res.string.common_no_results),
+                    description = stringResource(Res.string.common_no_results_desc),
+                    icon = IconSearch,
+                    actionText = stringResource(Res.string.common_clear_filters),
+                    onActionClick = { onIntent(ViewIntent.OnClearFilters) }
+                )
             }
         } else {
             items(

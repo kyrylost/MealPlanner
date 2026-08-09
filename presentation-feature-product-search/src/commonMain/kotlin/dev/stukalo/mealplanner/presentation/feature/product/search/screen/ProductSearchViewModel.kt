@@ -19,6 +19,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
+/**
+ * ViewModel for the product search screen.
+ * Handles search queries, auto-complete suggestions, and product logging.
+ *
+ * @param getProductsByQueryUseCase Use case for searching products by query.
+ * @param getAutoCompleteHintsUseCase Use case for fetching auto-complete hints.
+ * @param logProductConsumedUseCase Use case for logging consumed products.
+ */
 @OptIn(FlowPreview::class)
 class ProductSearchViewModel(
     private val getProductsByQueryUseCase: GetProductsByQueryUseCase,
@@ -33,7 +41,7 @@ class ProductSearchViewModel(
         queryFlow
             .debounce(DEBOUNCE_MILLIS.milliseconds)
             .distinctUntilChanged()
-            .filter { it.isNotBlank() }
+            .filter { it.isNotBlank() && it.length >= MIN_QUERY_LENGTH }
             .onEach { query ->
                 loadSuggestions(query)
             }.launchIn(viewModelScope)
@@ -59,7 +67,7 @@ class ProductSearchViewModel(
                 searchProducts(intent.suggestion)
             }
             is ViewIntent.OnProductClick -> {
-                // Show dialog in UI, intent will follow
+                sendEvent(ViewEvent.NavigateToProductDetails(intent.product.id.orEmpty()))
             }
             is ViewIntent.OnLogProduct -> {
                 logProduct(intent.product, intent.weight)
@@ -101,6 +109,7 @@ class ProductSearchViewModel(
     }
 
     companion object {
-        private const val DEBOUNCE_MILLIS = 400L
+        private const val DEBOUNCE_MILLIS = 1000L
+        private const val MIN_QUERY_LENGTH = 3
     }
 }

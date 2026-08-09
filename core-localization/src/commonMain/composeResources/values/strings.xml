@@ -81,6 +81,9 @@
     <string name="common_recipe_search">Recipe Search</string>
     <string name="common_search">Search</string>
     <string name="common_no_results">No results found</string>
+    <string name="common_no_results_desc">Try adjusting your search to find what you\'re looking for</string>
+    <string name="product_search_initial_title">Find your favorite products</string>
+    <string name="product_search_initial_desc">Search by name or scan a barcode to see nutritional information</string>
     <string name="common_clear_filters">Clear Filters</string>
     <string name="common_calories">Calories</string>
     <string name="common_proteins">Proteins</string>
@@ -100,6 +103,8 @@
     <string name="common_kcal_left">Kkal left</string>
     <string name="common_eaten">Eaten</string>
     <string name="common_burned">Burned</string>
+    <string name="common_not_available" translatable="false">--</string>
+    <string name="common_nutrient_value_with_label" translatable="false">%1$s: %2$s</string>
 
     <string name="recipe_details_ingredients">Ingredients</string>
     <string name="recipe_details_instructions">Instructions</string>
@@ -132,9 +137,21 @@
 
     <string name="barcode_scanner_title">Barcode Scanner</string>
     <string name="barcode_scanner_enter_barcode">Enter Barcode</string>
-    <string name="barcode_scanner_product_result">Product: %1$s</string>
-    <string name="barcode_scanner_error_result">Error: %1$s</string>
+    <string name="barcode_scanner_not_found">Product not found. Try scanning another one or enter manually.</string>
+    <string name="barcode_scanner_manual_entry">Enter Manually</string>
     <string name="barcode_scanner_not_supported_desktop">Barcode scanner not supported on Desktop</string>
     <string name="barcode_scanner_not_supported_ios">Barcode scanner not supported on iOS yet</string>
     <string name="barcode_scanner_grant_permission">Grant Camera Permission</string>
+
+    <string name="product_details_title">Product Details</string>
+    <string name="product_details_ingredients">Ingredients</string>
+    <string name="product_details_serving_size">Serving Size</string>
+    <string name="product_details_serving_size_value">Serving Size: %1$s</string>
+    <string name="product_details_nutriscore_label">Nutri-Score %1$s</string>
+    <string name="product_details_nova_label">NOVA %1$s</string>
+    <string name="product_details_not_found">Product not found</string>
+    <string name="product_details_name">Name: %1$s</string>
+    <string name="product_details_add_to_diary">Add to Daily Progress</string>
+    <string name="product_details_kcal_per_100g">%1$.1f kcal / 100g</string>
+    <string name="product_details_success_added">Product added to your progress!</string>
 </resources>

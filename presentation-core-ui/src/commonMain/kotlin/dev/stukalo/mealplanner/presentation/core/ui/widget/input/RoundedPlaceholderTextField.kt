@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,7 +58,8 @@ fun RoundedPlaceholderTextField(
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
     error: String? = null,
-    onClick: () -> Unit = { }
+    onClick: () -> Unit = { },
+    onAction: () -> Unit = { }
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val borderColor by animateColorAsState(
@@ -106,6 +108,11 @@ fun RoundedPlaceholderTextField(
                         keyboardOptions = keyboardOptions,
                         readOnly = readOnly,
                         enabled = enabled,
+                        keyboardActions = KeyboardActions(
+                            onAny = {
+                                onAction()
+                            }
+                        ),
                         modifier =
                         Modifier
                             .fillMaxWidth()
@@ -173,7 +180,8 @@ fun RoundedPlaceholderTextField(
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
     error: String? = null,
-    onClick: () -> Unit = { }
+    onClick: () -> Unit = { },
+    onAction: () -> Unit = { }
 ) {
     var textFieldValueState by remember {
         mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length)))
@@ -212,6 +220,7 @@ fun RoundedPlaceholderTextField(
         enabled = enabled,
         keyboardOptions = keyboardOptions,
         error = error,
-        onClick = onClick
+        onClick = onClick,
+        onAction = onAction
     )
 }

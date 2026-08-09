@@ -12,27 +12,24 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_cancel
-import dev.stukalo.mealplanner.core.localization.common_ok
+import dev.stukalo.mealplanner.core.localization.common_no_results
+import dev.stukalo.mealplanner.core.localization.common_no_results_desc
 import dev.stukalo.mealplanner.core.localization.common_product_search
-import dev.stukalo.mealplanner.core.localization.common_value_placeholder
-import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
-import dev.stukalo.mealplanner.core.localization.home_consumed_amount_title
+import dev.stukalo.mealplanner.core.localization.product_search_initial_desc
+import dev.stukalo.mealplanner.core.localization.product_search_initial_title
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBarcodeScanner
-import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
+import dev.stukalo.mealplanner.presentation.core.ui.widget.empty.CommonEmptyState
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.ProductSearchBar
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.component.ProductsList
@@ -55,27 +52,6 @@ internal fun ProductSearchContent(
     onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
-    var selectedProduct by remember { mutableStateOf<ProductDomainModel?>(null) }
-
-    if (selectedProduct != null) {
-        ValueEditDialog(
-            initialValue = "",
-            onDismissRequest = { selectedProduct = null },
-            onConfirm = { weightStr ->
-                weightStr.toFloatOrNull()?.let { weight ->
-                    selectedProduct?.let { product ->
-                        onIntent(ViewIntent.OnLogProduct(product, weight))
-                    }
-                }
-                selectedProduct = null
-            },
-            title = stringResource(Res.string.home_consumed_amount_title),
-            message = stringResource(Res.string.home_consumed_amount_subtitle),
-            placeholder = stringResource(Res.string.common_value_placeholder),
-            confirmLabel = stringResource(Res.string.common_ok),
-            dismissLabel = stringResource(Res.string.common_cancel)
-        )
-    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -94,20 +70,47 @@ internal fun ProductSearchContent(
             ProductSearchBar(
                 query = state.query,
                 onQueryChange = { onIntent(ViewIntent.OnQueryChange(it)) },
+                onAction = { onIntent(ViewIntent.OnSearchClick) },
                 modifier = Modifier.padding(horizontal = Theme.spacing.space16)
             )
 
             Box(modifier = Modifier.fillMaxSize()) {
+                when {
+                    products == null -> {
+                        CommonEmptyState(
+                            title = stringResource(Res.string.product_search_initial_title),
+                            description = stringResource(Res.string.product_search_initial_desc),
+                            icon = IconSearch,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    products.loadState.refresh is LoadState.Loading -> {
+                        CircularProgressIndicator(
+                            color = Theme.color.primary,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    products.loadState.refresh is LoadState.NotLoading && products.itemCount == 0 -> {
+                        CommonEmptyState(
+                            title = stringResource(Res.string.common_no_results),
+                            description = stringResource(Res.string.common_no_results_desc),
+                            icon = IconSearch,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    else -> {
+                        ProductsList(
+                            products = products,
+                            hazeState = hazeState,
+                            onProductClick = { onIntent(ViewIntent.OnProductClick(it)) }
+                        )
+                    }
+                }
+
                 if (state.suggestions.isNotEmpty() && state.query.isNotEmpty()) {
                     SuggestionsList(
                         suggestions = state.suggestions,
                         onSuggestionClick = { onIntent(ViewIntent.OnSuggestionClick(it)) }
-                    )
-                } else {
-                    ProductsList(
-                        products = products,
-                        hazeState = hazeState,
-                        onProductClick = { selectedProduct = it }
                     )
                 }
 

@@ -6,7 +6,8 @@ import androidx.paging.PagingData
 import dev.stukalo.mealplanner.data.network.edamam.food.source.EdamamFoodNetSource
 import dev.stukalo.mealplanner.data.network.fooddatacentral.source.FoodDataCentralNetSource
 import dev.stukalo.mealplanner.data.network.openfoodfacts.source.OpenFoodFactsNetSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.FdcProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.mapper.FDCDetailsProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.mapper.FDCSearchProductMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.OffProductMapper
 import dev.stukalo.mealplanner.data.repository.impl.paging.ProductPagingSource
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
@@ -17,9 +18,12 @@ internal class SearchRepositoryImpl(
     private val edamamFoodNetSource: EdamamFoodNetSource,
     private val fdcNetSource: FoodDataCentralNetSource,
     private val offNetSource: OpenFoodFactsNetSource,
-    private val fdcProductMapper: FdcProductMapper,
+    private val fdcSearchProductMapper: FDCSearchProductMapper,
+    private val fdcDetailsProductMapper: FDCDetailsProductMapper,
     private val offProductMapper: OffProductMapper
 ) : SearchRepository {
+    private val productCache = mutableMapOf<String, ProductDomainModel>()
+
     override suspend fun getAutoCompleteHints(query: String, limit: Int): List<String> =
         edamamFoodNetSource.getAutoCompleteHints(query, limit.toString())
 
@@ -32,15 +36,30 @@ internal class SearchRepositoryImpl(
         pagingSourceFactory = {
             ProductPagingSource(
                 fdcNetSource = fdcNetSource,
-                fdcProductMapper = fdcProductMapper,
+                fdcSearchProductMapper = fdcSearchProductMapper,
                 query = query
             )
         }
     ).flow
 
     override suspend fun getProductByQrCode(qrCode: String): ProductDomainModel? {
+        productCache[qrCode]?.let { return it }
+
         val response = offNetSource.getProductByBarcode(qrCode)
-        return if (response.status == 1) offProductMapper.mapTo(response) else null
+        return if (response.status == 1) {
+            offProductMapper.mapTo(response).also { product ->
+                productCache[qrCode] = product
+            }
+        } else {
+            null
+        }
+    }
+
+    override suspend fun getProductById(id: String): ProductDomainModel? = try {
+        val response = fdcNetSource.getProductDetails(id)
+        fdcDetailsProductMapper.mapTo(response)
+    } catch (_: Exception) {
+        null
     }
 
     companion object {

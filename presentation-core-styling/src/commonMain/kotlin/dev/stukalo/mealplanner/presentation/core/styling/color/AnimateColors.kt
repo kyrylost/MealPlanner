@@ -3,6 +3,12 @@ package dev.stukalo.mealplanner.presentation.core.styling.color
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.runtime.Composable
 
+/**
+ * Animates the transition between two [AppColors] states.
+ *
+ * @param targetColors The target [AppColors] to animate towards.
+ * @return A new [AppColors] instance with animated color values.
+ */
 @Composable
 internal fun animateColors(targetColors: AppColors): AppColors = AppColors(
     primary = animateColorAsState(targetColors.primary).value,
@@ -18,6 +24,8 @@ internal fun animateColors(targetColors: AppColors): AppColors = AppColors(
     iconPrimary = animateColorAsState(targetColors.iconPrimary).value,
     iconOnPrimary = animateColorAsState(targetColors.iconOnPrimary).value,
     iconDisabled = animateColorAsState(targetColors.iconDisabled).value,
+    fixedLight = animateColorAsState(targetColors.fixedLight).value,
+    fixedDark = animateColorAsState(targetColors.fixedDark).value,
     error = animateColorAsState(targetColors.error).value,
     warning = animateColorAsState(targetColors.warning).value,
     success = animateColorAsState(targetColors.success).value

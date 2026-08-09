@@ -80,6 +80,7 @@ kotlin {
             implementation(projects.presentationFeatureSettings)
             implementation(projects.presentationFeatureFilters)
             implementation(projects.presentationFeatureRecipeSearch)
+            implementation(projects.presentationFeatureProductDetails)
             implementation(projects.domainModel)
             implementation(projects.domainUsecase)
             implementation(libs.koin.compose.viewmodel)

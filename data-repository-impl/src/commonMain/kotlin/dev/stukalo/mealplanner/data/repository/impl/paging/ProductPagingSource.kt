@@ -3,12 +3,12 @@ package dev.stukalo.mealplanner.data.repository.impl.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.stukalo.mealplanner.data.network.fooddatacentral.source.FoodDataCentralNetSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.FdcProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.mapper.FDCSearchProductMapper
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 
 internal class ProductPagingSource(
     private val fdcNetSource: FoodDataCentralNetSource,
-    private val fdcProductMapper: FdcProductMapper,
+    private val fdcSearchProductMapper: FDCSearchProductMapper,
     private val query: String
 ) : PagingSource<Int, ProductDomainModel>() {
     override fun getRefreshKey(state: PagingState<Int, ProductDomainModel>): Int? =
@@ -26,7 +26,7 @@ internal class ProductPagingSource(
                     pageSize = params.loadSize,
                     pageNumber = page
                 )
-            val products = response.foods?.map { fdcProductMapper.mapTo(it) } ?: emptyList()
+            val products = response.foods?.map { fdcSearchProductMapper.mapTo(it) } ?: emptyList()
 
             LoadResult.Page(
                 data = products,
