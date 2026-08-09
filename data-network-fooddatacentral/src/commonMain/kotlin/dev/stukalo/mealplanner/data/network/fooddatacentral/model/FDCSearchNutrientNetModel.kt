@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FDCNutrientNetModel(
+data class FDCSearchNutrientNetModel(
     @SerialName("nutrientId") val nutrientId: Int,
     @SerialName("nutrientName") val nutrientName: String,
     @SerialName("nutrientNumber") val nutrientNumber: String,

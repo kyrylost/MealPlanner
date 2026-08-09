@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FDCFoodNetModel(
+data class FDCSearchProductNetModel(
     @SerialName("fdcId") val fdcId: Long,
     @SerialName("description") val description: String,
     @SerialName("dataType") val dataType: String? = null,
@@ -15,5 +15,5 @@ data class FDCFoodNetModel(
     @SerialName("foodCategory") val foodCategory: String? = null,
     @SerialName("servingSize") val servingSize: Double? = null,
     @SerialName("servingSizeUnit") val servingSizeUnit: String? = null,
-    @SerialName("foodNutrients") val foodNutrients: List<FDCNutrientNetModel>? = null
+    @SerialName("foodNutrients") val foodNutrients: List<FDCSearchNutrientNetModel>? = null
 )
