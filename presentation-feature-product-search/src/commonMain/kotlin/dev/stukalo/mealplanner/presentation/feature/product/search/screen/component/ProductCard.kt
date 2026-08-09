@@ -49,7 +49,7 @@ fun ProductCard(product: ProductDomainModel, hazeState: HazeState, modifier: Mod
             Text(
                 text = product.productName.orEmpty(),
                 style = Theme.typography.bold16,
-                color = Theme.color.textPrimary,
+                color = Theme.color.text.primary,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -111,12 +111,12 @@ private fun NutrientShortInfo(label: String, value: String, unit: String) {
         Text(
             text = value,
             style = Theme.typography.bold14,
-            color = Theme.color.textPrimary
+            color = Theme.color.text.primary
         )
         Text(
             text = stringResource(Res.string.common_nutrient_with_unit, label, unit),
             style = Theme.typography.regular12,
-            color = Theme.color.textSecondary
+            color = Theme.color.text.secondary
         )
     }
 }

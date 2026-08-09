@@ -25,7 +25,7 @@ internal fun StreakCard(streak: Int, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = Theme.shape.normalRoundedCornerShape,
-        color = Theme.color.backgroundSecondary
+        color = Theme.color.background.secondary
     ) {
         Row(
             modifier = Modifier
@@ -38,18 +38,18 @@ internal fun StreakCard(streak: Int, modifier: Modifier = Modifier) {
                 Text(
                     text = stringResource(Res.string.statistics_streak),
                     style = Theme.typography.regular14,
-                    color = Theme.color.textSecondary
+                    color = Theme.color.text.secondary
                 )
                 Text(
                     text = stringResource(Res.string.statistics_streak_days, streak),
                     style = Theme.typography.bold36,
-                    color = Theme.color.primary
+                    color = Theme.color.brand.primary
                 )
             }
             Icon(
                 imageVector = IconFire,
                 contentDescription = null,
-                tint = Theme.color.primary,
+                tint = Theme.color.brand.primary,
                 modifier = Modifier.size(Theme.spacing.space48)
             )
         }
@@ -60,7 +60,7 @@ internal fun StreakCard(streak: Int, modifier: Modifier = Modifier) {
 @Composable
 private fun StreakCardPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             StreakCard(
                 streak = 7,
                 modifier = Modifier.padding(Theme.spacing.space16)

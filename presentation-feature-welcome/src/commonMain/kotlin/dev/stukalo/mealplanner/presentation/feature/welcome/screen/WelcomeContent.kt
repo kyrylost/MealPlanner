@@ -53,7 +53,7 @@ internal fun WelcomeContent(
                 Row(
                     modifier =
                     Modifier
-                        .background(color = Theme.color.backgroundSecondary)
+                        .background(color = Theme.color.background.secondary)
                 ) {
                     WelcomeHeader(
                         currentStep = state.currentStep,
@@ -70,7 +70,7 @@ internal fun WelcomeContent(
                 Column(
                     modifier =
                     Modifier
-                        .background(color = Theme.color.backgroundSecondary)
+                        .background(color = Theme.color.background.secondary)
                 ) {
                     WelcomeHeader(
                         currentStep = state.currentStep,

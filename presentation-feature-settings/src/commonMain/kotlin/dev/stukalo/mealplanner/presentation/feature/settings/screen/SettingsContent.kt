@@ -50,7 +50,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 Text(
                     text = stringResource(Res.string.settings_meal_config),
                     style = Theme.typography.bold14,
-                    color = Theme.color.textPrimary
+                    color = Theme.color.text.primary
                 )
             }
 
@@ -58,7 +58,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 Text(
                     text = stringResource(Res.string.settings_theme_choice),
                     style = Theme.typography.bold14,
-                    color = Theme.color.textPrimary
+                    color = Theme.color.text.primary
                 )
             }
 
@@ -78,7 +78,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 @Composable
 private fun SettingsContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             SettingsContent(
                 state = ViewState(),
                 onIntent = {}

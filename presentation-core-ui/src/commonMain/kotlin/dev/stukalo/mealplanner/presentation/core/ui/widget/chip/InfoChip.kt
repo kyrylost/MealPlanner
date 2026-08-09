@@ -25,13 +25,13 @@ fun InfoChip(text: String, icon: ImageVector? = null, modifier: Modifier = Modif
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.size(Theme.spacing.space16),
-                tint = Theme.color.textSecondary
+                tint = Theme.color.text.secondary
             )
         }
         Text(
             text = text,
             style = Theme.typography.regular14,
-            color = Theme.color.textSecondary
+            color = Theme.color.text.secondary
         )
     }
 }

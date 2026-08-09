@@ -31,9 +31,9 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 @Composable
 fun LinearScaleProgressBar(
     progress: Float,
-    progressColor: Color = Theme.color.primary,
-    guidelineColor: Color = Theme.color.surfaceVariant,
-    labelColor: Color = Theme.color.textPrimary,
+    progressColor: Color = Theme.color.brand.primary,
+    guidelineColor: Color = Theme.color.surface.variant,
+    labelColor: Color = Theme.color.text.primary,
     topLeftLabel: String? = null,
     topRightLabel: String? = null,
     bottomLeftLabel: String? = null,

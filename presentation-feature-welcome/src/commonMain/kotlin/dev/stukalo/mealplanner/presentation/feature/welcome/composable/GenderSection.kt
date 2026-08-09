@@ -52,9 +52,9 @@ internal fun GenderSection(state: ViewState, onIntent: (ViewIntent) -> Unit, mod
                 CardDefaults.cardColors(
                     containerColor =
                     if (isSelected) {
-                        Theme.color.primary
+                        Theme.color.brand.primary
                     } else {
-                        Theme.color.backgroundSecondary.copy(
+                        Theme.color.background.secondary.copy(
                             alpha = 0.1f
                         )
                     }
@@ -64,7 +64,7 @@ internal fun GenderSection(state: ViewState, onIntent: (ViewIntent) -> Unit, mod
                     Text(
                         text = stringResource(nameRes),
                         style = Theme.typography.regular14,
-                        color = if (isSelected) Theme.color.textOnPrimary else Theme.color.textPrimary
+                        color = if (isSelected) Theme.color.text.onPrimary else Theme.color.text.primary
                     )
                 }
             }

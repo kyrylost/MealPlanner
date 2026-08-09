@@ -1,8 +1,7 @@
-package dev.devlight.skeleton.presentation.core.ui.component.widget.button.core
+package dev.stukalo.mealplanner.presentation.core.ui.widget.button.core
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.IconButtonSizeSet
 
 /**
  * Interface representing the default configuration for a button.

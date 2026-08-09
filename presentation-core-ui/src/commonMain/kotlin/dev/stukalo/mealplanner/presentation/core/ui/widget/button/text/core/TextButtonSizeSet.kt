@@ -3,8 +3,8 @@ package dev.stukalo.mealplanner.presentation.core.ui.widget.button.text.core
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSize
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSizeSet
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonSize
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonSizeSet
 
 class TextButtonSizeSet : ButtonSizeSet {
     override fun small(): ButtonSize = object : ButtonSize {

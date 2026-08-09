@@ -29,14 +29,14 @@ fun RangeInput(
             onValueChange = { onMinChange(it.toIntOrNull()) },
             placeholder = stringResource(Res.string.common_min),
             modifier = Modifier.weight(1f),
-            backgroundColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f)
+            backgroundColor = Theme.color.background.secondary.copy(alpha = 0.5f)
         )
         RoundedPlaceholderTextField(
             value = max?.toString().orEmpty(),
             onValueChange = { onMaxChange(it.toIntOrNull()) },
             placeholder = stringResource(Res.string.common_max),
             modifier = Modifier.weight(1f),
-            backgroundColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f)
+            backgroundColor = Theme.color.background.secondary.copy(alpha = 0.5f)
         )
     }
 }

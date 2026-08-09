@@ -36,7 +36,7 @@ fun MealTrackingItem(
         modifier
             .fillMaxWidth()
             .background(
-                color = Theme.color.backgroundSecondary,
+                color = Theme.color.background.secondary,
                 shape = Theme.shape.normalRoundedCornerShape
             ).clickable { onMealClick() }
             .padding(Theme.spacing.space16),
@@ -46,12 +46,12 @@ fun MealTrackingItem(
             Text(
                 text = name,
                 style = Theme.typography.bold14,
-                color = Theme.color.textPrimary
+                color = Theme.color.text.primary
             )
             Text(
                 text = stringResource(Res.string.common_kcal, calories.toInt()),
                 style = Theme.typography.regular12,
-                color = Theme.color.textSecondary
+                color = Theme.color.text.secondary
             )
         }
 
@@ -62,7 +62,7 @@ fun MealTrackingItem(
             Icon(
                 imageVector = IconCheck,
                 contentDescription = stringResource(Res.string.statistics_mark_as_consumed),
-                tint = if (isConsumed) Theme.color.primary else Theme.color.iconPrimary,
+                tint = if (isConsumed) Theme.color.brand.primary else Theme.color.icon.primary,
                 modifier = Modifier.size(Theme.spacing.space32)
             )
         }

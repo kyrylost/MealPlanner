@@ -60,7 +60,7 @@ fun RecipeCard(
                 Modifier
                     .fillMaxWidth()
                     .aspectRatio(Theme.aspect.recipeCard)
-                    .background(Theme.color.backgroundSecondary)
+                    .background(Theme.color.background.secondary)
             ) {
                 AsyncImage(
                     model = imageUrl,
@@ -98,7 +98,7 @@ fun RecipeCard(
                 Text(
                     text = title,
                     style = Theme.typography.bold14,
-                    color = Theme.color.textPrimary,
+                    color = Theme.color.text.primary,
                     maxLines = 2,
                     minLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -113,13 +113,13 @@ fun RecipeCard(
                         imageVector = IconClock,
                         contentDescription = null,
                         modifier = Modifier.size(Theme.spacing.space12),
-                        tint = Theme.color.textSecondary
+                        tint = Theme.color.text.secondary
                     )
                     Spacer(modifier = Modifier.width(Theme.spacing.space4))
                     Text(
                         text = timeText ?: "--",
                         style = Theme.typography.regular12,
-                        color = Theme.color.textSecondary
+                        color = Theme.color.text.secondary
                     )
                 }
             }
@@ -130,7 +130,7 @@ fun RecipeCard(
 @Composable
 private fun HealthLabel(label: String) {
     Surface(
-        color = Theme.color.primary.copy(alpha = 0.8f),
+        color = Theme.color.brand.primary.copy(alpha = 0.8f),
         shape = Theme.shape.normalRoundedCornerShape
     ) {
         Text(

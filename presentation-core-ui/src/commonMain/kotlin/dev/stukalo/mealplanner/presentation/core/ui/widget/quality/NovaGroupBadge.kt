@@ -14,7 +14,6 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.product_details_nova_label
 import dev.stukalo.mealplanner.domain.model.food.quality.NovaGroup
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.styling.color.QualityColors
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -29,10 +28,10 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun NovaGroupBadge(group: NovaGroup, modifier: Modifier = Modifier) {
     val backgroundColor = when (group) {
-        NovaGroup.GROUP_1 -> QualityColors.NovaGroup1
-        NovaGroup.GROUP_2 -> QualityColors.NovaGroup2
-        NovaGroup.GROUP_3 -> QualityColors.NovaGroup3
-        NovaGroup.GROUP_4 -> QualityColors.NovaGroup4
+        NovaGroup.GROUP_1 -> Theme.color.quality.novaGroup1
+        NovaGroup.GROUP_2 -> Theme.color.quality.novaGroup2
+        NovaGroup.GROUP_3 -> Theme.color.quality.novaGroup3
+        NovaGroup.GROUP_4 -> Theme.color.quality.novaGroup4
     }
 
     val label = when (group) {
@@ -52,7 +51,7 @@ fun NovaGroupBadge(group: NovaGroup, modifier: Modifier = Modifier) {
     ) {
         Text(
             text = stringResource(Res.string.product_details_nova_label, label),
-            color = Theme.color.textOnPrimary,
+            color = Theme.color.text.onPrimary,
             style = Theme.typography.bold12
         )
     }

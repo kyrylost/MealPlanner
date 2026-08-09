@@ -69,8 +69,8 @@ internal fun BarcodeScannerContent(
         CommonHeader(
             title = stringResource(Res.string.barcode_scanner_title),
             leftIcon = IconBack,
-            leftIconTint = Theme.color.fixedLight,
-            titleColor = Theme.color.fixedLight,
+            leftIconTint = Theme.color.state.fixedLight,
+            titleColor = Theme.color.state.fixedLight,
             onLeftIconClick = { onIntent(ViewIntent.OnBackClick) }
         )
 
@@ -99,8 +99,8 @@ internal fun BarcodeScannerContent(
             ModalBottomSheet(
                 onDismissRequest = { onIntent(ViewIntent.OnDismissManualEntry) },
                 sheetState = sheetState,
-                containerColor = Theme.color.backgroundSecondary,
-                contentColor = Theme.color.textPrimary
+                containerColor = Theme.color.background.secondary,
+                contentColor = Theme.color.text.primary
             ) {
                 Column(
                     modifier = Modifier
@@ -110,7 +110,7 @@ internal fun BarcodeScannerContent(
                     Text(
                         text = stringResource(Res.string.barcode_scanner_enter_barcode),
                         style = Theme.typography.bold16,
-                        color = Theme.color.textPrimary
+                        color = Theme.color.text.primary
                     )
 
                     Spacer(modifier = Modifier.height(Theme.spacing.space16))
@@ -142,7 +142,7 @@ internal fun BarcodeScannerContent(
 @Composable
 private fun BarcodeScannerContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             BarcodeScannerContent(
                 state = ViewState(),
                 snackbarHostState = SnackbarHostState(),

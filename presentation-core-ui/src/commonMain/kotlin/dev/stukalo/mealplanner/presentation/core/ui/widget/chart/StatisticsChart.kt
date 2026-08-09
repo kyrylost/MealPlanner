@@ -47,7 +47,7 @@ fun StatisticsChart(
 ) {
     val textMeasurer = rememberTextMeasurer()
     val labelStyle = Theme.typography.regular12.copy(
-        color = Theme.color.textSecondary,
+        color = Theme.color.text.secondary,
         textAlign = TextAlign.Center
     )
 
@@ -62,12 +62,12 @@ fun StatisticsChart(
             Text(
                 text = stringResource(Res.string.statistics_no_data),
                 style = Theme.typography.regular14,
-                color = Theme.color.textSecondary
+                color = Theme.color.text.secondary
             )
         }
 
-        val primaryColor = Theme.color.primary
-        val secondaryColor = Theme.color.textSecondary.copy(alpha = 0.2f)
+        val primaryColor = Theme.color.brand.primary
+        val secondaryColor = Theme.color.text.secondary.copy(alpha = 0.2f)
         val radius = Theme.radius.radius8
 
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -273,7 +273,7 @@ private fun getLabel(date: LocalDate, totalPoints: Int): String = when {
 @Composable
 private fun StatisticsChartBarPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             StatisticsChart(
                 points = listOf(
                     StatisticsPoint(LocalDate(2026, 8, 1), 1500.0, 2000.0),
@@ -293,7 +293,7 @@ private fun StatisticsChartBarPreview() {
 @Composable
 private fun StatisticsChartLinePreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             StatisticsChart(
                 points = listOf(
                     StatisticsPoint(LocalDate(2026, 8, 1), 78.5),
@@ -313,7 +313,7 @@ private fun StatisticsChartLinePreview() {
 @Composable
 private fun StatisticsChartEmptyPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             StatisticsChart(
                 points = emptyList(),
                 modifier = Modifier.padding(Theme.spacing.space16)

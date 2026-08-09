@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.ThemeColorPalette
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -37,7 +37,7 @@ fun HostScreen() {
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = Theme.color.background
+            color = Theme.color.background.primary
         ) {
             AppNavHost(navController = navController)
         }

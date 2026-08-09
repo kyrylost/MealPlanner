@@ -76,14 +76,14 @@ fun ActiveFilterChips(
                         imageVector = IconClose,
                         contentDescription = null,
                         modifier = Modifier.size(Theme.spacing.space16),
-                        tint = Theme.color.textSecondary
+                        tint = Theme.color.text.secondary
                     )
                 },
                 shape = Theme.shape.normalRoundedCornerShape,
                 colors =
                 AssistChipDefaults.assistChipColors(
-                    containerColor = Theme.color.primary.copy(alpha = 0.1f),
-                    labelColor = Theme.color.textPrimary
+                    containerColor = Theme.color.brand.primary.copy(alpha = 0.1f),
+                    labelColor = Theme.color.text.primary
                 ),
                 border = null
             )

@@ -54,7 +54,7 @@ internal fun WeightSection(state: ViewState, onIntent: (ViewIntent) -> Unit, mod
         state.weightErrorMessage?.let {
             Text(
                 text = stringResource(it),
-                color = Theme.color.error,
+                color = Theme.color.state.error,
                 style = Theme.typography.regular12,
                 modifier = Modifier.padding(top = Theme.spacing.space4)
             )

@@ -93,11 +93,11 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Theme.color.background)
+            .background(Theme.color.background.primary)
     ) {
         if (state.isLoading) {
             CircularProgressIndicator(
-                color = Theme.color.primary,
+                color = Theme.color.brand.primary,
                 modifier = Modifier.align(Alignment.Center)
             )
         } else if (state.product != null) {
@@ -113,7 +113,7 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(Theme.aspect.productDetailsImage)
-                            .background(Theme.color.backgroundSecondary),
+                            .background(Theme.color.background.secondary),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -129,14 +129,14 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                             Text(
                                 text = product.productName.orEmpty(),
                                 style = Theme.typography.bold36,
-                                color = Theme.color.textPrimary
+                                color = Theme.color.text.primary
                             )
 
                             product.brand?.let { brandName ->
                                 Text(
                                     text = brandName,
                                     style = Theme.typography.semibold16,
-                                    color = Theme.color.textSecondary
+                                    color = Theme.color.text.secondary
                                 )
                             }
 
@@ -176,12 +176,12 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                                 Text(
                                     text = stringResource(Res.string.product_details_ingredients),
                                     style = Theme.typography.bold16,
-                                    color = Theme.color.textPrimary
+                                    color = Theme.color.text.primary
                                 )
                                 Text(
                                     text = ingredients,
                                     style = Theme.typography.regular14,
-                                    color = Theme.color.textSecondary
+                                    color = Theme.color.text.secondary
                                 )
                             }
                         }
@@ -218,7 +218,7 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
         } else if (state.error != null) {
             Text(
                 text = stringResource(Res.string.product_details_not_found),
-                color = Theme.color.textSecondary,
+                color = Theme.color.text.secondary,
                 modifier = Modifier.align(Alignment.Center)
             )
         }
@@ -229,7 +229,7 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 @Composable
 private fun ProductDetailsContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             ProductDetailsContent(
                 state = ViewState(
                     isLoading = false,

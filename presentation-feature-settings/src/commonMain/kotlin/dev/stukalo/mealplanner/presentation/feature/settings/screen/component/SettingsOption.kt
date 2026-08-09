@@ -28,7 +28,7 @@ fun SettingsOption(title: String, onClick: () -> Unit, modifier: Modifier = Modi
         modifier
             .fillMaxWidth()
             .clip(Theme.shape.normalRoundedCornerShape)
-            .background(Theme.color.backgroundSecondary)
+            .background(Theme.color.background.secondary)
             .clickable(onClick = onClick)
             .padding(Theme.spacing.space16),
         verticalAlignment = Alignment.CenterVertically,
@@ -37,7 +37,7 @@ fun SettingsOption(title: String, onClick: () -> Unit, modifier: Modifier = Modi
         Text(
             text = title,
             style = Theme.typography.regular14,
-            color = Theme.color.textPrimary,
+            color = Theme.color.text.primary,
             modifier = Modifier.weight(1f)
         )
     }

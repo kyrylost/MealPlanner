@@ -1,25 +1,18 @@
 package dev.stukalo.mealplanner.presentation.core.styling
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.stukalo.mealplanner.presentation.core.styling.color.AppColors
-import dev.stukalo.mealplanner.presentation.core.styling.color.ColorDark
-import dev.stukalo.mealplanner.presentation.core.styling.color.ColorGreenDark
-import dev.stukalo.mealplanner.presentation.core.styling.color.ColorLight
-import dev.stukalo.mealplanner.presentation.core.styling.color.LocalColor
-import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
-import dev.stukalo.mealplanner.presentation.core.styling.color.animateColors
+import dev.stukalo.mealplanner.presentation.core.styling.color.anim.animateColors
+import dev.stukalo.mealplanner.presentation.core.styling.color.factory.AppColorsFactory
+import dev.stukalo.mealplanner.presentation.core.styling.color.local.LocalColor
+import dev.stukalo.mealplanner.presentation.core.styling.color.model.AppColors
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.ThemeColorPalette
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.AspectRatio
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.Elevation
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalAspectRatio
@@ -39,6 +32,17 @@ import dev.stukalo.mealplanner.presentation.core.styling.typography.Typography
 import dev.stukalo.mealplanner.presentation.core.styling.typography.caveatFont
 import dev.stukalo.mealplanner.presentation.core.styling.typography.nunitoFont
 
+/**
+ * The main theme entry point for the application.
+ *
+ * This composable provides all design tokens (colors, typography, spacing, etc.)
+ * to the composition hierarchy via CompositionLocals.
+ *
+ * @param darkTheme Whether the theme should be in dark mode.
+ * @param palette The selected color palette.
+ * @param animatePaletteChange Whether to animate color transitions when the palette or theme mode changes.
+ * @param content The composable content to be themed.
+ */
 @Composable
 fun Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -46,11 +50,7 @@ fun Theme(
     animatePaletteChange: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val targetColors: AppColors =
-        when (palette) {
-            ThemeColorPalette.ORANGE -> if (darkTheme) ColorDark else ColorLight
-            ThemeColorPalette.GREEN -> if (darkTheme) ColorGreenDark else ColorGreenDark
-        }
+    val targetColors: AppColors = AppColorsFactory.create(palette, darkTheme)
 
     val color = if (animatePaletteChange) animateColors(targetColors) else targetColors
 
@@ -63,7 +63,7 @@ fun Theme(
                 fontSize = 48.sp,
                 lineHeight = 56.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             bold36 =
             TextStyle(
@@ -72,7 +72,7 @@ fun Theme(
                 fontSize = 36.sp,
                 lineHeight = 42.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             bold16 =
             TextStyle(
@@ -81,7 +81,7 @@ fun Theme(
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             bold14 =
             TextStyle(
@@ -90,7 +90,7 @@ fun Theme(
                 fontSize = 14.sp,
                 lineHeight = 21.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             bold12 =
             TextStyle(
@@ -99,7 +99,7 @@ fun Theme(
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             semibold48 =
             TextStyle(
@@ -108,7 +108,7 @@ fun Theme(
                 fontSize = 48.sp,
                 lineHeight = 56.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             semibold36 =
             TextStyle(
@@ -117,7 +117,7 @@ fun Theme(
                 fontSize = 36.sp,
                 lineHeight = 42.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             semibold16 =
             TextStyle(
@@ -126,7 +126,7 @@ fun Theme(
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             regular48 =
             TextStyle(
@@ -135,7 +135,7 @@ fun Theme(
                 fontSize = 48.sp,
                 lineHeight = 56.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             regular14 =
             TextStyle(
@@ -144,7 +144,7 @@ fun Theme(
                 fontSize = 14.sp,
                 lineHeight = 21.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             regular12 =
             TextStyle(
@@ -153,7 +153,7 @@ fun Theme(
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
                 letterSpacing = 0.5.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             handwrittenRegular64 =
             TextStyle(
@@ -162,7 +162,7 @@ fun Theme(
                 fontSize = 64.sp,
                 lineHeight = 64.sp,
                 letterSpacing = 1.sp,
-                color = color.textPrimary
+                color = color.text.primary
             ),
             handwrittenSemibold64 =
             TextStyle(
@@ -171,7 +171,7 @@ fun Theme(
                 fontSize = 64.sp,
                 lineHeight = 64.sp,
                 letterSpacing = 1.sp,
-                color = color.textPrimary
+                color = color.text.primary
             )
         )
 
@@ -255,6 +255,12 @@ fun Theme(
     )
 }
 
+/**
+ * Accessor object for the current theme's design tokens.
+ *
+ * Use this object to access colors, typography, spacing, etc. provided by the [Theme] composable.
+ * For example: `Theme.color.brand.primary`.
+ */
 object Theme {
     val color: AppColors
         @Composable
@@ -283,17 +289,4 @@ object Theme {
     val aspect: AspectRatio
         @Composable
         get() = LocalAspectRatio.current
-}
-
-@Preview
-@Composable
-private fun ThemePreview() {
-    Theme {
-        Box(
-            modifier =
-            Modifier
-                .size(100.dp)
-                .background(Theme.color.primary)
-        )
-    }
 }

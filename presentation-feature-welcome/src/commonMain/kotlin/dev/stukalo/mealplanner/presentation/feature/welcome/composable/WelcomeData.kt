@@ -48,7 +48,7 @@ internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onInte
     Column(
         modifier =
         modifier
-            .background(color = Theme.color.background)
+            .background(color = Theme.color.background.primary)
     ) {
         AnimatedContent(
             targetState = state.currentStep,

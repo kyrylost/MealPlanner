@@ -14,7 +14,6 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.product_details_nutriscore_label
 import dev.stukalo.mealplanner.domain.model.food.quality.NutriScore
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.styling.color.QualityColors
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -29,11 +28,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun NutriScoreBadge(score: NutriScore, modifier: Modifier = Modifier) {
     val backgroundColor = when (score) {
-        NutriScore.A -> QualityColors.NutriScoreA
-        NutriScore.B -> QualityColors.NutriScoreB
-        NutriScore.C -> QualityColors.NutriScoreC
-        NutriScore.D -> QualityColors.NutriScoreD
-        NutriScore.E -> QualityColors.NutriScoreE
+        NutriScore.A -> Theme.color.quality.nutriScoreA
+        NutriScore.B -> Theme.color.quality.nutriScoreB
+        NutriScore.C -> Theme.color.quality.nutriScoreC
+        NutriScore.D -> Theme.color.quality.nutriScoreD
+        NutriScore.E -> Theme.color.quality.nutriScoreE
     }
 
     Box(
@@ -46,7 +45,7 @@ fun NutriScoreBadge(score: NutriScore, modifier: Modifier = Modifier) {
     ) {
         Text(
             text = stringResource(Res.string.product_details_nutriscore_label, score.name),
-            color = Theme.color.textOnPrimary,
+            color = Theme.color.text.onPrimary,
             style = Theme.typography.bold12
         )
     }

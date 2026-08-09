@@ -18,8 +18,8 @@ import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 
 @Composable
 internal fun BackgroundCircles(hazeState: HazeState, modifier: Modifier = Modifier) {
-    val primaryColor = Theme.color.secondary
-    val backgroundColor = Theme.color.background
+    val primaryColor = Theme.color.brand.secondary
+    val backgroundColor = Theme.color.background.primary
     Box(
         modifier =
         modifier

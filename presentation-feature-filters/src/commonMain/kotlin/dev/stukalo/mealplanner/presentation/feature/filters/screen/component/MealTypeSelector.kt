@@ -36,10 +36,10 @@ fun MealTypeSelector(
                 },
                 colors =
                 FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = Theme.color.primary,
-                    selectedLabelColor = Theme.color.textOnPrimary,
-                    labelColor = Theme.color.textPrimary,
-                    containerColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f)
+                    selectedContainerColor = Theme.color.brand.primary,
+                    selectedLabelColor = Theme.color.text.onPrimary,
+                    labelColor = Theme.color.text.primary,
+                    containerColor = Theme.color.background.secondary.copy(alpha = 0.5f)
                 ),
                 border = null
             )

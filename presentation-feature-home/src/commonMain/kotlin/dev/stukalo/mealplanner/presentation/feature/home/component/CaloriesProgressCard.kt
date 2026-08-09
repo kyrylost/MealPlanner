@@ -15,6 +15,14 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
 import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.LinearScaleProgressBar
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * A card that displays calorie consumption progress.
+ *
+ * @param currentCalories The number of calories consumed today.
+ * @param targetCalories The target number of calories for today.
+ * @param hazeState The state for the blur effect.
+ * @param modifier The modifier for this component.
+ */
 @Composable
 internal fun CaloriesProgressCard(
     currentCalories: Int,

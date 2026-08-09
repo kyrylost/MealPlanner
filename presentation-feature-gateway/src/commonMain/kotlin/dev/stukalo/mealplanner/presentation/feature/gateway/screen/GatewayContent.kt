@@ -27,7 +27,7 @@ internal fun GatewayContent(state: ViewState) {
 @Composable
 private fun GatewayContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             GatewayContent(
                 state = ViewState(isLoading = true)
             )

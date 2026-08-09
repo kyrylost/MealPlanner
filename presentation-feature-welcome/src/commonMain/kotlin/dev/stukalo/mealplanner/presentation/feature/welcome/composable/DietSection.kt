@@ -56,9 +56,9 @@ internal fun DietSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modif
                 CardDefaults.cardColors(
                     containerColor =
                     if (isSelected) {
-                        Theme.color.primary
+                        Theme.color.brand.primary
                     } else {
-                        Theme.color.backgroundSecondary.copy(
+                        Theme.color.background.secondary.copy(
                             alpha = 0.1f
                         )
                     }
@@ -68,7 +68,7 @@ internal fun DietSection(state: ViewState, onIntent: (ViewIntent) -> Unit, modif
                     Text(
                         text = stringResource(nameRes),
                         style = Theme.typography.regular14,
-                        color = if (isSelected) Theme.color.textOnPrimary else Theme.color.textPrimary
+                        color = if (isSelected) Theme.color.text.onPrimary else Theme.color.text.primary
                     )
                 }
             }

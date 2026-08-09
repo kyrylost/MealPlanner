@@ -9,11 +9,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColor
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSize
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.StateButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonAnimation
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonColor
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonSize
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.PrimaryButtonDefault
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core.primaryButtonDefaultColorSet
 

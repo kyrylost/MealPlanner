@@ -14,10 +14,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColor
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonSize
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonAnimation
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonColor
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonInteractionState
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonSize
 
 /**
  * A composable function that represents a stateful button with customizable properties and animations.

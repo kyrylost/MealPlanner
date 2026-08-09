@@ -46,14 +46,14 @@ fun RoundedPlaceholderTextField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     textStyle: TextStyle = Theme.typography.regular14,
-    activeColor: Color = Theme.color.textPrimary,
-    inactiveColor: Color = Theme.color.textSecondary,
+    activeColor: Color = Theme.color.text.primary,
+    inactiveColor: Color = Theme.color.text.secondary,
     backgroundColor: Color = Color.Transparent,
     cornerRadiusDp: Dp = 16.dp,
     contentPaddingDp: Dp = 20.dp,
     singleLine: Boolean = true,
     imeAction: ImeAction = ImeAction.Done,
-    cursorColor: Color = Theme.color.textPrimary,
+    cursorColor: Color = Theme.color.text.primary,
     readOnly: Boolean = false,
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
@@ -65,7 +65,7 @@ fun RoundedPlaceholderTextField(
     val borderColor by animateColorAsState(
         targetValue =
         when {
-            error != null -> Theme.color.error
+            error != null -> Theme.color.state.error
             isFocused -> activeColor
             else -> inactiveColor
         }
@@ -151,7 +151,7 @@ fun RoundedPlaceholderTextField(
         if (error != null) {
             Text(
                 text = error,
-                color = Theme.color.error,
+                color = Theme.color.state.error,
                 style = Theme.typography.regular12,
                 modifier = Modifier.padding(top = 4.dp, start = 16.dp)
             )
@@ -168,14 +168,14 @@ fun RoundedPlaceholderTextField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     textStyle: TextStyle = Theme.typography.regular14,
-    activeColor: Color = Theme.color.textPrimary,
-    inactiveColor: Color = Theme.color.textSecondary,
+    activeColor: Color = Theme.color.text.primary,
+    inactiveColor: Color = Theme.color.text.secondary,
     backgroundColor: Color = Color.Transparent,
     cornerRadiusDp: Dp = 16.dp,
     contentPaddingDp: Dp = 20.dp,
     singleLine: Boolean = true,
     imeAction: ImeAction = ImeAction.Done,
-    cursorColor: Color = Theme.color.textPrimary,
+    cursorColor: Color = Theme.color.text.primary,
     readOnly: Boolean = false,
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),

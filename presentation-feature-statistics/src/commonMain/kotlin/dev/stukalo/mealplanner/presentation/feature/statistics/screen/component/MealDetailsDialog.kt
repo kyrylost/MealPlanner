@@ -38,7 +38,7 @@ fun MealDetailsDialog(meal: MealSlotProgress, onDismissRequest: () -> Unit) {
             Text(
                 text = meal.name,
                 style = Theme.typography.bold16,
-                color = Theme.color.textPrimary
+                color = Theme.color.text.primary
             )
         },
         text = {
@@ -72,7 +72,7 @@ fun MealDetailsDialog(meal: MealSlotProgress, onDismissRequest: () -> Unit) {
                 }
             )
         },
-        containerColor = Theme.color.backgroundSecondary,
+        containerColor = Theme.color.background.secondary,
         shape = Theme.shape.normalRoundedCornerShape
     )
 }
@@ -87,12 +87,12 @@ private fun NutrientRow(label: String, value: String) {
         Text(
             text = label,
             style = Theme.typography.regular14,
-            color = Theme.color.textSecondary
+            color = Theme.color.text.secondary
         )
         Text(
             text = value,
             style = Theme.typography.bold14,
-            color = Theme.color.textPrimary
+            color = Theme.color.text.primary
         )
     }
 }

@@ -86,7 +86,7 @@ internal fun ProductSearchContent(
                     }
                     products.loadState.refresh is LoadState.Loading -> {
                         CircularProgressIndicator(
-                            color = Theme.color.primary,
+                            color = Theme.color.brand.primary,
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
@@ -116,7 +116,7 @@ internal fun ProductSearchContent(
 
                 if (state.isLoading) {
                     CircularProgressIndicator(
-                        color = Theme.color.primary,
+                        color = Theme.color.brand.primary,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
@@ -125,8 +125,8 @@ internal fun ProductSearchContent(
 
         FloatingActionButton(
             onClick = { onIntent(ViewIntent.OnBarcodeScannerClick) },
-            containerColor = Theme.color.primary,
-            contentColor = Theme.color.textOnPrimary,
+            containerColor = Theme.color.brand.primary,
+            contentColor = Theme.color.text.onPrimary,
             shape = CircleShape,
             modifier =
             Modifier
@@ -146,7 +146,7 @@ internal fun ProductSearchContent(
 @Composable
 private fun ProductSearchContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             ProductSearchContent(
                 state = ViewState(query = "Apple"),
                 products = null,

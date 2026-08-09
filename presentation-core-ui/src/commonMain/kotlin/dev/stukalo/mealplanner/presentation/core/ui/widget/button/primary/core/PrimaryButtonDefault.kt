@@ -3,12 +3,12 @@ package dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.core
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColorSet
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonDefault
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonTypographySet
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonAnimation
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonColorSet
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonDefault
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonTypographySet
 
 object PrimaryButtonDefault : ButtonDefault {
     @Composable

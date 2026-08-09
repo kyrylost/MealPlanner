@@ -1,7 +1,5 @@
 package dev.stukalo.mealplanner.presentation.core.ui.widget.button.core
 
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.IconButtonSize
-
 /**
  * Interface representing a set of predefined button sizes.
  *
@@ -16,7 +14,7 @@ interface IconButtonSizeSet {
     /**
      * Returns the button size configuration for a button with a size of 32dp.
      *
-     * @return A [dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.IconButtonSize] instance representing the button size configuration for 32dp.
+     * @return A [IconButtonSize] instance representing the button size configuration for 32dp.
      */
     fun small(): IconButtonSize
 

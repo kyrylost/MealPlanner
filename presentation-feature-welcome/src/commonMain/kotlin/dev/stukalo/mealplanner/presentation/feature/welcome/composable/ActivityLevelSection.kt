@@ -69,9 +69,9 @@ internal fun ActivityLevelSection(state: ViewState, onIntent: (ViewIntent) -> Un
                 CardDefaults.cardColors(
                     containerColor =
                     if (isSelected) {
-                        Theme.color.primary
+                        Theme.color.brand.primary
                     } else {
-                        Theme.color.backgroundSecondary.copy(
+                        Theme.color.background.secondary.copy(
                             alpha = 0.1f
                         )
                     }
@@ -81,12 +81,12 @@ internal fun ActivityLevelSection(state: ViewState, onIntent: (ViewIntent) -> Un
                     Text(
                         text = stringResource(nameRes),
                         style = Theme.typography.regular14,
-                        color = if (isSelected) Theme.color.textOnPrimary else Theme.color.textPrimary
+                        color = if (isSelected) Theme.color.text.onPrimary else Theme.color.text.primary
                     )
                     Text(
                         text = stringResource(descRes),
                         style = Theme.typography.regular12,
-                        color = if (isSelected) Theme.color.textOnPrimaryVariant else Theme.color.textSecondary
+                        color = if (isSelected) Theme.color.text.onPrimaryVariant else Theme.color.text.secondary
                     )
                 }
             }

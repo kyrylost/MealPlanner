@@ -63,6 +63,13 @@ import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewSta
 import kotlinx.coroutines.flow.flowOf
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The stateless UI content for the Home screen.
+ *
+ * @param state The current [ViewState] to render.
+ * @param recommendedRecipes The paging items for recommended recipes.
+ * @param onIntent Callback to send [ViewIntent]s to the ViewModel.
+ */
 @Composable
 internal fun HomeContent(
     state: ViewState,
@@ -218,12 +225,12 @@ internal fun HomeContent(
                     Text(
                         text = stringResource(Res.string.home_recommended_for_today),
                         style = Theme.typography.bold14,
-                        color = Theme.color.textPrimary
+                        color = Theme.color.text.primary
                     )
                     Text(
                         text = stringResource(Res.string.common_show_all),
                         style = Theme.typography.bold14,
-                        color = Theme.color.primary,
+                        color = Theme.color.brand.primary,
                         modifier = Modifier.clickable { onIntent(ViewIntent.OnShowAllRecipesClick) }
                     )
                 }
@@ -251,7 +258,7 @@ internal fun HomeContent(
                             .padding(vertical = Theme.spacing.space32),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(color = Theme.color.primary)
+                        CircularProgressIndicator(color = Theme.color.brand.primary)
                     }
                 }
             } else {
@@ -293,7 +300,7 @@ internal fun HomeContent(
                                 .padding(vertical = Theme.spacing.space16),
                             contentAlignment = Alignment.Center
                         ) {
-                            CircularProgressIndicator(color = Theme.color.primary)
+                            CircularProgressIndicator(color = Theme.color.brand.primary)
                         }
                     }
                 }
@@ -314,7 +321,7 @@ internal fun HomeContent(
 @Composable
 private fun HomeContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             HomeContent(
                 state = ViewState(userName = "User"),
                 recommendedRecipes =

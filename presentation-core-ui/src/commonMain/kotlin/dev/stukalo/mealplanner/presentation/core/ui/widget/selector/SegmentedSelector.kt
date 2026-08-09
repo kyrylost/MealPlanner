@@ -50,7 +50,7 @@ fun <T> SegmentedSelector(
             .fillMaxWidth()
             .height(48.dp)
             .clip(Theme.shape.normalRoundedCornerShape)
-            .background(Theme.color.backgroundSecondary)
+            .background(Theme.color.background.secondary)
             .padding(Theme.spacing.space4)
     ) {
         val maxWidth = maxWidth
@@ -68,14 +68,14 @@ fun <T> SegmentedSelector(
                 .width(itemWidth)
                 .fillMaxHeight()
                 .clip(Theme.shape.normalRoundedCornerShape)
-                .background(Theme.color.primary)
+                .background(Theme.color.brand.primary)
         )
 
         Row(modifier = Modifier.fillMaxSize()) {
             items.forEach { item ->
                 val isSelected = item == selectedItem
                 val textColor by animateColorAsState(
-                    targetValue = if (isSelected) Theme.color.textOnPrimary else Theme.color.textPrimary,
+                    targetValue = if (isSelected) Theme.color.text.onPrimary else Theme.color.text.primary,
                     animationSpec = tween(durationMillis = 300)
                 )
 
@@ -101,7 +101,7 @@ fun <T> SegmentedSelector(
 @Composable
 private fun SegmentedSelectorPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             SegmentedSelector(
                 items = listOf("Week", "Month", "Year"),
                 selectedItem = "Week",

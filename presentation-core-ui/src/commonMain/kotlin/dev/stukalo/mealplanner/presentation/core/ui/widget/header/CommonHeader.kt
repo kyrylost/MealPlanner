@@ -45,13 +45,13 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun CommonHeader(
     title: String,
-    titleColor: Color = Theme.color.textPrimary,
+    titleColor: Color = Theme.color.text.primary,
     leftIcon: ImageVector? = null,
-    leftIconTint: Color = Theme.color.iconPrimary,
+    leftIconTint: Color = Theme.color.icon.primary,
     leftIconContentDescription: String? = null,
     onLeftIconClick: (() -> Unit)? = null,
     rightIcon: ImageVector? = null,
-    rightIconTint: Color = Theme.color.iconPrimary,
+    rightIconTint: Color = Theme.color.icon.primary,
     rightIconContentDescription: String? = null,
     onRightIconClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
@@ -127,7 +127,7 @@ private fun CommonHeaderPreview() {
             modifier =
             Modifier
                 .fillMaxWidth()
-                .background(Theme.color.background)
+                .background(Theme.color.background.primary)
         ) {
             CommonHeader(
                 title = stringResource(Res.string.barcode_scanner_title),
@@ -150,7 +150,7 @@ private fun CommonHeaderNoLeftIconPreview() {
             modifier =
             Modifier
                 .fillMaxWidth()
-                .background(Theme.color.background)
+                .background(Theme.color.background.primary)
         ) {
             CommonHeader(
                 title = stringResource(Res.string.barcode_scanner_title),

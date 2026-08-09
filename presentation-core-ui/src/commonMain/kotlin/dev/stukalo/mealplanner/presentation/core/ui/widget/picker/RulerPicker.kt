@@ -69,8 +69,8 @@ fun RulerPicker(
     step: Float = 1f,
     unit: String = "",
     lineSpacing: Dp = 16.dp,
-    centerTickColor: Color = Theme.color.primary,
-    edgeTickColor: Color = Theme.color.backgroundSecondary,
+    centerTickColor: Color = Theme.color.brand.primary,
+    edgeTickColor: Color = Theme.color.background.secondary,
     onEditClick: () -> Unit = {}
 ) {
     val density = LocalDensity.current
@@ -85,8 +85,8 @@ fun RulerPicker(
         )
     }
 
-    val textPrimaryColor = Theme.color.textPrimary
-    val textSecondaryColor = Theme.color.textSecondary
+    val textPrimaryColor = Theme.color.text.primary
+    val textSecondaryColor = Theme.color.text.secondary
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -133,7 +133,7 @@ fun RulerPicker(
                         buttonColorSet =
                         iconButtonDefaultColorSet()
                             .copy(
-                                foregroundColorDefault = Theme.color.primary
+                                foregroundColorDefault = Theme.color.brand.primary
                             )
                     ),
                     onClick = onEditClick
@@ -207,7 +207,7 @@ fun RulerPicker(
 private fun RulerPickerPreview() {
     var value by remember { mutableFloatStateOf(70f) }
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             RulerPicker(
                 label = "Weight",
                 value = value,

@@ -22,12 +22,12 @@ internal fun HomeHeader(userName: String, modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(Res.string.home_hello),
                 style = Theme.typography.handwrittenRegular64,
-                color = Theme.color.textSecondary
+                color = Theme.color.text.secondary
             )
             Text(
                 text = stringResource(Res.string.home_hello_name, userName),
                 style = Theme.typography.handwrittenSemibold64,
-                color = Theme.color.textPrimary
+                color = Theme.color.text.primary
             )
         }
     }

@@ -22,9 +22,9 @@ import org.jetbrains.compose.resources.stringResource
 fun AppSnackbar(model: SnackbarModel, modifier: Modifier = Modifier) {
     val backgroundColor =
         when (model.type) {
-            SnackbarType.SUCCESS -> Theme.color.success
-            SnackbarType.WARNING -> Theme.color.warning
-            SnackbarType.ERROR -> Theme.color.error
+            SnackbarType.SUCCESS -> Theme.color.state.success
+            SnackbarType.WARNING -> Theme.color.state.warning
+            SnackbarType.ERROR -> Theme.color.state.error
         }
 
     Box(
@@ -47,7 +47,7 @@ fun AppSnackbar(model: SnackbarModel, modifier: Modifier = Modifier) {
             Text(
                 text = text,
                 style = Theme.typography.regular14,
-                color = Theme.color.textOnPrimary
+                color = Theme.color.text.onPrimary
             )
         }
     }

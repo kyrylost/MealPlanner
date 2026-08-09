@@ -35,8 +35,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 @Composable
 fun SemiCircularProgressBar(
     progress: Float,
-    trackColor: Color = Theme.color.backgroundSecondary,
-    progressColor: Color = Theme.color.primary,
+    trackColor: Color = Theme.color.background.secondary,
+    progressColor: Color = Theme.color.brand.primary,
     progressBrush: Brush? = null,
     thickness: Dp = Theme.thickness.thickness4,
     centerTitle: String,
@@ -49,10 +49,10 @@ fun SemiCircularProgressBar(
     centerSubtitleStyle: TextStyle = Theme.typography.regular12,
     sideTitleStyle: TextStyle = Theme.typography.bold16,
     sideSubtitleStyle: TextStyle = Theme.typography.regular12,
-    centerTitleColor: Color = Theme.color.textPrimary,
-    centerSubtitleColor: Color = Theme.color.textSecondary,
-    sideTitleColor: Color = Theme.color.textPrimary,
-    sideSubtitleColor: Color = Theme.color.textSecondary,
+    centerTitleColor: Color = Theme.color.text.primary,
+    centerSubtitleColor: Color = Theme.color.text.secondary,
+    sideTitleColor: Color = Theme.color.text.primary,
+    sideSubtitleColor: Color = Theme.color.text.secondary,
     labelPadding: Dp = 0.dp,
     labelPosition: LabelPosition = LabelPosition.Top,
     modifier: Modifier = Modifier
@@ -239,7 +239,7 @@ fun SemiCircularProgressBar(
 @Composable
 private fun SemiCircularProgressBarPreview() {
     Theme {
-        Box(modifier = Modifier.background(Theme.color.iconDisabled).padding(32.dp)) {
+        Box(modifier = Modifier.background(Theme.color.icon.disabled).padding(32.dp)) {
             SemiCircularProgressBar(
                 progress = 0.5f,
                 centerTitle = "180",
@@ -258,7 +258,7 @@ private fun SemiCircularProgressBarPreview() {
 @Composable
 private fun SemiCircularProgressBarLabelsBottomPreview() {
     Theme {
-        Box(modifier = Modifier.background(Theme.color.iconDisabled).padding(32.dp)) {
+        Box(modifier = Modifier.background(Theme.color.icon.disabled).padding(32.dp)) {
             SemiCircularProgressBar(
                 progress = 0.5f,
                 centerTitle = "180",
@@ -279,12 +279,12 @@ private fun SemiCircularProgressBarLabelsBottomPreview() {
 @Composable
 private fun SemiCircularProgressBarGradientPreview() {
     Theme {
-        Box(modifier = Modifier.background(Theme.color.iconDisabled).padding(32.dp)) {
+        Box(modifier = Modifier.background(Theme.color.icon.disabled).padding(32.dp)) {
             SemiCircularProgressBar(
                 progress = 0.75f,
                 progressBrush =
                 Brush.horizontalGradient(
-                    colors = listOf(Theme.color.primary, Theme.color.secondary)
+                    colors = listOf(Theme.color.brand.primary, Theme.color.brand.secondary)
                 ),
                 centerTitle = "180",
                 centerSubtitle = "Kkal left",

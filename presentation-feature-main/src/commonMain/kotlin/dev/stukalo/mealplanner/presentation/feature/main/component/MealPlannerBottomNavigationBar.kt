@@ -45,8 +45,8 @@ import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.MainTa
  * A custom bottom navigation bar that features a smooth, circular indicator transition.
  *
  * This component uses a "cutout" effect for the icons:
- * 1. The bottom [NavigationTabRow] renders all icons in the default [Theme.color.iconPrimary] color.
- * 2. The top [NavigationTabRow] renders all icons in the [Theme.color.textOnPrimary] color.
+ * 1. The bottom [NavigationTabRow] renders all icons in the default [Theme.color.icon.primary] color.
+ * 2. The top [NavigationTabRow] renders all icons in the [Theme.color.text.onPrimary] color.
  * 3. The top layer is clipped to a circular [Path] that follows the [indicatorOffset].
  *
  * This dual-layer approach allows icons to partially change color as the indicator moves
@@ -94,7 +94,7 @@ fun MealPlannerBottomNavigationBar(
                 .blur(12.dp)
                 .hazeChild(
                     state = hazeState ?: HazeState(),
-                    tint = Theme.color.backgroundSecondary.copy(alpha = 0.7f)
+                    tint = Theme.color.background.secondary.copy(alpha = 0.7f)
                 )
         )
 
@@ -108,12 +108,12 @@ fun MealPlannerBottomNavigationBar(
             NavigationTabRow(
                 iconSize = iconSize,
                 onTabSelected = onTabSelected,
-                tint = Theme.color.iconPrimary
+                tint = Theme.color.icon.primary
             )
 
             if (itemWidth > 0) {
-                val primaryColor = Theme.color.primary
-                val iconOnPrimaryColor = Theme.color.iconOnPrimary
+                val primaryColor = Theme.color.brand.primary
+                val iconOnPrimaryColor = Theme.color.icon.onPrimary
 
                 Box(
                     modifier =
@@ -206,7 +206,7 @@ fun MealPlannerBottomNavigationBarPreview() {
             modifier =
             Modifier
                 .fillMaxSize()
-                .background(Theme.color.background)
+                .background(Theme.color.background.primary)
         ) {
             MealPlannerBottomNavigationBar(
                 selectedTab = selectedTab,

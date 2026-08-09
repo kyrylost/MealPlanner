@@ -1,4 +1,4 @@
-package dev.devlight.skeleton.presentation.core.ui.component.widget.button.core
+package dev.stukalo.mealplanner.presentation.core.ui.widget.button.core
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable

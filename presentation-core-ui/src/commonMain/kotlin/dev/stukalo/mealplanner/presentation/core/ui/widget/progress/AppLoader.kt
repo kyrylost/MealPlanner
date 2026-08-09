@@ -31,7 +31,7 @@ fun AppLoader(modifier: Modifier = Modifier) {
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(48.dp),
-            color = Theme.color.primary
+            color = Theme.color.brand.primary
         )
     }
 }

@@ -55,7 +55,7 @@ fun CommonEmptyState(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.size(Theme.spacing.space64),
-                tint = Theme.color.iconPrimary
+                tint = Theme.color.icon.primary
             )
             Spacer(modifier = Modifier.height(Theme.spacing.space24))
         }
@@ -63,7 +63,7 @@ fun CommonEmptyState(
         Text(
             text = title,
             style = Theme.typography.bold16,
-            color = Theme.color.textPrimary,
+            color = Theme.color.text.primary,
             textAlign = TextAlign.Center
         )
 
@@ -72,7 +72,7 @@ fun CommonEmptyState(
             Text(
                 text = description,
                 style = Theme.typography.regular14,
-                color = Theme.color.textSecondary,
+                color = Theme.color.text.secondary,
                 textAlign = TextAlign.Center
             )
         }

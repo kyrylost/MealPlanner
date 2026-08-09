@@ -23,8 +23,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
  */
 @Composable
 fun ScannerOverlay(modifier: Modifier = Modifier) {
-    val strokeColor = Theme.color.primary
-    val overlayColor = Theme.color.fixedDark.copy(alpha = OVERLAY_ALPHA)
+    val strokeColor = Theme.color.brand.primary
+    val overlayColor = Theme.color.state.fixedDark.copy(alpha = OVERLAY_ALPHA)
     val cornerRadius = Theme.radius.radius16
     val strokeWidth = STROKE_WIDTH.dp
 

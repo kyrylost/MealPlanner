@@ -154,13 +154,13 @@ private fun FilterSection(title: String, modifier: Modifier = Modifier, content:
         modifier
             .fillMaxWidth()
             .clip(Theme.shape.normalRoundedCornerShape)
-            .background(Theme.color.backgroundSecondary.copy(alpha = 0.5f))
+            .background(Theme.color.background.secondary.copy(alpha = 0.5f))
             .padding(Theme.spacing.space16)
     ) {
         Text(
             text = title,
             style = Theme.typography.bold16,
-            color = Theme.color.textPrimary
+            color = Theme.color.text.primary
         )
         Spacer(modifier = Modifier.height(Theme.spacing.space12))
         content()
@@ -171,7 +171,7 @@ private fun FilterSection(title: String, modifier: Modifier = Modifier, content:
 @Composable
 private fun FiltersContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             FiltersContent(
                 state = ViewState(),
                 onIntent = {}

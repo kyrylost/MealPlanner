@@ -4,10 +4,10 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonAnimation
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.ButtonColorSet
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.IconButtonDefault
 import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonAnimation
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonColorSet
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.IconButtonDefault
 
 object IconButtonDefault : IconButtonDefault {
     @Composable

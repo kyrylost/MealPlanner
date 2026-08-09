@@ -12,13 +12,13 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 fun HealthLabelChip(label: String, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
-        color = Theme.color.primary.copy(alpha = 0.1f),
+        color = Theme.color.brand.primary.copy(alpha = 0.1f),
         shape = Theme.shape.normalRoundedCornerShape
     ) {
         Text(
             text = label,
             style = Theme.typography.bold12,
-            color = Theme.color.primary,
+            color = Theme.color.brand.primary,
             modifier = Modifier.padding(horizontal = Theme.spacing.space12, vertical = Theme.spacing.space4)
         )
     }

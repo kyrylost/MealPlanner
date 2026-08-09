@@ -21,6 +21,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import kotlin.time.Clock
 
+/**
+ * ViewModel for the Home screen.
+ *
+ * Manages user data, daily nutrition progress, and recommended recipes.
+ */
 internal class HomeViewModel(
     private val getUserUseCase: GetUserUseCase,
     private val getDailyNormUseCase: GetDailyNormUseCase,

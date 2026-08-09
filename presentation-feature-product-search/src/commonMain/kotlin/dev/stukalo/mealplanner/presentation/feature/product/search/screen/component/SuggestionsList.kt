@@ -30,7 +30,7 @@ fun SuggestionsList(suggestions: List<String>, onSuggestionClick: (String) -> Un
             .heightIn(max = SUGGESTIONS_LIST_MAX_HEIGHT)
             .padding(horizontal = Theme.spacing.space16),
         shape = Theme.shape.normalRoundedCornerShape,
-        color = Theme.color.background,
+        color = Theme.color.background.primary,
         shadowElevation = Theme.elevation.normal
     ) {
         LazyColumn(
@@ -41,7 +41,7 @@ fun SuggestionsList(suggestions: List<String>, onSuggestionClick: (String) -> Un
                 Text(
                     text = suggestion,
                     style = Theme.typography.regular14,
-                    color = Theme.color.textPrimary,
+                    color = Theme.color.text.primary,
                     modifier =
                     Modifier
                         .fillMaxWidth()
@@ -49,7 +49,7 @@ fun SuggestionsList(suggestions: List<String>, onSuggestionClick: (String) -> Un
                         .padding(vertical = Theme.spacing.space12)
                 )
                 if (index < suggestions.size - 1) {
-                    HorizontalDivider(color = Theme.color.textSecondary.copy(alpha = 0.1f))
+                    HorizontalDivider(color = Theme.color.text.secondary.copy(alpha = 0.1f))
                 }
             }
         }

@@ -3,7 +3,7 @@ package dev.stukalo.mealplanner.presentation.core.ui.widget.button.icon.core
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import dev.devlight.skeleton.presentation.core.ui.component.widget.button.core.IconButtonSize
+import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.IconButtonSize
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.IconButtonSizeSet
 
 class IconButtonSizeSet : IconButtonSizeSet {

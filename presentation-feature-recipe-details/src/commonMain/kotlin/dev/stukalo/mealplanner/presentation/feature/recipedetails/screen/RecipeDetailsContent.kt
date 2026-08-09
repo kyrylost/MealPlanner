@@ -105,7 +105,7 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
     ) {
         if (state.isLoading) {
             CircularProgressIndicator(
-                color = Theme.color.primary,
+                color = Theme.color.brand.primary,
                 modifier = Modifier.align(Alignment.Center)
             )
         } else if (state.recipe != null) {
@@ -122,7 +122,7 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                         Modifier
                             .fillMaxWidth()
                             .aspectRatio(Theme.aspect.recipeDetailsImage)
-                            .background(Theme.color.backgroundSecondary),
+                            .background(Theme.color.background.secondary),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -139,7 +139,7 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                             Text(
                                 text = currentRecipe.product.productName.orEmpty(),
                                 style = Theme.typography.bold36,
-                                color = Theme.color.textPrimary
+                                color = Theme.color.text.primary
                             )
 
                             Row(
@@ -199,13 +199,13 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                             Text(
                                 text = stringResource(Res.string.recipe_details_ingredients),
                                 style = Theme.typography.bold16,
-                                color = Theme.color.textPrimary
+                                color = Theme.color.text.primary
                             )
                             currentRecipe.ingredientLines?.forEach { line ->
                                 Text(
                                     text = stringResource(Res.string.common_bullet_item, line),
                                     style = Theme.typography.regular14,
-                                    color = Theme.color.textSecondary
+                                    color = Theme.color.text.secondary
                                 )
                             }
                         }
@@ -215,13 +215,13 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                                 Text(
                                     text = stringResource(Res.string.recipe_details_instructions),
                                     style = Theme.typography.bold16,
-                                    color = Theme.color.textPrimary
+                                    color = Theme.color.text.primary
                                 )
                                 instructions.forEachIndexed { index, line ->
                                     Text(
                                         text = stringResource(Res.string.common_numbered_item, index + 1, line),
                                         style = Theme.typography.regular14,
-                                        color = Theme.color.textSecondary
+                                        color = Theme.color.text.secondary
                                     )
                                 }
                             }
@@ -232,7 +232,7 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
                                 text = stringResource(Res.string.recipe_details_view_prep),
                                 style =
                                 Theme.typography.bold14.copy(
-                                    color = Theme.color.primary,
+                                    color = Theme.color.brand.primary,
                                     textDecoration = TextDecoration.Underline
                                 ),
                                 modifier = Modifier.clickable { uriHandler.openUri(url) }
@@ -273,7 +273,7 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
         } else {
             Text(
                 text = stringResource(Res.string.recipe_details_not_found),
-                color = Theme.color.textSecondary,
+                color = Theme.color.text.secondary,
                 modifier = Modifier.align(Alignment.Center)
             )
         }
@@ -284,7 +284,7 @@ internal fun RecipeDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Un
 @Composable
 private fun RecipeDetailsContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             RecipeDetailsContent(
                 state =
                 ViewState(

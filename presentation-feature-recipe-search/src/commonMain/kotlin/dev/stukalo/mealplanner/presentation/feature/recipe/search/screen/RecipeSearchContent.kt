@@ -66,10 +66,10 @@ internal fun RecipeSearchContent(
             CommonHeader(
                 title = stringResource(Res.string.common_recipe_search),
                 leftIcon = IconBack,
-                leftIconTint = Theme.color.iconPrimary,
+                leftIconTint = Theme.color.icon.primary,
                 onLeftIconClick = { onIntent(ViewIntent.OnBackClick) },
                 rightIcon = IconFilter,
-                rightIconTint = Theme.color.primary,
+                rightIconTint = Theme.color.brand.primary,
                 onRightIconClick = { onIntent(ViewIntent.OnFiltersClick) }
             )
         }
@@ -107,7 +107,7 @@ internal fun RecipeSearchContent(
                         .padding(vertical = Theme.spacing.space32),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = Theme.color.primary)
+                    CircularProgressIndicator(color = Theme.color.brand.primary)
                 }
             }
         } else if (recipes.loadState.refresh is LoadState.NotLoading && recipes.itemCount == 0) {
@@ -154,7 +154,7 @@ internal fun RecipeSearchContent(
                             .padding(vertical = Theme.spacing.space16),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(color = Theme.color.primary)
+                        CircularProgressIndicator(color = Theme.color.brand.primary)
                     }
                 }
             }
@@ -166,7 +166,7 @@ internal fun RecipeSearchContent(
 @Composable
 private fun RecipeSearchContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             RecipeSearchContent(
                 state = ViewState(),
                 recipes = flowOf(PagingData.from(emptyList<RecipeDomainModel>())).collectAsLazyPagingItems(),

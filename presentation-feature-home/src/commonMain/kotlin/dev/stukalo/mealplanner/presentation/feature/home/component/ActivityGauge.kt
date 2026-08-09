@@ -42,8 +42,8 @@ internal fun ActivityGauge(
             Brush.linearGradient(
                 colors =
                 listOf(
-                    Theme.color.secondary,
-                    Theme.color.primary
+                    Theme.color.brand.secondary,
+                    Theme.color.brand.primary
                 )
             ),
             thickness = Theme.thickness.thickness4,

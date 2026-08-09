@@ -37,13 +37,13 @@ fun ValueEditDialog(
                 Text(
                     text = title,
                     style = Theme.typography.bold16,
-                    color = Theme.color.textPrimary
+                    color = Theme.color.text.primary
                 )
                 if (message != null) {
                     Text(
                         text = message,
                         style = Theme.typography.regular12,
-                        color = Theme.color.textSecondary
+                        color = Theme.color.text.secondary
                     )
                 }
             }
@@ -75,7 +75,7 @@ fun ValueEditDialog(
                 onClick = onDismissRequest
             )
         },
-        containerColor = Theme.color.backgroundSecondary,
+        containerColor = Theme.color.background.secondary,
         shape = Theme.shape.normalRoundedCornerShape
     )
 }

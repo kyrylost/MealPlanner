@@ -33,12 +33,12 @@ fun RecipeSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Mo
                 Icon(
                     imageVector = IconSearch,
                     contentDescription = null,
-                    tint = Theme.color.textSecondary.copy(alpha = 0.5f),
+                    tint = Theme.color.text.secondary.copy(alpha = 0.5f),
                     modifier = Modifier.size(Theme.spacing.space20)
                 )
             },
             modifier = Modifier.weight(1f),
-            backgroundColor = Theme.color.backgroundSecondary.copy(alpha = 0.5f),
+            backgroundColor = Theme.color.background.secondary.copy(alpha = 0.5f),
             cornerRadiusDp = Theme.radius.radius16,
             contentPaddingDp = Theme.spacing.space12
         )

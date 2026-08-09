@@ -73,7 +73,7 @@ fun ProductsList(
                         .padding(Theme.spacing.space16),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = Theme.color.primary)
+                    CircularProgressIndicator(color = Theme.color.brand.primary)
                 }
             }
         }

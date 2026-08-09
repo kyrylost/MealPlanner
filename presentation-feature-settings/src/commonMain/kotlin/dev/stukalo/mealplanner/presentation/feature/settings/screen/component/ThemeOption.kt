@@ -21,8 +21,8 @@ import dev.stukalo.mealplanner.core.localization.settings_theme_green
 import dev.stukalo.mealplanner.core.localization.settings_theme_orange
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.styling.color.ThemeColorPalette
-import dev.stukalo.mealplanner.presentation.core.styling.color.toPrimaryColor
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.ThemeColorPalette
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.toPrimaryColor
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -46,7 +46,7 @@ fun ThemeOption(palette: ColorPaletteDomainModel, onClick: () -> Unit, modifier:
         modifier
             .fillMaxWidth()
             .clip(Theme.shape.normalRoundedCornerShape)
-            .background(Theme.color.backgroundSecondary)
+            .background(Theme.color.background.secondary)
             .clickable(onClick = onClick)
             .padding(Theme.spacing.space16),
         verticalAlignment = Alignment.CenterVertically,
@@ -66,7 +66,7 @@ fun ThemeOption(palette: ColorPaletteDomainModel, onClick: () -> Unit, modifier:
                 ColorPaletteDomainModel.GREEN -> stringResource(Res.string.settings_theme_green)
             },
             style = Theme.typography.regular14,
-            color = Theme.color.textPrimary
+            color = Theme.color.text.primary
         )
     }
 }

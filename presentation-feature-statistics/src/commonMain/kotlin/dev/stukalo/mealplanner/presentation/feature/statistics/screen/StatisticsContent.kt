@@ -89,7 +89,7 @@ internal fun StatisticsContent(state: ViewState, onIntent: (ViewIntent) -> Unit)
                     Text(
                         text = stringResource(Res.string.statistics_nutrition_statistics),
                         style = Theme.typography.bold16,
-                        color = Theme.color.textPrimary
+                        color = Theme.color.text.primary
                     )
                     SegmentedSelector(
                         items = StatisticsInterval.entries,
@@ -137,13 +137,13 @@ internal fun StatisticsContent(state: ViewState, onIntent: (ViewIntent) -> Unit)
                         Text(
                             text = stringResource(Res.string.statistics_weight_history),
                             style = Theme.typography.bold16,
-                            color = Theme.color.textPrimary
+                            color = Theme.color.text.primary
                         )
                         IconButton(onClick = { onIntent(ViewIntent.OnAddWeightClick) }) {
                             Icon(
                                 imageVector = IconAdd,
                                 contentDescription = null,
-                                tint = Theme.color.primary
+                                tint = Theme.color.brand.primary
                             )
                         }
                     }
@@ -173,7 +173,7 @@ internal fun StatisticsContent(state: ViewState, onIntent: (ViewIntent) -> Unit)
                 Text(
                     text = stringResource(Res.string.statistics_meal_tracking),
                     style = Theme.typography.bold16,
-                    color = Theme.color.textPrimary,
+                    color = Theme.color.text.primary,
                     modifier = Modifier.padding(bottom = Theme.spacing.space8)
                 )
             }
@@ -219,7 +219,7 @@ internal fun StatisticsContent(state: ViewState, onIntent: (ViewIntent) -> Unit)
 @Composable
 private fun StatisticsContentPreview() {
     Theme {
-        Surface(color = Theme.color.background) {
+        Surface(color = Theme.color.background.primary) {
             StatisticsContent(
                 state =
                 ViewState(
