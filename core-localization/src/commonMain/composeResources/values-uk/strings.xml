@@ -1,5 +1,5 @@
 <resources>
-    <string name="welcome_name_label">Ім\'я</string>
+    <string name="welcome_name_label">Ім'я</string>
     <string name="welcome_name_placeholder">Приклад імені</string>
     <string name="welcome_birth_date_label">Дата народження</string>
     <string name="welcome_birth_date_placeholder">дд/мм/рррр</string>
@@ -38,8 +38,8 @@
     <string name="common_ok">ОК</string>
     <string name="common_cancel">Скасувати</string>
 
-    <string name="validation_error_name_empty">Ім\'я не може бути порожнім</string>
-    <string name="validation_error_name_too_short">Ім\'я занадто коротке</string>
+    <string name="validation_error_name_empty">Ім'я не може бути порожнім</string>
+    <string name="validation_error_name_too_short">Ім'я занадто коротке</string>
     <string name="validation_error_date_empty">Дата народження не може бути порожньою</string>
     <string name="validation_error_date_invalid">Неправильний формат дати</string>
     <string name="validation_error_date_future">Дата народження не може бути у майбутньому</string>
@@ -57,7 +57,7 @@
     <string name="home_steps">Кроки</string>
     <string name="home_recommended_for_today">Рекомендовано на сьогодні</string>
     <string name="home_consumed_amount_title">Вага порції</string>
-    <string name="home_consumed_amount_subtitle">Скільки грам цього продукту ви з\'їли?</string>
+    <string name="home_consumed_amount_subtitle">Скільки грам цього продукту ви з'їли?</string>
 
     <string name="common_back">Назад</string>
     <string name="common_apply">Застосувати</string>
@@ -115,7 +115,7 @@
     <string name="common_unit_grams">г</string>
     <string name="common_close">Закрити</string>
     <string name="common_kcal_left">Залишилось ккал</string>
-    <string name="common_eaten">З\'їдено</string>
+    <string name="common_eaten">З'їдено</string>
     <string name="common_burned">Спалено</string>
     <string name="common_not_available" translatable="false">--</string>
     <string name="common_nutrient_value_with_label" translatable="false">%1$s: %2$s</string>
@@ -148,7 +148,7 @@
     <string name="meal_schedule_percentage">Відсоток:</string>
     <string name="statistics_coming_soon">Статистика незабаром</string>
     <string name="statistics_meal_tracking">Відстеження їжі</string>
-    <string name="statistics_mark_as_consumed">Відмітити як з\'їдене</string>
+    <string name="statistics_mark_as_consumed">Відмітити як з'їдене</string>
     <string name="statistics_nutrition_statistics">Статистика харчування</string>
     <string name="statistics_streak">Страйк</string>
     <string name="statistics_streak_days">%1$d днів</string>

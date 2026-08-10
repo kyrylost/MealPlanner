@@ -2,6 +2,7 @@ import com.android.build.api.dsl.ApplicationExtension
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -95,6 +96,13 @@ kotlin {
 }
 
 configure<ApplicationExtension> {
+    val signingProps = Properties().apply {
+        val propFile = rootProject.file("configure/signing.properties")
+        if (propFile.exists()) {
+            load(propFile.inputStream())
+        }
+    }
+
     namespace = "dev.stukalo.mealplanner"
     compileSdk =
         libs.versions.android.compileSdk
@@ -120,8 +128,27 @@ configure<ApplicationExtension> {
         }
     }
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+        debug {
+            applicationIdSuffix = ".debug"
+        }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            val keystorePath = signingProps.getProperty("RELEASE_STORE_FILE")
+            if (!keystorePath.isNullOrBlank()) {
+                signingConfig = signingConfigs.create("release") {
+                    storeFile = rootProject.file(keystorePath)
+                    storePassword = signingProps.getProperty("RELEASE_STORE_PASSWORD")
+                    keyAlias = signingProps.getProperty("RELEASE_KEY_ALIAS")
+                    keyPassword = signingProps.getProperty("RELEASE_KEY_PASSWORD")
+                }
+            }
         }
     }
     compileOptions {
