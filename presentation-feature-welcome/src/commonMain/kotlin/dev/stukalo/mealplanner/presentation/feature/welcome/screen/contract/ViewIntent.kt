@@ -14,6 +14,8 @@ internal sealed interface ViewIntent : MviIntent {
 
     data class OnChangeWeightInputIntent(val value: String) : ViewIntent
 
+    data class OnChangeTargetWeightInputIntent(val value: String) : ViewIntent
+
     data class OnChangeGenderInputIntent(val value: GenderDomainModel) : ViewIntent
 
     data class OnChangeActivityLevelInputIntent(val value: ActivityLevelDomainModel) : ViewIntent

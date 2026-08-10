@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 import dev.stukalo.mealplanner.presentation.core.ui.haze.HazeState
 import dev.stukalo.mealplanner.presentation.core.ui.haze.hazeChild
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
@@ -73,7 +74,7 @@ fun MealPlannerBottomNavigationBar(
 
     val indicatorOffset by animateFloatAsState(
         targetValue = (selectedTab.ordinal * itemWidth).toFloat(),
-        animationSpec = tween(),
+        animationSpec = tween(durationMillis = AnimationConfiguration.Duration.NORMAL),
         label = "indicatorOffset"
     )
 

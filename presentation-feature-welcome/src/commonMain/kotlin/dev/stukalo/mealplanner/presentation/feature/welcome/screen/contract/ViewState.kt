@@ -17,6 +17,8 @@ internal data class ViewState(
     val heightErrorMessage: StringResource? = null,
     val weightInput: String = "",
     val weightErrorMessage: StringResource? = null,
+    val targetWeightInput: String = "",
+    val targetWeightErrorMessage: StringResource? = null,
     val gender: GenderDomainModel? = null,
     val activityLevel: ActivityLevelDomainModel? = null,
     val diet: DietDomainModel? = null,

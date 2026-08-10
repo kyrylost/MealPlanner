@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.datetime.LocalDate
 
+/**
+ * Database entity representing a user.
+ */
 @Entity
 data class UserDatabaseModel(
     @PrimaryKey
@@ -11,6 +14,7 @@ data class UserDatabaseModel(
     val name: String,
     val birthDate: LocalDate,
     val height: Double,
+    val targetWeight: Double,
     val physicalActivity: ActivityLevelDatabaseModel,
     val gender: GenderDatabaseModel,
     val diet: DietDatabaseModel

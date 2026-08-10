@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconPreview16
 
 /**
@@ -147,7 +148,7 @@ private fun PreviewPreviewAnimateButton() {
                 minHeight = 64.dp,
                 paddings = PaddingValues(all = 8.dp),
                 textStyle = Theme.typography.regular12,
-                animationDuration = 400,
+                animationDuration = AnimationConfiguration.Duration.NORMAL,
                 animationEasing = EaseInBack,
                 isLoading = false,
                 loadingSize = 0.dp

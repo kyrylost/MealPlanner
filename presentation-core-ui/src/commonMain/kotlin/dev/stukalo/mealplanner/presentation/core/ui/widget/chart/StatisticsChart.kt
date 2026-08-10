@@ -22,6 +22,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_apr
+import dev.stukalo.mealplanner.core.localization.common_aug
+import dev.stukalo.mealplanner.core.localization.common_dec
+import dev.stukalo.mealplanner.core.localization.common_feb
+import dev.stukalo.mealplanner.core.localization.common_format_date_short
+import dev.stukalo.mealplanner.core.localization.common_format_percentage
+import dev.stukalo.mealplanner.core.localization.common_fri
+import dev.stukalo.mealplanner.core.localization.common_jan
+import dev.stukalo.mealplanner.core.localization.common_jul
+import dev.stukalo.mealplanner.core.localization.common_jun
+import dev.stukalo.mealplanner.core.localization.common_mar
+import dev.stukalo.mealplanner.core.localization.common_may
+import dev.stukalo.mealplanner.core.localization.common_mon
+import dev.stukalo.mealplanner.core.localization.common_nov
+import dev.stukalo.mealplanner.core.localization.common_oct
+import dev.stukalo.mealplanner.core.localization.common_sat
+import dev.stukalo.mealplanner.core.localization.common_sep
+import dev.stukalo.mealplanner.core.localization.common_sun
+import dev.stukalo.mealplanner.core.localization.common_thu
+import dev.stukalo.mealplanner.core.localization.common_tue
+import dev.stukalo.mealplanner.core.localization.common_wed
 import dev.stukalo.mealplanner.core.localization.statistics_no_data
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsPoint
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -51,6 +72,39 @@ fun StatisticsChart(
         textAlign = TextAlign.Center
     )
 
+    val localizedDays = listOf(
+        stringResource(Res.string.common_mon),
+        stringResource(Res.string.common_tue),
+        stringResource(Res.string.common_wed),
+        stringResource(Res.string.common_thu),
+        stringResource(Res.string.common_fri),
+        stringResource(Res.string.common_sat),
+        stringResource(Res.string.common_sun)
+    )
+
+    val localizedMonths = listOf(
+        stringResource(Res.string.common_jan),
+        stringResource(Res.string.common_feb),
+        stringResource(Res.string.common_mar),
+        stringResource(Res.string.common_apr),
+        stringResource(Res.string.common_may),
+        stringResource(Res.string.common_jun),
+        stringResource(Res.string.common_jul),
+        stringResource(Res.string.common_aug),
+        stringResource(Res.string.common_sep),
+        stringResource(Res.string.common_oct),
+        stringResource(Res.string.common_nov),
+        stringResource(Res.string.common_dec)
+    )
+
+    val dateFormat = stringResource(Res.string.common_format_date_short)
+    val percentageFormat = stringResource(Res.string.common_format_percentage)
+
+    val xAxisLabelOffset = Theme.spacing.space8
+    val pointRadius = Theme.radius.radius4
+    val gridThickness = Theme.thickness.thickness1
+    val lineThickness = Theme.thickness.thickness2
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -69,6 +123,8 @@ fun StatisticsChart(
         val primaryColor = Theme.color.brand.primary
         val secondaryColor = Theme.color.text.secondary.copy(alpha = 0.2f)
         val radius = Theme.radius.radius8
+        val spacing4 = Theme.spacing.space4
+        val spacing2 = Theme.spacing.space2
 
         Canvas(modifier = Modifier.fillMaxSize()) {
             if (points.isEmpty()) return@Canvas
@@ -85,11 +141,8 @@ fun StatisticsChart(
                 0.0
             }
 
-            val target = if (style == ChartStyle.BAR) {
-                points.firstOrNull()?.target ?: 1.0
-            } else {
-                targetValue ?: maxDataValue
-            }
+            val targetValueForLine = if (style == ChartStyle.LINE) targetValue else null
+            val targetValueForBar = if (style == ChartStyle.BAR) points.firstOrNull()?.target else null
 
             // Adjust max value to include target and provide padding
             val rangePadding = if (style == ChartStyle.LINE) {
@@ -98,14 +151,21 @@ fun StatisticsChart(
                 0.0
             }
 
-            val effectiveMax = if (style == ChartStyle.BAR) {
-                maxOf(maxDataValue, target * BAR_CHART_TARGET_MULTIPLIER)
-            } else {
-                maxOf(maxDataValue, target) + rangePadding
+            val effectiveMax = when (style) {
+                ChartStyle.BAR -> maxOf(maxDataValue, (targetValueForBar ?: 0.0) * BAR_CHART_TARGET_MULTIPLIER)
+                ChartStyle.LINE -> if (targetValueForLine != null) {
+                    maxOf(maxDataValue, targetValueForLine) + rangePadding
+                } else {
+                    maxDataValue + rangePadding
+                }
             }
 
             val effectiveMin = if (style == ChartStyle.LINE) {
-                minOf(minDataValue, target) - rangePadding
+                if (targetValueForLine != null) {
+                    minOf(minDataValue, targetValueForLine) - rangePadding
+                } else {
+                    minOf(minDataValue, maxDataValue) - rangePadding
+                }
             } else {
                 0.0
             }
@@ -121,8 +181,8 @@ fun StatisticsChart(
                 val y = chartHeight - ratio * chartHeight
                 val value = effectiveMin + ratio * (effectiveMax - effectiveMin)
 
-                val label = if (style == ChartStyle.BAR) {
-                    "${(value / target * 100).toInt()}%"
+                val label = if (style == ChartStyle.BAR && targetValueForBar != null && targetValueForBar > 0) {
+                    percentageFormat.replace("%1\$d", (value / targetValueForBar * 100).toInt().toString())
                 } else {
                     value.toInt().toString()
                 }
@@ -140,23 +200,26 @@ fun StatisticsChart(
                     color = secondaryColor,
                     start = Offset(yAxisWidth, y),
                     end = Offset(size.width, y),
-                    strokeWidth = GRID_LINE_WIDTH_DP.toPx()
+                    strokeWidth = gridThickness.toPx()
                 )
             }
 
             // Draw Target Line
-            val targetY = chartHeight - ((target - effectiveMin) / valueRange * chartHeight).toFloat()
+            if (targetValueForLine != null || targetValueForBar != null) {
+                val target = targetValueForLine ?: targetValueForBar ?: 0.0
+                val targetY = chartHeight - ((target - effectiveMin) / valueRange * chartHeight).toFloat()
 
-            drawLine(
-                color = primaryColor.copy(alpha = 0.5f),
-                start = Offset(yAxisWidth, targetY),
-                end = Offset(size.width, targetY),
-                strokeWidth = TARGET_LINE_WIDTH_DP.toPx(),
-                pathEffect = PathEffect.dashPathEffect(
-                    floatArrayOf(DASH_ON_INTERVAL, DASH_OFF_INTERVAL),
-                    0f
+                drawLine(
+                    color = primaryColor.copy(alpha = 0.5f),
+                    start = Offset(yAxisWidth, targetY),
+                    end = Offset(size.width, targetY),
+                    strokeWidth = lineThickness.toPx(),
+                    pathEffect = PathEffect.dashPathEffect(
+                        floatArrayOf(DASH_ON_INTERVAL, DASH_OFF_INTERVAL),
+                        0f
+                    )
                 )
-            )
+            }
 
             when (style) {
                 ChartStyle.BAR -> {
@@ -185,13 +248,13 @@ fun StatisticsChart(
 
                         // Label
                         if (points.size <= MAX_X_LABELS || index % (points.size / 5).coerceAtLeast(1) == 0) {
-                            val label = getLabel(point.date, points.size)
+                            val label = getLabel(point.date, points.size, localizedDays, localizedMonths, dateFormat)
                             val textLayoutResult = textMeasurer.measure(label, labelStyle)
                             drawText(
                                 textLayoutResult = textLayoutResult,
                                 topLeft = Offset(
                                     x + (barWidth - textLayoutResult.size.width) / 2,
-                                    chartHeight + X_AXIS_LABEL_OFFSET_DP.toPx()
+                                    chartHeight + xAxisLabelOffset.toPx()
                                 )
                             )
                         }
@@ -206,13 +269,13 @@ fun StatisticsChart(
 
                         // Draw Label (Independent of value)
                         if (points.size <= MAX_X_LABELS || index % (points.size / 5).coerceAtLeast(1) == 0) {
-                            val label = getLabel(point.date, points.size)
+                            val label = getLabel(point.date, points.size, localizedDays, localizedMonths, dateFormat)
                             val textLayoutResult = textMeasurer.measure(label, labelStyle)
                             drawText(
                                 textLayoutResult = textLayoutResult,
                                 topLeft = Offset(
                                     x - textLayoutResult.size.width / 2,
-                                    chartHeight + X_AXIS_LABEL_OFFSET_DP.toPx()
+                                    chartHeight + xAxisLabelOffset.toPx()
                                 )
                             )
                         }
@@ -230,7 +293,7 @@ fun StatisticsChart(
 
                             drawCircle(
                                 color = primaryColor,
-                                radius = POINT_RADIUS_DP.toPx(),
+                                radius = pointRadius.toPx(),
                                 center = Offset(x, y)
                             )
                         }
@@ -238,7 +301,7 @@ fun StatisticsChart(
                     drawPath(
                         path = path,
                         color = primaryColor,
-                        style = Stroke(width = LINE_STROKE_WIDTH_DP.toPx())
+                        style = Stroke(width = lineThickness.toPx())
                     )
                 }
             }
@@ -249,11 +312,6 @@ fun StatisticsChart(
 private val CHART_HEIGHT_DP = 260.dp
 private val Y_AXIS_WIDTH_DP = 40.dp
 private val X_AXIS_HEIGHT_DP = 30.dp
-private val GRID_LINE_WIDTH_DP = 1.dp
-private val TARGET_LINE_WIDTH_DP = 2.dp
-private val LINE_STROKE_WIDTH_DP = 2.dp
-private val POINT_RADIUS_DP = 4.dp
-private val X_AXIS_LABEL_OFFSET_DP = 8.dp
 
 private const val BAR_CHART_TARGET_MULTIPLIER = 1.5f
 private const val LINE_CHART_PADDING_FACTOR = 0.1f
@@ -263,10 +321,16 @@ private const val MAX_X_LABELS = 12
 private const val DASH_ON_INTERVAL = 10f
 private const val DASH_OFF_INTERVAL = 10f
 
-private fun getLabel(date: LocalDate, totalPoints: Int): String = when {
-    totalPoints <= 7 -> date.dayOfWeek.name.take(3) // Mon, Tue...
-    totalPoints <= 12 -> date.month.name.take(3) // Jan, Feb...
-    else -> "${date.day}/${date.month.number}" // 05/08
+private fun getLabel(
+    date: LocalDate,
+    totalPoints: Int,
+    days: List<String>,
+    months: List<String>,
+    dateFormat: String
+): String = when {
+    totalPoints <= 7 -> days[date.dayOfWeek.ordinal]
+    totalPoints <= 12 -> months[date.month.ordinal]
+    else -> dateFormat.replace($$"%1$d", date.day.toString()).replace("%2\$d", date.month.number.toString())
 }
 
 @Preview

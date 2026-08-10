@@ -112,7 +112,7 @@ fun DrawButton(
             .animateContentSize(
                 animationSpec =
                 tween(
-                    durationMillis = AnimationConfiguration.Duration.DEFAULT,
+                    durationMillis = AnimationConfiguration.Duration.NORMAL,
                     easing = LinearOutSlowInEasing
                 )
             ).border(

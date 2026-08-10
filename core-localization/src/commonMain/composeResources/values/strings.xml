@@ -80,6 +80,27 @@
     <string name="common_product_search">Product Search</string>
     <string name="common_recipe_search">Recipe Search</string>
     <string name="common_search">Search</string>
+    <string name="common_mon">Mon</string>
+    <string name="common_tue">Tue</string>
+    <string name="common_wed">Wed</string>
+    <string name="common_thu">Thu</string>
+    <string name="common_fri">Fri</string>
+    <string name="common_sat">Sat</string>
+    <string name="common_sun">Sun</string>
+    <string name="common_jan">Jan</string>
+    <string name="common_feb">Feb</string>
+    <string name="common_mar">Mar</string>
+    <string name="common_apr">Apr</string>
+    <string name="common_may">May</string>
+    <string name="common_jun">Jun</string>
+    <string name="common_jul">Jul</string>
+    <string name="common_aug">Aug</string>
+    <string name="common_sep">Sep</string>
+    <string name="common_oct">Oct</string>
+    <string name="common_nov">Nov</string>
+    <string name="common_dec">Dec</string>
+    <string name="common_format_percentage">%1$d%%</string>
+    <string name="common_format_date_short">%1$d/%2$d</string>
     <string name="common_no_results">No results found</string>
     <string name="common_no_results_desc">Try adjusting your search to find what you\'re looking for</string>
     <string name="product_search_initial_title">Find your favorite products</string>
@@ -114,7 +135,13 @@
 
     <string name="settings_meal_config">Meal Configuration</string>
     <string name="settings_meal_schedule">Meal Schedule</string>
+    <string name="settings_my_profile">My Profile</string>
+    <string name="settings_language">Language</string>
     <string name="settings_theme_choice">Theme Choice</string>
+    <string name="settings_target_weight">Target Weight</string>
+    <string name="settings_save_changes">Save Changes</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_uk">Українська</string>
     <string name="settings_theme_orange">Orange</string>
     <string name="settings_theme_green">Green</string>
 

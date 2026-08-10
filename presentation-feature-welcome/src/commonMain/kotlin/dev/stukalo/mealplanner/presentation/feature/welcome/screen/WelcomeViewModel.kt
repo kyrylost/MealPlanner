@@ -61,7 +61,8 @@ internal class WelcomeViewModel(
             updateState { currentState ->
                 currentState.copy(
                     weightInput = weight,
-                    heightInput = height
+                    heightInput = height,
+                    targetWeightInput = weight
                 )
             }
         }
@@ -83,6 +84,10 @@ internal class WelcomeViewModel(
 
             is ViewIntent.OnChangeWeightInputIntent -> {
                 onChangeWeightInput(intent)
+            }
+
+            is ViewIntent.OnChangeTargetWeightInputIntent -> {
+                onChangeTargetWeightInput(intent)
             }
 
             is ViewIntent.OnChangeGenderInputIntent -> {
@@ -196,6 +201,24 @@ internal class WelcomeViewModel(
         }
     }
 
+    private fun onChangeTargetWeightInput(intent: ViewIntent.OnChangeTargetWeightInputIntent) {
+        updateState { currentState ->
+            PartialStateChange.TargetWeightInput
+                .ValueChange(
+                    value = intent.value
+                ).reduce(currentState)
+        }
+
+        validateWeightUseCase(intent.value.toDoubleOrNull()).onValidationError {
+            updateState { currentState ->
+                PartialStateChange.TargetWeightInput
+                    .Error(
+                        errorMessage = it.toMessage()
+                    ).reduce(currentState)
+            }
+        }
+    }
+
     private fun onChangeGenderInput(intent: ViewIntent.OnChangeGenderInputIntent) {
         updateState { currentState ->
             PartialStateChange
@@ -259,20 +282,26 @@ internal class WelcomeViewModel(
                         }
                     }
                 3 ->
+                    validateWeightUseCase(state.targetWeightInput.toDoubleOrNull()).onValidationError {
+                        updateState { currentState ->
+                            PartialStateChange.TargetWeightInput.Error(it.toMessage()).reduce(currentState)
+                        }
+                    }
+                4 ->
                     validateHeightUseCase(state.heightInput.toDoubleOrNull()).onValidationError {
                         updateState { currentState ->
                             PartialStateChange.HeightInput.Error(it.toMessage()).reduce(currentState)
                         }
                     }
-                4 ->
+                5 ->
                     validateGenderUseCase(state.gender).onValidationError {
                         sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
                     }
-                5 ->
+                6 ->
                     validateActivityLevelUseCase(state.activityLevel).onValidationError {
                         sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
                     }
-                6 ->
+                7 ->
                     validateDietUseCase(state.diet).onValidationError {
                         sendEvent(ViewEvent.ShowSnackbar(it.toMessage(), SnackbarType.ERROR))
                     }
@@ -280,7 +309,7 @@ internal class WelcomeViewModel(
             }
 
         if (validationResult is ValidationResult.Success) {
-            if (currentStep < 6) {
+            if (currentStep < 7) {
                 updateState { PartialStateChange.StepChange(currentStep + 1).reduce(it) }
             } else {
                 saveUserDataAndNavigate()
@@ -307,6 +336,7 @@ internal class WelcomeViewModel(
                 birthDate = birthDate,
                 height = state.heightInput.toDoubleOrNull() ?: 0.0,
                 weight = state.weightInput.toDoubleOrNull() ?: 0.0,
+                targetWeight = state.targetWeightInput.toDoubleOrNull() ?: 0.0,
                 physicalActivity = activityLevel,
                 gender = gender,
                 diet = diet

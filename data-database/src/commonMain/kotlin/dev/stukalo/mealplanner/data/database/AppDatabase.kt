@@ -19,6 +19,10 @@ import dev.stukalo.mealplanner.data.database.model.slot.MealSlotDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.statistics.WeightHistoryDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
 
+/**
+ * Main database for the application.
+ * Contains tables for users, daily norms, progress, and statistics.
+ */
 @Database(
     entities = [
         UserDatabaseModel::class,
@@ -27,7 +31,7 @@ import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
         MealSlotDatabaseModel::class,
         WeightHistoryDatabaseModel::class
     ],
-    version = 7
+    version = 8
 )
 @TypeConverters(DateConverter::class, TimeConverter::class, MealTypeConverter::class)
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -45,6 +49,7 @@ abstract class AppDatabase : RoomDatabase() {
 
 fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder
     .setDriver(BundledSQLiteDriver())
+    .fallbackToDestructiveMigration(true)
     .build()
 
 fun getUserDao(appDatabase: AppDatabase): UserDao = appDatabase.getUserDao()

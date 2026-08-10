@@ -9,12 +9,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 
 /**
  * Standard navigation transitions for the application.
  */
 object NavigationTransitions {
-    private const val DEFAULT_DURATION = 300
+    private const val DEFAULT_DURATION = AnimationConfiguration.Duration.NORMAL
 
     /**
      * Enter transition for tabs. Slides from right if [isRight] is true, else from left.

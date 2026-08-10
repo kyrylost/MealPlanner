@@ -1,18 +1,14 @@
 package dev.stukalo.mealplanner.presentation.feature.gateway.screen
 
-import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CheckUserExistsUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.ViewState
-import kotlinx.coroutines.flow.first
 
-internal class GatewayViewModel(
-    private val checkUserExistsUseCase: CheckUserExistsUseCase,
-    private val getColorPaletteUseCase: GetColorPaletteUseCase
-) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
+internal class GatewayViewModel(private val checkUserExistsUseCase: CheckUserExistsUseCase) :
+    BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
     init {
@@ -28,14 +24,17 @@ internal class GatewayViewModel(
     private suspend fun checkUserExistence() {
         updateState { PartialStateChange.Loading(true).reduce(it) }
 
-        getColorPaletteUseCase().first()
-
-        if (checkUserExistsUseCase()) {
-            sendEvent(ViewEvent.NavigateToMain)
-        } else {
+        try {
+            if (checkUserExistsUseCase()) {
+                sendEvent(ViewEvent.NavigateToMain)
+            } else {
+                sendEvent(ViewEvent.NavigateToWelcome)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
             sendEvent(ViewEvent.NavigateToWelcome)
+        } finally {
+            updateState { PartialStateChange.Loading(false).reduce(it) }
         }
-
-        updateState { PartialStateChange.Loading(false).reduce(it) }
     }
 }

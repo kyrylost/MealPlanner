@@ -6,7 +6,14 @@ import dev.stukalo.mealplanner.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+/**
+ * Implementation of [SettingsRepository].
+ * Manages user preferences such as theme palette and locale.
+ */
 class SettingsRepositoryImpl(private val dataSource: SettingsPreferencesDataSource) : SettingsRepository {
+    /**
+     * Gets the current color palette from data source.
+     */
     override fun getColorPalette(): Flow<ColorPaletteDomainModel> = dataSource
         .getColorPaletteName()
         .map { name ->
@@ -18,14 +25,21 @@ class SettingsRepositoryImpl(private val dataSource: SettingsPreferencesDataSour
             }
         }
 
+    /**
+     * Sets the color palette in data source.
+     */
     override suspend fun setColorPalette(palette: ColorPaletteDomainModel) {
         dataSource.setColorPaletteName(palette.name)
     }
 
-    override fun getLocale(): Flow<String> = dataSource
-        .getLocale()
-        .map { it ?: "en" } // Default locale
+    /**
+     * Gets the current locale from data source.
+     */
+    override fun getLocale(): Flow<String?> = dataSource.getLocale()
 
+    /**
+     * Sets the locale in data source.
+     */
     override suspend fun setLocale(locale: String) {
         dataSource.setLocale(locale)
     }

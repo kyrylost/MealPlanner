@@ -28,6 +28,7 @@ internal class UserMapper {
             birthDate = birthDate,
             height = height,
             weight = weight,
+            targetWeight = targetWeight,
             physicalActivity = physicalActivity.toDomain(),
             gender = gender.toDomain(),
             diet = diet.toDomain()
@@ -46,6 +47,7 @@ internal class UserMapper {
             name = name,
             birthDate = birthDate,
             height = height,
+            targetWeight = targetWeight,
             physicalActivity = physicalActivity.toData(),
             gender = gender.toData(),
             diet = diet.toData()

@@ -18,7 +18,7 @@ object IconButtonDefault : IconButtonDefault {
 
     @Composable
     override fun animation(): ButtonAnimation = object : ButtonAnimation {
-        override val duration = AnimationConfiguration.Duration.DEFAULT
+        override val duration = AnimationConfiguration.Duration.NORMAL
         override val easing = LinearEasing
     }
 

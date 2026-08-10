@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.feature.settings.screen.component
+package dev.stukalo.mealplanner.presentation.core.ui.widget.row
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,11 +18,12 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
  * A generic settings option component.
  *
  * @param title The title of the option.
+ * @param value An optional value to display on the right side.
  * @param onClick The callback for when the option is clicked.
  * @param modifier The modifier to apply to the component.
  */
 @Composable
-fun SettingsOption(title: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun SettingsOption(title: String, value: String? = null, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
         modifier =
         modifier
@@ -40,6 +41,14 @@ fun SettingsOption(title: String, onClick: () -> Unit, modifier: Modifier = Modi
             color = Theme.color.text.primary,
             modifier = Modifier.weight(1f)
         )
+
+        if (value != null) {
+            Text(
+                text = value,
+                style = Theme.typography.bold14,
+                color = Theme.color.brand.primary
+            )
+        }
     }
 }
 
@@ -48,7 +57,8 @@ fun SettingsOption(title: String, onClick: () -> Unit, modifier: Modifier = Modi
 private fun SettingsOptionPreview() {
     Theme {
         SettingsOption(
-            title = "Meal Schedule",
+            title = "Option Title",
+            value = "Value",
             onClick = {}
         )
     }

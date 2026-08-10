@@ -22,28 +22,40 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.welcome_back_button
 import dev.stukalo.mealplanner.core.localization.welcome_continue_button
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.text.TextButton
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The data entry section of the Welcome flow.
+ * Displays different sections based on the current step.
+ *
+ * @param modifier The modifier to apply to the component.
+ * @param state The current view state.
+ * @param onIntent Callback for processing user intents.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onIntent: (ViewIntent) -> Unit) {
     val focusManager = LocalFocusManager.current
+    val animationDuration = AnimationConfiguration.Duration.NORMAL
 
     Column(
         modifier =
@@ -56,17 +68,23 @@ internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onInte
                 if (targetState > initialState) {
                     (
                         slideInHorizontally(
-                            animationSpec = tween(300)
-                        ) { it } + fadeIn(animationSpec = tween(300))
+                            animationSpec = tween(animationDuration)
+                        ) { it } + fadeIn(animationSpec = tween(animationDuration))
                         ) togetherWith
-                        (slideOutHorizontally(animationSpec = tween(300)) { -it } + fadeOut(animationSpec = tween(300)))
+                        (
+                            slideOutHorizontally(animationSpec = tween(animationDuration)) { -it } +
+                                fadeOut(animationSpec = tween(animationDuration))
+                            )
                 } else {
                     (
                         slideInHorizontally(
-                            animationSpec = tween(300)
-                        ) { -it } + fadeIn(animationSpec = tween(300))
+                            animationSpec = tween(animationDuration)
+                        ) { -it } + fadeIn(animationSpec = tween(animationDuration))
                         ) togetherWith
-                        (slideOutHorizontally(animationSpec = tween(300)) { it } + fadeOut(animationSpec = tween(300)))
+                        (
+                            slideOutHorizontally(animationSpec = tween(animationDuration)) { it } +
+                                fadeOut(animationSpec = tween(animationDuration))
+                            )
                 }.using(SizeTransform(clip = true))
             },
             modifier = Modifier.weight(1f).fillMaxWidth()
@@ -81,10 +99,11 @@ internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onInte
                 when (step) {
                     1 -> NameAndDateSection(state, onIntent)
                     2 -> WeightSection(state, onIntent)
-                    3 -> HeightSection(state, onIntent)
-                    4 -> GenderSection(state, onIntent)
-                    5 -> ActivityLevelSection(state, onIntent)
-                    6 -> DietSection(state, onIntent)
+                    3 -> TargetWeightSection(state, onIntent)
+                    4 -> HeightSection(state, onIntent)
+                    5 -> GenderSection(state, onIntent)
+                    6 -> ActivityLevelSection(state, onIntent)
+                    7 -> DietSection(state, onIntent)
                 }
             }
         }
@@ -153,6 +172,19 @@ internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onInte
             ) {
                 DatePicker(state = datePickerState)
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun WelcomeDataPreview() {
+    Theme {
+        Surface(color = Theme.color.background.primary) {
+            WelcomeData(
+                state = ViewState(currentStep = 1),
+                onIntent = {}
+            )
         }
     }
 }

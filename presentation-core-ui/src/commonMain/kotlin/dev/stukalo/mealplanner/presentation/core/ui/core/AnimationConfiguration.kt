@@ -6,7 +6,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration.Duration.DEFAULT
 
 /**
  * Configuration object for animation settings.
@@ -25,9 +24,19 @@ object AnimationConfiguration {
         const val SHORT = 150
 
         /**
-         * The default animation duration in milliseconds.
+         * The normal animation duration in milliseconds.
          */
-        const val DEFAULT = 500
+        const val NORMAL = 300
+
+        /**
+         * The long animation duration in milliseconds.
+         */
+        const val LONG = 500
+
+        /**
+         * The extra long animation duration in milliseconds.
+         */
+        const val EXTRA_LONG = 1000
     }
 
     /**
@@ -41,10 +50,10 @@ object AnimationConfiguration {
          */
         fun <T> default(): AnimatedContentTransitionScope<T>.() -> ContentTransform = {
             fadeIn(
-                animationSpec = tween(DEFAULT)
+                animationSpec = tween(Duration.NORMAL)
             ) togetherWith
                 fadeOut(
-                    animationSpec = tween(DEFAULT)
+                    animationSpec = tween(Duration.NORMAL)
                 )
         }
     }

@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 
 /**
  * A generic segmented selector component with a sliding animation.
@@ -58,7 +59,7 @@ fun <T> SegmentedSelector(
 
         val indicatorOffset by animateDpAsState(
             targetValue = itemWidth * selectedIndex,
-            animationSpec = tween(durationMillis = 300)
+            animationSpec = tween(durationMillis = AnimationConfiguration.Duration.NORMAL)
         )
 
         // Sliding Background Indicator
@@ -76,7 +77,7 @@ fun <T> SegmentedSelector(
                 val isSelected = item == selectedItem
                 val textColor by animateColorAsState(
                     targetValue = if (isSelected) Theme.color.text.onPrimary else Theme.color.text.primary,
-                    animationSpec = tween(durationMillis = 300)
+                    animationSpec = tween(durationMillis = AnimationConfiguration.Duration.NORMAL)
                 )
 
                 Box(

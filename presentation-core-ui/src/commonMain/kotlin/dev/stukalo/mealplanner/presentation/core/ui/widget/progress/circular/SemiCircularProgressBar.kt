@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 
 @Composable
 fun SemiCircularProgressBar(
@@ -59,7 +60,7 @@ fun SemiCircularProgressBar(
 ) {
     val animatedProgress by animateFloatAsState(
         targetValue = if (progress.isNaN()) 0f else progress,
-        animationSpec = tween(durationMillis = 1000)
+        animationSpec = tween(durationMillis = AnimationConfiguration.Duration.EXTRA_LONG)
     )
 
     Column(modifier = modifier) {

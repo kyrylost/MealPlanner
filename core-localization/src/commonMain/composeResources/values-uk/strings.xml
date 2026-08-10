@@ -76,6 +76,27 @@
     <string name="common_product_search">Пошук продуктів</string>
     <string name="common_recipe_search">Пошук рецептів</string>
     <string name="common_search">Пошук</string>
+    <string name="common_mon">Пн</string>
+    <string name="common_tue">Вт</string>
+    <string name="common_wed">Ср</string>
+    <string name="common_thu">Чт</string>
+    <string name="common_fri">Пт</string>
+    <string name="common_sat">Сб</string>
+    <string name="common_sun">Нд</string>
+    <string name="common_jan">Січ</string>
+    <string name="common_feb">Лют</string>
+    <string name="common_mar">Бер</string>
+    <string name="common_apr">Квіт</string>
+    <string name="common_may">Трав</string>
+    <string name="common_jun">Черв</string>
+    <string name="common_jul">Лип</string>
+    <string name="common_aug">Серп</string>
+    <string name="common_sep">Вер</string>
+    <string name="common_oct">Жовт</string>
+    <string name="common_nov">Лист</string>
+    <string name="common_dec">Груд</string>
+    <string name="common_format_percentage">%1$d%%</string>
+    <string name="common_format_date_short">%1$d/%2$d</string>
     <string name="common_no_results">Нічого не знайдено</string>
     <string name="common_no_results_desc">Спробуйте змінити пошуковий запит, щоб знайти те, що ви шукаєте</string>
     <string name="product_search_initial_title">Знайдіть ваші улюблені продукти</string>
@@ -106,7 +127,13 @@
 
     <string name="settings_meal_config">Конфігурація харчування</string>
     <string name="settings_meal_schedule">Розклад харчування</string>
+    <string name="settings_my_profile">Мій профіль</string>
+    <string name="settings_language">Мова</string>
     <string name="settings_theme_choice">Вибір теми</string>
+    <string name="settings_target_weight">Цільова вага</string>
+    <string name="settings_save_changes">Зберегти зміни</string>
+    <string name="settings_language_en">Англійська</string>
+    <string name="settings_language_uk">Українська</string>
     <string name="settings_theme_orange">Помаранчева</string>
     <string name="settings_theme_green">Зелена</string>
 

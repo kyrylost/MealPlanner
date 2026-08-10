@@ -71,6 +71,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
+            implementation(projects.presentationCorePlatform)
             implementation(projects.presentationCoreUi)
             implementation(projects.coreLocalization)
             implementation(projects.domainModel)

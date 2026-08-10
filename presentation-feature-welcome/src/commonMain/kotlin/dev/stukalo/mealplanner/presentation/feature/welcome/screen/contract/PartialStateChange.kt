@@ -96,6 +96,25 @@ internal sealed interface PartialStateChange {
         data class Error(val errorMessage: StringResource?) : WeightInput
     }
 
+    sealed interface TargetWeightInput : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = when (this) {
+            is ValueChange ->
+                oldState.copy(
+                    targetWeightInput = value,
+                    targetWeightErrorMessage = null
+                )
+
+            is Error ->
+                oldState.copy(
+                    targetWeightErrorMessage = errorMessage
+                )
+        }
+
+        data class ValueChange(val value: String) : TargetWeightInput
+
+        data class Error(val errorMessage: StringResource?) : TargetWeightInput
+    }
+
     data class GenderChange(val gender: GenderDomainModel) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(gender = gender)
     }
@@ -124,13 +143,15 @@ internal sealed interface PartialStateChange {
         val nameErrorMessage: StringResource? = null,
         val dateErrorMessage: StringResource? = null,
         val heightErrorMessage: StringResource? = null,
-        val weightErrorMessage: StringResource? = null
+        val weightErrorMessage: StringResource? = null,
+        val targetWeightErrorMessage: StringResource? = null
     ) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             nameErrorMessage = nameErrorMessage,
             dateErrorMessage = dateErrorMessage,
             heightErrorMessage = heightErrorMessage,
-            weightErrorMessage = weightErrorMessage
+            weightErrorMessage = weightErrorMessage,
+            targetWeightErrorMessage = targetWeightErrorMessage
         )
     }
 }

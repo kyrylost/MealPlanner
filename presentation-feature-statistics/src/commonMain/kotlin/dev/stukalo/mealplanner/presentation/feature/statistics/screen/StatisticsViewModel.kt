@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
  * @property calculateStreakUseCase UseCase to calculate the current success streak.
  * @property saveWeightUseCase UseCase to save a new weight entry.
  * @property getUserUseCase UseCase to fetch user information (e.g., target weight).
+ * @property clock Clock provider for today's date calculation.
  */
 class StatisticsViewModel(
     private val getMealScheduleUseCase: GetMealScheduleUseCase,
@@ -41,7 +42,8 @@ class StatisticsViewModel(
     private val getWeightHistoryUseCase: GetWeightHistoryUseCase,
     private val calculateStreakUseCase: CalculateStreakUseCase,
     private val saveWeightUseCase: SaveWeightUseCase,
-    private val getUserUseCase: GetUserUseCase
+    private val getUserUseCase: GetUserUseCase,
+    private val clock: kotlin.time.Clock
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
@@ -107,7 +109,7 @@ class StatisticsViewModel(
     private fun loadData() {
         viewModelScope.launch {
             getUserUseCase().collect { user ->
-                updateState { it.copy(targetWeight = user?.weight) }
+                updateState { it.copy(targetWeight = user?.targetWeight) }
             }
         }
         viewModelScope.launch {

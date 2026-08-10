@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
 
 @Composable
 fun LinearScaleProgressBar(
@@ -50,7 +51,7 @@ fun LinearScaleProgressBar(
 ) {
     val animatedProgress by animateFloatAsState(
         targetValue = if (progress.isNaN()) 0f else progress.coerceIn(0f, 1f),
-        animationSpec = tween(durationMillis = 1000),
+        animationSpec = tween(durationMillis = AnimationConfiguration.Duration.EXTRA_LONG),
         label = "progressAnimation"
     )
 
