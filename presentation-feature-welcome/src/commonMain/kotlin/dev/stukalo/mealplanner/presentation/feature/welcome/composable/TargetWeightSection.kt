@@ -16,6 +16,7 @@ import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.settings_target_weight
 import dev.stukalo.mealplanner.core.localization.welcome_weight_unit_kg
+import dev.stukalo.mealplanner.domain.model.user.UserConstants
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
@@ -40,7 +41,7 @@ internal fun TargetWeightSection(state: ViewState, onIntent: (ViewIntent) -> Uni
             label = stringResource(Res.string.settings_target_weight),
             value = weightValue,
             onValueChange = { onIntent(ViewIntent.OnChangeTargetWeightInputIntent(it.toString())) },
-            range = 30f..300f,
+            range = UserConstants.MIN_WEIGHT.toFloat()..UserConstants.MAX_WEIGHT.toFloat(),
             unit = stringResource(Res.string.welcome_weight_unit_kg),
             onEditClick = { showEditDialog = true },
             modifier = Modifier.fillMaxWidth().padding(top = Theme.spacing.space24)

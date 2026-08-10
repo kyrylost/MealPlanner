@@ -9,10 +9,8 @@
     <string name="welcome_gender_placeholder">Gender</string>
     <string name="welcome_height_label">Height</string>
     <string name="welcome_height_unit_cm">Cm</string>
-    <string name="welcome_height_default" translatable="false">170</string>
     <string name="welcome_weight_label">Weight</string>
     <string name="welcome_weight_unit_kg">Kg</string>
-    <string name="welcome_weight_default" translatable="false">70</string>
     <string name="welcome_continue_button">Continue</string>
     <string name="welcome_back_button">Back</string>
     <string name="welcome_gender_male">Male</string>
@@ -46,6 +44,7 @@
     <string name="validation_error_name_too_short">Name is too short</string>
     <string name="validation_error_date_empty">Birth date cannot be empty</string>
     <string name="validation_error_date_invalid">Invalid date format</string>
+    <string name="validation_error_date_future">Birth date cannot be in the future</string>
     <string name="validation_error_height_empty">Height cannot be empty</string>
     <string name="validation_error_height_invalid">Invalid height</string>
     <string name="validation_error_weight_empty">Weight cannot be empty</string>

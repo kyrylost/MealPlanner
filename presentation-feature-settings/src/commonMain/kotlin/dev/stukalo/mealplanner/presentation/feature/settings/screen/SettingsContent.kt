@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -23,9 +24,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_settings
+import dev.stukalo.mealplanner.core.localization.common_value_placeholder
 import dev.stukalo.mealplanner.core.localization.settings_language
 import dev.stukalo.mealplanner.core.localization.settings_language_en
 import dev.stukalo.mealplanner.core.localization.settings_language_uk
@@ -56,9 +60,11 @@ import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
+import dev.stukalo.mealplanner.domain.model.user.UserConstants
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
 import dev.stukalo.mealplanner.presentation.core.ui.widget.row.SettingsOption
@@ -228,7 +234,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
         }
     }
 
-    if (state.editingField != null) {
+    if (state.editingField != null && !state.isManualInputVisible) {
         ModalBottomSheet(
             onDismissRequest = { onIntent(ViewIntent.OnDismissEdit) },
             sheetState = sheetState,
@@ -246,20 +252,24 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                         RulerPicker(
                             label = stringResource(Res.string.welcome_weight_label),
                             value =
-                            state.tempWeightInput.toFloatOrNull() ?: state.user?.weight?.toFloat() ?: DEFAULT_WEIGHT,
+                            state.tempWeightInput.toFloatOrNull() ?: state.user?.weight?.toFloat()
+                                ?: UserConstants.DEFAULT_WEIGHT.toFloat(),
                             onValueChange = { onIntent(ViewIntent.OnWeightChange(it.toString())) },
-                            range = MIN_WEIGHT..MAX_WEIGHT,
-                            unit = stringResource(Res.string.welcome_weight_unit_kg)
+                            range = UserConstants.MIN_WEIGHT.toFloat()..UserConstants.MAX_WEIGHT.toFloat(),
+                            unit = stringResource(Res.string.welcome_weight_unit_kg),
+                            onEditClick = { onIntent(ViewIntent.OnManualInputClick) }
                         )
                     }
                     EditableField.Height -> {
                         RulerPicker(
                             label = stringResource(Res.string.welcome_height_label),
                             value =
-                            state.tempHeightInput.toFloatOrNull() ?: state.user?.height?.toFloat() ?: DEFAULT_HEIGHT,
+                            state.tempHeightInput.toFloatOrNull() ?: state.user?.height?.toFloat()
+                                ?: UserConstants.DEFAULT_HEIGHT.toFloat(),
                             onValueChange = { onIntent(ViewIntent.OnHeightChange(it.toString())) },
-                            range = MIN_HEIGHT..MAX_HEIGHT,
-                            unit = stringResource(Res.string.welcome_height_unit_cm)
+                            range = UserConstants.MIN_HEIGHT.toFloat()..UserConstants.MAX_HEIGHT.toFloat(),
+                            unit = stringResource(Res.string.welcome_height_unit_cm),
+                            onEditClick = { onIntent(ViewIntent.OnManualInputClick) }
                         )
                     }
                     EditableField.TargetWeight -> {
@@ -267,10 +277,11 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                             label = stringResource(Res.string.settings_target_weight),
                             value =
                             state.tempTargetWeightInput.toFloatOrNull() ?: state.user?.targetWeight?.toFloat()
-                                ?: DEFAULT_WEIGHT,
+                                ?: UserConstants.DEFAULT_WEIGHT.toFloat(),
                             onValueChange = { onIntent(ViewIntent.OnTargetWeightChange(it.toString())) },
-                            range = MIN_WEIGHT..MAX_WEIGHT,
-                            unit = stringResource(Res.string.welcome_weight_unit_kg)
+                            range = UserConstants.MIN_WEIGHT.toFloat()..UserConstants.MAX_WEIGHT.toFloat(),
+                            unit = stringResource(Res.string.welcome_weight_unit_kg),
+                            onEditClick = { onIntent(ViewIntent.OnManualInputClick) }
                         )
                     }
                     EditableField.ActivityLevel -> {
@@ -306,6 +317,44 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
         }
     }
 
+    if (state.editingField != null && state.isManualInputVisible) {
+        val titleRes = when (state.editingField) {
+            EditableField.Weight -> Res.string.welcome_weight_label
+            EditableField.Height -> Res.string.welcome_height_label
+            EditableField.TargetWeight -> Res.string.settings_target_weight
+            else -> null
+        }
+
+        val initialValue = when (state.editingField) {
+            EditableField.Weight -> state.user?.weight?.toString() ?: ""
+            EditableField.Height -> state.user?.height?.toInt()?.toString() ?: ""
+            EditableField.TargetWeight -> state.user?.targetWeight?.toString() ?: ""
+            else -> ""
+        }
+
+        if (titleRes != null) {
+            ValueEditDialog(
+                initialValue = initialValue,
+                onDismissRequest = { onIntent(ViewIntent.OnDismissEdit) },
+                onConfirm = { newValue ->
+                    when (state.editingField) {
+                        EditableField.Weight -> onIntent(ViewIntent.OnWeightChange(newValue))
+                        EditableField.Height -> onIntent(ViewIntent.OnHeightChange(newValue))
+                        EditableField.TargetWeight -> onIntent(ViewIntent.OnTargetWeightChange(newValue))
+                        else -> {}
+                    }
+                    onIntent(ViewIntent.OnSaveProfileClick)
+                },
+                title = stringResource(titleRes),
+                placeholder = stringResource(Res.string.common_value_placeholder),
+                confirmLabel = stringResource(Res.string.settings_save_changes),
+                dismissLabel = stringResource(Res.string.common_cancel),
+                message = state.errorMessage?.let { stringResource(it) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+            )
+        }
+    }
+
     if (showLanguageSheet) {
         ModalBottomSheet(
             onDismissRequest = { showLanguageSheet = false },
@@ -338,13 +387,6 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
         }
     }
 }
-
-private const val MIN_WEIGHT = 30f
-private const val MAX_WEIGHT = 300f
-private const val DEFAULT_WEIGHT = 70f
-private const val MIN_HEIGHT = 100f
-private const val MAX_HEIGHT = 250f
-private const val DEFAULT_HEIGHT = 170f
 
 @Preview
 @Composable

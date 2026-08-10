@@ -16,6 +16,7 @@ import dev.stukalo.mealplanner.core.localization.common_cancel
 import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.welcome_height_label
 import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
+import dev.stukalo.mealplanner.domain.model.user.UserConstants
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
@@ -33,7 +34,7 @@ internal fun HeightSection(state: ViewState, onIntent: (ViewIntent) -> Unit, mod
             label = stringResource(Res.string.welcome_height_label),
             value = heightValue,
             onValueChange = { onIntent(ViewIntent.OnChangeHeightInputIntent(it.toString())) },
-            range = 50f..250f,
+            range = UserConstants.MIN_HEIGHT.toFloat()..UserConstants.MAX_HEIGHT.toFloat(),
             unit = stringResource(Res.string.welcome_height_unit_cm),
             onEditClick = { showEditDialog = true },
             modifier = Modifier.fillMaxWidth().padding(top = Theme.spacing.space24)

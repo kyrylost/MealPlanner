@@ -12,14 +12,10 @@ sealed class ValidationException : AppException() {
         class Empty : Name()
     }
 
-    sealed class Email : ValidationException() {
-        class InvalidFormat : Email()
-
-        class Empty : Email()
-    }
-
     sealed class Date : ValidationException() {
         class Invalid : Date()
+
+        class Future : Date()
 
         class Empty : Date()
     }

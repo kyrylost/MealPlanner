@@ -42,6 +42,7 @@
     <string name="validation_error_name_too_short">Ім\'я занадто коротке</string>
     <string name="validation_error_date_empty">Дата народження не може бути порожньою</string>
     <string name="validation_error_date_invalid">Неправильний формат дати</string>
+    <string name="validation_error_date_future">Дата народження не може бути у майбутньому</string>
     <string name="validation_error_height_empty">Зріст не може бути порожнім</string>
     <string name="validation_error_height_invalid">Неправильний зріст</string>
     <string name="validation_error_weight_empty">Вага не може бути порожньою</string>

@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
+import org.jetbrains.compose.resources.StringResource
 
 /**
  * The view state for the Settings screen.
@@ -15,9 +16,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewSta
  * @property currentColorPalette The currently selected color palette.
  * @property currentThemeMode The currently selected theme mode (Auto, Light, Dark).
  * @property editingField The field currently being edited in a bottom sheet, or null.
+ * @property isManualInputVisible Whether the manual input dialog is shown.
  * @property tempWeightInput Temporary input for weight editing.
  * @property tempHeightInput Temporary input for height editing.
  * @property tempTargetWeightInput Temporary input for target weight editing.
+ * @property errorMessage Localized error message to display in the UI.
  */
 data class ViewState(
     val user: UserDomainModel? = null,
@@ -27,9 +30,11 @@ data class ViewState(
     val currentColorPalette: ColorPaletteDomainModel = ColorPaletteDomainModel.ORANGE,
     val currentThemeMode: ThemeModeDomainModel = ThemeModeDomainModel.AUTO,
     val editingField: EditableField? = null,
+    val isManualInputVisible: Boolean = false,
     val tempWeightInput: String = "",
     val tempHeightInput: String = "",
-    val tempTargetWeightInput: String = ""
+    val tempTargetWeightInput: String = "",
+    val errorMessage: StringResource? = null
 ) : MviViewState {
     companion object {
         /** Language code for English. */

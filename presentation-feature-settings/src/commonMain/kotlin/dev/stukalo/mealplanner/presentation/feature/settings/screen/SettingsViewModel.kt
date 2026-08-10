@@ -12,8 +12,11 @@ import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveUserDataUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.platform.getSystemLocale
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
@@ -35,7 +38,9 @@ class SettingsViewModel(
     private val saveUserDataUseCase: SaveUserDataUseCase,
     getUserUseCase: GetUserUseCase,
     private val calculateDailyNormUseCase: CalculateDailyNormUseCase,
-    private val saveDailyNormUseCase: SaveDailyNormUseCase
+    private val saveDailyNormUseCase: SaveDailyNormUseCase,
+    private val validateWeightUseCase: ValidateWeightUseCase,
+    private val validateHeightUseCase: ValidateHeightUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
     /**
@@ -99,19 +104,23 @@ class SettingsViewModel(
             }
 
             ViewIntent.OnDismissEdit -> {
-                updateState { it.copy(editingField = null) }
+                updateState { it.copy(editingField = null, isManualInputVisible = false, errorMessage = null) }
+            }
+
+            ViewIntent.OnManualInputClick -> {
+                updateState { it.copy(isManualInputVisible = true, errorMessage = null) }
             }
 
             is ViewIntent.OnWeightChange -> {
-                updateState { it.copy(tempWeightInput = intent.weight) }
+                updateState { it.copy(tempWeightInput = intent.weight, errorMessage = null) }
             }
 
             is ViewIntent.OnHeightChange -> {
-                updateState { it.copy(tempHeightInput = intent.height) }
+                updateState { it.copy(tempHeightInput = intent.height, errorMessage = null) }
             }
 
             is ViewIntent.OnTargetWeightChange -> {
-                updateState { it.copy(tempTargetWeightInput = intent.targetWeight) }
+                updateState { it.copy(tempTargetWeightInput = intent.targetWeight, errorMessage = null) }
             }
 
             is ViewIntent.OnActivityLevelChange -> {
@@ -131,30 +140,44 @@ class SettingsViewModel(
                 var updatedUser = user
 
                 if (state.tempWeightInput.isNotEmpty()) {
-                    state.tempWeightInput.toDoubleOrNull()?.let {
-                        updatedUser = updatedUser.copy(weight = it)
+                    val weight = state.tempWeightInput.toDoubleOrNull()
+                    val validationResult = validateWeightUseCase(weight)
+                    if (validationResult is dev.stukalo.mealplanner.common.core.validation.ValidationResult.Error) {
+                        updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                        return
                     }
+                    updatedUser = updatedUser.copy(weight = weight!!)
                 }
 
                 if (state.tempHeightInput.isNotEmpty()) {
-                    state.tempHeightInput.toDoubleOrNull()?.let {
-                        updatedUser = updatedUser.copy(height = it)
+                    val height = state.tempHeightInput.toDoubleOrNull()
+                    val validationResult = validateHeightUseCase(height)
+                    if (validationResult is dev.stukalo.mealplanner.common.core.validation.ValidationResult.Error) {
+                        updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                        return
                     }
+                    updatedUser = updatedUser.copy(height = height!!)
                 }
 
                 if (state.tempTargetWeightInput.isNotEmpty()) {
-                    state.tempTargetWeightInput.toDoubleOrNull()?.let {
-                        updatedUser = updatedUser.copy(targetWeight = it)
+                    val targetWeight = state.tempTargetWeightInput.toDoubleOrNull()
+                    val validationResult = validateWeightUseCase(targetWeight)
+                    if (validationResult is dev.stukalo.mealplanner.common.core.validation.ValidationResult.Error) {
+                        updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                        return
                     }
+                    updatedUser = updatedUser.copy(targetWeight = targetWeight!!)
                 }
 
                 saveUser(updatedUser)
                 updateState {
                     it.copy(
                         editingField = null,
+                        isManualInputVisible = false,
                         tempWeightInput = "",
                         tempHeightInput = "",
-                        tempTargetWeightInput = ""
+                        tempTargetWeightInput = "",
+                        errorMessage = null
                     )
                 }
             }

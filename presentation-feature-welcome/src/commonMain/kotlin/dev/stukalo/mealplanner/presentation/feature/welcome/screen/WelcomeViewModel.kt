@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen
 
-import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.common.core.date.formatDate
 import dev.stukalo.mealplanner.common.core.date.parseDate
 import dev.stukalo.mealplanner.common.core.exception.AppException
@@ -8,8 +7,7 @@ import dev.stukalo.mealplanner.common.core.validation.ValidationResult
 import dev.stukalo.mealplanner.common.core.validation.onValidationError
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.error_unknown
-import dev.stukalo.mealplanner.core.localization.welcome_height_default
-import dev.stukalo.mealplanner.core.localization.welcome_weight_default
+import dev.stukalo.mealplanner.domain.model.user.UserConstants
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
@@ -22,18 +20,16 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateNameUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarType
-import dev.stukalo.mealplanner.presentation.feature.welcome.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.compose.resources.getString
 import kotlin.time.Instant
 
 /**
@@ -55,16 +51,14 @@ internal class WelcomeViewModel(
     override val initialState = ViewState()
 
     init {
-        viewModelScope.launch {
-            val weight = getString(Res.string.welcome_weight_default)
-            val height = getString(Res.string.welcome_height_default)
-            updateState { currentState ->
-                currentState.copy(
-                    weightInput = weight,
-                    heightInput = height,
-                    targetWeightInput = weight
-                )
-            }
+        val weight = UserConstants.DEFAULT_WEIGHT.toInt().toString()
+        val height = UserConstants.DEFAULT_HEIGHT.toInt().toString()
+        updateState { currentState ->
+            currentState.copy(
+                weightInput = weight,
+                heightInput = height,
+                targetWeightInput = weight
+            )
         }
     }
 

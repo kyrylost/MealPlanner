@@ -45,6 +45,11 @@ sealed interface ViewIntent : MviIntent {
     data object OnDismissEdit : ViewIntent
 
     /**
+     * Triggered when the user clicks on the manual input button.
+     */
+    data object OnManualInputClick : ViewIntent
+
+    /**
      * Triggered when the weight input changes.
      * @property weight The new weight value.
      */
