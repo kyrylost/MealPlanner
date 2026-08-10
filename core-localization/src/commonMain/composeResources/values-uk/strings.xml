@@ -129,11 +129,13 @@
     <string name="settings_meal_schedule">Розклад харчування</string>
     <string name="settings_my_profile">Мій профіль</string>
     <string name="settings_language">Мова</string>
-    <string name="settings_theme_choice">Вибір теми</string>
+    <string name="settings_theme_color">Колір теми</string>
     <string name="settings_target_weight">Цільова вага</string>
     <string name="settings_save_changes">Зберегти зміни</string>
-    <string name="settings_language_en">Англійська</string>
-    <string name="settings_language_uk">Українська</string>
+    <string name="settings_theme_mode">Режим теми</string>
+    <string name="settings_theme_mode_auto">Авто</string>
+    <string name="settings_theme_mode_light">Світла</string>
+    <string name="settings_theme_mode_dark">Темна</string>
     <string name="settings_theme_orange">Помаранчева</string>
     <string name="settings_theme_green">Зелена</string>
 

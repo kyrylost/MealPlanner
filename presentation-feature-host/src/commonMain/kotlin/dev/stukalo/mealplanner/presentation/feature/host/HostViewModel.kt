@@ -3,6 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.host
 import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
 import dev.stukalo.mealplanner.presentation.core.platform.getSystemLocale
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.host.contract.ViewEvent
@@ -15,14 +16,22 @@ import kotlinx.coroutines.flow.onEach
  * ViewModel for the Host screen.
  * Manages global application state like theme and locale.
  */
-class HostViewModel(getColorPaletteUseCase: GetColorPaletteUseCase, getLocaleUseCase: GetLocaleUseCase) :
-    BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
+class HostViewModel(
+    getColorPaletteUseCase: GetColorPaletteUseCase,
+    getThemeModeUseCase: GetThemeModeUseCase,
+    getLocaleUseCase: GetLocaleUseCase
+) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState(locale = getSystemLocale())
 
     init {
         getColorPaletteUseCase()
             .onEach { palette ->
-                updateState { it.copy(themePalette = palette) }
+                updateState { it.copy(colorPalette = palette) }
+            }.launchIn(viewModelScope)
+
+        getThemeModeUseCase()
+            .onEach { mode ->
+                updateState { it.copy(themeMode = mode) }
             }.launchIn(viewModelScope)
 
         getLocaleUseCase()

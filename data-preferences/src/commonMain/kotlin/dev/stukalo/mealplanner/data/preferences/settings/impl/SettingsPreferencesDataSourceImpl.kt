@@ -12,6 +12,7 @@ class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Prefere
     SettingsPreferencesDataSource {
     private object PreferencesKeys {
         val COLOR_PALETTE = stringPreferencesKey("color_palette")
+        val THEME_MODE = stringPreferencesKey("theme_mode")
         val LOCALE = stringPreferencesKey("locale")
     }
 
@@ -21,6 +22,15 @@ class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Prefere
     override suspend fun setColorPaletteName(name: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.COLOR_PALETTE] = name
+        }
+    }
+
+    override fun getThemeModeName(): Flow<String?> = dataStore.data
+        .map { preferences -> preferences[PreferencesKeys.THEME_MODE] }
+
+    override suspend fun setThemeModeName(name: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.THEME_MODE] = name
         }
     }
 

@@ -137,13 +137,17 @@
     <string name="settings_meal_schedule">Meal Schedule</string>
     <string name="settings_my_profile">My Profile</string>
     <string name="settings_language">Language</string>
-    <string name="settings_theme_choice">Theme Choice</string>
+    <string name="settings_theme_color">Theme Color</string>
     <string name="settings_target_weight">Target Weight</string>
     <string name="settings_save_changes">Save Changes</string>
-    <string name="settings_language_en">English</string>
-    <string name="settings_language_uk">Українська</string>
+    <string name="settings_theme_mode">Theme Mode</string>
+    <string name="settings_theme_mode_auto">Auto</string>
+    <string name="settings_theme_mode_light">Light</string>
+    <string name="settings_theme_mode_dark">Dark</string>
     <string name="settings_theme_orange">Orange</string>
     <string name="settings_theme_green">Green</string>
+    <string name="settings_language_en" translatable="false">English</string>
+    <string name="settings_language_uk" translatable="false">Українська</string>
 
     <string name="meal_schedule_auto_calculate">Auto-Calculate</string>
     <string name="meal_schedule_total_percentage">Total Percentage: %1$d%%</string>

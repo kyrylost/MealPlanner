@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.data.repository.impl.setting
 
 import dev.stukalo.mealplanner.data.preferences.settings.SettingsPreferencesDataSource
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
+import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -30,6 +31,21 @@ class SettingsRepositoryImpl(private val dataSource: SettingsPreferencesDataSour
      */
     override suspend fun setColorPalette(palette: ColorPaletteDomainModel) {
         dataSource.setColorPaletteName(palette.name)
+    }
+
+    override fun getThemeMode(): Flow<ThemeModeDomainModel> = dataSource
+        .getThemeModeName()
+        .map { name ->
+            if (name == null) return@map ThemeModeDomainModel.AUTO
+            try {
+                ThemeModeDomainModel.valueOf(name)
+            } catch (_: Exception) {
+                ThemeModeDomainModel.AUTO
+            }
+        }
+
+    override suspend fun setThemeMode(mode: ThemeModeDomainModel) {
+        dataSource.setThemeModeName(mode.name)
     }
 
     /**

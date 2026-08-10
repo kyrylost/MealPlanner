@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.host
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
+import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.core.platform.setLocale
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -38,15 +40,22 @@ fun HostScreen() {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val isGateway = navBackStackEntry?.destination?.hasRoute<NavigationDirection.Gateway>() == true
 
-            val themeColorPalette =
-                when (state.themePalette) {
+            val palette =
+                when (state.colorPalette) {
                     ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
                     else -> ThemeColorPalette.ORANGE
                 }
 
+            val darkTheme = when (state.themeMode) {
+                ThemeModeDomainModel.AUTO -> isSystemInDarkTheme()
+                ThemeModeDomainModel.LIGHT -> false
+                ThemeModeDomainModel.DARK -> true
+            }
+
             key(state.locale) {
                 Theme(
-                    palette = themeColorPalette,
+                    darkTheme = darkTheme,
+                    palette = palette,
                     animatePaletteChange = !isGateway
                 ) {
                     Surface(

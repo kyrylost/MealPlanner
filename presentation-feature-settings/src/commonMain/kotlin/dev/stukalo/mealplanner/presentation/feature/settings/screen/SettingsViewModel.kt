@@ -2,9 +2,12 @@ package dev.stukalo.mealplanner.presentation.feature.settings.screen
 
 import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
+import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
-import dev.stukalo.mealplanner.domain.usecase.setting.SetThemePaletteUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
@@ -23,14 +26,21 @@ import kotlinx.coroutines.launch
  * Handles theme changes, locale updates, and user profile modifications.
  */
 class SettingsViewModel(
-    private val setThemePaletteUseCase: SetThemePaletteUseCase,
-    getLocaleUseCase: GetLocaleUseCase,
+    private val setColorPaletteUseCase: SetColorPaletteUseCase,
+    getColorPaletteUseCase: GetColorPaletteUseCase,
+    private val setThemeModeUseCase: SetThemeModeUseCase,
+    getThemeModeUseCase: GetThemeModeUseCase,
     private val setLocaleUseCase: SetLocaleUseCase,
-    getUserUseCase: GetUserUseCase,
+    getLocaleUseCase: GetLocaleUseCase,
     private val saveUserDataUseCase: SaveUserDataUseCase,
+    getUserUseCase: GetUserUseCase,
     private val calculateDailyNormUseCase: CalculateDailyNormUseCase,
     private val saveDailyNormUseCase: SaveDailyNormUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
+
+    /**
+     * The initial state of the Settings screen.
+     */
     override val initialState = ViewState()
 
     init {
@@ -43,13 +53,34 @@ class SettingsViewModel(
             .onEach { locale ->
                 updateState { it.copy(currentLanguage = locale ?: getSystemLocale()) }
             }.launchIn(viewModelScope)
+
+        getColorPaletteUseCase()
+            .onEach { palette ->
+                updateState { it.copy(currentColorPalette = palette) }
+            }.launchIn(viewModelScope)
+
+        getThemeModeUseCase()
+            .onEach { mode ->
+                updateState { it.copy(currentThemeMode = mode) }
+            }.launchIn(viewModelScope)
     }
 
+    /**
+     * Processes user intents and updates the state or sends single events.
+     *
+     * @param intent The [ViewIntent] to process.
+     */
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
-            is ViewIntent.OnThemeClick -> {
+            is ViewIntent.OnColorPaletteClick -> {
                 viewModelScope.launch {
-                    setThemePaletteUseCase(intent.palette)
+                    setColorPaletteUseCase(intent.palette)
+                }
+            }
+
+            is ViewIntent.OnThemeModeClick -> {
+                viewModelScope.launch {
+                    setThemeModeUseCase(intent.mode)
                 }
             }
 

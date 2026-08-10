@@ -7,6 +7,10 @@ interface SettingsPreferencesDataSource {
 
     suspend fun setColorPaletteName(name: String)
 
+    fun getThemeModeName(): Flow<String?>
+
+    suspend fun setThemeModeName(name: String)
+
     fun getLocale(): Flow<String?>
 
     suspend fun setLocale(locale: String)

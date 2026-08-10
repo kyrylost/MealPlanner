@@ -32,7 +32,11 @@ import dev.stukalo.mealplanner.core.localization.settings_language_uk
 import dev.stukalo.mealplanner.core.localization.settings_my_profile
 import dev.stukalo.mealplanner.core.localization.settings_save_changes
 import dev.stukalo.mealplanner.core.localization.settings_target_weight
-import dev.stukalo.mealplanner.core.localization.settings_theme_choice
+import dev.stukalo.mealplanner.core.localization.settings_theme_color
+import dev.stukalo.mealplanner.core.localization.settings_theme_mode
+import dev.stukalo.mealplanner.core.localization.settings_theme_mode_auto
+import dev.stukalo.mealplanner.core.localization.settings_theme_mode_dark
+import dev.stukalo.mealplanner.core.localization.settings_theme_mode_light
 import dev.stukalo.mealplanner.core.localization.welcome_activity_high_name
 import dev.stukalo.mealplanner.core.localization.welcome_activity_label
 import dev.stukalo.mealplanner.core.localization.welcome_activity_low_name
@@ -49,6 +53,7 @@ import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
 import dev.stukalo.mealplanner.core.localization.welcome_weight_label
 import dev.stukalo.mealplanner.core.localization.welcome_weight_unit_kg
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
+import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -57,6 +62,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.Primar
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
 import dev.stukalo.mealplanner.presentation.core.ui.widget.row.SettingsOption
+import dev.stukalo.mealplanner.presentation.core.ui.widget.selector.SegmentedSelector
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ActivityLevelSelection
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.DietTypeSelection
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ThemeOption
@@ -65,11 +71,17 @@ import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.Vie
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The content of the Settings screen.
+ *
+ * @param state The current [ViewState].
+ * @param onIntent Callback to handle user intents.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var showLanguageSheet by remember { mutableStateOf(false) }
+    var showLanguageSheet by remember { mutableStateOf(value = false) }
 
     Column(
         modifier =
@@ -161,7 +173,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
             item {
                 val languageName = when (state.currentLanguage) {
-                    "uk" -> stringResource(Res.string.settings_language_uk)
+                    ViewState.LOCALE_UK -> stringResource(Res.string.settings_language_uk)
                     else -> stringResource(Res.string.settings_language_en)
                 }
                 SettingsOption(
@@ -173,7 +185,32 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
             item {
                 Text(
-                    text = stringResource(Res.string.settings_theme_choice),
+                    text = stringResource(Res.string.settings_theme_mode),
+                    style = Theme.typography.bold14,
+                    color = Theme.color.text.primary
+                )
+            }
+
+            item {
+                SegmentedSelector(
+                    items = ThemeModeDomainModel.entries,
+                    selectedItem = state.currentThemeMode,
+                    onItemSelected = { onIntent(ViewIntent.OnThemeModeClick(it)) },
+                    label = { mode ->
+                        stringResource(
+                            when (mode) {
+                                ThemeModeDomainModel.AUTO -> Res.string.settings_theme_mode_auto
+                                ThemeModeDomainModel.LIGHT -> Res.string.settings_theme_mode_light
+                                ThemeModeDomainModel.DARK -> Res.string.settings_theme_mode_dark
+                            }
+                        )
+                    }
+                )
+            }
+
+            item {
+                Text(
+                    text = stringResource(Res.string.settings_theme_color),
                     style = Theme.typography.bold14,
                     color = Theme.color.text.primary
                 )
@@ -182,8 +219,9 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
             items(ColorPaletteDomainModel.entries) { palette ->
                 ThemeOption(
                     palette = palette,
+                    isSelected = state.currentColorPalette == palette,
                     onClick = {
-                        onIntent(ViewIntent.OnThemeClick(palette))
+                        onIntent(ViewIntent.OnColorPaletteClick(palette))
                     }
                 )
             }
@@ -251,9 +289,9 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
                 Spacer(modifier = Modifier.height(Theme.spacing.space24))
 
-                if (state.editingField is EditableField.Weight ||
-                    state.editingField is EditableField.Height ||
-                    state.editingField is EditableField.TargetWeight
+                if ((state.editingField is EditableField.Weight) ||
+                    (state.editingField is EditableField.Height) ||
+                    (state.editingField is EditableField.TargetWeight)
                 ) {
                     PrimaryButton(
                         text = stringResource(Res.string.settings_save_changes),
@@ -284,14 +322,14 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 SettingsOption(
                     title = stringResource(Res.string.settings_language_en),
                     onClick = {
-                        onIntent(ViewIntent.OnLanguageClick("en"))
+                        onIntent(ViewIntent.OnLanguageClick(ViewState.LOCALE_EN))
                         showLanguageSheet = false
                     }
                 )
                 SettingsOption(
                     title = stringResource(Res.string.settings_language_uk),
                     onClick = {
-                        onIntent(ViewIntent.OnLanguageClick("uk"))
+                        onIntent(ViewIntent.OnLanguageClick(ViewState.LOCALE_UK))
                         showLanguageSheet = false
                     }
                 )

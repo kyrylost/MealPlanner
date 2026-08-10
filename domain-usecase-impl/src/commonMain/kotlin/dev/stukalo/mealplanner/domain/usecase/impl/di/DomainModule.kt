@@ -15,8 +15,10 @@ import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecipesUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecommendedRecipesUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetColorPaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetLocaleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetThemeModeUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetColorPaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
-import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemePaletteUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemeModeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.GetMealScheduleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.TrackMealConsumedUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.CalculateStreakUseCaseImpl
@@ -50,8 +52,10 @@ import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecommendedRecipesUseCa
 import dev.stukalo.mealplanner.domain.usecase.recipes.LogRecipeConsumedUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
-import dev.stukalo.mealplanner.domain.usecase.setting.SetThemePaletteUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.GetMealScheduleUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
@@ -79,7 +83,9 @@ val domainModule =
         single<kotlin.time.Clock> { kotlin.time.Clock.System }
 
         singleOf(::GetColorPaletteUseCaseImpl) bind GetColorPaletteUseCase::class
-        singleOf(::SetThemePaletteUseCaseImpl) bind SetThemePaletteUseCase::class
+        singleOf(::SetColorPaletteUseCaseImpl) bind SetColorPaletteUseCase::class
+        singleOf(::GetThemeModeUseCaseImpl) bind GetThemeModeUseCase::class
+        singleOf(::SetThemeModeUseCaseImpl) bind SetThemeModeUseCase::class
         singleOf(::GetLocaleUseCaseImpl) bind GetLocaleUseCase::class
         singleOf(::SetLocaleUseCaseImpl) bind SetLocaleUseCase::class
 
