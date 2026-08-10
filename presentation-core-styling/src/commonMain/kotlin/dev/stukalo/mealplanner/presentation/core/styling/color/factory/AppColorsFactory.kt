@@ -8,6 +8,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.palette.lime.Colo
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.lime.ColorLimeLight
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.orange.ColorOrangeDark
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.orange.ColorOrangeLight
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.pink.ColorPinkDark
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.pink.ColorPinkLight
 
 /**
  * Factory for creating [dev.stukalo.mealplanner.presentation.core.styling.color.model.AppColors] based on the selected palette and theme mode.
@@ -24,5 +26,6 @@ internal object AppColorsFactory {
         ThemeColorPalette.ORANGE -> if (isDark) ColorOrangeDark else ColorOrangeLight
         ThemeColorPalette.GREEN -> if (isDark) ColorGreenDark else ColorGreenLight
         ThemeColorPalette.LIME -> if (isDark) ColorLimeDark else ColorLimeLight
+        ThemeColorPalette.PINK -> if (isDark) ColorPinkDark else ColorPinkLight
     }
 }

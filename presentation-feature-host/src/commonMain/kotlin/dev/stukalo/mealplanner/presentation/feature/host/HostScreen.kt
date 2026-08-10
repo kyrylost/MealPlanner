@@ -44,6 +44,7 @@ fun HostScreen() {
                 when (state.colorPalette) {
                     ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
                     ColorPaletteDomainModel.LIME -> ThemeColorPalette.LIME
+                    ColorPaletteDomainModel.PINK -> ThemeColorPalette.PINK
                     else -> ThemeColorPalette.ORANGE
                 }
 

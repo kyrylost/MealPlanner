@@ -8,7 +8,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.token.ColorTokens
 enum class ThemeColorPalette {
     ORANGE,
     GREEN,
-    LIME
+    LIME,
+    PINK
 }
 
 /**
@@ -20,4 +21,5 @@ fun ThemeColorPalette.toPrimaryColor() = when (this) {
     ThemeColorPalette.ORANGE -> ColorTokens.Orange500
     ThemeColorPalette.GREEN -> ColorTokens.Green400
     ThemeColorPalette.LIME -> ColorTokens.Lime500
+    ThemeColorPalette.PINK -> ColorTokens.Pink500
 }

@@ -11,6 +11,8 @@ internal object ColorTokens {
     val Orange500 = Color(0xFFF17152)
     val Orange600 = Color(0xFFEB6A4B)
     val Pink500 = Color(0xFFD95C78)
+    val Pink600 = Color(0xFFC24662)
+    val Pink900 = Color(0xFF4B0018)
 
     val Green400 = Color(0xFF34FFA1)
     val Green500 = Color(0xFF2DF89A)

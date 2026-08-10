@@ -15,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.settings_theme_green
 import dev.stukalo.mealplanner.core.localization.settings_theme_lime
 import dev.stukalo.mealplanner.core.localization.settings_theme_orange
+import dev.stukalo.mealplanner.core.localization.settings_theme_pink
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.ThemeColorPalette
@@ -46,6 +48,7 @@ fun ThemeOption(
             ColorPaletteDomainModel.ORANGE -> ThemeColorPalette.ORANGE
             ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
             ColorPaletteDomainModel.LIME -> ThemeColorPalette.LIME
+            ColorPaletteDomainModel.PINK -> ThemeColorPalette.PINK
         }
     val primary = themeColorPalette.toPrimaryColor()
 
@@ -59,7 +62,12 @@ fun ThemeOption(
                 if (isSelected) {
                     Modifier.border(
                         width = Theme.thickness.thickness2,
-                        color = Theme.color.brand.primary,
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Theme.color.brand.secondary,
+                                Theme.color.brand.primary
+                            )
+                        ),
                         shape = Theme.shape.normalRoundedCornerShape
                     )
                 } else {
@@ -84,6 +92,7 @@ fun ThemeOption(
                 ColorPaletteDomainModel.ORANGE -> stringResource(Res.string.settings_theme_orange)
                 ColorPaletteDomainModel.GREEN -> stringResource(Res.string.settings_theme_green)
                 ColorPaletteDomainModel.LIME -> stringResource(Res.string.settings_theme_lime)
+                ColorPaletteDomainModel.PINK -> stringResource(Res.string.settings_theme_pink)
             },
             style = Theme.typography.regular14,
             color = Theme.color.text.primary
