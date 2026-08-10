@@ -20,9 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -168,9 +170,48 @@ internal fun WelcomeData(modifier: Modifier = Modifier, state: ViewState, onInte
                             focusManager.clearFocus()
                         }
                     )
-                }
+                },
+                colors =
+                DatePickerDefaults.colors(
+                    containerColor = Theme.color.background.primary
+                )
             ) {
-                DatePicker(state = datePickerState)
+                DatePicker(
+                    state = datePickerState,
+                    colors =
+                    DatePickerDefaults.colors(
+                        containerColor = Theme.color.background.primary,
+                        titleContentColor = Theme.color.text.secondary,
+                        headlineContentColor = Theme.color.text.primary,
+                        weekdayContentColor = Theme.color.text.secondary,
+                        subheadContentColor = Theme.color.text.secondary,
+                        navigationContentColor = Theme.color.icon.primary,
+                        yearContentColor = Theme.color.text.secondary,
+                        disabledYearContentColor = Theme.color.icon.disabled,
+                        currentYearContentColor = Theme.color.brand.primary,
+                        selectedYearContentColor = Theme.color.text.onPrimary,
+                        selectedYearContainerColor = Theme.color.brand.primary,
+                        dayContentColor = Theme.color.text.primary,
+                        disabledDayContentColor = Theme.color.icon.disabled,
+                        selectedDayContentColor = Theme.color.text.onPrimary,
+                        selectedDayContainerColor = Theme.color.brand.primary,
+                        todayContentColor = Theme.color.brand.primary,
+                        todayDateBorderColor = Theme.color.brand.primary,
+                        dividerColor = Theme.color.surface.variant,
+                        dateTextFieldColors =
+                        TextFieldDefaults.colors(
+                            focusedIndicatorColor = Theme.color.brand.primary,
+                            unfocusedIndicatorColor = Theme.color.text.secondary,
+                            focusedLabelColor = Theme.color.brand.primary,
+                            unfocusedLabelColor = Theme.color.text.secondary,
+                            cursorColor = Theme.color.brand.primary,
+                            focusedContainerColor = Theme.color.background.primary,
+                            unfocusedContainerColor = Theme.color.background.primary,
+                            focusedTextColor = Theme.color.text.primary,
+                            unfocusedTextColor = Theme.color.text.primary
+                        )
+                    )
+                )
             }
         }
     }
