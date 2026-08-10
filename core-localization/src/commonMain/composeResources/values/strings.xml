@@ -146,6 +146,7 @@
     <string name="settings_theme_mode_dark">Dark</string>
     <string name="settings_theme_orange">Orange</string>
     <string name="settings_theme_green">Green</string>
+    <string name="settings_theme_lime">Lime</string>
     <string name="settings_language_en" translatable="false">English</string>
     <string name="settings_language_uk" translatable="false">Українська</string>
 

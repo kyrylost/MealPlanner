@@ -6,6 +6,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.token.ColorTokens
 
 /**
  * A data class representing the food quality colors (Nutri-Score, NOVA) of the application.
+ *
+ * These colors remain constant (static).
  */
 @Immutable
 data class QualityColors(

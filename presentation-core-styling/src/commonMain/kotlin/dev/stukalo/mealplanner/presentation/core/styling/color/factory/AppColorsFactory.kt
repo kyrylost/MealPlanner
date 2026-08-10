@@ -4,6 +4,8 @@ import dev.stukalo.mealplanner.presentation.core.styling.color.model.AppColors
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.ThemeColorPalette
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.green.ColorGreenDark
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.green.ColorGreenLight
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.lime.ColorLimeDark
+import dev.stukalo.mealplanner.presentation.core.styling.color.palette.lime.ColorLimeLight
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.orange.ColorOrangeDark
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.orange.ColorOrangeLight
 
@@ -21,5 +23,6 @@ internal object AppColorsFactory {
     fun create(palette: ThemeColorPalette, isDark: Boolean): AppColors = when (palette) {
         ThemeColorPalette.ORANGE -> if (isDark) ColorOrangeDark else ColorOrangeLight
         ThemeColorPalette.GREEN -> if (isDark) ColorGreenDark else ColorGreenLight
+        ThemeColorPalette.LIME -> if (isDark) ColorLimeDark else ColorLimeLight
     }
 }

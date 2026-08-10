@@ -138,6 +138,7 @@
     <string name="settings_theme_mode_dark">Темна</string>
     <string name="settings_theme_orange">Помаранчева</string>
     <string name="settings_theme_green">Зелена</string>
+    <string name="settings_theme_lime">Лайм</string>
 
     <string name="meal_schedule_auto_calculate">Автоматичний розрахунок</string>
     <string name="meal_schedule_total_percentage">Загальний відсоток: %1$d%%</string>

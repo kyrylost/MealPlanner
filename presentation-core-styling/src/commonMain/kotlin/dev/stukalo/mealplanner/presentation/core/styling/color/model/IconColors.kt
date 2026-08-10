@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * A data class representing the icon colors of the application.
+ *
+ * These colors change based on the theme (light/dark).
  */
 @Immutable
 data class IconColors(val primary: Color, val onPrimary: Color, val disabled: Color)

@@ -16,6 +16,10 @@ internal object ColorTokens {
     val Green500 = Color(0xFF2DF89A)
     val Green700 = Color(0xFF00DBB1)
 
+    val Lime500 = Color(0xFFC7F702)
+    val Lime600 = Color(0xFFB0DC02)
+    val Purple900 = Color(0xFF29004B)
+
     // Neutral Colors
     val White = Color(0xFFFFFFFF)
     val OffWhite = Color(0xFFFCFCFC)

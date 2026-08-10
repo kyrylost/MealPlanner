@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.settings_theme_green
+import dev.stukalo.mealplanner.core.localization.settings_theme_lime
 import dev.stukalo.mealplanner.core.localization.settings_theme_orange
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -44,6 +45,7 @@ fun ThemeOption(
         when (palette) {
             ColorPaletteDomainModel.ORANGE -> ThemeColorPalette.ORANGE
             ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
+            ColorPaletteDomainModel.LIME -> ThemeColorPalette.LIME
         }
     val primary = themeColorPalette.toPrimaryColor()
 
@@ -81,6 +83,7 @@ fun ThemeOption(
             when (palette) {
                 ColorPaletteDomainModel.ORANGE -> stringResource(Res.string.settings_theme_orange)
                 ColorPaletteDomainModel.GREEN -> stringResource(Res.string.settings_theme_green)
+                ColorPaletteDomainModel.LIME -> stringResource(Res.string.settings_theme_lime)
             },
             style = Theme.typography.regular14,
             color = Theme.color.text.primary

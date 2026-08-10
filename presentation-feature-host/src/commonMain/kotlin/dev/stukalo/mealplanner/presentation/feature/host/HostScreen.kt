@@ -43,6 +43,7 @@ fun HostScreen() {
             val palette =
                 when (state.colorPalette) {
                     ColorPaletteDomainModel.GREEN -> ThemeColorPalette.GREEN
+                    ColorPaletteDomainModel.LIME -> ThemeColorPalette.LIME
                     else -> ThemeColorPalette.ORANGE
                 }
 

@@ -8,5 +8,8 @@ enum class ColorPaletteDomainModel {
     ORANGE,
 
     /** A green-based color palette. */
-    GREEN
+    GREEN,
+
+    /** A lime-based color palette. */
+    LIME
 }

@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * A data class representing the state colors (error, success, etc.) of the application.
+ *
+ * These colors remain constant (static) across themes and palettes.
  */
 @Immutable
 data class StateColors(
