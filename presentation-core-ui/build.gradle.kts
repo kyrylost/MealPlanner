@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.androidx.appcompat)
             implementation(libs.androidx.activity.compose)
             implementation(libs.material)
+            implementation(libs.androidx.health.connect)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -69,7 +70,7 @@ kotlin {
             implementation(libs.adaptive)
             implementation(libs.coil.compose)
             implementation("io.github.alexzhirkevich:compottie:2.0.0")
-            implementation(projects.commonCore)
+            implementation(projects.coreCommon)
             implementation(projects.presentationCoreStyling)
             implementation(projects.coreLocalization)
             implementation(projects.domainModel)

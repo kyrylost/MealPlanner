@@ -15,7 +15,8 @@ data class UserDomainModel(
     val targetWeight: Double,
     val physicalActivity: ActivityLevelDomainModel,
     val gender: GenderDomainModel,
-    val diet: DietDomainModel
+    val diet: DietDomainModel,
+    val stepsTarget: Int
 ) {
     companion object {
         private const val DEFAULT_USER_ID = 1L

@@ -2,10 +2,10 @@
 adaptive = "1.2.0"
 agp = "9.3.1"
 android-compileSdk = "37"
-android-minSdk = "24"
+android-minSdk = "26"
 android-targetSdk = "37"
 androidx-activity = "1.13.0"
-androidx-appcompat = "1.7.1"
+androidx-appcompat = "1.8.0"
 androidx-constraintlayout = "2.2.2"
 androidx-core = "1.19.0"
 androidx-espresso = "3.7.0"
@@ -26,13 +26,13 @@ navigationCompose = "2.9.2"
 room = "2.8.4"
 sqlite = "2.7.0"
 ksp = "2.3.11"
-paging = "3.5.0"
+paging = "3.5.1"
 koin = "4.2.2" # https://github.com/InsertKoinIO/koin
 koin-ksp = "2.1.0"
 androidBuiltInKotlin = "9.3.1"
 barcode-scanning = "17.3.0"
 camera = "1.6.1"
-ui = "1.11.4"
+ui = "1.12.0"
 datastore = "1.2.1"
 okio = "3.18.1"
 coil = "3.5.0"
@@ -83,6 +83,8 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+androidx-health-connect = { module = "androidx.health.connect:connect-client", version = "1.1.0" }
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version = "2.1.5" }
 
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcode-scanning" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camera" }

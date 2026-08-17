@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.domain.model.exception
 
-import dev.stukalo.mealplanner.common.core.exception.AppException
+import dev.stukalo.mealplanner.core.common.exception.AppException
 
 /**
  * Base class for all validation exceptions in the domain layer.
@@ -42,5 +42,11 @@ sealed class ValidationException : AppException() {
 
     sealed class Diet : ValidationException() {
         class NotSelected : Diet()
+    }
+
+    sealed class Steps : ValidationException() {
+        class Invalid : Steps()
+
+        class Empty : Steps()
     }
 }

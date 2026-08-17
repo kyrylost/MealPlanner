@@ -71,11 +71,13 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
-            implementation(projects.presentationCorePlatform)
+            implementation(projects.corePlatform)
             implementation(projects.presentationCoreUi)
             implementation(projects.coreLocalization)
             implementation(projects.domainModel)
+            implementation(projects.domainRepository)
             implementation(projects.domainUsecase)
+            implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
         }
         desktopMain.dependencies {

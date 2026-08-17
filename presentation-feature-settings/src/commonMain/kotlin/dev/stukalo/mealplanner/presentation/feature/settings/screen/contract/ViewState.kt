@@ -1,5 +1,7 @@
 package dev.stukalo.mealplanner.presentation.feature.settings.screen.contract
 
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
+import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
@@ -21,6 +23,10 @@ import org.jetbrains.compose.resources.StringResource
  * @property tempHeightInput Temporary input for height editing.
  * @property tempTargetWeightInput Temporary input for target weight editing.
  * @property errorMessage Localized error message to display in the UI.
+ * @property healthServiceStatus The current status of the health service on the device.
+ * @property grantedPermissionTypes Set of currently granted health permission types.
+ * @property shouldRequestHealthPermissions Whether to trigger the health permission dialog.
+ * @property healthPermissionsToRequest The set of permission strings to request.
  */
 data class ViewState(
     val user: UserDomainModel? = null,
@@ -34,7 +40,13 @@ data class ViewState(
     val tempWeightInput: String = "",
     val tempHeightInput: String = "",
     val tempTargetWeightInput: String = "",
-    val errorMessage: StringResource? = null
+    val tempStepsTargetInput: String = "",
+    val errorMessage: StringResource? = null,
+    val healthServiceStatus: HealthServiceStatus = HealthServiceStatus.NOT_SUPPORTED,
+    val grantedPermissionTypes: Set<HealthPermissionType> = emptySet(),
+    val shouldRequestHealthPermissions: Boolean = false,
+    val healthPermissionsToRequest: Set<String> = emptySet(),
+    val showPermissionBlockedDialog: Boolean = false
 ) : MviViewState {
     companion object {
         /** Language code for English. */
@@ -63,4 +75,7 @@ sealed interface EditableField {
 
     /** The user's target diet type. */
     data object DietType : EditableField
+
+    /** The user's target daily steps. */
+    data object StepsTarget : EditableField
 }

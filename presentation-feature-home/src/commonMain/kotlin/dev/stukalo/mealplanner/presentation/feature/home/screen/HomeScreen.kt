@@ -1,9 +1,18 @@
 package dev.stukalo.mealplanner.presentation.feature.home.screen
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
 import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewEvent
+import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewIntent
+import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -18,6 +27,12 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateToRecipeSearch: () -> Unit) {
     val viewModel: HomeViewModel = koinViewModel()
     val recommendedRecipes = viewModel.recommendedRecipes.collectAsLazyPagingItems()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.onIntent(ViewIntent.OnResume)
+        onPauseOrDispose {}
+    }
 
     MviScreen(
         viewModel = viewModel,
@@ -25,14 +40,24 @@ fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateToRecipeSe
             when (event) {
                 is ViewEvent.NavigateToRecipeDetails -> onNavigateToRecipeDetails(event.recipeId)
                 ViewEvent.NavigateToRecipeSearch -> onNavigateToRecipeSearch()
+                is ViewEvent.ShowError -> {
+                    snackbarHostState.showSnackbar(getString(event.message))
+                }
             }
         },
         content = { state ->
-            HomeContent(
-                state = state,
-                recommendedRecipes = recommendedRecipes,
-                onIntent = viewModel::onIntent
-            )
+            Box {
+                HomeContent(
+                    state = state,
+                    recommendedRecipes = recommendedRecipes,
+                    onIntent = viewModel::onIntent
+                )
+
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
+            }
         }
     )
 }

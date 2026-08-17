@@ -28,8 +28,27 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_cancel
+import dev.stukalo.mealplanner.core.localization.common_ok
 import dev.stukalo.mealplanner.core.localization.common_settings
 import dev.stukalo.mealplanner.core.localization.common_value_placeholder
+import dev.stukalo.mealplanner.core.localization.home_steps
+import dev.stukalo.mealplanner.core.localization.settings_health_sync
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_blocked_hint
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_install
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_manage_all
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_not_installed
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_not_supported
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_read
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_read_desc
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_write
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_write_desc
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_revoke_hint
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_steps_read
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_steps_read_desc
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_read
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_read_desc
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_write
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_write_desc
 import dev.stukalo.mealplanner.core.localization.settings_language
 import dev.stukalo.mealplanner.core.localization.settings_language_en
 import dev.stukalo.mealplanner.core.localization.settings_language_uk
@@ -56,6 +75,8 @@ import dev.stukalo.mealplanner.core.localization.welcome_height_label
 import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
 import dev.stukalo.mealplanner.core.localization.welcome_weight_label
 import dev.stukalo.mealplanner.core.localization.welcome_weight_unit_kg
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
+import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
@@ -64,6 +85,7 @@ import dev.stukalo.mealplanner.domain.model.user.UserConstants
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
+import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.CommonDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
@@ -71,6 +93,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.row.SettingsOption
 import dev.stukalo.mealplanner.presentation.core.ui.widget.selector.SegmentedSelector
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ActivityLevelSelection
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.DietTypeSelection
+import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.HealthSyncToggle
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ThemeOption
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
@@ -88,6 +111,35 @@ import org.jetbrains.compose.resources.stringResource
 internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showLanguageSheet by remember { mutableStateOf(value = false) }
+    var showRevokeDialog by remember { mutableStateOf(value = false) }
+
+    if (showRevokeDialog) {
+        CommonDialog(
+            title = stringResource(Res.string.settings_health_sync),
+            message = stringResource(Res.string.settings_health_sync_revoke_hint),
+            confirmLabel = stringResource(Res.string.common_ok),
+            onConfirm = {
+                onIntent(ViewIntent.OnOpenHealthSettings)
+                showRevokeDialog = false
+            },
+            onDismissRequest = { showRevokeDialog = false },
+            dismissLabel = stringResource(Res.string.common_cancel)
+        )
+    }
+
+    if (state.showPermissionBlockedDialog) {
+        CommonDialog(
+            title = stringResource(Res.string.settings_health_sync),
+            message = stringResource(Res.string.settings_health_sync_blocked_hint),
+            confirmLabel = stringResource(Res.string.common_ok),
+            onConfirm = {
+                onIntent(ViewIntent.OnOpenHealthSettings)
+                onIntent(ViewIntent.OnDismissPermissionBlockedDialog)
+            },
+            onDismissRequest = { onIntent(ViewIntent.OnDismissPermissionBlockedDialog) },
+            dismissLabel = stringResource(Res.string.common_cancel)
+        )
+    }
 
     Column(
         modifier =
@@ -136,6 +188,11 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                         title = stringResource(Res.string.settings_target_weight),
                         value = user?.targetWeight?.let { "$it ${stringResource(Res.string.welcome_weight_unit_kg)}" },
                         onClick = { onIntent(ViewIntent.OnEditFieldClick(EditableField.TargetWeight)) }
+                    )
+                    SettingsOption(
+                        title = stringResource(Res.string.home_steps),
+                        value = user?.stepsTarget?.toString(),
+                        onClick = { onIntent(ViewIntent.OnEditFieldClick(EditableField.StepsTarget)) }
                     )
                     SettingsOption(
                         title = stringResource(Res.string.welcome_activity_label),
@@ -231,6 +288,99 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                     }
                 )
             }
+
+            item {
+                Text(
+                    text = stringResource(Res.string.settings_health_sync),
+                    style = Theme.typography.bold14,
+                    color = Theme.color.text.primary
+                )
+            }
+
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(Theme.spacing.space8)) {
+                    when (state.healthServiceStatus) {
+                        HealthServiceStatus.AVAILABLE -> {
+                            HealthSyncToggle(
+                                title = stringResource(Res.string.settings_health_sync_steps_read),
+                                description = stringResource(Res.string.settings_health_sync_steps_read_desc),
+                                type = HealthPermissionType.STEPS_READ,
+                                state = state,
+                                onIntent = onIntent,
+                                onShowRevokeDialog = { showRevokeDialog = true }
+                            )
+                            HealthSyncToggle(
+                                title = stringResource(Res.string.settings_health_sync_weight_read),
+                                description = stringResource(Res.string.settings_health_sync_weight_read_desc),
+                                type = HealthPermissionType.WEIGHT_READ,
+                                state = state,
+                                onIntent = onIntent,
+                                onShowRevokeDialog = { showRevokeDialog = true }
+                            )
+                            HealthSyncToggle(
+                                title = stringResource(Res.string.settings_health_sync_weight_write),
+                                description = stringResource(Res.string.settings_health_sync_weight_write_desc),
+                                type = HealthPermissionType.WEIGHT_WRITE,
+                                state = state,
+                                onIntent = onIntent,
+                                onShowRevokeDialog = { showRevokeDialog = true }
+                            )
+                            HealthSyncToggle(
+                                title = stringResource(Res.string.settings_health_sync_nutrition_read),
+                                description = stringResource(Res.string.settings_health_sync_nutrition_read_desc),
+                                type = HealthPermissionType.NUTRITION_READ,
+                                state = state,
+                                onIntent = onIntent,
+                                onShowRevokeDialog = { showRevokeDialog = true }
+                            )
+                            HealthSyncToggle(
+                                title = stringResource(Res.string.settings_health_sync_nutrition_write),
+                                description = stringResource(Res.string.settings_health_sync_nutrition_write_desc),
+                                type = HealthPermissionType.NUTRITION_WRITE,
+                                state = state,
+                                onIntent = onIntent,
+                                onShowRevokeDialog = { showRevokeDialog = true }
+                            )
+
+                            Spacer(modifier = Modifier.height(Theme.spacing.space8))
+
+                            PrimaryButton(
+                                text = stringResource(Res.string.settings_health_sync_manage_all),
+                                onClick = { onIntent(ViewIntent.OnOpenHealthSettings) },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+
+                            Text(
+                                text = stringResource(Res.string.settings_health_sync_revoke_hint),
+                                style = Theme.typography.regular12,
+                                color = Theme.color.text.secondary,
+                                modifier = Modifier.padding(horizontal = Theme.spacing.space4)
+                            )
+                        }
+                        HealthServiceStatus.NOT_INSTALLED -> {
+                            Text(
+                                text = stringResource(Res.string.settings_health_sync_not_installed),
+                                style = Theme.typography.regular12,
+                                color = Theme.color.text.secondary,
+                                modifier = Modifier.padding(horizontal = Theme.spacing.space4)
+                            )
+                            PrimaryButton(
+                                text = stringResource(Res.string.settings_health_sync_install),
+                                onClick = { onIntent(ViewIntent.OnInstallHealthConnectClick) },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                        HealthServiceStatus.NOT_SUPPORTED -> {
+                            Text(
+                                text = stringResource(Res.string.settings_health_sync_not_supported),
+                                style = Theme.typography.regular12,
+                                color = Theme.color.text.secondary,
+                                modifier = Modifier.padding(horizontal = Theme.spacing.space4)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -284,6 +434,19 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                             onEditClick = { onIntent(ViewIntent.OnManualInputClick) }
                         )
                     }
+                    EditableField.StepsTarget -> {
+                        RulerPicker(
+                            label = stringResource(Res.string.home_steps),
+                            value =
+                            state.tempStepsTargetInput.toFloatOrNull() ?: state.user?.stepsTarget?.toFloat()
+                                ?: UserConstants.DEFAULT_STEPS_TARGET.toFloat(),
+                            onValueChange = { onIntent(ViewIntent.OnStepsTargetChange(it.toInt().toString())) },
+                            range = UserConstants.MIN_STEPS_TARGET.toFloat()..UserConstants.MAX_STEPS_TARGET.toFloat(),
+                            step = UserConstants.STEPS_INCREMENT.toFloat(),
+                            unit = "",
+                            onEditClick = { onIntent(ViewIntent.OnManualInputClick) }
+                        )
+                    }
                     EditableField.ActivityLevel -> {
                         ActivityLevelSelection(
                             selectedLevel = state.user?.physicalActivity,
@@ -302,7 +465,8 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
                 if ((state.editingField is EditableField.Weight) ||
                     (state.editingField is EditableField.Height) ||
-                    (state.editingField is EditableField.TargetWeight)
+                    (state.editingField is EditableField.TargetWeight) ||
+                    (state.editingField is EditableField.StepsTarget)
                 ) {
                     PrimaryButton(
                         text = stringResource(Res.string.settings_save_changes),
@@ -322,13 +486,15 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
             EditableField.Weight -> Res.string.welcome_weight_label
             EditableField.Height -> Res.string.welcome_height_label
             EditableField.TargetWeight -> Res.string.settings_target_weight
+            EditableField.StepsTarget -> Res.string.home_steps
             else -> null
         }
 
         val initialValue = when (state.editingField) {
-            EditableField.Weight -> state.user?.weight?.toString() ?: ""
-            EditableField.Height -> state.user?.height?.toInt()?.toString() ?: ""
-            EditableField.TargetWeight -> state.user?.targetWeight?.toString() ?: ""
+            EditableField.Weight -> state.user?.weight?.toString().orEmpty()
+            EditableField.Height -> state.user?.height?.toInt()?.toString().orEmpty()
+            EditableField.TargetWeight -> state.user?.targetWeight?.toString().orEmpty()
+            EditableField.StepsTarget -> state.user?.stepsTarget?.toString().orEmpty()
             else -> ""
         }
 
@@ -337,13 +503,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 initialValue = initialValue,
                 onDismissRequest = { onIntent(ViewIntent.OnDismissEdit) },
                 onConfirm = { newValue ->
-                    when (state.editingField) {
-                        EditableField.Weight -> onIntent(ViewIntent.OnWeightChange(newValue))
-                        EditableField.Height -> onIntent(ViewIntent.OnHeightChange(newValue))
-                        EditableField.TargetWeight -> onIntent(ViewIntent.OnTargetWeightChange(newValue))
-                        else -> {}
-                    }
-                    onIntent(ViewIntent.OnSaveProfileClick)
+                    onIntent(ViewIntent.OnManualInputConfirm(newValue))
                 },
                 title = stringResource(titleRes),
                 placeholder = stringResource(Res.string.common_value_placeholder),

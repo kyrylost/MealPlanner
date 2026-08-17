@@ -10,7 +10,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.commonCore)
+            implementation(projects.coreCommon)
             implementation(projects.domainModel)
             implementation(projects.domainRepository)
             implementation(projects.dataNetworkEdamam)
@@ -18,6 +18,7 @@ kotlin {
             implementation(projects.dataNetworkFooddatacentral)
             implementation(projects.dataDatabase)
             implementation(projects.dataPreferences)
+            implementation(projects.dataHealth)
             implementation(libs.androidx.paging.common)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines.core)

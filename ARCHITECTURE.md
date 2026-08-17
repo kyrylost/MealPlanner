@@ -23,7 +23,7 @@ All feature modules MUST follow the MVI pattern and be structured as follows:
 - **Screen Wrapper**: Must use the `MviScreen` wrapper to standardize state collection and event handling.
 
 ## Module Layers
-- **Presentation**: UI and UX logic.
+- **Presentation**: UI and UX logic. **Rule**: ViewModels MUST NOT depend on Repositories directly. Always use UseCases to interact with the domain/data layer.
 - **Domain**: Pure business logic and data models (POJOs).
 - **Data**: Implementation of persistence, networking, and repositories.
 - **Core**: Shared utilities, styling, and navigation base.

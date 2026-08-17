@@ -1,8 +1,10 @@
 package dev.stukalo.mealplanner
 
 import androidx.compose.runtime.Composable
+import dev.stukalo.mealplanner.core.platform.di.platformModule
 import dev.stukalo.mealplanner.data.database.di.databaseBuilderModule
 import dev.stukalo.mealplanner.data.database.di.databaseModule
+import dev.stukalo.mealplanner.data.health.impl.di.healthDataModule
 import dev.stukalo.mealplanner.data.network.core.di.dataNetworkModule
 import dev.stukalo.mealplanner.data.network.edamam.impl.di.edamamNetworkModule
 import dev.stukalo.mealplanner.data.network.fooddatacentral.impl.di.foodDataCentralNetworkModule
@@ -39,12 +41,14 @@ fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
                     databaseBuilderModule,
                     databaseModule,
                     dataNetworkModule,
+                    healthDataModule,
                     edamamNetworkModule,
                     openFoodFactsNetworkModule,
                     foodDataCentralNetworkModule,
                     dataRepositoryModule,
                     dataPreferencesModule,
                     platformDataPreferencesModule,
+                    platformModule,
                     domainModule,
                     gatewayModule,
                     homeModule,

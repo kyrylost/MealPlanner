@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
+import dev.stukalo.mealplanner.core.common.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.database.model.user.ActivityLevelDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.user.DietDatabaseModel
 import dev.stukalo.mealplanner.data.database.model.user.GenderDatabaseModel
@@ -13,7 +14,7 @@ import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
  * Mapper for [UserDatabaseModel] and [UserDomainModel].
  * Weight is handled externally because it resides in a separate table.
  */
-internal class UserMapper {
+internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {
     /**
      * Maps database model to domain model.
      *
@@ -31,7 +32,8 @@ internal class UserMapper {
             targetWeight = targetWeight,
             physicalActivity = physicalActivity.toDomain(),
             gender = gender.toDomain(),
-            diet = diet.toDomain()
+            diet = diet.toDomain(),
+            stepsTarget = stepsTarget
         )
     }
 
@@ -41,7 +43,7 @@ internal class UserMapper {
      * @param model The domain model.
      * @return The database model (weight is ignored).
      */
-    fun mapFrom(model: UserDomainModel): UserDatabaseModel = with(model) {
+    override fun mapFrom(model: UserDomainModel): UserDatabaseModel = with(model) {
         UserDatabaseModel(
             id = id,
             name = name,
@@ -50,7 +52,8 @@ internal class UserMapper {
             targetWeight = targetWeight,
             physicalActivity = physicalActivity.toData(),
             gender = gender.toData(),
-            diet = diet.toData()
+            diet = diet.toData(),
+            stepsTarget = stepsTarget
         )
     }
 

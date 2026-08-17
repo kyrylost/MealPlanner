@@ -21,4 +21,16 @@ object UserConstants {
 
     /** Default height in centimeters. */
     const val DEFAULT_HEIGHT = 170.0
+
+    /** Minimum allowed steps target. */
+    const val MIN_STEPS_TARGET = 1000
+
+    /** Maximum allowed steps target. */
+    const val MAX_STEPS_TARGET = 100000
+
+    /** Default steps target. */
+    const val DEFAULT_STEPS_TARGET = 10000
+
+    /** Steps increment for picker. */
+    const val STEPS_INCREMENT = 500
 }

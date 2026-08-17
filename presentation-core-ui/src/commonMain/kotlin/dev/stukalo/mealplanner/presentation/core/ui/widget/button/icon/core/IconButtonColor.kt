@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
-import dev.stukalo.mealplanner.common.core.ext.has
+import dev.stukalo.mealplanner.core.common.ext.has
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonColor
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonColorSet
 import dev.stukalo.mealplanner.presentation.core.ui.widget.button.core.ButtonInteractionState

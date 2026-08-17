@@ -53,6 +53,9 @@
     <string name="validation_error_activity_empty">Please select activity level</string>
     <string name="validation_error_diet_empty">Please select a diet</string>
     <string name="error_unknown">An unexpected error occurred</string>
+    <string name="error_health_unavailable">Health tracking is not available on this device</string>
+    <string name="error_health_permissions_denied">Please grant permissions to sync with health services</string>
+    <string name="error_health_sync_failed">Failed to sync health data</string>
 
     <string name="home_hello">Hello</string>
     <string name="home_hello_name">%1$s!</string>
@@ -101,7 +104,7 @@
     <string name="common_format_percentage">%1$d%%</string>
     <string name="common_format_date_short">%1$d/%2$d</string>
     <string name="common_no_results">No results found</string>
-    <string name="common_no_results_desc">Try adjusting your search to find what you\'re looking for</string>
+    <string name="common_no_results_desc">Try adjusting your search to find what you're looking for</string>
     <string name="product_search_initial_title">Find your favorite products</string>
     <string name="product_search_initial_desc">Search by name or scan a barcode to see nutritional information</string>
     <string name="common_clear_filters">Clear Filters</string>
@@ -147,6 +150,24 @@
     <string name="settings_theme_green">Green</string>
     <string name="settings_theme_lime">Lime</string>
     <string name="settings_theme_pink">Pink</string>
+    <string name="settings_health_sync">Health Synchronization</string>
+    <string name="settings_health_sync_desc">Manage data exchange with Health Connect</string>
+    <string name="settings_health_sync_steps_read">Read Steps</string>
+    <string name="settings_health_sync_steps_read_desc">Get steps from other apps to track your activity</string>
+    <string name="settings_health_sync_weight_read">Import Weight</string>
+    <string name="settings_health_sync_weight_read_desc">Automatically update your weight from health services</string>
+    <string name="settings_health_sync_weight_write">Export Weight</string>
+    <string name="settings_health_sync_weight_write_desc">Share your weight entries with other health apps</string>
+    <string name="settings_health_sync_nutrition_read">Import Nutrition</string>
+    <string name="settings_health_sync_nutrition_read_desc">Get calories and nutrients from other apps</string>
+    <string name="settings_health_sync_nutrition_write">Export Nutrition</string>
+    <string name="settings_health_sync_nutrition_write_desc">Share your meals with other health apps</string>
+    <string name="settings_health_sync_manage_all">Manage in Health Connect</string>
+    <string name="settings_health_sync_revoke_hint">To disable, please revoke permissions in System Settings</string>
+    <string name="settings_health_sync_blocked_hint">The system blocked the request. Please enable permissions manually in Health Connect settings.</string>
+    <string name="settings_health_sync_not_installed">Health Connect is not installed on your device</string>
+    <string name="settings_health_sync_install">Install Health Connect</string>
+    <string name="settings_health_sync_not_supported">Health synchronization is not supported on this device</string>
     <string name="settings_language_en" translatable="false">English</string>
     <string name="settings_language_uk" translatable="false">Українська</string>
 

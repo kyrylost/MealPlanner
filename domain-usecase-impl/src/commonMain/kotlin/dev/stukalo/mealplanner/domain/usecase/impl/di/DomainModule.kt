@@ -1,5 +1,17 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.di
 
+import dev.stukalo.mealplanner.domain.usecase.health.GetGrantedHealthPermissionsUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStringUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.GetHealthServiceStatusUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.GetStepsUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.IsHealthServiceAvailableUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.SyncHealthDataUseCase
+import dev.stukalo.mealplanner.domain.usecase.impl.health.GetGrantedHealthPermissionsUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthPermissionStringUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthServiceStatusUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.GetStepsUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.IsHealthServiceAvailableUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.SyncHealthDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyNormUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyProgressUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.LogProductConsumedUseCaseImpl
@@ -36,6 +48,7 @@ import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateDietUseCas
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateGenderUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateHeightUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateNameUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateStepsTargetUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.validation.ValidateWeightUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyProgressUseCase
@@ -73,6 +86,7 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateDietUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateGenderUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateNameUseCase
+import dev.stukalo.mealplanner.domain.usecase.validation.ValidateStepsTargetUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -118,10 +132,18 @@ val domainModule =
         singleOf(::CalculateStreakUseCaseImpl) bind CalculateStreakUseCase::class
         singleOf(::SaveWeightUseCaseImpl) bind SaveWeightUseCase::class
 
+        singleOf(::GetStepsUseCaseImpl) bind GetStepsUseCase::class
+        singleOf(::SyncHealthDataUseCaseImpl) bind SyncHealthDataUseCase::class
+        singleOf(::IsHealthServiceAvailableUseCaseImpl) bind IsHealthServiceAvailableUseCase::class
+        singleOf(::GetHealthServiceStatusUseCaseImpl) bind GetHealthServiceStatusUseCase::class
+        singleOf(::GetGrantedHealthPermissionsUseCaseImpl) bind GetGrantedHealthPermissionsUseCase::class
+        singleOf(::GetHealthPermissionStringUseCaseImpl) bind GetHealthPermissionStringUseCase::class
+
         singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
         singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class
         singleOf(::ValidateHeightUseCaseImpl) bind ValidateHeightUseCase::class
         singleOf(::ValidateWeightUseCaseImpl) bind ValidateWeightUseCase::class
+        singleOf(::ValidateStepsTargetUseCaseImpl) bind ValidateStepsTargetUseCase::class
         singleOf(::ValidateGenderUseCaseImpl) bind ValidateGenderUseCase::class
         singleOf(::ValidateActivityLevelUseCaseImpl) bind ValidateActivityLevelUseCase::class
         singleOf(::ValidateDietUseCaseImpl) bind ValidateDietUseCase::class

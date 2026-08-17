@@ -11,7 +11,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.commonCore)
+            implementation(projects.coreCommon)
             implementation(projects.dataNetworkCore)
             implementation(projects.dataNetworkEdamam)
             implementation(libs.ktor.client.core)

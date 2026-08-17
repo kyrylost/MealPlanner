@@ -31,7 +31,7 @@ import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
         MealSlotDatabaseModel::class,
         WeightHistoryDatabaseModel::class
     ],
-    version = 8
+    version = 9
 )
 @TypeConverters(DateConverter::class, TimeConverter::class, MealTypeConverter::class)
 @ConstructedBy(AppDatabaseConstructor::class)

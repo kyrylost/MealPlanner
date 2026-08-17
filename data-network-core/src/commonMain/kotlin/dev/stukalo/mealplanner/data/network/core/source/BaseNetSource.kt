@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.data.network.core.source
 
-import dev.stukalo.mealplanner.common.core.exception.ApiException
+import dev.stukalo.mealplanner.core.common.exception.ApiException
 import dev.stukalo.mealplanner.data.network.core.error.isConnectionError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

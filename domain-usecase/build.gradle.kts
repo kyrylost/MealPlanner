@@ -11,7 +11,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.domainModel)
-            api(projects.commonCore)
+            api(projects.coreCommon)
             implementation(libs.androidx.paging.common)
             implementation(libs.kotlinx.datetime)
             implementation(projects.domainRepository)

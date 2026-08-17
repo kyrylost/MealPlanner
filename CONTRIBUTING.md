@@ -17,6 +17,7 @@ These rules apply to all developers and AI assistants working on this project.
 - **Components**: Check `:presentation-core-ui` for reusable widgets (Buttons, Cards, Inputs) before creating new ones.
 
 ## Logic & Data
+- **Mappers**: All mappers MUST inherit from `dev.stukalo.mealplanner.core.common.mapper.BaseMapper<In, Out>` to ensure consistency in mapping individual objects and lists.
 - **Clock**: Use `kotlin.time.Clock` from the Kotlin standard library for all time-related operations.
 - **Injection**: ALWAYS inject `Clock` via constructor in ViewModels, Repositories, or UseCases.
 - **Strict Prohibition**: NEVER use static time providers like `Clock.System`, `System.currentTimeMillis()`, or the deprecated `kotlinx.datetime.Clock.System`.
@@ -28,5 +29,6 @@ These rules apply to all developers and AI assistants working on this project.
 - **Non-Translatable Strings**: For strings that don't need translation (e.g., format patterns like `%1$s (%2$s)` or the app name), use the `translatable="false"` attribute in the XML.
 
 ## Dependency Management
-- Use Koin for Dependency Injection.
-- Define dependencies in `libs.versions.toml`.
+- **Koin**: Use Koin for Dependency Injection.
+- **`singleOf` Rule**: Prefer using `singleOf(::Implementation) bind Interface::class` over `single { Implementation(get(), ...) } bind Interface::class` to reduce boilerplate.
+- **Versions**: Define dependencies in `libs.versions.toml`.

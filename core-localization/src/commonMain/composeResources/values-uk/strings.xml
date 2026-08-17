@@ -51,6 +51,9 @@
     <string name="validation_error_activity_empty">Будь ласка, оберіть рівень активності</string>
     <string name="validation_error_diet_empty">Будь ласка, оберіть дієту</string>
     <string name="error_unknown">Сталася неочікувана помилка</string>
+    <string name="error_health_unavailable">Відстеження здоров'я недоступне на цьому пристрої</string>
+    <string name="error_health_permissions_denied">Будь ласка, надайте дозволи для синхронізації з сервісами здоров'я</string>
+    <string name="error_health_sync_failed">Не вдалося синхронізувати дані здоров'я</string>
 
     <string name="home_hello">Привіт</string>
     <string name="home_hello_name">%1$s!</string>
@@ -141,6 +144,24 @@
     <string name="settings_theme_green">Зелена</string>
     <string name="settings_theme_lime">Лайм</string>
     <string name="settings_theme_pink">Рожева</string>
+    <string name="settings_health_sync">Синхронізація зі здоров'ям</string>
+    <string name="settings_health_sync_desc">Керуйте обміном даними з Health Connect</string>
+    <string name="settings_health_sync_steps_read">Кроки</string>
+    <string name="settings_health_sync_steps_read_desc">Отримувати кількість кроків з інших додатків</string>
+    <string name="settings_health_sync_weight_read">Імпорт ваги</string>
+    <string name="settings_health_sync_weight_read_desc">Автоматично оновлювати вашу вагу з інших сервісів</string>
+    <string name="settings_health_sync_weight_write">Експорт ваги</string>
+    <string name="settings_health_sync_weight_write_desc">Передавати ваші записи ваги в інші додатки</string>
+    <string name="settings_health_sync_nutrition_read">Імпорт харчування</string>
+    <string name="settings_health_sync_nutrition_read_desc">Отримувати дані про калорії та нутрієнти з інших додатків</string>
+    <string name="settings_health_sync_nutrition_write">Експорт харчування</string>
+    <string name="settings_health_sync_nutrition_write_desc">Ділитися вашими прийомами їжі з іншими додатками</string>
+    <string name="settings_health_sync_manage_all">Керувати в Health Connect</string>
+    <string name="settings_health_sync_revoke_hint">Щоб вимкнути, відкличте дозволи в налаштуваннях системи</string>
+    <string name="settings_health_sync_blocked_hint">Система заблокувала запит. Будь ласка, увімкніть дозволи вручну в налаштуваннях Health Connect.</string>
+    <string name="settings_health_sync_not_installed">Health Connect не встановлено на вашому пристрої</string>
+    <string name="settings_health_sync_install">Встановити Health Connect</string>
+    <string name="settings_health_sync_not_supported">Синхронізація здоров'я не підтримується на цьому пристрої</string>
 
     <string name="meal_schedule_auto_calculate">Автоматичний розрахунок</string>
     <string name="meal_schedule_total_percentage">Загальний відсоток: %1$d%%</string>

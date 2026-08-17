@@ -1,10 +1,10 @@
 package dev.stukalo.mealplanner.presentation.feature.host
 
 import androidx.lifecycle.viewModelScope
+import dev.stukalo.mealplanner.core.platform.LocaleManager
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
-import dev.stukalo.mealplanner.presentation.core.platform.getSystemLocale
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.host.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.host.contract.ViewIntent
@@ -19,9 +19,10 @@ import kotlinx.coroutines.flow.onEach
 class HostViewModel(
     getColorPaletteUseCase: GetColorPaletteUseCase,
     getThemeModeUseCase: GetThemeModeUseCase,
-    getLocaleUseCase: GetLocaleUseCase
+    getLocaleUseCase: GetLocaleUseCase,
+    private val localeManager: LocaleManager
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-    override val initialState = ViewState(locale = getSystemLocale())
+    override val initialState = ViewState(locale = localeManager.getSystemLocale())
 
     init {
         getColorPaletteUseCase()
@@ -36,7 +37,7 @@ class HostViewModel(
 
         getLocaleUseCase()
             .onEach { locale ->
-                updateState { it.copy(locale = locale ?: getSystemLocale()) }
+                updateState { it.copy(locale = locale ?: localeManager.getSystemLocale()) }
             }.launchIn(viewModelScope)
     }
 

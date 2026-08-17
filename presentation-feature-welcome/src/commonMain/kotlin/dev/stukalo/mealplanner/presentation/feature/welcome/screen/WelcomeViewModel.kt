@@ -1,10 +1,10 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen
 
-import dev.stukalo.mealplanner.common.core.date.formatDate
-import dev.stukalo.mealplanner.common.core.date.parseDate
-import dev.stukalo.mealplanner.common.core.exception.AppException
-import dev.stukalo.mealplanner.common.core.validation.ValidationResult
-import dev.stukalo.mealplanner.common.core.validation.onValidationError
+import dev.stukalo.mealplanner.core.common.date.formatDate
+import dev.stukalo.mealplanner.core.common.date.parseDate
+import dev.stukalo.mealplanner.core.common.exception.AppException
+import dev.stukalo.mealplanner.core.common.validation.ValidationResult
+import dev.stukalo.mealplanner.core.common.validation.onValidationError
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.error_unknown
 import dev.stukalo.mealplanner.domain.model.user.UserConstants
@@ -333,7 +333,8 @@ internal class WelcomeViewModel(
                 targetWeight = state.targetWeightInput.toDoubleOrNull() ?: 0.0,
                 physicalActivity = activityLevel,
                 gender = gender,
-                diet = diet
+                diet = diet,
+                stepsTarget = UserConstants.DEFAULT_STEPS_TARGET
             )
 
         coroutineScope {

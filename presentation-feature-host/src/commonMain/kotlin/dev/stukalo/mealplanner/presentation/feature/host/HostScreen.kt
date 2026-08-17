@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.stukalo.mealplanner.core.platform.LocaleManager
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
-import dev.stukalo.mealplanner.presentation.core.platform.setLocale
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.color.palette.ThemeColorPalette
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -27,6 +28,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HostScreen() {
     val viewModel: HostViewModel = koinViewModel()
+    val localeManager: LocaleManager = koinInject()
     val navController = rememberNavController()
 
     MviScreen(
@@ -34,7 +36,7 @@ fun HostScreen() {
         onSingleEvent = {},
         content = { state ->
             LaunchedEffect(state.locale) {
-                setLocale(state.locale)
+                localeManager.setLocale(state.locale)
             }
 
             val navBackStackEntry by navController.currentBackStackEntryAsState()

@@ -54,7 +54,8 @@ kotlin {
             implementation(libs.adaptive)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(projects.commonCore)
+            implementation(projects.coreCommon)
+            implementation(projects.corePlatform)
             implementation(projects.dataNetworkCore)
             implementation(projects.dataNetworkEdamam)
             implementation(projects.dataNetworkEdamamImpl)
@@ -65,6 +66,8 @@ kotlin {
             implementation(projects.dataDatabase)
             implementation(projects.dataRepositoryImpl)
             implementation(projects.dataPreferences)
+            implementation(projects.dataHealth)
+            implementation(projects.dataHealthImpl)
             implementation(projects.domainModel)
             implementation(projects.domainRepository)
             implementation(projects.domainUsecase)
@@ -154,6 +157,7 @@ configure<ApplicationExtension> {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 
     lint {
@@ -163,6 +167,7 @@ configure<ApplicationExtension> {
 
 dependencies {
     debugImplementation(libs.compose.ui.tooling)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 
 compose.desktop {

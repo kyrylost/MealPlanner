@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.settings.screen.contract
 
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
@@ -68,6 +69,12 @@ sealed interface ViewIntent : MviIntent {
     data class OnTargetWeightChange(val targetWeight: String) : ViewIntent
 
     /**
+     * Triggered when the steps target input changes.
+     * @property steps The new steps target value.
+     */
+    data class OnStepsTargetChange(val steps: String) : ViewIntent
+
+    /**
      * Triggered when the physical activity level changes.
      * @property activityLevel The new activity level.
      */
@@ -83,4 +90,48 @@ sealed interface ViewIntent : MviIntent {
      * Triggered when the user saves the profile changes.
      */
     data object OnSaveProfileClick : ViewIntent
+
+    /**
+     * Triggered when the user confirms manual input in the dialog.
+     * @property value The confirmed value.
+     */
+    data class OnManualInputConfirm(val value: String) : ViewIntent
+
+    /**
+     * Triggered when the user toggles a specific health permission.
+     * @property type The permission type.
+     * @property enabled Whether to enable or disable (though disable only opens system settings).
+     */
+    data class OnHealthPermissionToggle(val type: HealthPermissionType, val enabled: Boolean) : ViewIntent
+
+    /**
+     * Triggered when the screen resumes.
+     */
+    data object OnResume : ViewIntent
+
+    /**
+     * Triggered when the health permissions have been handled.
+     */
+    data object OnHealthPermissionsHandled : ViewIntent
+
+    /**
+     * Triggered when the health permissions result is received.
+     * @property isGranted Whether the permissions were granted.
+     */
+    data class OnHealthPermissionsResult(val isGranted: Boolean) : ViewIntent
+
+    /**
+     * Triggered when the user wants to open health settings.
+     */
+    data object OnOpenHealthSettings : ViewIntent
+
+    /**
+     * Triggered when the user wants to install Health Connect.
+     */
+    data object OnInstallHealthConnectClick : ViewIntent
+
+    /**
+     * Triggered when the permission blocked dialog is dismissed.
+     */
+    data object OnDismissPermissionBlockedDialog : ViewIntent
 }

@@ -17,7 +17,8 @@ data class UserDatabaseModel(
     val targetWeight: Double,
     val physicalActivity: ActivityLevelDatabaseModel,
     val gender: GenderDatabaseModel,
-    val diet: DietDatabaseModel
+    val diet: DietDatabaseModel,
+    val stepsTarget: Int
 ) {
     companion object {
         const val DEFAULT_USER_ID = 1L

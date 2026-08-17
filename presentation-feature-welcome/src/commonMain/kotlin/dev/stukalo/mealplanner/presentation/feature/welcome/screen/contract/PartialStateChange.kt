@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract
 
-import dev.stukalo.mealplanner.common.core.date.formatDate
+import dev.stukalo.mealplanner.core.common.date.formatDate
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel

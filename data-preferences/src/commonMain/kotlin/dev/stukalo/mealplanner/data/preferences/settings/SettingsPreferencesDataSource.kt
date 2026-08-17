@@ -14,4 +14,8 @@ interface SettingsPreferencesDataSource {
     fun getLocale(): Flow<String?>
 
     suspend fun setLocale(locale: String)
+
+    fun getLastHealthSyncTime(): Flow<Long?>
+
+    suspend fun setLastHealthSyncTime(time: Long)
 }

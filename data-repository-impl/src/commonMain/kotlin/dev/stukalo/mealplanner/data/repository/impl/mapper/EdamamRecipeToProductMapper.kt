@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
-import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
+import dev.stukalo.mealplanner.core.common.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamNutrientNetModel
 import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamNutrientsNetModel
 import dev.stukalo.mealplanner.data.network.edamam.recipe.model.EdamamRecipeNetModel

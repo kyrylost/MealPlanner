@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.data.repository.impl.mapper
 
-import dev.stukalo.mealplanner.common.core.mapper.BaseMapper
+import dev.stukalo.mealplanner.core.common.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.network.fooddatacentral.model.FDCProductDetailsResponseNetModel
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientDomainModel

@@ -3,8 +3,11 @@ package dev.stukalo.mealplanner.presentation.feature.home.screen.contract
 internal sealed interface PartialStateChange {
     fun reduce(oldState: ViewState): ViewState
 
-    data class UserLoaded(val userName: String) : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = oldState.copy(userName = userName)
+    data class UserLoaded(val userName: String, val stepsTarget: Int) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(
+            userName = userName,
+            stepsTarget = stepsTarget.toFloat()
+        )
     }
 
     data class DailyNormLoaded(val calories: Int, val proteins: Float, val fats: Float, val carbs: Float) :
@@ -29,5 +32,9 @@ internal sealed interface PartialStateChange {
 
     data class Loading(val isLoading: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(isLoading = isLoading)
+    }
+
+    data class StepsLoaded(val steps: Int) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(steps = steps.toFloat())
     }
 }

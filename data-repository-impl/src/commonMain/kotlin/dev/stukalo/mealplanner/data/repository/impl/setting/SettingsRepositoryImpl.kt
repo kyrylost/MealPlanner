@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.map
 /**
  * Implementation of [SettingsRepository].
  * Manages user preferences such as theme palette and locale.
+ *
+ * @property dataSource Preferences data source.
  */
 class SettingsRepositoryImpl(private val dataSource: SettingsPreferencesDataSource) : SettingsRepository {
     /**
