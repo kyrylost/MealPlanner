@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.main.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
+import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.haze.hazeSource
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
@@ -53,6 +55,7 @@ fun MainFlowScreen(appNavController: NavHostController, initialTab: NavigationDi
                 Modifier
                     .fillMaxSize()
                     .hazeSource(hazeState)
+                    .background(Theme.color.background.primary) // workaround to make bottom nav blur work
             )
         }
 
