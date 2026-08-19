@@ -1,6 +1,7 @@
 package dev.stukalo.mealplanner.data.health
 
 import dev.stukalo.mealplanner.data.health.model.HealthPermissionDataModel
+import dev.stukalo.mealplanner.data.health.model.HealthPermissionStatusDataModel
 import dev.stukalo.mealplanner.data.health.model.HealthServiceStatusDataModel
 import dev.stukalo.mealplanner.data.health.model.NutritionHealthModel
 import dev.stukalo.mealplanner.data.health.model.WeightHealthModel
@@ -12,6 +13,26 @@ import kotlin.time.Instant
  * Data source for interacting with platform-specific health services (e.g., Health Connect on Android).
  */
 interface HealthDataSource {
+    companion object {
+        /** ID for step count permission group. */
+        const val ID_STEPS = "steps"
+
+        /** ID for weight read permission group. */
+        const val ID_WEIGHT_READ = "weight_read"
+
+        /** ID for weight write permission group. */
+        const val ID_WEIGHT_WRITE = "weight_write"
+
+        /** ID for nutrition read permission group. */
+        const val ID_NUTRITION_READ = "nutrition_read"
+
+        /** ID for nutrition write permission group. */
+        const val ID_NUTRITION_WRITE = "nutrition_write"
+
+        /** ID for integrated health services (e.g. Apple Health). */
+        const val ID_INTEGRATED = "integrated"
+    }
+
     /**
      * Checks if health tracking is available on the current device.
      */
@@ -30,9 +51,10 @@ interface HealthDataSource {
     /**
      * Requests the necessary health permissions.
      *
-     * @return Result containing true if permissions were granted, false otherwise.
+     * @param permissionId Optional identifier for a specific permission group. If null, requests all.
+     * @return Result containing the set of newly granted permission types.
      */
-    suspend fun requestPermissions(): Result<Boolean>
+    suspend fun requestPermissions(permissionId: String? = null): Result<Set<HealthPermissionDataModel>>
 
     /**
      * Returns a flow of step count for the given [date].
@@ -60,17 +82,7 @@ interface HealthDataSource {
     suspend fun writeNutrition(date: LocalDate, progress: NutritionHealthModel): Result<Unit>
 
     /**
-     * Returns a set of currently granted platform-specific permission strings.
+     * Returns a list of health permission statuses grouped for the current platform.
      */
-    suspend fun getGrantedPermissions(): Set<String>
-
-    /**
-     * Maps a [HealthPermissionDataModel] to a platform-specific permission string.
-     */
-    fun getPermissionString(type: HealthPermissionDataModel): String
-
-    /**
-     * Returns a set of all required platform-specific permission strings.
-     */
-    fun getPermissionStrings(): Set<String>
+    suspend fun getPermissionStatuses(): List<HealthPermissionStatusDataModel>
 }

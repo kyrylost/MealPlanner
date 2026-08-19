@@ -19,8 +19,8 @@ These rules apply to all developers and AI assistants working on this project.
 ## Logic & Data
 - **Mappers**: All mappers MUST inherit from `dev.stukalo.mealplanner.core.common.mapper.BaseMapper<In, Out>` to ensure consistency in mapping individual objects and lists.
 - **Clock**: Use `kotlin.time.Clock` from the Kotlin standard library for all time-related operations.
-- **Injection**: ALWAYS inject `Clock` via constructor in ViewModels, Repositories, or UseCases.
-- **Strict Prohibition**: NEVER use static time providers like `Clock.System`, `System.currentTimeMillis()`, or the deprecated `kotlinx.datetime.Clock.System`.
+- **Injection**: Inject `Clock` via constructor in ViewModels, Repositories, or UseCases *only when time-related logic is required*. Avoid injecting it if it's not used.
+- **Strict Prohibition**: NEVER use static time providers or direct imports of system time like `Clock.System`, `System.currentTimeMillis()`, or the deprecated `kotlinx.datetime.Clock.System`. Always prefer the injected instance to ensure testability.
 - **Magic Numbers**: Avoid magic numbers. Use named constants (val/const) to explain the purpose of values.
 
 ## Localization

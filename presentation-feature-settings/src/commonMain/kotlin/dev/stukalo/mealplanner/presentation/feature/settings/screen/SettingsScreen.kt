@@ -46,6 +46,9 @@ fun SettingsScreen() {
             },
             onTriggerReset = {
                 viewModel.onIntent(ViewIntent.OnHealthPermissionsHandled)
+            },
+            onRequestPermissions = {
+                viewModel.onIntent(ViewIntent.OnRequestHealthPermissions)
             }
         )
 

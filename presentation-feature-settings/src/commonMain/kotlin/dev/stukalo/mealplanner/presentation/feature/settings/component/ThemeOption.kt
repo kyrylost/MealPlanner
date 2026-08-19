@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.feature.settings.screen.component
+package dev.stukalo.mealplanner.presentation.feature.settings.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

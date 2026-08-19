@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.feature.settings.screen.component
+package dev.stukalo.mealplanner.presentation.feature.settings.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

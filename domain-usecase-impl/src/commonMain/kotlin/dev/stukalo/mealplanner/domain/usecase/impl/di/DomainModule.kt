@@ -1,16 +1,14 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.di
 
-import dev.stukalo.mealplanner.domain.usecase.health.GetGrantedHealthPermissionsUseCase
-import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStringUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthServiceStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetStepsUseCase
-import dev.stukalo.mealplanner.domain.usecase.health.IsHealthServiceAvailableUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.RequestHealthPermissionsUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.SyncHealthDataUseCase
-import dev.stukalo.mealplanner.domain.usecase.impl.health.GetGrantedHealthPermissionsUseCaseImpl
-import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthPermissionStringUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthPermissionStatusUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthServiceStatusUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.GetStepsUseCaseImpl
-import dev.stukalo.mealplanner.domain.usecase.impl.health.IsHealthServiceAvailableUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.RequestHealthPermissionsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.SyncHealthDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyNormUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyProgressUseCaseImpl
@@ -134,10 +132,9 @@ val domainModule =
 
         singleOf(::GetStepsUseCaseImpl) bind GetStepsUseCase::class
         singleOf(::SyncHealthDataUseCaseImpl) bind SyncHealthDataUseCase::class
-        singleOf(::IsHealthServiceAvailableUseCaseImpl) bind IsHealthServiceAvailableUseCase::class
         singleOf(::GetHealthServiceStatusUseCaseImpl) bind GetHealthServiceStatusUseCase::class
-        singleOf(::GetGrantedHealthPermissionsUseCaseImpl) bind GetGrantedHealthPermissionsUseCase::class
-        singleOf(::GetHealthPermissionStringUseCaseImpl) bind GetHealthPermissionStringUseCase::class
+        singleOf(::GetHealthPermissionStatusUseCaseImpl) bind GetHealthPermissionStatusUseCase::class
+        singleOf(::RequestHealthPermissionsUseCaseImpl) bind RequestHealthPermissionsUseCase::class
 
         singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
         singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class

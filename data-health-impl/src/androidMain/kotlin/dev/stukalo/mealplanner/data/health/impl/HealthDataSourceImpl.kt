@@ -15,6 +15,7 @@ import androidx.health.connect.client.units.Mass
 import dev.stukalo.mealplanner.data.health.HealthDataSource
 import dev.stukalo.mealplanner.data.health.exception.HealthDataException
 import dev.stukalo.mealplanner.data.health.model.HealthPermissionDataModel
+import dev.stukalo.mealplanner.data.health.model.HealthPermissionStatusDataModel
 import dev.stukalo.mealplanner.data.health.model.HealthServiceStatusDataModel
 import dev.stukalo.mealplanner.data.health.model.NutritionHealthModel
 import dev.stukalo.mealplanner.data.health.model.WeightHealthModel
@@ -69,12 +70,38 @@ internal class HealthDataSourceImpl(private val context: Context, private val cl
         return granted.containsAll(permissions)
     }
 
-    override suspend fun getGrantedPermissions(): Set<String> {
+    private suspend fun getGrantedPermissions(): Set<String> {
         val client = healthConnectClient ?: return emptySet()
         return client.permissionController.getGrantedPermissions()
     }
 
-    override fun getPermissionString(type: HealthPermissionDataModel): String = when (type) {
+    override suspend fun getPermissionStatuses(): List<HealthPermissionStatusDataModel> {
+        val granted = getGrantedPermissions()
+        return listOf(
+            HealthPermissionStatusDataModel(
+                id = HealthDataSource.ID_STEPS,
+                isGranted = granted.contains(getPermissionString(HealthPermissionDataModel.STEPS_READ))
+            ),
+            HealthPermissionStatusDataModel(
+                id = HealthDataSource.ID_WEIGHT_READ,
+                isGranted = granted.contains(getPermissionString(HealthPermissionDataModel.WEIGHT_READ))
+            ),
+            HealthPermissionStatusDataModel(
+                id = HealthDataSource.ID_WEIGHT_WRITE,
+                isGranted = granted.contains(getPermissionString(HealthPermissionDataModel.WEIGHT_WRITE))
+            ),
+            HealthPermissionStatusDataModel(
+                id = HealthDataSource.ID_NUTRITION_READ,
+                isGranted = granted.contains(getPermissionString(HealthPermissionDataModel.NUTRITION_READ))
+            ),
+            HealthPermissionStatusDataModel(
+                id = HealthDataSource.ID_NUTRITION_WRITE,
+                isGranted = granted.contains(getPermissionString(HealthPermissionDataModel.NUTRITION_WRITE))
+            )
+        )
+    }
+
+    private fun getPermissionString(type: HealthPermissionDataModel): String = when (type) {
         HealthPermissionDataModel.STEPS_READ -> HealthPermission.getReadPermission(StepsRecord::class)
         HealthPermissionDataModel.WEIGHT_READ -> HealthPermission.getReadPermission(WeightRecord::class)
         HealthPermissionDataModel.WEIGHT_WRITE -> HealthPermission.getWritePermission(WeightRecord::class)
@@ -82,7 +109,19 @@ internal class HealthDataSourceImpl(private val context: Context, private val cl
         HealthPermissionDataModel.NUTRITION_WRITE -> HealthPermission.getWritePermission(NutritionRecord::class)
     }
 
-    override suspend fun requestPermissions(): Result<Boolean> = Result.success(hasPermissions())
+    override suspend fun requestPermissions(permissionId: String?): Result<Set<HealthPermissionDataModel>> {
+        val typesToRequest = when (permissionId) {
+            null -> HealthPermissionDataModel.entries.toSet()
+            HealthDataSource.ID_STEPS -> setOf(HealthPermissionDataModel.STEPS_READ)
+            HealthDataSource.ID_WEIGHT_READ -> setOf(HealthPermissionDataModel.WEIGHT_READ)
+            HealthDataSource.ID_WEIGHT_WRITE -> setOf(HealthPermissionDataModel.WEIGHT_WRITE)
+            HealthDataSource.ID_NUTRITION_READ -> setOf(HealthPermissionDataModel.NUTRITION_READ)
+            HealthDataSource.ID_NUTRITION_WRITE -> setOf(HealthPermissionDataModel.NUTRITION_WRITE)
+            else -> HealthPermissionDataModel.entries.toSet() // Should be "integrated" or similar, default to all
+        }
+
+        return Result.success(typesToRequest)
+    }
 
     override fun getStepsAsFlow(date: LocalDate): Flow<Int> = flow {
         val client = healthConnectClient ?: return@flow emit(0)
@@ -216,6 +255,4 @@ internal class HealthDataSourceImpl(private val context: Context, private val cl
             Result.failure(HealthDataException.WriteError(e))
         }
     }
-
-    override fun getPermissionStrings(): Set<String> = permissions
 }

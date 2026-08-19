@@ -18,5 +18,5 @@ class IosLocaleManager : LocaleManager {
         }
     }
 
-    override fun getSystemLocale(): String = NSLocale.currentLocale.languageCode ?: "en"
+    override fun getSystemLocale(): String = NSLocale.currentLocale.languageCode
 }

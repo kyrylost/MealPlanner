@@ -33,22 +33,10 @@ import dev.stukalo.mealplanner.core.localization.common_settings
 import dev.stukalo.mealplanner.core.localization.common_value_placeholder
 import dev.stukalo.mealplanner.core.localization.home_steps
 import dev.stukalo.mealplanner.core.localization.settings_health_sync
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_blocked_hint
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_install
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_manage_all
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_not_installed
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_not_supported
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_read
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_read_desc
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_write
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_nutrition_write_desc
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_revoke_hint
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_steps_read
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_steps_read_desc
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_read
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_read_desc
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_write
-import dev.stukalo.mealplanner.core.localization.settings_health_sync_weight_write_desc
 import dev.stukalo.mealplanner.core.localization.settings_language
 import dev.stukalo.mealplanner.core.localization.settings_language_en
 import dev.stukalo.mealplanner.core.localization.settings_language_uk
@@ -75,7 +63,6 @@ import dev.stukalo.mealplanner.core.localization.welcome_height_label
 import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
 import dev.stukalo.mealplanner.core.localization.welcome_weight_label
 import dev.stukalo.mealplanner.core.localization.welcome_weight_unit_kg
-import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
@@ -91,10 +78,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.widget.picker.RulerPicker
 import dev.stukalo.mealplanner.presentation.core.ui.widget.row.SettingsOption
 import dev.stukalo.mealplanner.presentation.core.ui.widget.selector.SegmentedSelector
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ActivityLevelSelection
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.DietTypeSelection
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.HealthSyncToggle
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.component.ThemeOption
+import dev.stukalo.mealplanner.presentation.feature.settings.component.ActivityLevelSelection
+import dev.stukalo.mealplanner.presentation.feature.settings.component.DietTypeSelection
+import dev.stukalo.mealplanner.presentation.feature.settings.component.HealthSyncToggle
+import dev.stukalo.mealplanner.presentation.feature.settings.component.ThemeOption
+import dev.stukalo.mealplanner.presentation.feature.settings.core.platform.healthSyncBlockedHint
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
@@ -130,7 +118,7 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
     if (state.showPermissionBlockedDialog) {
         CommonDialog(
             title = stringResource(Res.string.settings_health_sync),
-            message = stringResource(Res.string.settings_health_sync_blocked_hint),
+            message = stringResource(healthSyncBlockedHint),
             confirmLabel = stringResource(Res.string.common_ok),
             onConfirm = {
                 onIntent(ViewIntent.OnOpenHealthSettings)
@@ -301,54 +289,15 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 Column(verticalArrangement = Arrangement.spacedBy(Theme.spacing.space8)) {
                     when (state.healthServiceStatus) {
                         HealthServiceStatus.AVAILABLE -> {
-                            HealthSyncToggle(
-                                title = stringResource(Res.string.settings_health_sync_steps_read),
-                                description = stringResource(Res.string.settings_health_sync_steps_read_desc),
-                                type = HealthPermissionType.STEPS_READ,
-                                state = state,
-                                onIntent = onIntent,
-                                onShowRevokeDialog = { showRevokeDialog = true }
-                            )
-                            HealthSyncToggle(
-                                title = stringResource(Res.string.settings_health_sync_weight_read),
-                                description = stringResource(Res.string.settings_health_sync_weight_read_desc),
-                                type = HealthPermissionType.WEIGHT_READ,
-                                state = state,
-                                onIntent = onIntent,
-                                onShowRevokeDialog = { showRevokeDialog = true }
-                            )
-                            HealthSyncToggle(
-                                title = stringResource(Res.string.settings_health_sync_weight_write),
-                                description = stringResource(Res.string.settings_health_sync_weight_write_desc),
-                                type = HealthPermissionType.WEIGHT_WRITE,
-                                state = state,
-                                onIntent = onIntent,
-                                onShowRevokeDialog = { showRevokeDialog = true }
-                            )
-                            HealthSyncToggle(
-                                title = stringResource(Res.string.settings_health_sync_nutrition_read),
-                                description = stringResource(Res.string.settings_health_sync_nutrition_read_desc),
-                                type = HealthPermissionType.NUTRITION_READ,
-                                state = state,
-                                onIntent = onIntent,
-                                onShowRevokeDialog = { showRevokeDialog = true }
-                            )
-                            HealthSyncToggle(
-                                title = stringResource(Res.string.settings_health_sync_nutrition_write),
-                                description = stringResource(Res.string.settings_health_sync_nutrition_write_desc),
-                                type = HealthPermissionType.NUTRITION_WRITE,
-                                state = state,
-                                onIntent = onIntent,
-                                onShowRevokeDialog = { showRevokeDialog = true }
-                            )
+                            state.permissionOptions.forEach { option ->
+                                HealthSyncToggle(
+                                    option = option,
+                                    onIntent = onIntent,
+                                    onShowRevokeDialog = { showRevokeDialog = true }
+                                )
+                            }
 
                             Spacer(modifier = Modifier.height(Theme.spacing.space8))
-
-                            PrimaryButton(
-                                text = stringResource(Res.string.settings_health_sync_manage_all),
-                                onClick = { onIntent(ViewIntent.OnOpenHealthSettings) },
-                                modifier = Modifier.fillMaxWidth()
-                            )
 
                             Text(
                                 text = stringResource(Res.string.settings_health_sync_revoke_hint),

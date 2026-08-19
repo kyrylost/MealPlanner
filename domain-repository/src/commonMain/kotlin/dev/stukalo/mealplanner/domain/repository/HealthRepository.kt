@@ -1,5 +1,7 @@
 package dev.stukalo.mealplanner.domain.repository
 
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionStatus
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.progress.DailyProgressDomainModel
@@ -27,19 +29,17 @@ interface HealthRepository {
     suspend fun hasPermissions(): Boolean
 
     /**
-     * Returns a set of currently granted platform-specific permission strings.
+     * Returns a list of health permission statuses grouped for the current platform.
      */
-    suspend fun getGrantedPermissions(): Set<String>
-
-    /**
-     * Maps a [HealthPermissionType] to a platform-specific permission string.
-     */
-    fun getPermissionString(type: HealthPermissionType): String
+    suspend fun getPermissionStatuses(): List<HealthPermissionStatus>
 
     /**
      * Requests necessary permissions for health data access.
+     *
+     * @param group Optional identifier for a specific permission group. If null, requests all.
+     * @return Result containing the set of newly granted permission types.
      */
-    suspend fun requestPermissions(): Result<Boolean>
+    suspend fun requestPermissions(group: HealthPermissionGroup? = null): Result<Set<HealthPermissionType>>
 
     /**
      * Returns a flow of step count for the given date.
@@ -60,9 +60,4 @@ interface HealthRepository {
      * Writes nutrition progress to health services.
      */
     suspend fun writeNutrition(date: LocalDate, progress: DailyProgressDomainModel): Result<Unit>
-
-    /**
-     * Returns the set of platform-specific permission strings required for health sync.
-     */
-    fun getPermissionStrings(): Set<String>
 }

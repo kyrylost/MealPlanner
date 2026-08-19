@@ -6,6 +6,7 @@ import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
+import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 import org.jetbrains.compose.resources.StringResource
 
 /**
@@ -24,7 +25,7 @@ import org.jetbrains.compose.resources.StringResource
  * @property tempTargetWeightInput Temporary input for target weight editing.
  * @property errorMessage Localized error message to display in the UI.
  * @property healthServiceStatus The current status of the health service on the device.
- * @property grantedPermissionTypes Set of currently granted health permission types.
+ * @property permissionOptions List of health permission options for the current platform.
  * @property shouldRequestHealthPermissions Whether to trigger the health permission dialog.
  * @property healthPermissionsToRequest The set of permission strings to request.
  */
@@ -43,9 +44,9 @@ data class ViewState(
     val tempStepsTargetInput: String = "",
     val errorMessage: StringResource? = null,
     val healthServiceStatus: HealthServiceStatus = HealthServiceStatus.NOT_SUPPORTED,
-    val grantedPermissionTypes: Set<HealthPermissionType> = emptySet(),
+    val permissionOptions: List<HealthPermissionOption> = emptyList(),
     val shouldRequestHealthPermissions: Boolean = false,
-    val healthPermissionsToRequest: Set<String> = emptySet(),
+    val healthPermissionsToRequest: Set<HealthPermissionType> = emptySet(),
     val showPermissionBlockedDialog: Boolean = false
 ) : MviViewState {
     companion object {

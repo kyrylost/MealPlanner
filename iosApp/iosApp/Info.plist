@@ -4,5 +4,9 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Meal Planner needs to write your weight and nutrition data to HealthKit to keep your profile in sync.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Meal Planner needs to read your steps, weight, and nutrition data from HealthKit to provide personalized insights.</string>
 </dict>
 </plist>

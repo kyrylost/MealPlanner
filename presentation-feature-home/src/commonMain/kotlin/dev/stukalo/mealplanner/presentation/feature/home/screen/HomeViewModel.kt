@@ -3,7 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.home.screen
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
-import dev.stukalo.mealplanner.domain.usecase.health.GetGrantedHealthPermissionsUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetStepsUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.SyncHealthDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyNormUseCase
@@ -21,6 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
@@ -39,7 +40,7 @@ internal class HomeViewModel(
     private val updateNutrientProgressUseCase: UpdateNutrientProgressUseCase,
     private val getStepsUseCase: GetStepsUseCase,
     private val syncHealthDataUseCase: SyncHealthDataUseCase,
-    private val getGrantedHealthPermissionsUseCase: GetGrantedHealthPermissionsUseCase,
+    private val getHealthPermissionStatusUseCase: GetHealthPermissionStatusUseCase,
     getRecommendedRecipesUseCase: GetRecommendedRecipesUseCase,
     private val clock: Clock
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
@@ -112,7 +113,7 @@ internal class HomeViewModel(
 
     private fun onResume() {
         viewModelScope.launch {
-            val currentPermissions = getGrantedHealthPermissionsUseCase().size
+            val currentPermissions = getHealthPermissionStatusUseCase().first().count { it.isGranted }
 
             // Only sync and refresh steps if permissions were granted (count increased)
             // or if we haven't done an initial sync (count was -1).

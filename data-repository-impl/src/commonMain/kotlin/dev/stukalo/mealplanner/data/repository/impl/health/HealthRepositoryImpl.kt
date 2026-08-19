@@ -2,12 +2,15 @@ package dev.stukalo.mealplanner.data.repository.impl.health
 
 import dev.stukalo.mealplanner.data.health.HealthDataSource
 import dev.stukalo.mealplanner.data.health.exception.HealthDataException
-import dev.stukalo.mealplanner.data.health.model.HealthPermissionDataModel
-import dev.stukalo.mealplanner.data.health.model.HealthServiceStatusDataModel
 import dev.stukalo.mealplanner.data.preferences.settings.SettingsPreferencesDataSource
+import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthPermissionStatusMapper
+import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthPermissionTypeMapper
+import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthServiceStatusMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyProgressMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.WeightHistoryMapper
 import dev.stukalo.mealplanner.domain.model.exception.HealthException
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionStatus
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.progress.DailyProgressDomainModel
@@ -35,6 +38,9 @@ import kotlin.time.Instant
  * @property nutritionRepository Repository for nutrition data.
  * @property weightHistoryMapper Mapper for weight history data.
  * @property dailyProgressMapper Mapper for daily nutrition progress data.
+ * @property healthServiceStatusMapper Mapper for health service status.
+ * @property healthPermissionTypeMapper Mapper for health permission types.
+ * @property healthPermissionStatusMapper Mapper for health permission statuses.
  * @property settingsPreferencesDataSource Data source for health-related preferences.
  * @property clock Provider for current time.
  */
@@ -44,6 +50,9 @@ internal class HealthRepositoryImpl(
     private val nutritionRepository: NutritionRepository,
     private val weightHistoryMapper: WeightHistoryMapper,
     private val dailyProgressMapper: DailyProgressMapper,
+    private val healthServiceStatusMapper: HealthServiceStatusMapper,
+    private val healthPermissionTypeMapper: HealthPermissionTypeMapper,
+    private val healthPermissionStatusMapper: HealthPermissionStatusMapper,
     private val settingsPreferencesDataSource: SettingsPreferencesDataSource,
     private val clock: Clock
 ) : HealthRepository {
@@ -53,16 +62,18 @@ internal class HealthRepositoryImpl(
 
     override suspend fun isAvailable(): Boolean = healthDataSource.isAvailable()
 
-    override suspend fun getStatus(): HealthServiceStatus = healthDataSource.getStatus().toDomain()
+    override suspend fun getStatus(): HealthServiceStatus =
+        healthServiceStatusMapper.mapTo(healthDataSource.getStatus())
 
     override suspend fun hasPermissions(): Boolean = healthDataSource.hasPermissions()
 
-    override suspend fun getGrantedPermissions(): Set<String> = healthDataSource.getGrantedPermissions()
+    override suspend fun getPermissionStatuses(): List<HealthPermissionStatus> =
+        healthPermissionStatusMapper.mapListTo(healthDataSource.getPermissionStatuses())
 
-    override fun getPermissionString(type: HealthPermissionType): String =
-        healthDataSource.getPermissionString(type.toData())
-
-    override suspend fun requestPermissions(): Result<Boolean> = healthDataSource.requestPermissions()
+    override suspend fun requestPermissions(group: HealthPermissionGroup?): Result<Set<HealthPermissionType>> =
+        healthDataSource.requestPermissions(group?.let { healthPermissionStatusMapper.mapGroupToId(it) }).map { types ->
+            healthPermissionTypeMapper.mapListTo(types.toList()).toSet()
+        }
 
     override fun getStepsAsFlow(date: LocalDate): Flow<Int> = healthDataSource.getStepsAsFlow(date)
 
@@ -110,20 +121,4 @@ internal class HealthRepositoryImpl(
     } else {
         this
     }
-
-    private fun HealthServiceStatusDataModel.toDomain(): HealthServiceStatus = when (this) {
-        HealthServiceStatusDataModel.AVAILABLE -> HealthServiceStatus.AVAILABLE
-        HealthServiceStatusDataModel.NOT_SUPPORTED -> HealthServiceStatus.NOT_SUPPORTED
-        HealthServiceStatusDataModel.NOT_INSTALLED -> HealthServiceStatus.NOT_INSTALLED
-    }
-
-    private fun HealthPermissionType.toData(): HealthPermissionDataModel = when (this) {
-        HealthPermissionType.STEPS_READ -> HealthPermissionDataModel.STEPS_READ
-        HealthPermissionType.WEIGHT_READ -> HealthPermissionDataModel.WEIGHT_READ
-        HealthPermissionType.WEIGHT_WRITE -> HealthPermissionDataModel.WEIGHT_WRITE
-        HealthPermissionType.NUTRITION_READ -> HealthPermissionDataModel.NUTRITION_READ
-        HealthPermissionType.NUTRITION_WRITE -> HealthPermissionDataModel.NUTRITION_WRITE
-    }
-
-    override fun getPermissionStrings(): Set<String> = healthDataSource.getPermissionStrings()
 }

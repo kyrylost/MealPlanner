@@ -3,16 +3,15 @@ package dev.stukalo.mealplanner.presentation.feature.settings.screen
 import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.core.common.validation.ValidationResult
 import dev.stukalo.mealplanner.core.platform.LocaleManager
-import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
+import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
-import dev.stukalo.mealplanner.domain.usecase.health.GetGrantedHealthPermissionsUseCase
-import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStringUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthServiceStatusUseCase
-import dev.stukalo.mealplanner.domain.usecase.health.IsHealthServiceAvailableUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.RequestHealthPermissionsUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
@@ -28,11 +27,15 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateStepsTargetUseC
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
+import dev.stukalo.mealplanner.presentation.feature.settings.core.mapper.HealthPermissionMapper
+import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -54,10 +57,10 @@ class SettingsViewModel(
     private val validateWeightUseCase: ValidateWeightUseCase,
     private val validateHeightUseCase: ValidateHeightUseCase,
     private val validateStepsTargetUseCase: ValidateStepsTargetUseCase,
-    private val isHealthServiceAvailableUseCase: IsHealthServiceAvailableUseCase,
     private val getHealthServiceStatusUseCase: GetHealthServiceStatusUseCase,
-    private val getGrantedHealthPermissionsUseCase: GetGrantedHealthPermissionsUseCase,
-    private val getHealthPermissionStringUseCase: GetHealthPermissionStringUseCase,
+    private val getHealthPermissionStatusUseCase: GetHealthPermissionStatusUseCase,
+    private val requestHealthPermissionsUseCase: RequestHealthPermissionsUseCase,
+    private val healthPermissionMapper: HealthPermissionMapper,
     private val localeManager: LocaleManager
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
@@ -87,6 +90,12 @@ class SettingsViewModel(
                 updateState { it.copy(currentThemeMode = mode) }
             }.launchIn(viewModelScope)
 
+        getHealthPermissionStatusUseCase()
+            .map { healthPermissionMapper.mapListTo(it) }
+            .onEach { options ->
+                updateState { it.copy(permissionOptions = options) }
+            }.launchIn(viewModelScope)
+
         viewModelScope.launch {
             refreshPermissions()
         }
@@ -109,13 +118,14 @@ class SettingsViewModel(
             is ViewIntent.OnDietTypeChange -> onDietTypeChange(intent.diet)
             ViewIntent.OnSaveProfileClick -> onSaveProfileClick()
             is ViewIntent.OnManualInputConfirm -> onManualInputConfirm(intent.value)
-            is ViewIntent.OnHealthPermissionToggle -> onHealthPermissionToggle(intent.type, intent.enabled)
+            is ViewIntent.OnHealthPermissionToggle -> onHealthPermissionToggle(intent.option, intent.enabled)
             ViewIntent.OnResume -> onResume()
             ViewIntent.OnHealthPermissionsHandled -> onHealthPermissionsHandled()
             is ViewIntent.OnHealthPermissionsResult -> onHealthPermissionsResult(intent.isGranted)
             ViewIntent.OnDismissPermissionBlockedDialog -> onDismissPermissionBlockedDialog()
             ViewIntent.OnOpenHealthSettings -> onOpenHealthSettings()
             ViewIntent.OnInstallHealthConnectClick -> onInstallHealthConnectClick()
+            ViewIntent.OnRequestHealthPermissions -> onRequestHealthPermissions()
         }
     }
 
@@ -204,17 +214,19 @@ class SettingsViewModel(
     /**
      * Handles the user's request to toggle a health permission.
      *
-     * @param type The type of the health permission.
+     * @param option The permission option to toggle.
      * @param enabled Whether the permission should be enabled or disabled.
      */
-    private fun onHealthPermissionToggle(type: HealthPermissionType, enabled: Boolean) {
+    private fun onHealthPermissionToggle(option: HealthPermissionOption, enabled: Boolean) {
         if (enabled) {
             viewModelScope.launch {
-                val permissionString = getHealthPermissionStringUseCase(type)
+                val result = requestHealthPermissionsUseCase(option.group)
+                val types = result.getOrDefault(defaultValue = emptySet())
+
                 updateState {
                     it.copy(
                         shouldRequestHealthPermissions = true,
-                        healthPermissionsToRequest = setOf(permissionString)
+                        healthPermissionsToRequest = types
                     )
                 }
             }
@@ -243,12 +255,32 @@ class SettingsViewModel(
     private fun onHealthPermissionsResult(isGranted: Boolean) {
         updateState { it.copy(shouldRequestHealthPermissions = false) }
         viewModelScope.launch {
-            val previouslyGranted = viewState.value.grantedPermissionTypes
-            val currentlyGranted = refreshPermissions()
+            val previouslyGrantedGroups =
+                viewState.value.permissionOptions
+                    .filter { it.isGranted }
+                    .map { it.group }
+                    .toSet()
 
-            // If we requested permissions but the state didn't change to granted,
-            // it means the user denied or the system blocked the dialog.
-            if (!isGranted && currentlyGranted.size <= previouslyGranted.size) {
+            refreshPermissions()
+
+            val currentlyGrantedGroups =
+                viewState.value.permissionOptions
+                    .filter { it.isGranted }
+                    .map { it.group }
+                    .toSet()
+
+            val wasAnythingAdded = (currentlyGrantedGroups - previouslyGrantedGroups).isNotEmpty()
+
+            // On iOS, isGranted is reported as true if the dialog finished.
+            // We show the dialog if nothing was actually added to the granted set,
+            // which implies the user either denied or the system blocked the dialog.
+            val shouldShowBlocked = if (isGranted) {
+                !wasAnythingAdded && currentlyGrantedGroups.size < viewState.value.permissionOptions.size
+            } else {
+                true
+            }
+
+            if (shouldShowBlocked) {
                 updateState { it.copy(showPermissionBlockedDialog = true) }
             }
         }
@@ -270,26 +302,25 @@ class SettingsViewModel(
         }
     }
 
+    private fun onRequestHealthPermissions() {
+        viewModelScope.launch {
+            val result = requestHealthPermissionsUseCase()
+            onHealthPermissionsResult(isGranted = result.isSuccess && result.getOrThrow().isNotEmpty())
+        }
+    }
+
     /**
      * Refreshes the set of granted health permissions by querying the health service.
-     *
-     * @return The set of currently granted [HealthPermissionType]s.
      */
-    private suspend fun refreshPermissions(): Set<HealthPermissionType> {
+    private suspend fun refreshPermissions() {
         val status = getHealthServiceStatusUseCase()
         updateState { it.copy(healthServiceStatus = status) }
 
-        if (isHealthServiceAvailableUseCase()) {
-            val grantedStrings = getGrantedHealthPermissionsUseCase()
-            val grantedTypes = HealthPermissionType.entries.filter { type ->
-                val systemString = getHealthPermissionStringUseCase(type)
-                grantedStrings.contains(systemString)
-            }.toSet()
-
-            updateState { it.copy(grantedPermissionTypes = grantedTypes) }
-            return grantedTypes
+        if (status == HealthServiceStatus.AVAILABLE) {
+            val statuses = getHealthPermissionStatusUseCase().first()
+            val options = healthPermissionMapper.mapListTo(statuses)
+            updateState { it.copy(permissionOptions = options) }
         }
-        return emptySet()
     }
 
     private fun saveUser(user: UserDomainModel) {

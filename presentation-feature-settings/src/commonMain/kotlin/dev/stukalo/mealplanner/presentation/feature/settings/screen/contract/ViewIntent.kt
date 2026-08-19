@@ -1,11 +1,11 @@
 package dev.stukalo.mealplanner.presentation.feature.settings.screen.contract
 
-import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
+import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 
 /**
  * The intents for the Settings screen.
@@ -99,10 +99,10 @@ sealed interface ViewIntent : MviIntent {
 
     /**
      * Triggered when the user toggles a specific health permission.
-     * @property type The permission type.
-     * @property enabled Whether to enable or disable (though disable only opens system settings).
+     * @property option The permission option to toggle.
+     * @property enabled Whether to enable or disable.
      */
-    data class OnHealthPermissionToggle(val type: HealthPermissionType, val enabled: Boolean) : ViewIntent
+    data class OnHealthPermissionToggle(val option: HealthPermissionOption, val enabled: Boolean) : ViewIntent
 
     /**
      * Triggered when the screen resumes.
@@ -129,6 +129,11 @@ sealed interface ViewIntent : MviIntent {
      * Triggered when the user wants to install Health Connect.
      */
     data object OnInstallHealthConnectClick : ViewIntent
+
+    /**
+     * Triggered when the platform-specific health permission request should be initiated.
+     */
+    data object OnRequestHealthPermissions : ViewIntent
 
     /**
      * Triggered when the permission blocked dialog is dismissed.

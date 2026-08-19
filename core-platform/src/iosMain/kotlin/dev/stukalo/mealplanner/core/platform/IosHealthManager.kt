@@ -10,8 +10,8 @@ import platform.UIKit.UIApplicationOpenSettingsURLString
 class IosHealthManager : HealthManager {
     override fun openHealthSettings() {
         val settingsUrl = NSURL.URLWithString(UIApplicationOpenSettingsURLString)
-        if (settingsUrl != null && UIApplication.sharedApplication.canOpenURL(settingsUrl)) {
-            UIApplication.sharedApplication.openURL(settingsUrl)
+        if (settingsUrl != null) {
+            UIApplication.sharedApplication.openURL(settingsUrl, emptyMap<Any?, Any?>(), null)
         }
     }
 

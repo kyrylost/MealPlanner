@@ -7,6 +7,9 @@ import dev.stukalo.mealplanner.data.repository.impl.SearchRepositoryImpl
 import dev.stukalo.mealplanner.data.repository.impl.UserRepositoryImpl
 import dev.stukalo.mealplanner.data.repository.impl.WeightRepositoryImpl
 import dev.stukalo.mealplanner.data.repository.impl.health.HealthRepositoryImpl
+import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthPermissionStatusMapper
+import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthPermissionTypeMapper
+import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthServiceStatusMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyNormMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyProgressMapper
 import dev.stukalo.mealplanner.data.repository.impl.mapper.EdamamRecipeToProductMapper
@@ -45,6 +48,9 @@ val dataRepositoryModule =
         singleOf(::WeightHistoryMapper)
         singleOf(::WeightRepositoryImpl) bind WeightRepository::class
 
+        singleOf(::HealthServiceStatusMapper)
+        singleOf(::HealthPermissionTypeMapper)
+        singleOf(::HealthPermissionStatusMapper)
         singleOf(::HealthRepositoryImpl) bind HealthRepository::class
 
         singleOf(::EdamamRecipeToProductMapper)
