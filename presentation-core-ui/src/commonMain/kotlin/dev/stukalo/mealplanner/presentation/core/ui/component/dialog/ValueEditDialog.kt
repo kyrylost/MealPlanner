@@ -1,0 +1,81 @@
+package dev.stukalo.mealplanner.presentation.core.ui.component.dialog
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.component.button.text.TextButton
+import dev.stukalo.mealplanner.presentation.core.ui.component.input.RoundedPlaceholderTextField
+
+@Composable
+fun ValueEditDialog(
+    initialValue: String,
+    onDismissRequest: () -> Unit,
+    onConfirm: (String) -> Unit,
+    title: String,
+    placeholder: String,
+    confirmLabel: String,
+    dismissLabel: String,
+    message: String? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    var textValue by remember { mutableStateOf(initialValue) }
+
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        title = {
+            Column(verticalArrangement = Arrangement.spacedBy(Theme.spacing.space8)) {
+                Text(
+                    text = title,
+                    style = Theme.typography.bold16,
+                    color = Theme.color.text.primary
+                )
+                if (message != null) {
+                    Text(
+                        text = message,
+                        style = Theme.typography.regular12,
+                        color = Theme.color.text.secondary
+                    )
+                }
+            }
+        },
+        text = {
+            RoundedPlaceholderTextField(
+                value = textValue,
+                onValueChange = { textValue = it },
+                placeholder = placeholder,
+                textStyle = Theme.typography.regular12,
+                keyboardOptions = keyboardOptions,
+                modifier =
+                Modifier
+                    .fillMaxWidth()
+            )
+        },
+        confirmButton = {
+            TextButton(
+                text = confirmLabel,
+                onClick = {
+                    onConfirm(textValue)
+                    onDismissRequest()
+                }
+            )
+        },
+        dismissButton = {
+            TextButton(
+                text = dismissLabel,
+                onClick = onDismissRequest
+            )
+        },
+        containerColor = Theme.color.background.secondary,
+        shape = Theme.shape.normalRoundedCornerShape
+    )
+}

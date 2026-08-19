@@ -9,10 +9,10 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_calories
 import dev.stukalo.mealplanner.core.localization.common_kcal
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.component.card.BlurredCard
+import dev.stukalo.mealplanner.presentation.core.ui.component.progress.LinearScaleProgressBar
 import dev.stukalo.mealplanner.presentation.core.ui.haze.HazeState
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
-import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
-import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.LinearScaleProgressBar
 import org.jetbrains.compose.resources.stringResource
 
 /**

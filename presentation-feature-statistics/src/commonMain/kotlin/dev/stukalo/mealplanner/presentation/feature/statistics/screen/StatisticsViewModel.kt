@@ -13,7 +13,7 @@ import dev.stukalo.mealplanner.domain.usecase.statistics.GetWeightHistoryUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.SaveWeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
-import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.MealSlotProgress
+import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState

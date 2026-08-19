@@ -10,11 +10,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.component.card.BlurredCard
+import dev.stukalo.mealplanner.presentation.core.ui.component.progress.circular.LabelPosition
+import dev.stukalo.mealplanner.presentation.core.ui.component.progress.circular.SemiCircularProgressBar
 import dev.stukalo.mealplanner.presentation.core.ui.haze.HazeState
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
-import dev.stukalo.mealplanner.presentation.core.ui.widget.card.BlurredCard
-import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.circular.LabelPosition
-import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.circular.SemiCircularProgressBar
 
 @Composable
 internal fun ActivityGauge(

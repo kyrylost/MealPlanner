@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.core.ui.widget.permission
+package dev.stukalo.mealplanner.presentation.core.ui.component.permission
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

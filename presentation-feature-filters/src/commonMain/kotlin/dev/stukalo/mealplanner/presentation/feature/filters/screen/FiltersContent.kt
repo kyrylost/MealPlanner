@@ -29,11 +29,11 @@ import dev.stukalo.mealplanner.core.localization.common_meal_types
 import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.core.localization.common_unit_grams
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.component.button.primary.PrimaryButton
+import dev.stukalo.mealplanner.presentation.core.ui.component.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
-import dev.stukalo.mealplanner.presentation.core.ui.widget.button.primary.PrimaryButton
-import dev.stukalo.mealplanner.presentation.core.ui.widget.header.CommonHeader
-import dev.stukalo.mealplanner.presentation.feature.filters.screen.component.MealTypeSelector
-import dev.stukalo.mealplanner.presentation.feature.filters.screen.component.RangeInput
+import dev.stukalo.mealplanner.presentation.feature.filters.component.MealTypeSelector
+import dev.stukalo.mealplanner.presentation.feature.filters.component.RangeInput
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource

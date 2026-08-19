@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.domain.model.statistics.PfcCategory
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsInterval
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsPoint
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
+import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 
 /**
  * Represents the state of the Statistics screen.

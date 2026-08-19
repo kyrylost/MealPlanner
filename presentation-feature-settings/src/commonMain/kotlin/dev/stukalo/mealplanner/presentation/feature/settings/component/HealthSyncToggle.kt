@@ -6,7 +6,7 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_steps_read
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_steps_read_desc
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
-import dev.stukalo.mealplanner.presentation.core.ui.widget.row.SettingsToggleOption
+import dev.stukalo.mealplanner.presentation.core.ui.component.row.SettingsToggleOption
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import org.jetbrains.compose.resources.stringResource

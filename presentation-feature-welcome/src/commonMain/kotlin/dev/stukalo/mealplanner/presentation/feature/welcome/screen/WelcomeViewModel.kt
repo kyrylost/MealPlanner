@@ -20,8 +20,8 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateNameUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.model.SnackbarType
 import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
-import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarType
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent

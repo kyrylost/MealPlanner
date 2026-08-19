@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import dev.stukalo.mealplanner.core.platform.HealthManager
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
-import dev.stukalo.mealplanner.presentation.core.ui.widget.permission.HealthPermissionGate
+import dev.stukalo.mealplanner.presentation.core.ui.component.permission.HealthPermissionGate
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import org.koin.compose.koinInject

@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.core.ui.widget.permission
+package dev.stukalo.mealplanner.presentation.core.ui.component.permission
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
@@ -11,7 +11,7 @@ import androidx.health.connect.client.records.WeightRecord
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 
 /**
- * Android implementation of [HealthPermissionGate] using Health Connect.
+ * Android implementation of [dev.stukalo.mealplanner.presentation.core.ui.component.permission.HealthPermissionGate] using Health Connect.
  */
 @Composable
 actual fun HealthPermissionGate(

@@ -21,10 +21,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.zIndex
 import androidx.window.core.layout.WindowSizeClass
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.AppLoader
-import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.AppSnackbarHost
-import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeData
-import dev.stukalo.mealplanner.presentation.feature.welcome.composable.WelcomeHeader
+import dev.stukalo.mealplanner.presentation.core.ui.component.progress.AppLoader
+import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.AppSnackbarHost
+import dev.stukalo.mealplanner.presentation.feature.welcome.component.WelcomeData
+import dev.stukalo.mealplanner.presentation.feature.welcome.component.WelcomeHeader
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewState
 

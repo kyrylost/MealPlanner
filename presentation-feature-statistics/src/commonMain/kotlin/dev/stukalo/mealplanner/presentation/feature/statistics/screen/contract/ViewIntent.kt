@@ -3,6 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract
 import dev.stukalo.mealplanner.domain.model.statistics.PfcCategory
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsInterval
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
+import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 
 /**
  * Represents user intentions on the Statistics screen.

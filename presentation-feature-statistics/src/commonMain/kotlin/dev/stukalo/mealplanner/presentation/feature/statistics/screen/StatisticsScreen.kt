@@ -7,7 +7,7 @@ import dev.stukalo.mealplanner.core.localization.common_breakfast
 import dev.stukalo.mealplanner.core.localization.common_lunch
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
-import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.MealSlotProgress
+import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel

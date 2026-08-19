@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import dev.stukalo.mealplanner.presentation.core.ui.widget.progress.AppLoader
+import dev.stukalo.mealplanner.presentation.core.ui.component.progress.AppLoader
 import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.ViewState
 
 @Composable

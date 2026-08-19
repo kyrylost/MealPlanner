@@ -1,0 +1,19 @@
+package dev.stukalo.mealplanner.presentation.feature.barcodescanner.component
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+
+@Composable
+actual fun BarcodeScannerView(modifier: Modifier, onBarcodeScanned: (String) -> Unit) {
+    Box(
+        modifier = modifier.background(Color.Black),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("Barcode scanner not supported on Desktop", color = Color.White)
+    }
+}

@@ -1,7 +1,7 @@
 package dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract
 
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleEvent
-import dev.stukalo.mealplanner.presentation.core.ui.widget.snackbar.model.SnackbarType
+import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.model.SnackbarType
 import org.jetbrains.compose.resources.StringResource
 
 internal sealed interface ViewEvent : MviSingleEvent {

@@ -1,0 +1,31 @@
+package dev.stukalo.mealplanner.presentation.core.ui.component.button.text.core
+
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import dev.stukalo.mealplanner.presentation.core.ui.component.button.core.ButtonAnimation
+import dev.stukalo.mealplanner.presentation.core.ui.component.button.core.ButtonColorSet
+import dev.stukalo.mealplanner.presentation.core.ui.component.button.core.ButtonDefault
+import dev.stukalo.mealplanner.presentation.core.ui.component.button.core.ButtonTypographySet
+import dev.stukalo.mealplanner.presentation.core.ui.core.AnimationConfiguration
+
+object TextButtonDefault : ButtonDefault {
+    @Composable
+    override fun buttonColor(buttonColorSet: ButtonColorSet) = TextButtonColor(buttonColorSet)
+
+    @Composable
+    override fun buttonSizeSet() = TextButtonSizeSet()
+
+    @Composable
+    override fun animation(): ButtonAnimation = object : ButtonAnimation {
+        override val duration = AnimationConfiguration.Duration.NORMAL
+        override val easing = LinearEasing
+    }
+
+    @Composable
+    override fun corner(): Dp = 0.dp
+
+    @Composable
+    override fun typography(): ButtonTypographySet = TextButtonTypographySet()
+}
