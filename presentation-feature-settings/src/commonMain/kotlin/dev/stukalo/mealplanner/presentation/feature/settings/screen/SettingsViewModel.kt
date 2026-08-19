@@ -30,9 +30,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.settings.core.mapper.HealthPermissionMapper
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.EditableField
+import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -72,28 +74,28 @@ class SettingsViewModel(
     init {
         getUserUseCase()
             .onEach { user ->
-                updateState { it.copy(user = user) }
+                updateState { PartialStateChange.UserLoaded(user).reduce(it) }
             }.launchIn(viewModelScope)
 
-        getLocaleUseCase()
-            .onEach { locale ->
-                updateState { it.copy(currentLanguage = locale ?: localeManager.getSystemLocale()) }
-            }.launchIn(viewModelScope)
-
-        getColorPaletteUseCase()
-            .onEach { palette ->
-                updateState { it.copy(currentColorPalette = palette) }
-            }.launchIn(viewModelScope)
-
-        getThemeModeUseCase()
-            .onEach { mode ->
-                updateState { it.copy(currentThemeMode = mode) }
-            }.launchIn(viewModelScope)
+        combine(
+            getLocaleUseCase(),
+            getColorPaletteUseCase(),
+            getThemeModeUseCase()
+        ) { locale, palette, mode ->
+            PartialStateChange.ConfigLoaded(
+                language = locale ?: localeManager.getSystemLocale(),
+                palette = palette,
+                themeMode = mode
+            )
+        }.onEach { change ->
+            updateState { change.reduce(it) }
+        }.launchIn(viewModelScope)
 
         getHealthPermissionStatusUseCase()
             .map { healthPermissionMapper.mapListTo(it) }
             .onEach { options ->
-                updateState { it.copy(permissionOptions = options) }
+                val status = getHealthServiceStatusUseCase()
+                updateState { PartialStateChange.HealthStatusLoaded(status, options).reduce(it) }
             }.launchIn(viewModelScope)
 
         viewModelScope.launch {
@@ -154,31 +156,36 @@ class SettingsViewModel(
     }
 
     private fun onEditFieldClick(field: EditableField) {
-        updateState { it.copy(editingField = field) }
+        updateState { PartialStateChange.EditingFieldChange(field).reduce(it) }
     }
 
     private fun onDismissEdit() {
-        updateState { it.copy(editingField = null, isManualInputVisible = false, errorMessage = null) }
+        updateState { PartialStateChange.EditingFieldChange(null).reduce(it) }
     }
 
     private fun onManualInputClick() {
-        updateState { it.copy(isManualInputVisible = true, errorMessage = null) }
+        val currentField = viewState.value.editingField
+        updateState { PartialStateChange.EditingFieldChange(currentField).reduce(it) }
     }
 
     private fun onWeightChange(weight: String) {
-        updateState { it.copy(tempWeightInput = weight, errorMessage = null) }
+        updateState { PartialStateChange.TempInput.Weight(weight).reduce(it) }
+        updateState { PartialStateChange.Error(null).reduce(it) }
     }
 
     private fun onHeightChange(height: String) {
-        updateState { it.copy(tempHeightInput = height, errorMessage = null) }
+        updateState { PartialStateChange.TempInput.Height(height).reduce(it) }
+        updateState { PartialStateChange.Error(null).reduce(it) }
     }
 
     private fun onTargetWeightChange(targetWeight: String) {
-        updateState { it.copy(tempTargetWeightInput = targetWeight, errorMessage = null) }
+        updateState { PartialStateChange.TempInput.TargetWeight(targetWeight).reduce(it) }
+        updateState { PartialStateChange.Error(null).reduce(it) }
     }
 
     private fun onStepsTargetChange(steps: String) {
-        updateState { it.copy(tempStepsTargetInput = steps, errorMessage = null) }
+        updateState { PartialStateChange.TempInput.StepsTarget(steps).reduce(it) }
+        updateState { PartialStateChange.Error(null).reduce(it) }
     }
 
     private fun onActivityLevelChange(activityLevel: ActivityLevelDomainModel) {
@@ -200,13 +207,14 @@ class SettingsViewModel(
         val field = state.editingField ?: return
 
         updateState {
-            when (field) {
-                EditableField.Weight -> it.copy(tempWeightInput = value)
-                EditableField.Height -> it.copy(tempHeightInput = value)
-                EditableField.TargetWeight -> it.copy(tempTargetWeightInput = value)
-                EditableField.StepsTarget -> it.copy(tempStepsTargetInput = value)
-                else -> it
+            val inputChange = when (field) {
+                EditableField.Weight -> PartialStateChange.TempInput.Weight(value)
+                EditableField.Height -> PartialStateChange.TempInput.Height(value)
+                EditableField.TargetWeight -> PartialStateChange.TempInput.TargetWeight(value)
+                EditableField.StepsTarget -> PartialStateChange.TempInput.StepsTarget(value)
+                else -> null
             }
+            inputChange?.reduce(it) ?: it
         }
         saveProfile()
     }
@@ -319,17 +327,17 @@ class SettingsViewModel(
         if (status == HealthServiceStatus.AVAILABLE) {
             val statuses = getHealthPermissionStatusUseCase().first()
             val options = healthPermissionMapper.mapListTo(statuses)
-            updateState { it.copy(permissionOptions = options) }
+            updateState { PartialStateChange.HealthStatusLoaded(status, options).reduce(it) }
         }
     }
 
     private fun saveUser(user: UserDomainModel) {
         viewModelScope.launch {
-            updateState { it.copy(isSaving = true) }
+            updateState { PartialStateChange.Saving(true).reduce(it) }
             saveUserDataUseCase(user)
             val dailyNorm = calculateDailyNormUseCase(user)
             saveDailyNormUseCase(dailyNorm)
-            updateState { it.copy(isSaving = false) }
+            updateState { PartialStateChange.Saving(false).reduce(it) }
         }
     }
 
@@ -346,7 +354,7 @@ class SettingsViewModel(
             val weight = state.tempWeightInput.toDoubleOrNull()
             val validationResult = validateWeightUseCase(weight)
             if (validationResult is ValidationResult.Error) {
-                updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
                 return
             }
             weight?.let { updatedUser = updatedUser.copy(weight = it) }
@@ -356,7 +364,7 @@ class SettingsViewModel(
             val height = state.tempHeightInput.toDoubleOrNull()
             val validationResult = validateHeightUseCase(height)
             if (validationResult is ValidationResult.Error) {
-                updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
                 return
             }
             height?.let { updatedUser = updatedUser.copy(height = it) }
@@ -366,7 +374,7 @@ class SettingsViewModel(
             val targetWeight = state.tempTargetWeightInput.toDoubleOrNull()
             val validationResult = validateWeightUseCase(targetWeight)
             if (validationResult is ValidationResult.Error) {
-                updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
                 return
             }
             targetWeight?.let { updatedUser = updatedUser.copy(targetWeight = it) }
@@ -376,23 +384,13 @@ class SettingsViewModel(
             val steps = state.tempStepsTargetInput.toIntOrNull()
             val validationResult = validateStepsTargetUseCase(steps)
             if (validationResult is ValidationResult.Error) {
-                updateState { it.copy(errorMessage = validationResult.exception.toMessage()) }
+                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
                 return
             }
             steps?.let { updatedUser = updatedUser.copy(stepsTarget = it) }
         }
 
         saveUser(updatedUser)
-        updateState {
-            it.copy(
-                editingField = null,
-                isManualInputVisible = false,
-                tempWeightInput = "",
-                tempHeightInput = "",
-                tempTargetWeightInput = "",
-                tempStepsTargetInput = "",
-                errorMessage = null
-            )
-        }
+        updateState { PartialStateChange.EditingFieldChange(null).reduce(it) }
     }
 }

@@ -123,8 +123,6 @@ fun StatisticsChart(
         val primaryColor = Theme.color.brand.primary
         val secondaryColor = Theme.color.text.secondary.copy(alpha = 0.2f)
         val radius = Theme.radius.radius8
-        val spacing4 = Theme.spacing.space4
-        val spacing2 = Theme.spacing.space2
 
         Canvas(modifier = Modifier.fillMaxSize()) {
             if (points.isEmpty()) return@Canvas

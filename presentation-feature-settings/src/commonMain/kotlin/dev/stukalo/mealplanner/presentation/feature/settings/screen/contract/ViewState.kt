@@ -13,7 +13,6 @@ import org.jetbrains.compose.resources.StringResource
  * The view state for the Settings screen.
  *
  * @property user The current user profile data.
- * @property isLoading Whether the screen is currently loading data.
  * @property isSaving Whether a profile update is in progress.
  * @property currentLanguage The currently selected language code (e.g., "en", "uk").
  * @property currentColorPalette The currently selected color palette.
@@ -31,7 +30,6 @@ import org.jetbrains.compose.resources.StringResource
  */
 data class ViewState(
     val user: UserDomainModel? = null,
-    val isLoading: Boolean = false,
     val isSaving: Boolean = false,
     val currentLanguage: String = "",
     val currentColorPalette: ColorPaletteDomainModel = ColorPaletteDomainModel.ORANGE,

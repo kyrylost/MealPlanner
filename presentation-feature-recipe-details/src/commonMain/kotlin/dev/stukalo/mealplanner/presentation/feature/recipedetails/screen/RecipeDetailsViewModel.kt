@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipeByIdUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.LogRecipeConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewState
@@ -31,12 +32,12 @@ class RecipeDetailsViewModel(
 
     private fun loadRecipe(id: String) {
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true) }
+            updateState { PartialStateChange.Loading(true).reduce(it) }
             getRecipeByIdUseCase(id)
                 .onSuccess { recipe ->
-                    updateState { it.copy(recipe = recipe, isLoading = false) }
+                    updateState { PartialStateChange.RecipeLoaded(recipe).reduce(it) }
                 }.onFailure {
-                    updateState { it.copy(isLoading = false) }
+                    updateState { PartialStateChange.Loading(false).reduce(it) }
                 }
         }
     }

@@ -30,10 +30,6 @@ internal sealed interface PartialStateChange {
         )
     }
 
-    data class Loading(val isLoading: Boolean) : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = oldState.copy(isLoading = isLoading)
-    }
-
     data class StepsLoaded(val steps: Int) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(steps = steps.toFloat())
     }

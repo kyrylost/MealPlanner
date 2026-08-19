@@ -14,6 +14,7 @@ import dev.stukalo.mealplanner.domain.usecase.statistics.SaveWeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
+import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState
@@ -71,28 +72,28 @@ class StatisticsViewModel(
                 }
             }
             is ViewIntent.OnMealClick -> {
-                updateState { it.copy(selectedMeal = intent.meal) }
+                updateState { PartialStateChange.SelectedMealChange(intent.meal).reduce(it) }
             }
             ViewIntent.OnDismissDialog -> {
-                updateState { it.copy(selectedMeal = null) }
+                updateState { PartialStateChange.SelectedMealChange(null).reduce(it) }
             }
             is ViewIntent.ChangePfcCategory -> {
-                updateState { it.copy(pfcCategory = intent.category) }
+                updateState { PartialStateChange.PfcConfigChange(intent.category, it.timeInterval).reduce(it) }
                 loadStatistics()
             }
             is ViewIntent.ChangeTimeInterval -> {
-                updateState { it.copy(timeInterval = intent.interval) }
+                updateState { PartialStateChange.PfcConfigChange(it.pfcCategory, intent.interval).reduce(it) }
                 loadStatistics()
             }
             is ViewIntent.ChangeWeightInterval -> {
-                updateState { it.copy(weightInterval = intent.interval) }
+                updateState { PartialStateChange.WeightIntervalChange(intent.interval).reduce(it) }
                 loadWeightHistory()
             }
             ViewIntent.OnAddWeightClick -> {
-                updateState { it.copy(isAddWeightDialogVisible = true) }
+                updateState { PartialStateChange.AddWeightDialogVisibility(true).reduce(it) }
             }
             ViewIntent.OnDismissAddWeightDialog -> {
-                updateState { it.copy(isAddWeightDialogVisible = false) }
+                updateState { PartialStateChange.AddWeightDialogVisibility(false).reduce(it) }
             }
             is ViewIntent.OnAddWeight -> {
                 viewModelScope.launch {
@@ -109,7 +110,7 @@ class StatisticsViewModel(
     private fun loadData() {
         viewModelScope.launch {
             getUserUseCase().collect { user ->
-                updateState { it.copy(targetWeight = user?.targetWeight) }
+                updateState { PartialStateChange.WeightDataLoaded(it.weightData, user?.targetWeight).reduce(it) }
             }
         }
         viewModelScope.launch {
@@ -136,12 +137,12 @@ class StatisticsViewModel(
                     )
                 }
             }.collect { meals ->
-                updateState { it.copy(meals = meals) }
+                updateState { PartialStateChange.MealsLoaded(meals).reduce(it) }
             }
         }
         viewModelScope.launch {
             calculateStreakUseCase().collect { streak ->
-                updateState { it.copy(streak = streak) }
+                updateState { PartialStateChange.StreakLoaded(streak).reduce(it) }
             }
         }
         loadStatistics()
@@ -154,7 +155,7 @@ class StatisticsViewModel(
     private fun loadStatistics() {
         viewModelScope.launch {
             getStatisticsUseCase(viewState.value.timeInterval, viewState.value.pfcCategory).collect { points ->
-                updateState { it.copy(pfcData = points) }
+                updateState { PartialStateChange.PfcDataLoaded(points).reduce(it) }
             }
         }
     }
@@ -165,7 +166,7 @@ class StatisticsViewModel(
     private fun loadWeightHistory() {
         viewModelScope.launch {
             getWeightHistoryUseCase(viewState.value.weightInterval).collect { points ->
-                updateState { it.copy(weightData = points) }
+                updateState { PartialStateChange.WeightDataLoaded(points, it.targetWeight).reduce(it) }
             }
         }
     }

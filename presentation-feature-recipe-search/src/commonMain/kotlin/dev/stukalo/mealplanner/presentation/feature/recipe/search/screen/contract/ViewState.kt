@@ -3,8 +3,4 @@ package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contra
 import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
 
-data class ViewState(
-    val searchQuery: String = "",
-    val filters: FilterDomainModel? = null,
-    val isLoading: Boolean = false
-) : MviViewState
+data class ViewState(val searchQuery: String = "", val filters: FilterDomainModel? = null) : MviViewState

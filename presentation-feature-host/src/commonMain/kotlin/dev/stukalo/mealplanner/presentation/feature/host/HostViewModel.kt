@@ -6,9 +6,11 @@ import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.host.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.host.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.host.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.host.contract.ViewState
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -25,26 +27,27 @@ class HostViewModel(
     override val initialState = ViewState(locale = localeManager.getSystemLocale())
 
     init {
-        getColorPaletteUseCase()
-            .onEach { palette ->
-                updateState { it.copy(colorPalette = palette) }
-            }.launchIn(viewModelScope)
-
-        getThemeModeUseCase()
-            .onEach { mode ->
-                updateState { it.copy(themeMode = mode) }
-            }.launchIn(viewModelScope)
-
-        getLocaleUseCase()
-            .onEach { locale ->
-                updateState { it.copy(locale = locale ?: localeManager.getSystemLocale()) }
-            }.launchIn(viewModelScope)
+        combine(
+            getColorPaletteUseCase(),
+            getThemeModeUseCase(),
+            getLocaleUseCase()
+        ) { palette, mode, locale ->
+            PartialStateChange.ThemeConfigLoaded(
+                colorPalette = palette,
+                themeMode = mode,
+                locale = locale ?: localeManager.getSystemLocale()
+            )
+        }.onEach { change ->
+            updateState { change.reduce(it) }
+        }.launchIn(viewModelScope)
     }
 
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
             is ViewIntent.OnLocaleChanged -> {
-                updateState { it.copy(locale = intent.locale) }
+                updateState {
+                    PartialStateChange.ThemeConfigLoaded(it.colorPalette, it.themeMode, intent.locale).reduce(it)
+                }
             }
         }
     }

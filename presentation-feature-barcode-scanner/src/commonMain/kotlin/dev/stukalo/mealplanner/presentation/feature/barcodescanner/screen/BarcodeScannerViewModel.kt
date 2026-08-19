@@ -5,6 +5,7 @@ import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.barcode_scanner_not_found
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewState
@@ -31,11 +32,12 @@ class BarcodeScannerViewModel(private val getProductByBarcodeUseCase: GetProduct
         when (intent) {
             is ViewIntent.OnBarcodeScanned -> {
                 if (shouldThrottle(intent.barcode) || isProcessing) return
-                updateState { it.copy(barcode = intent.barcode) }
+                updateState { PartialStateChange.BarcodeChange(intent.barcode).reduce(it) }
                 getProductByBarcode(intent.barcode)
             }
             is ViewIntent.OnBarcodeChange -> {
-                updateState { it.copy(barcode = intent.barcode, error = null) }
+                updateState { PartialStateChange.BarcodeChange(intent.barcode).reduce(it) }
+                updateState { PartialStateChange.Error(null).reduce(it) }
             }
             ViewIntent.OnScanClick -> {
                 if (isProcessing) return
@@ -45,10 +47,12 @@ class BarcodeScannerViewModel(private val getProductByBarcodeUseCase: GetProduct
                 sendEvent(ViewEvent.NavigateBack)
             }
             ViewIntent.OnManualEntryClick -> {
-                updateState { it.copy(isManualEntryVisible = true, error = null) }
+                updateState { PartialStateChange.ManualEntryVisibility(true).reduce(it) }
+                updateState { PartialStateChange.Error(null).reduce(it) }
             }
             ViewIntent.OnDismissManualEntry -> {
-                updateState { it.copy(isManualEntryVisible = false, error = null) }
+                updateState { PartialStateChange.ManualEntryVisibility(false).reduce(it) }
+                updateState { PartialStateChange.Error(null).reduce(it) }
             }
         }
     }
@@ -70,29 +74,31 @@ class BarcodeScannerViewModel(private val getProductByBarcodeUseCase: GetProduct
         isProcessing = true
 
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true, error = null) }
+            updateState { PartialStateChange.Loading(true).reduce(it) }
+            updateState { PartialStateChange.Error(null).reduce(it) }
             val result = getProductByBarcodeUseCase(barcode)
 
-            updateState { it.copy(isLoading = false) }
+            updateState { PartialStateChange.Loading(false).reduce(it) }
             isProcessing = false
 
             result.onSuccess { product ->
                 if (product != null) {
-                    updateState { it.copy(isManualEntryVisible = false, isNavigating = true) }
+                    updateState { PartialStateChange.ManualEntryVisibility(false).reduce(it) }
+                    updateState { PartialStateChange.Navigating(true).reduce(it) }
                     sendEvent(ViewEvent.NavigateToProductDetails(barcode))
                     // Reset navigation state after some time to allow scanning again if returned
                     launch {
                         delay(RESET_NAVIGATION_DELAY_MS.milliseconds)
-                        updateState { it.copy(isNavigating = false) }
+                        updateState { PartialStateChange.Navigating(false).reduce(it) }
                     }
                 } else {
                     val errorMessage = getString(Res.string.barcode_scanner_not_found)
-                    updateState { it.copy(error = errorMessage) }
+                    updateState { PartialStateChange.Error(errorMessage).reduce(it) }
                     sendEvent(ViewEvent.ShowError(errorMessage))
                 }
             }.onFailure {
                 val errorMessage = getString(Res.string.barcode_scanner_not_found)
-                updateState { it.copy(error = errorMessage) }
+                updateState { PartialStateChange.Error(errorMessage).reduce(it) }
                 sendEvent(ViewEvent.ShowError(errorMessage))
             }
         }

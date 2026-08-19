@@ -19,7 +19,6 @@ import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSl
  * @property timeInterval The selected time interval for the PFC chart.
  * @property weightInterval The selected time interval for the weight history chart.
  * @property isAddWeightDialogVisible Whether the "Add Weight" dialog is currently shown.
- * @property isLoading Whether the screen is currently loading data.
  */
 data class ViewState(
     val meals: List<MealSlotProgress> = emptyList(),
@@ -31,6 +30,5 @@ data class ViewState(
     val pfcCategory: PfcCategory = PfcCategory.CALORIES,
     val timeInterval: StatisticsInterval = StatisticsInterval.WEEK,
     val weightInterval: StatisticsInterval = StatisticsInterval.WEEK,
-    val isAddWeightDialogVisible: Boolean = false,
-    val isLoading: Boolean = false
+    val isAddWeightDialogVisible: Boolean = false
 ) : MviViewState

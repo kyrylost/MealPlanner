@@ -6,6 +6,7 @@ import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCa
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.LogProductConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.ViewState
@@ -53,17 +54,14 @@ class ProductSearchViewModel(
                 sendEvent(ViewEvent.NavigateBack)
             }
             is ViewIntent.OnQueryChange -> {
-                updateState { it.copy(query = intent.query) }
+                updateState { PartialStateChange.QueryChange(intent.query).reduce(it) }
                 queryFlow.value = intent.query
-                if (intent.query.isBlank()) {
-                    updateState { it.copy(suggestions = emptyList()) }
-                }
             }
             ViewIntent.OnSearchClick -> {
                 searchProducts(viewState.value.query)
             }
             is ViewIntent.OnSuggestionClick -> {
-                updateState { it.copy(query = intent.suggestion, suggestions = emptyList()) }
+                updateState { PartialStateChange.QueryChange(intent.suggestion).reduce(it) }
                 searchProducts(intent.suggestion)
             }
             is ViewIntent.OnProductClick -> {
@@ -81,7 +79,7 @@ class ProductSearchViewModel(
     private fun loadSuggestions(query: String) {
         viewModelScope.launch {
             getAutoCompleteHintsUseCase(query).onSuccess { suggestions ->
-                updateState { it.copy(suggestions = suggestions) }
+                updateState { PartialStateChange.SuggestionsLoaded(suggestions).reduce(it) }
             }
         }
     }
@@ -90,20 +88,18 @@ class ProductSearchViewModel(
         if (query.isBlank()) return
         viewModelScope.launch {
             val flow = getProductsByQueryUseCase(query)
-            updateState { it.copy(productsFlow = flow, suggestions = emptyList()) }
+            updateState { PartialStateChange.ProductsLoaded(flow).reduce(it) }
         }
     }
 
     private fun logProduct(product: ProductDomainModel, weight: Float) {
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true) }
+            updateState { PartialStateChange.Loading(true).reduce(it) }
             logProductConsumedUseCase(product, weight)
                 .onSuccess {
-                    updateState { it.copy(isLoading = false) }
-                    // Maybe show success or navigate back?
-                    // The user said "on click show add to consumed dialog", so probably just log it.
+                    updateState { PartialStateChange.Loading(false).reduce(it) }
                 }.onFailure {
-                    updateState { it.copy(isLoading = false) }
+                    updateState { PartialStateChange.Loading(false).reduce(it) }
                 }
         }
     }

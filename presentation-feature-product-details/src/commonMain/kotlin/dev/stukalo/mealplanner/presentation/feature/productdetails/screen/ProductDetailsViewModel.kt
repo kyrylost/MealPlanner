@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductDetailsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.LogProductConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewState
@@ -27,17 +28,17 @@ class ProductDetailsViewModel(
                 loadProduct()
             }
             is ViewIntent.OnWeightChange -> {
-                updateState { it.copy(weightInput = intent.weight) }
+                updateState { PartialStateChange.WeightChange(intent.weight).reduce(it) }
             }
             ViewIntent.OnAddConsumedClick -> {
-                updateState { it.copy(isDialogVisible = true) }
+                updateState { PartialStateChange.DialogVisibility(true).reduce(it) }
             }
             is ViewIntent.OnConfirmLog -> {
-                updateState { it.copy(isDialogVisible = false) }
+                updateState { PartialStateChange.DialogVisibility(false).reduce(it) }
                 logConsumed(intent.weight)
             }
             ViewIntent.OnDismissDialog -> {
-                updateState { it.copy(isDialogVisible = false) }
+                updateState { PartialStateChange.DialogVisibility(false).reduce(it) }
             }
             ViewIntent.OnBackClick -> {
                 sendEvent(ViewEvent.NavigateBack)
@@ -47,12 +48,12 @@ class ProductDetailsViewModel(
 
     private fun loadProduct() {
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true) }
+            updateState { PartialStateChange.Loading(true).reduce(it) }
             val product = getProductDetailsUseCase(productId, barcode)
             if (product != null) {
-                updateState { it.copy(isLoading = false, product = product, error = null) }
+                updateState { PartialStateChange.ProductLoaded(product).reduce(it) }
             } else {
-                updateState { it.copy(isLoading = false, error = "PRODUCT_NOT_FOUND") }
+                updateState { PartialStateChange.Error("PRODUCT_NOT_FOUND").reduce(it) }
             }
         }
     }
@@ -62,13 +63,13 @@ class ProductDetailsViewModel(
         if (weight <= 0) return
 
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true) }
+            updateState { PartialStateChange.Loading(true).reduce(it) }
             logProductConsumedUseCase(product, weight)
                 .onSuccess {
-                    updateState { it.copy(isLoading = false) }
+                    updateState { PartialStateChange.Loading(false).reduce(it) }
                     sendEvent(ViewEvent.SuccessAdded)
                 }.onFailure {
-                    updateState { it.copy(isLoading = false) }
+                    updateState { PartialStateChange.Loading(false).reduce(it) }
                     sendEvent(ViewEvent.ShowError(it.message ?: "Unknown error"))
                 }
         }

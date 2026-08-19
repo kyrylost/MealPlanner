@@ -8,6 +8,7 @@ import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecommendedRecipesUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
@@ -59,15 +60,16 @@ class RecipeSearchViewModel(
                 searchRecommended()
             }
             is ViewIntent.OnSearchQueryChange -> {
-                updateState { it.copy(searchQuery = intent.query) }
+                updateState { PartialStateChange.SearchQueryChange(intent.query).reduce(it) }
                 searchFlow.value = intent.query
             }
             is ViewIntent.ApplyFilters -> {
-                updateState { it.copy(filters = intent.filters) }
+                updateState { PartialStateChange.FiltersChanged(intent.filters).reduce(it) }
                 searchWithFilters(viewState.value.searchQuery, intent.filters)
             }
             ViewIntent.OnClearFilters -> {
-                updateState { it.copy(filters = null, searchQuery = "") }
+                updateState { PartialStateChange.SearchQueryChange("").reduce(it) }
+                updateState { PartialStateChange.FiltersChanged(null).reduce(it) }
                 searchFlow.value = ""
                 searchRecommended()
             }
