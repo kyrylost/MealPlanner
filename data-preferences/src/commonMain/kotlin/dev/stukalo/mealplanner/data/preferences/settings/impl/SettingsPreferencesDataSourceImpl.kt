@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.data.preferences.settings.impl
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -16,6 +17,7 @@ class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Prefere
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val LOCALE = stringPreferencesKey("locale")
         val LAST_HEALTH_SYNC_TIME = longPreferencesKey("last_health_sync_time")
+        val ONBOARDING_SHOWN = booleanPreferencesKey("onboarding_shown")
     }
 
     override fun getColorPaletteName(): Flow<String?> = dataStore.data
@@ -51,6 +53,15 @@ class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Prefere
     override suspend fun setLastHealthSyncTime(time: Long) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.LAST_HEALTH_SYNC_TIME] = time
+        }
+    }
+
+    override fun isOnboardingShown(): Flow<Boolean> = dataStore.data
+        .map { preferences -> preferences[PreferencesKeys.ONBOARDING_SHOWN] ?: false }
+
+    override suspend fun setOnboardingShown(shown: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ONBOARDING_SHOWN] = shown
         }
     }
 }

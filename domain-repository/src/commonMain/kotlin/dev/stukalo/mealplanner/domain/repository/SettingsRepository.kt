@@ -16,4 +16,8 @@ interface SettingsRepository {
     fun getLocale(): Flow<String?>
 
     suspend fun setLocale(locale: String)
+
+    fun isOnboardingShown(): Flow<Boolean>
+
+    suspend fun setOnboardingShown(shown: Boolean)
 }

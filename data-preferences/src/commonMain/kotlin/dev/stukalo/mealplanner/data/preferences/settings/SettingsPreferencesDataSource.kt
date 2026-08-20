@@ -18,4 +18,8 @@ interface SettingsPreferencesDataSource {
     fun getLastHealthSyncTime(): Flow<Long?>
 
     suspend fun setLastHealthSyncTime(time: Long)
+
+    fun isOnboardingShown(): Flow<Boolean>
+
+    suspend fun setOnboardingShown(shown: Boolean)
 }

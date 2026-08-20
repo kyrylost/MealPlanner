@@ -40,6 +40,16 @@
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>
 
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_finish">Create my profile</string>
+    <string name="onboarding_slide1_title">Your personal nutrition plan</string>
+    <string name="onboarding_slide1_desc">We will automatically calculate the ideal norm of calories, proteins, fats and carbohydrates for your body and goals. No complex formulas — we do it all for you.</string>
+    <string name="onboarding_slide2_title">Tasty, healthy and fast</string>
+    <string name="onboarding_slide2_desc">Find ready-made recipes that fit your limits, or add foods in seconds. Planning breakfast or lunch has never been easier.</string>
+    <string name="onboarding_slide3_title">Reach goals with excitement</string>
+    <string name="onboarding_slide3_desc">Track weight dynamics and maintain a streak of successful days. Turn healthy eating into a game and watch yourself become the best version of yourself.</string>
+
     <string name="validation_error_name_empty">Name cannot be empty</string>
     <string name="validation_error_name_too_short">Name is too short</string>
     <string name="validation_error_date_empty">Birth date cannot be empty</string>

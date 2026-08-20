@@ -8,6 +8,12 @@ import dev.stukalo.mealplanner.presentation.feature.onboarding.screen.Onboarding
 
 fun NavGraphBuilder.onboardingNavigationGraph(navController: NavHostController) {
     composable<NavigationDirection.Onboarding> {
-        OnboardingScreen()
+        OnboardingScreen(
+            onNavigateToWelcome = {
+                navController.navigate(NavigationDirection.Welcome) {
+                    popUpTo(NavigationDirection.Onboarding) { inclusive = true }
+                }
+            }
+        )
     }
 }

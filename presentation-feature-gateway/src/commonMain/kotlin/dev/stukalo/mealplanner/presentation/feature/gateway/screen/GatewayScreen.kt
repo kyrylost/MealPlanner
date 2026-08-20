@@ -6,7 +6,11 @@ import dev.stukalo.mealplanner.presentation.feature.gateway.screen.contract.View
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-internal fun GatewayScreen(onNavigateToMain: () -> Unit, onNavigateToWelcome: () -> Unit) {
+internal fun GatewayScreen(
+    onNavigateToMain: () -> Unit,
+    onNavigateToWelcome: () -> Unit,
+    onNavigateToOnboarding: () -> Unit
+) {
     val viewModel: GatewayViewModel = koinViewModel()
 
     MviScreen(
@@ -15,6 +19,7 @@ internal fun GatewayScreen(onNavigateToMain: () -> Unit, onNavigateToWelcome: ()
             when (event) {
                 ViewEvent.NavigateToMain -> onNavigateToMain()
                 ViewEvent.NavigateToWelcome -> onNavigateToWelcome()
+                ViewEvent.NavigateToOnboarding -> onNavigateToOnboarding()
             }
         },
         content = { state ->

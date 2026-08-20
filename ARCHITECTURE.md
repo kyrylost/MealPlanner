@@ -6,20 +6,32 @@ This document describes the high-level design and architectural patterns used in
 The project follows a **Modular Clean Architecture** with **MVI (Model-View-Intent)** in the presentation layer.
 
 ### Presentation Layer (MVI)
-All feature modules MUST follow the MVI pattern and be structured similarly to `:presentation-feature-welcome`.
+All feature modules MUST follow a strict package structure. Deviation is prohibited.
 
-#### 1. Package Structure
-- `di/`: Koin module definition (`singleOf`, `viewModelOf`).
-- `navigation/`: Navigation graph using `composable<NavigationDirection.Feature>`.
-- `component/`: Reusable `@Composable` UI elements specific to this feature (e.g., sections, headers, cards).
-- `core/`: Internal models (`model/`), mappers (`mapper/`), or platform-specific logic (`platform/`).
-- `screen/`:
-    - `contract/`: The MVI contract.
-    - `[Feature]Screen.kt`: The logic holder and Koin entry point.
-    - `[Feature]Content.kt`: Stateless UI renderer.
-    - `[Feature]ViewModel.kt`: Business logic and state management.
+#### 1. Mandatory Package Structure
+```text
+/src/commonMain/kotlin/.../feature/[name]/
+├── di/                     # Koin module definition
+├── navigation/            # Navigation graph registration
+├── core/                  # Internal logic and feature-specific models
+│   ├── model/             # All UI models and data classes
+│   └── mapper/            # Feature-specific mappers
+├── component/             # Reusable UI widgets for this feature only
+└── screen/                # MVI Components
+    ├── contract/          # ViewState, ViewIntent, ViewEvent, PartialStateChange
+    ├── [Name]Screen.kt    # Logic holder & entry point
+    ├── [Name]Content.kt   # Stateless UI renderer
+    └── [Name]ViewModel.kt # Business logic
+```
 
-#### 2. MVI Contract (`screen/contract/`)
+**CRITICAL RULE**: Do NOT create sub-packages inside `screen/` (e.g., `screen/model/` is FORBIDDEN). All models must reside in `core/model/`.
+
+#### 2. Visibility Modifiers
+To maintain strict encapsulation, almost everything within a feature module MUST be marked as `internal`.
+- **`internal`**: ViewModels, Screens, Contents, MVI contracts, Models, Mappers, and Components.
+- **`public`**: Only the Navigation Graph (usually in `navigation/`) and the Koin Module (usually in `di/`) are public.
+
+#### 3. MVI Contract (`screen/contract/`)
 - `ViewState`: Immutable data class representing the entire UI state.
 - `ViewIntent`: Sealed interface for user actions or system triggers.
 - `ViewEvent`: Sealed interface for one-time events (navigation, snackbars).

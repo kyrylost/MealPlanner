@@ -77,6 +77,7 @@ kotlin {
             implementation(projects.presentationCoreUi)
             implementation(projects.presentationFeatureHost)
             implementation(projects.presentationFeatureGateway)
+            implementation(projects.presentationFeatureOnboarding)
             implementation(projects.presentationFeatureHome)
             implementation(projects.presentationFeatureWelcome)
             implementation(projects.presentationFeatureBarcodeScanner)

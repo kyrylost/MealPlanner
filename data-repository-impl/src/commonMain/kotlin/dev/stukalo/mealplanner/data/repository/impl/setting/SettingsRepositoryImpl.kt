@@ -61,4 +61,10 @@ class SettingsRepositoryImpl(private val dataSource: SettingsPreferencesDataSour
     override suspend fun setLocale(locale: String) {
         dataSource.setLocale(locale)
     }
+
+    override fun isOnboardingShown(): Flow<Boolean> = dataSource.isOnboardingShown()
+
+    override suspend fun setOnboardingShown(shown: Boolean) {
+        dataSource.setOnboardingShown(shown)
+    }
 }

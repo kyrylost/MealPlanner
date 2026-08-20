@@ -38,6 +38,19 @@
     <string name="common_ok">ОК</string>
     <string name="common_cancel">Скасувати</string>
 
+    <string name="onboarding_skip">Пропустити</string>
+    <string name="onboarding_next">Далі</string>
+    <string name="onboarding_finish">Створити мій профіль</string>
+
+    <string name="onboarding_slide1_title">Ваш персональний план харчування</string>
+    <string name="onboarding_slide1_desc">Ми автоматично розрахуємо ідеальну норму калорій, білків, жирів та вуглеводів саме для вашого тіла та цілей. Жодних складних формул — ми все зробимо за вас.</string>
+
+    <string name="onboarding_slide2_title">Смачно, корисно та швидко</string>
+    <string name="onboarding_slide2_desc">Знаходьте готові рецепти, які підходять під ваші ліміти, або додавайте продукти за лічені секунди. Планувати сніданок чи обід ще ніколи не було так просто.</string>
+
+    <string name="onboarding_slide3_title">Досягайте цілей з азартом</string>
+    <string name="onboarding_slide3_desc">Відстежуйте динаміку ваги та підтримуйте серію успішних днів. Перетворюйте здорове харчування на гру і спостерігайте, як ви стаєте кращою версією себе.</string>
+
     <string name="validation_error_name_empty">Ім'я не може бути порожнім</string>
     <string name="validation_error_name_too_short">Ім'я занадто коротке</string>
     <string name="validation_error_date_empty">Дата народження не може бути порожньою</string>

@@ -26,8 +26,10 @@ import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecommendedRecipes
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetColorPaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetThemeModeUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.IsOnboardingShownUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetColorPaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetOnboardingShownUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemeModeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.GetMealScheduleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.TrackMealConsumedUseCaseImpl
@@ -64,8 +66,10 @@ import dev.stukalo.mealplanner.domain.usecase.recipes.LogRecipeConsumedUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.IsOnboardingShownUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetOnboardingShownUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.GetMealScheduleUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
@@ -100,6 +104,8 @@ val domainModule =
         singleOf(::SetThemeModeUseCaseImpl) bind SetThemeModeUseCase::class
         singleOf(::GetLocaleUseCaseImpl) bind GetLocaleUseCase::class
         singleOf(::SetLocaleUseCaseImpl) bind SetLocaleUseCase::class
+        singleOf(::IsOnboardingShownUseCaseImpl) bind IsOnboardingShownUseCase::class
+        singleOf(::SetOnboardingShownUseCaseImpl) bind SetOnboardingShownUseCase::class
 
         singleOf(::GetRecipesUseCaseImpl) bind GetRecipesUseCase::class
         singleOf(::GetRecommendedRecipesUseCaseImpl) bind GetRecommendedRecipesUseCase::class

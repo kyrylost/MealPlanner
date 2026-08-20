@@ -4,16 +4,19 @@ This document contains specific instructions for AI assistants to optimize their
 
 ## General Instructions
 1.  **Read First**: Always read `ARCHITECTURE.md` and `CONTRIBUTING.md` before suggesting changes.
-2.  **Modular Awareness**: Be aware of module boundaries. Do not add circular dependencies.
-3.  **Tool Usage**: Use `find_declaration` and `find_files` to find existing implementations of similar features to use as templates.
+2.  **Modular Awareness**: Be aware of module boundaries. Do not add circular dependencies. Strictly follow the package structure defined in `ARCHITECTURE.md`.
+3.  **Strict Planning**: When proposing an implementation plan (`/plan`), ALWAYS specify the **full file paths** (including packages). This allows for early structure validation.
+4.  **Reference over Guessing**: Use `find_declaration` and `find_files` to find existing implementations of similar features to use as templates.
 
 ## Standard Development Protocols
 
 ### 1. Creating a New Feature
 When implementing a new screen or feature flow:
-- **Contract**: Define `Intent`, `ViewState`, and `SingleEvent` in a dedicated `contract` package.
+- **Structure First**: Verify your target directory structure against `ARCHITECTURE.md` BEFORE creating any files.
+- **Contract**: Define `ViewIntent`, `ViewState`, `ViewEvent`, and `PartialStateChange` in the `screen/contract/` package.
 - **ViewModel**: Implement the ViewModel inheriting from `BaseMviViewModel`.
-- **UI Split**: Create a `[Feature]Screen` (for logic/Koin) and a separate `[Feature]Content` (stateless rendering).
+- **UI Split**: Create a `[Feature]Screen` and a separate `[Feature]Content`.
+- **Forbidden**: Do not put models in `screen/`. They must go to `core/model/`.
 - **Previews**: Ensure the `Content` and all subcomponents have `@Preview` functions.
 - **Navigation**: Register the new screen in the appropriate `NavigationGraph`.
 

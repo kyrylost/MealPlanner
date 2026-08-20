@@ -19,6 +19,7 @@ import dev.stukalo.mealplanner.presentation.feature.gateway.di.gatewayModule
 import dev.stukalo.mealplanner.presentation.feature.home.di.homeModule
 import dev.stukalo.mealplanner.presentation.feature.host.HostScreen
 import dev.stukalo.mealplanner.presentation.feature.host.di.hostModule
+import dev.stukalo.mealplanner.presentation.feature.onboarding.di.onboardingModule
 import dev.stukalo.mealplanner.presentation.feature.product.search.di.productSearchModule
 import dev.stukalo.mealplanner.presentation.feature.productdetails.di.productDetailsModule
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.di.recipeSearchModule
@@ -51,6 +52,7 @@ fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
                     platformModule,
                     domainModule,
                     gatewayModule,
+                    onboardingModule,
                     homeModule,
                     welcomeModule,
                     barcodeScannerModule,

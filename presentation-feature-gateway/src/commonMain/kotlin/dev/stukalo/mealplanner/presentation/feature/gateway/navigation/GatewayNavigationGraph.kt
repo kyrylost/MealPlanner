@@ -19,6 +19,11 @@ fun NavGraphBuilder.gatewayNavigationGraph(navController: NavHostController) {
                 navController.safeNavigation(NavigationDirection.Welcome) {
                     popUpTo(NavigationDirection.Gateway) { inclusive = true }
                 }
+            },
+            onNavigateToOnboarding = {
+                navController.safeNavigation(NavigationDirection.Onboarding) {
+                    popUpTo(NavigationDirection.Gateway) { inclusive = true }
+                }
             }
         )
     }
