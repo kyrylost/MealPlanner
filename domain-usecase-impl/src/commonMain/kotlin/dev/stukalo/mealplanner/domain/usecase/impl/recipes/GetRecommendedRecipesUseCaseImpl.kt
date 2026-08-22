@@ -20,7 +20,20 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 
-class GetRecommendedRecipesUseCaseImpl(
+/**
+ * Implementation of [GetRecommendedRecipesUseCase] that calculates target nutrients for a specific slot
+ * and fetches matching recipes.
+ *
+ * The calculation takes into account the daily norm, already consumed nutrients, and the
+ * nutrient distribution defined for each meal slot.
+ *
+ * @property getMealScheduleUseCase Used to fetch all slots to calculate the "pool" of remaining percentages.
+ * @property getDailyNormUseCase Used to fetch the target daily nutrients.
+ * @property getDailyProgressUseCase Used to fetch currently consumed nutrients for today.
+ * @property getRecipesUseCase Used to fetch recipes based on the calculated targets.
+ * @property clock Provider for current time and date.
+ */
+internal class GetRecommendedRecipesUseCaseImpl(
     private val getMealScheduleUseCase: GetMealScheduleUseCase,
     private val getDailyNormUseCase: GetDailyNormUseCase,
     private val getDailyProgressUseCase: GetDailyProgressUseCase,
@@ -98,7 +111,7 @@ class GetRecommendedRecipesUseCaseImpl(
                     (targetFats.toInt() - MACRO_TOLERANCE)..(targetFats.toInt() + MACRO_TOLERANCE),
                     carbohydrates =
                     (targetCarbs.toInt() - MACRO_TOLERANCE)..(targetCarbs.toInt() + MACRO_TOLERANCE),
-                    mealTypes = activeSlot.mealTypes
+                    mealTypes = listOf(activeSlot.mealType)
                 )
             }
         }

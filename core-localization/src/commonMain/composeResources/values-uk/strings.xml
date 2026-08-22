@@ -86,6 +86,8 @@
     <string name="common_breakfast">Сніданок</string>
     <string name="common_lunch">Обід</string>
     <string name="common_dinner">Вечеря</string>
+    <string name="common_snack">Перекус</string>
+    <string name="common_teatime">Чаювання</string>
     <string name="common_filters">Фільтри</string>
     <string name="common_settings">Налаштування</string>
     <string name="common_statistics">Статистика</string>
@@ -194,6 +196,10 @@
     <string name="statistics_week">Тиждень</string>
     <string name="statistics_month">Місяць</string>
     <string name="statistics_year">Рік</string>
+    <string name="statistics_edit_time">Редагувати час</string>
+    <string name="statistics_edit_time_hint">Введіть час у форматі ГГ:ХХ (наприклад, 08:30)</string>
+    <string name="statistics_invalid_time_format">Невірний формат часу</string>
+    <string name="statistics_meal_order_error">Порушення черговості прийомів їжі</string>
     <string name="statistics_no_data">Немає даних за цей період</string>
 
     <string name="barcode_scanner_title">Сканер штрих-кодів</string>

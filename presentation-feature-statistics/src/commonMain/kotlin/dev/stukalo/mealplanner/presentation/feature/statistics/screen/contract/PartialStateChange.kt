@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.domain.model.statistics.PfcCategory
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsInterval
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsPoint
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
+import kotlinx.datetime.LocalTime
 
 internal sealed interface PartialStateChange {
     fun reduce(oldState: ViewState): ViewState
@@ -44,5 +45,12 @@ internal sealed interface PartialStateChange {
 
     data class AddWeightDialogVisibility(val isVisible: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(isAddWeightDialogVisible = isVisible)
+    }
+
+    data class EditTimeDialogVisibility(val slotId: Int?, val currentTime: LocalTime?) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(
+            editingSlotId = slotId,
+            editingSlotTime = currentTime
+        )
     }
 }

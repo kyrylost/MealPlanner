@@ -85,6 +85,8 @@
     <string name="common_breakfast">Breakfast</string>
     <string name="common_lunch">Lunch</string>
     <string name="common_dinner">Dinner</string>
+    <string name="common_snack">Snack</string>
+    <string name="common_teatime">Teatime</string>
     <string name="common_filters">Filters</string>
     <string name="common_settings">Settings</string>
     <string name="common_statistics">Statistics</string>
@@ -199,6 +201,10 @@
     <string name="statistics_week">Week</string>
     <string name="statistics_month">Month</string>
     <string name="statistics_year">Year</string>
+    <string name="statistics_edit_time">Edit Time</string>
+    <string name="statistics_edit_time_hint">Enter time in HH:mm format (e.g., 08:30)</string>
+    <string name="statistics_invalid_time_format">Invalid time format</string>
+    <string name="statistics_meal_order_error">Meal order violation</string>
     <string name="statistics_no_data">No data for this period</string>
 
     <string name="barcode_scanner_title">Barcode Scanner</string>

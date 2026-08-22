@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
+import dev.stukalo.mealplanner.presentation.core.ui.mapper.toText
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -30,7 +32,7 @@ fun MealTypeSelector(
                 onClick = { onToggleType(type) },
                 label = {
                     Text(
-                        text = type.name.lowercase().replaceFirstChar { it.uppercase() },
+                        text = stringResource(type.toText()),
                         style = if (isSelected) Theme.typography.bold14 else Theme.typography.regular14
                     )
                 },

@@ -5,6 +5,7 @@ import dev.stukalo.mealplanner.domain.model.statistics.StatisticsInterval
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsPoint
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
+import kotlinx.datetime.LocalTime
 
 /**
  * Represents the state of the Statistics screen.
@@ -20,7 +21,7 @@ import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSl
  * @property weightInterval The selected time interval for the weight history chart.
  * @property isAddWeightDialogVisible Whether the "Add Weight" dialog is currently shown.
  */
-data class ViewState(
+internal data class ViewState(
     val meals: List<MealSlotProgress> = emptyList(),
     val selectedMeal: MealSlotProgress? = null,
     val streak: Int = 0,
@@ -30,5 +31,7 @@ data class ViewState(
     val pfcCategory: PfcCategory = PfcCategory.CALORIES,
     val timeInterval: StatisticsInterval = StatisticsInterval.WEEK,
     val weightInterval: StatisticsInterval = StatisticsInterval.WEEK,
-    val isAddWeightDialogVisible: Boolean = false
+    val isAddWeightDialogVisible: Boolean = false,
+    val editingSlotId: Int? = null,
+    val editingSlotTime: LocalTime? = null
 ) : MviViewState

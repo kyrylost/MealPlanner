@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,6 +53,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.component.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.component.recipe.RecipeCard
+import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.feature.home.component.ActivityGauge
 import dev.stukalo.mealplanner.presentation.feature.home.component.BackgroundCircles
@@ -68,12 +70,14 @@ import org.jetbrains.compose.resources.stringResource
  *
  * @param state The current [ViewState] to render.
  * @param recommendedRecipes The paging items for recommended recipes.
+ * @param snackbarHostState State for showing snackbars.
  * @param onIntent Callback to send [ViewIntent]s to the ViewModel.
  */
 @Composable
 internal fun HomeContent(
     state: ViewState,
     recommendedRecipes: LazyPagingItems<RecipeDomainModel>,
+    snackbarHostState: SnackbarHostState,
     onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
@@ -314,6 +318,14 @@ internal fun HomeContent(
                 Spacer(modifier = Modifier.height(LocalBottomBarHeight.current))
             }
         }
+
+        AppSnackbarHost(
+            hostState = snackbarHostState,
+            modifier =
+            Modifier
+                .statusBarsPadding()
+                .align(Alignment.TopCenter)
+        )
     }
 }
 
@@ -333,6 +345,7 @@ private fun HomeContentPreview() {
                         )
                     )
                 ).collectAsLazyPagingItems(),
+                snackbarHostState = remember { SnackbarHostState() },
                 onIntent = {}
             )
         }

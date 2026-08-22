@@ -32,32 +32,29 @@ class GetRecommendedRecipesUseCaseTest {
                 listOf(
                     MealSlotDomainModel(
                         id = 1,
-                        name = "Breakfast",
                         startTime = LocalTime(7, 0),
                         proteinsPercentage = 25,
                         fatsPercentage = 25,
                         carbsPercentage = 25,
-                        mealTypes = listOf(MealTypeDomainModel.BREAKFAST),
+                        mealType = MealTypeDomainModel.BREAKFAST,
                         isConsumed = true
                     ),
                     MealSlotDomainModel(
                         id = 2,
-                        name = "Lunch",
                         startTime = LocalTime(12, 0),
                         proteinsPercentage = 35,
                         fatsPercentage = 35,
                         carbsPercentage = 35,
-                        mealTypes = listOf(MealTypeDomainModel.LUNCH),
+                        mealType = MealTypeDomainModel.LUNCH,
                         isConsumed = false
                     ),
                     MealSlotDomainModel(
                         id = 3,
-                        name = "Dinner",
                         startTime = LocalTime(19, 0),
                         proteinsPercentage = 40,
                         fatsPercentage = 40,
                         carbsPercentage = 40,
-                        mealTypes = listOf(MealTypeDomainModel.DINNER),
+                        mealType = MealTypeDomainModel.DINNER,
                         isConsumed = false
                     )
                 )
@@ -143,32 +140,29 @@ class GetRecommendedRecipesUseCaseTest {
                 listOf(
                     MealSlotDomainModel(
                         1,
-                        "Breakfast",
                         LocalTime(7, 0),
                         25,
                         25,
                         25,
-                        listOf(MealTypeDomainModel.BREAKFAST),
+                        MealTypeDomainModel.BREAKFAST,
                         false
                     ),
                     MealSlotDomainModel(
                         2,
-                        "Lunch",
                         LocalTime(12, 0),
                         35,
                         35,
                         35,
-                        listOf(MealTypeDomainModel.LUNCH),
+                        MealTypeDomainModel.LUNCH,
                         false
                     ),
                     MealSlotDomainModel(
                         3,
-                        "Dinner",
                         LocalTime(19, 0),
                         40,
                         40,
                         40,
-                        listOf(MealTypeDomainModel.DINNER),
+                        MealTypeDomainModel.DINNER,
                         false
                     )
                 )

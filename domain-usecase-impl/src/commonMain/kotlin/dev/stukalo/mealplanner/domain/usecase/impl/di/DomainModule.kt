@@ -33,6 +33,7 @@ import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetOnboardingShownUse
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemeModeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.GetMealScheduleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.TrackMealConsumedUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.slot.UpdateMealSlotTimeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.CalculateStreakUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.GetStatisticsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.GetWeightHistoryUseCaseImpl
@@ -73,6 +74,7 @@ import dev.stukalo.mealplanner.domain.usecase.setting.SetOnboardingShownUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.GetMealScheduleUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
+import dev.stukalo.mealplanner.domain.usecase.slot.UpdateMealSlotTimeUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.GetStatisticsUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.GetWeightHistoryUseCase
@@ -130,6 +132,7 @@ val domainModule =
 
         singleOf(::GetMealScheduleUseCaseImpl) bind GetMealScheduleUseCase::class
         singleOf(::TrackMealConsumedUseCaseImpl) bind TrackMealConsumedUseCase::class
+        singleOf(::UpdateMealSlotTimeUseCaseImpl) bind UpdateMealSlotTimeUseCase::class
 
         singleOf(::GetStatisticsUseCaseImpl) bind GetStatisticsUseCase::class
         singleOf(::GetWeightHistoryUseCaseImpl) bind GetWeightHistoryUseCase::class

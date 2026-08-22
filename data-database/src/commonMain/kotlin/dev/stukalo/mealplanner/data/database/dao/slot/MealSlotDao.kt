@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import dev.stukalo.mealplanner.data.database.model.slot.MealSlotDatabaseModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.LocalTime
 
 @Dao
 interface MealSlotDao {
@@ -23,6 +24,9 @@ interface MealSlotDao {
 
     @Query("UPDATE MealSlotDatabaseModel SET isConsumed = :isConsumed WHERE id = :id")
     suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean)
+
+    @Query("UPDATE MealSlotDatabaseModel SET startTime = :startTime WHERE id = :id")
+    suspend fun updateSlotTime(id: Int, startTime: LocalTime)
 
     @Query("UPDATE MealSlotDatabaseModel SET isConsumed = 0")
     suspend fun resetAllConsumedStatus()

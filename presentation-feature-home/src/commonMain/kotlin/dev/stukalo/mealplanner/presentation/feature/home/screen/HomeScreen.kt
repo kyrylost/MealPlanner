@@ -1,12 +1,8 @@
 package dev.stukalo.mealplanner.presentation.feature.home.screen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
@@ -46,18 +42,12 @@ fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateToRecipeSe
             }
         },
         content = { state ->
-            Box {
-                HomeContent(
-                    state = state,
-                    recommendedRecipes = recommendedRecipes,
-                    onIntent = viewModel::onIntent
-                )
-
-                SnackbarHost(
-                    hostState = snackbarHostState,
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                )
-            }
+            HomeContent(
+                state = state,
+                recommendedRecipes = recommendedRecipes,
+                snackbarHostState = snackbarHostState,
+                onIntent = viewModel::onIntent
+            )
         }
     )
 }

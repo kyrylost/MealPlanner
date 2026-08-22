@@ -4,15 +4,25 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.datetime.LocalTime
 
+/**
+ * Database entity representing a meal slot.
+ *
+ * @property id Unique identifier (auto-generated).
+ * @property startTime The scheduled time for the meal.
+ * @property proteinsPercentage Target percentage of daily protein intake for this slot.
+ * @property fatsPercentage Target percentage of daily fat intake for this slot.
+ * @property carbsPercentage Target percentage of daily carbohydrate intake for this slot.
+ * @property mealType The type of meal.
+ * @property isConsumed Whether the meal has been consumed today.
+ */
 @Entity
 data class MealSlotDatabaseModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val name: String,
     val startTime: LocalTime,
     val proteinsPercentage: Int,
     val fatsPercentage: Int,
     val carbsPercentage: Int,
-    val mealTypes: List<MealTypeDatabaseModel>,
+    val mealType: MealTypeDatabaseModel,
     val isConsumed: Boolean = false
 )

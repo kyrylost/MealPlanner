@@ -20,6 +20,7 @@ import dev.stukalo.mealplanner.core.localization.common_lunch
 import dev.stukalo.mealplanner.core.localization.statistics_mark_as_consumed
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconCheck
+import dev.stukalo.mealplanner.presentation.core.ui.icons.IconEdit
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -29,6 +30,7 @@ fun MealTrackingItem(
     isConsumed: Boolean,
     onConsumedClick: () -> Unit,
     onMealClick: () -> Unit,
+    onEditTimeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -55,6 +57,15 @@ fun MealTrackingItem(
             )
         }
 
+        IconButton(onClick = onEditTimeClick) {
+            Icon(
+                imageVector = IconEdit,
+                contentDescription = null,
+                tint = Theme.color.brand.primary,
+                modifier = Modifier.size(Theme.spacing.space24)
+            )
+        }
+
         IconButton(
             onClick = onConsumedClick,
             enabled = !isConsumed
@@ -78,7 +89,8 @@ private fun MealTrackingItemPreview() {
             calories = 750.0,
             isConsumed = false,
             onConsumedClick = {},
-            onMealClick = {}
+            onMealClick = {},
+            onEditTimeClick = {}
         )
     }
 }

@@ -1,12 +1,16 @@
 package dev.stukalo.mealplanner.presentation.feature.statistics.screen
 
 import androidx.lifecycle.viewModelScope
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.statistics_meal_order_error
+import dev.stukalo.mealplanner.domain.model.exception.MealSlotException
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_CARB_GRAM
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_FAT_GRAM
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_PROTEIN_GRAM
 import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.GetMealScheduleUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
+import dev.stukalo.mealplanner.domain.usecase.slot.UpdateMealSlotTimeUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.GetStatisticsUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.GetWeightHistoryUseCase
@@ -33,18 +37,17 @@ import kotlinx.coroutines.launch
  * @property calculateStreakUseCase UseCase to calculate the current success streak.
  * @property saveWeightUseCase UseCase to save a new weight entry.
  * @property getUserUseCase UseCase to fetch user information (e.g., target weight).
- * @property clock Clock provider for today's date calculation.
  */
-class StatisticsViewModel(
+internal class StatisticsViewModel(
     private val getMealScheduleUseCase: GetMealScheduleUseCase,
     private val getDailyNormUseCase: GetDailyNormUseCase,
     private val trackMealConsumedUseCase: TrackMealConsumedUseCase,
+    private val updateMealSlotTimeUseCase: UpdateMealSlotTimeUseCase,
     private val getStatisticsUseCase: GetStatisticsUseCase,
     private val getWeightHistoryUseCase: GetWeightHistoryUseCase,
     private val calculateStreakUseCase: CalculateStreakUseCase,
     private val saveWeightUseCase: SaveWeightUseCase,
-    private val getUserUseCase: GetUserUseCase,
-    private val clock: kotlin.time.Clock
+    private val getUserUseCase: GetUserUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
@@ -90,14 +93,35 @@ class StatisticsViewModel(
                 loadWeightHistory()
             }
             ViewIntent.OnAddWeightClick -> {
-                updateState { PartialStateChange.AddWeightDialogVisibility(true).reduce(it) }
+                updateState { PartialStateChange.AddWeightDialogVisibility(isVisible = true).reduce(it) }
             }
             ViewIntent.OnDismissAddWeightDialog -> {
-                updateState { PartialStateChange.AddWeightDialogVisibility(false).reduce(it) }
+                updateState { PartialStateChange.AddWeightDialogVisibility(isVisible = false).reduce(it) }
             }
             is ViewIntent.OnAddWeight -> {
                 viewModelScope.launch {
                     saveWeightUseCase(intent.weight)
+                }
+            }
+            is ViewIntent.OnEditTimeClick -> {
+                updateState {
+                    PartialStateChange.EditTimeDialogVisibility(intent.slotId, intent.currentTime).reduce(it)
+                }
+            }
+            ViewIntent.OnDismissTimePickerDialog -> {
+                updateState { PartialStateChange.EditTimeDialogVisibility(null, null).reduce(it) }
+            }
+            is ViewIntent.OnTimeSelected -> {
+                viewModelScope.launch {
+                    val result = updateMealSlotTimeUseCase(intent.slotId, intent.newTime)
+                    if (result.isSuccess) {
+                        updateState { PartialStateChange.EditTimeDialogVisibility(null, null).reduce(it) }
+                    } else {
+                        val error = result.exceptionOrNull()
+                        if (error is MealSlotException.MealOrderViolation) {
+                            sendEvent(ViewEvent.ShowError(Res.string.statistics_meal_order_error))
+                        }
+                    }
                 }
             }
         }
@@ -126,7 +150,8 @@ class StatisticsViewModel(
                     val cGrams = norm.carbohydrates * (slot.carbsPercentage / 100.0)
                     MealSlotProgress(
                         id = slot.id,
-                        name = slot.name,
+                        type = slot.mealType,
+                        startTime = slot.startTime,
                         calories =
                         (pGrams * CALORIES_PER_PROTEIN_GRAM) + (fGrams * CALORIES_PER_FAT_GRAM) +
                             (cGrams * CALORIES_PER_CARB_GRAM),

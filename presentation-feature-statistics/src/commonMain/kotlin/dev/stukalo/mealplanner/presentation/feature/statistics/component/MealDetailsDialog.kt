@@ -17,11 +17,13 @@ import dev.stukalo.mealplanner.core.localization.common_close
 import dev.stukalo.mealplanner.core.localization.common_fats
 import dev.stukalo.mealplanner.core.localization.common_grams_value
 import dev.stukalo.mealplanner.core.localization.common_kcal
-import dev.stukalo.mealplanner.core.localization.common_lunch
 import dev.stukalo.mealplanner.core.localization.common_proteins
+import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.component.button.text.TextButton
+import dev.stukalo.mealplanner.presentation.core.ui.mapper.toText
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
+import kotlinx.datetime.LocalTime
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -31,12 +33,12 @@ import org.jetbrains.compose.resources.stringResource
  * @param onDismissRequest The callback for dismissing the dialog.
  */
 @Composable
-fun MealDetailsDialog(meal: MealSlotProgress, onDismissRequest: () -> Unit) {
+internal fun MealDetailsDialog(meal: MealSlotProgress, onDismissRequest: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
-                text = meal.name,
+                text = stringResource(meal.type.toText()),
                 style = Theme.typography.bold16,
                 color = Theme.color.text.primary
             )
@@ -105,7 +107,8 @@ private fun MealDetailsDialogPreview() {
             meal =
             MealSlotProgress(
                 id = 1,
-                name = stringResource(Res.string.common_lunch),
+                type = MealTypeDomainModel.LUNCH,
+                startTime = LocalTime(12, 0),
                 calories = 750.0,
                 proteins = 35.0,
                 fats = 25.0,

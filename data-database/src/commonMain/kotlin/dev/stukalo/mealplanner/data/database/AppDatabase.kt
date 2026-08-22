@@ -31,7 +31,7 @@ import dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel
         MealSlotDatabaseModel::class,
         WeightHistoryDatabaseModel::class
     ],
-    version = 9
+    version = 10
 )
 @TypeConverters(DateConverter::class, TimeConverter::class, MealTypeConverter::class)
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -47,17 +47,38 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getWeightHistoryDao(): WeightHistoryDao
 }
 
+/**
+ * Provides an instance of [AppDatabase].
+ *
+ * @param builder The Room builder to use.
+ * @return The constructed database instance.
+ */
 fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder
     .setDriver(BundledSQLiteDriver())
     .fallbackToDestructiveMigration(true)
     .build()
 
+/**
+ * Convenience function to get [UserDao] from [AppDatabase].
+ */
 fun getUserDao(appDatabase: AppDatabase): UserDao = appDatabase.getUserDao()
 
+/**
+ * Convenience function to get [DailyNormDao] from [AppDatabase].
+ */
 fun getDailyNormDao(appDatabase: AppDatabase): DailyNormDao = appDatabase.getDailyNormDao()
 
+/**
+ * Convenience function to get [DailyProgressDao] from [AppDatabase].
+ */
 fun getDailyProgressDao(appDatabase: AppDatabase): DailyProgressDao = appDatabase.getDailyProgressDao()
 
+/**
+ * Convenience function to get [MealSlotDao] from [AppDatabase].
+ */
 fun getMealSlotDao(appDatabase: AppDatabase): MealSlotDao = appDatabase.getMealSlotDao()
 
+/**
+ * Convenience function to get [WeightHistoryDao] from [AppDatabase].
+ */
 fun getWeightHistoryDao(appDatabase: AppDatabase): WeightHistoryDao = appDatabase.getWeightHistoryDao()

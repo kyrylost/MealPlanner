@@ -3,11 +3,14 @@ package dev.stukalo.mealplanner.data.database.model.converter
 import androidx.room.TypeConverter
 import dev.stukalo.mealplanner.data.database.model.slot.MealTypeDatabaseModel
 
+/**
+ * Room TypeConverter for [MealTypeDatabaseModel].
+ * Converts between the enum and its string representation.
+ */
 class MealTypeConverter {
     @TypeConverter
-    fun fromString(value: String?): List<MealTypeDatabaseModel>? =
-        value?.split(",")?.filter { it.isNotEmpty() }?.map { MealTypeDatabaseModel.valueOf(it) }
+    fun fromString(value: String?): MealTypeDatabaseModel? = value?.let { MealTypeDatabaseModel.valueOf(it) }
 
     @TypeConverter
-    fun listToString(list: List<MealTypeDatabaseModel>?): String? = list?.joinToString(",") { it.name }
+    fun toString(value: MealTypeDatabaseModel?): String? = value?.name
 }
