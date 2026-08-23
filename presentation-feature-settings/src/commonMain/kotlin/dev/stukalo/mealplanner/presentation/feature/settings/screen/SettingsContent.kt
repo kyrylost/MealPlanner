@@ -33,6 +33,7 @@ import dev.stukalo.mealplanner.core.localization.common_settings
 import dev.stukalo.mealplanner.core.localization.common_value_placeholder
 import dev.stukalo.mealplanner.core.localization.home_steps
 import dev.stukalo.mealplanner.core.localization.settings_health_sync
+import dev.stukalo.mealplanner.core.localization.settings_health_sync_grant_all
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_install
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_not_installed
 import dev.stukalo.mealplanner.core.localization.settings_health_sync_not_supported
@@ -66,6 +67,7 @@ import dev.stukalo.mealplanner.core.localization.welcome_height_label
 import dev.stukalo.mealplanner.core.localization.welcome_height_unit_cm
 import dev.stukalo.mealplanner.core.localization.welcome_weight_label
 import dev.stukalo.mealplanner.core.localization.welcome_weight_unit_kg
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
@@ -310,6 +312,21 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 Column(verticalArrangement = Arrangement.spacedBy(Theme.spacing.space8)) {
                     when (state.healthServiceStatus) {
                         HealthServiceStatus.AVAILABLE -> {
+                            val allGranted = state.permissionOptions.all { it.isGranted }
+                            val isIntegrated = state.permissionOptions.any {
+                                it.group ==
+                                    HealthPermissionGroup.INTEGRATED
+                            }
+
+                            if (!allGranted && !isIntegrated) {
+                                PrimaryButton(
+                                    text = stringResource(Res.string.settings_health_sync_grant_all),
+                                    onClick = { onIntent(ViewIntent.OnRequestHealthPermissions) },
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                Spacer(modifier = Modifier.height(Theme.spacing.space8))
+                            }
+
                             state.permissionOptions.forEach { option ->
                                 HealthSyncToggle(
                                     option = option,

@@ -182,6 +182,7 @@
     <string name="settings_health_sync_ios_title">Інтеграція з Apple Health</string>
     <string name="settings_health_sync_ios_desc">Синхронізуйте кроки, вагу та харчування з Apple Health</string>
     <string name="settings_health_sync_revoke_hint">Щоб вимкнути, відкличте дозволи в налаштуваннях системи</string>
+    <string name="settings_health_sync_grant_all">Надати всі доступи</string>
     <string name="settings_health_sync_blocked_hint_android">Система заблокувала запит. Будь ласка, увімкніть дозволи вручну в налаштуваннях Health Connect.</string>
     <string name="settings_health_sync_blocked_hint_ios">Система заблокувала запит. Будь ласка, дозвольте доступ вручну в налаштуваннях Apple Health (Приватність > Здоров'я).</string>
     <string name="settings_health_sync_not_installed">Health Connect не встановлено на вашому пристрої</string>

@@ -33,7 +33,9 @@ actual fun HealthPermissionGate(
 
     val requestPermissionActivityContract = PermissionController.createRequestPermissionResultContract()
     val launcher = rememberLauncherForActivityResult(requestPermissionActivityContract) { granted ->
-        onPermissionsGranted(granted.containsAll(platformPermissions))
+        // On Android, we consider the request successful if any permission is granted.
+        // The ViewModel will perform a more detailed check by refreshing the granted set.
+        onPermissionsGranted(granted.isNotEmpty())
     }
 
     LaunchedEffect(trigger) {

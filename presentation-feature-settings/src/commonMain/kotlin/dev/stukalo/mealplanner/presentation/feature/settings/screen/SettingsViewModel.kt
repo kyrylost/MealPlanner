@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.presentation.feature.settings.screen
 
 import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.core.common.validation.ValidationResult
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
@@ -252,13 +253,11 @@ internal class SettingsViewModel(
         if (enabled) {
             viewModelScope.launch {
                 val result = requestHealthPermissionsUseCase(option.group)
-                val types = result.getOrDefault(defaultValue = emptySet())
-
-                updateState {
-                    it.copy(
-                        shouldRequestHealthPermissions = true,
-                        healthPermissionsToRequest = types
-                    )
+                if (option.group == HealthPermissionGroup.INTEGRATED) {
+                    onHealthPermissionsResult(result.isSuccess)
+                } else {
+                    val types = result.getOrDefault(defaultValue = emptySet())
+                    updateState { PartialStateChange.HealthPermissionsTriggered(types).reduce(it) }
                 }
             }
         } else {
@@ -274,7 +273,7 @@ internal class SettingsViewModel(
                     syncMealRemindersUseCase()
                 }
             } else {
-                updateState { it.copy(shouldRequestNotificationPermission = true) }
+                updateState { PartialStateChange.NotificationPermissionTriggered.reduce(it) }
             }
         } else {
             viewModelScope.launch {
@@ -285,7 +284,7 @@ internal class SettingsViewModel(
     }
 
     private fun onNotificationPermissionResult(isGranted: Boolean) {
-        updateState { it.copy(shouldRequestNotificationPermission = false) }
+        updateState { PartialStateChange.NotificationPermissionHandled.reduce(it) }
         if (isGranted) {
             viewModelScope.launch {
                 setMealRemindersEnabledUseCase(true)
@@ -295,7 +294,7 @@ internal class SettingsViewModel(
     }
 
     private fun onNotificationPermissionHandled() {
-        updateState { it.copy(shouldRequestNotificationPermission = false) }
+        updateState { PartialStateChange.NotificationPermissionHandled.reduce(it) }
     }
 
     private fun onResume() {
@@ -310,7 +309,7 @@ internal class SettingsViewModel(
     }
 
     private fun onHealthPermissionsHandled() {
-        updateState { it.copy(shouldRequestHealthPermissions = false) }
+        updateState { PartialStateChange.HealthPermissionsHandled.reduce(it) }
     }
 
     /**
@@ -319,7 +318,7 @@ internal class SettingsViewModel(
      * @param isGranted Whether the permission was granted by the user.
      */
     private fun onHealthPermissionsResult(isGranted: Boolean) {
-        updateState { it.copy(shouldRequestHealthPermissions = false) }
+        updateState { PartialStateChange.HealthPermissionsHandled.reduce(it) }
         viewModelScope.launch {
             val previouslyGrantedGroups =
                 viewState.value.permissionOptions
@@ -336,24 +335,31 @@ internal class SettingsViewModel(
                     .toSet()
 
             val wasAnythingAdded = (currentlyGrantedGroups - previouslyGrantedGroups).isNotEmpty()
+            val isIntegrated = viewState.value.permissionOptions.any {
+                it.group == HealthPermissionGroup.INTEGRATED
+            }
 
             // On iOS, isGranted is reported as true if the dialog finished.
             // We show the dialog if nothing was actually added to the granted set,
             // which implies the user either denied or the system blocked the dialog.
-            val shouldShowBlocked = if (isGranted) {
+            val shouldShowBlocked = if (isIntegrated) {
+                currentlyGrantedGroups.isEmpty()
+            } else if (isGranted) {
                 !wasAnythingAdded && currentlyGrantedGroups.size < viewState.value.permissionOptions.size
             } else {
-                true
+                // On Android, isGranted is false if not all requested permissions were granted.
+                // We only show the blocked dialog if nothing was added and we had no permissions before.
+                !wasAnythingAdded && previouslyGrantedGroups.isEmpty()
             }
 
             if (shouldShowBlocked) {
-                updateState { it.copy(showPermissionBlockedDialog = true) }
+                updateState { PartialStateChange.PermissionBlockedDialogVisibility(true).reduce(it) }
             }
         }
     }
 
     private fun onDismissPermissionBlockedDialog() {
-        updateState { it.copy(showPermissionBlockedDialog = false) }
+        updateState { PartialStateChange.PermissionBlockedDialogVisibility(false).reduce(it) }
     }
 
     private fun onOpenHealthSettings() {
@@ -367,7 +373,16 @@ internal class SettingsViewModel(
     private fun onRequestHealthPermissions() {
         viewModelScope.launch {
             val result = requestHealthPermissionsUseCase()
-            onHealthPermissionsResult(isGranted = result.isSuccess && result.getOrThrow().isNotEmpty())
+            val isIntegrated = viewState.value.permissionOptions.any {
+                it.group == HealthPermissionGroup.INTEGRATED
+            }
+
+            if (isIntegrated) {
+                onHealthPermissionsResult(result.isSuccess)
+            } else {
+                val types = result.getOrDefault(defaultValue = emptySet())
+                updateState { PartialStateChange.HealthPermissionsTriggered(types).reduce(it) }
+            }
         }
     }
 
@@ -376,7 +391,7 @@ internal class SettingsViewModel(
      */
     private suspend fun refreshPermissions() {
         val status = getHealthServiceStatusUseCase()
-        updateState { it.copy(healthServiceStatus = status) }
+        updateState { PartialStateChange.HealthServiceStatusChange(status).reduce(it) }
 
         if (status == HealthServiceStatus.AVAILABLE) {
             val statuses = getHealthPermissionStatusUseCase().first()

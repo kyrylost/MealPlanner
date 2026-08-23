@@ -181,6 +181,7 @@
     <string name="settings_health_sync_ios_title">Apple Health Integration</string>
     <string name="settings_health_sync_ios_desc">Sync your steps, weight, and nutrition with Apple Health</string>
     <string name="settings_health_sync_revoke_hint">To disable, please revoke permissions in System Settings</string>
+    <string name="settings_health_sync_grant_all">Grant all permissions</string>
     <string name="settings_health_sync_blocked_hint_android">The system blocked the request. Please enable permissions manually in Health Connect settings.</string>
     <string name="settings_health_sync_blocked_hint_ios">The system blocked the request. Please enable permissions manually in Apple Health settings (Privacy > Health).</string>
     <string name="settings_health_sync_not_installed">Health Connect is not installed on your device</string>

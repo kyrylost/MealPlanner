@@ -9,7 +9,7 @@ import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
  *
  * @param permissions The set of domain-level permission types to request.
  * @param onPermissionsGranted Callback triggered when the permission request is complete.
- *                             Receives true if all requested permissions were granted.
+ *                             Receives true if the request was considered successful (platform-dependent).
  * @param trigger When true, the platform permission dialog will be shown.
  * @param onTriggerReset Callback to reset the trigger state in the ViewModel.
  * @param onRequestPermissions Optional callback for manual permission request triggering (used on iOS).

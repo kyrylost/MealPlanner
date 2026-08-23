@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.StringResource
  * @property shouldRequestHealthPermissions Whether to trigger the health permission dialog.
  * @property healthPermissionsToRequest The set of permission strings to request.
  */
-data class ViewState(
+internal data class ViewState(
     val user: UserDomainModel? = null,
     val isSaving: Boolean = false,
     val currentLanguage: String = "",
@@ -56,27 +56,4 @@ data class ViewState(
         /** Language code for Ukrainian. */
         const val LOCALE_UK = "uk"
     }
-}
-
-/**
- * Represents the fields that can be edited in the settings profile section.
- */
-sealed interface EditableField {
-    /** The user's current weight. */
-    data object Weight : EditableField
-
-    /** The user's height. */
-    data object Height : EditableField
-
-    /** The user's target weight. */
-    data object TargetWeight : EditableField
-
-    /** The user's physical activity level. */
-    data object ActivityLevel : EditableField
-
-    /** The user's target diet type. */
-    data object DietType : EditableField
-
-    /** The user's target daily steps. */
-    data object StepsTarget : EditableField
 }

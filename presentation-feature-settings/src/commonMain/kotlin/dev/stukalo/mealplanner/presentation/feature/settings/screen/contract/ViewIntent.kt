@@ -10,7 +10,7 @@ import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPe
 /**
  * The intents for the Settings screen.
  */
-sealed interface ViewIntent : MviIntent {
+internal sealed interface ViewIntent : MviIntent {
     /**
      * Triggered when the user selects a new color palette.
      * @property palette The selected palette.

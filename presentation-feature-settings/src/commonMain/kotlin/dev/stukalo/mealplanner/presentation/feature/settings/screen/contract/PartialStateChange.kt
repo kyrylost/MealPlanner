@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.settings.screen.contract
 
+import dev.stukalo.mealplanner.domain.model.health.HealthPermissionType
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
@@ -70,5 +71,32 @@ internal sealed interface PartialStateChange {
 
     data class MealRemindersStatusChange(val enabled: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(isMealRemindersEnabled = enabled)
+    }
+
+    data class HealthPermissionsTriggered(val types: Set<HealthPermissionType>) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(
+            shouldRequestHealthPermissions = true,
+            healthPermissionsToRequest = types
+        )
+    }
+
+    object HealthPermissionsHandled : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(shouldRequestHealthPermissions = false)
+    }
+
+    object NotificationPermissionTriggered : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(shouldRequestNotificationPermission = true)
+    }
+
+    object NotificationPermissionHandled : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(shouldRequestNotificationPermission = false)
+    }
+
+    data class PermissionBlockedDialogVisibility(val isVisible: Boolean) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(showPermissionBlockedDialog = isVisible)
+    }
+
+    data class HealthServiceStatusChange(val status: HealthServiceStatus) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(healthServiceStatus = status)
     }
 }
