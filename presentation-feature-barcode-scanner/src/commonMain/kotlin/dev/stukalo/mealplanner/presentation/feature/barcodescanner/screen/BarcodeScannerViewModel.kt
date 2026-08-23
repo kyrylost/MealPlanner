@@ -11,7 +11,6 @@ import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contra
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -21,8 +20,10 @@ import kotlin.time.Duration.Companion.milliseconds
  *
  * @param getProductByBarcodeUseCase The use case to fetch product details by barcode.
  */
-class BarcodeScannerViewModel(private val getProductByBarcodeUseCase: GetProductByBarcodeUseCase, val clock: Clock) :
-    BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
+internal class BarcodeScannerViewModel(
+    private val getProductByBarcodeUseCase: GetProductByBarcodeUseCase,
+    val clock: Clock
+) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
     private val lastScannedBarcodes = mutableMapOf<String, Long>()
@@ -92,14 +93,12 @@ class BarcodeScannerViewModel(private val getProductByBarcodeUseCase: GetProduct
                         updateState { PartialStateChange.Navigating(false).reduce(it) }
                     }
                 } else {
-                    val errorMessage = getString(Res.string.barcode_scanner_not_found)
-                    updateState { PartialStateChange.Error(errorMessage).reduce(it) }
-                    sendEvent(ViewEvent.ShowError(errorMessage))
+                    updateState { PartialStateChange.Error(Res.string.barcode_scanner_not_found).reduce(it) }
+                    sendEvent(ViewEvent.ShowError(Res.string.barcode_scanner_not_found))
                 }
             }.onFailure {
-                val errorMessage = getString(Res.string.barcode_scanner_not_found)
-                updateState { PartialStateChange.Error(errorMessage).reduce(it) }
-                sendEvent(ViewEvent.ShowError(errorMessage))
+                updateState { PartialStateChange.Error(Res.string.barcode_scanner_not_found).reduce(it) }
+                sendEvent(ViewEvent.ShowError(Res.string.barcode_scanner_not_found))
             }
         }
     }

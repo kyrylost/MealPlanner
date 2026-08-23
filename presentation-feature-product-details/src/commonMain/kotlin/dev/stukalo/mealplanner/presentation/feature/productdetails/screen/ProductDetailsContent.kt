@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,6 +54,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.component.header.CommonHeade
 import dev.stukalo.mealplanner.presentation.core.ui.component.nutrition.NutritionSummary
 import dev.stukalo.mealplanner.presentation.core.ui.component.quality.NovaGroupBadge
 import dev.stukalo.mealplanner.presentation.core.ui.component.quality.NutriScoreBadge
+import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewIntent
@@ -65,10 +68,15 @@ import org.jetbrains.compose.resources.stringResource
  * via [state] and communicating user actions through [onIntent].
  *
  * @param state The current [ViewState] to render.
+ * @param snackbarHostState State for showing snackbars.
  * @param onIntent A lambda to handle user [ViewIntent]s.
  */
 @Composable
-fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
+internal fun ProductDetailsContent(
+    state: ViewState,
+    snackbarHostState: SnackbarHostState,
+    onIntent: (ViewIntent) -> Unit
+) {
     val hazeState = rememberHazeState()
     var buttonHeight by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
@@ -222,6 +230,13 @@ fun ProductDetailsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                 modifier = Modifier.align(Alignment.Center)
             )
         }
+
+        AppSnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .statusBarsPadding()
+                .align(Alignment.TopCenter)
+        )
     }
 }
 
@@ -250,6 +265,7 @@ private fun ProductDetailsContentPreview() {
                         imageUrl = "https://example.com/chicken.jpg"
                     )
                 ),
+                snackbarHostState = SnackbarHostState(),
                 onIntent = {}
             )
         }

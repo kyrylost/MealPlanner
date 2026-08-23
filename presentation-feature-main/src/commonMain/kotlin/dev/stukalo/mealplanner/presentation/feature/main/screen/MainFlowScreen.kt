@@ -29,7 +29,7 @@ import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.InnerM
 import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.MainTab
 
 @Composable
-fun MainFlowScreen(appNavController: NavHostController, initialTab: NavigationDirection) {
+internal fun MainFlowScreen(appNavController: NavHostController, initialTab: NavigationDirection) {
     val mainNavController = rememberNavController()
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current

@@ -12,9 +12,9 @@ internal class FDCSearchProductMapper : BaseMapper<FDCSearchProductNetModel, Pro
             model.foodNutrients?.mapNotNull { nutrient ->
                 val type =
                     when (nutrient.nutrientId) {
-                        1003 -> NutrientTypeDomainModel.PROTEIN
-                        1005 -> NutrientTypeDomainModel.CARBOHYDRATES
-                        1004 -> NutrientTypeDomainModel.FATS
+                        FdcNutrientIds.PROTEIN_ID -> NutrientTypeDomainModel.PROTEIN
+                        FdcNutrientIds.CARBS_ID -> NutrientTypeDomainModel.CARBOHYDRATES
+                        FdcNutrientIds.FAT_ID -> NutrientTypeDomainModel.FATS
                         else -> null
                     }
                 type?.let {
@@ -27,14 +27,14 @@ internal class FDCSearchProductMapper : BaseMapper<FDCSearchProductNetModel, Pro
 
         val calories =
             model.foodNutrients
-                ?.find { it.nutrientId == 1008 }
+                ?.find { it.nutrientId == FdcNutrientIds.CALORIES_ID }
                 ?.value
                 ?.toFloat()
         val weight = model.servingSize?.toFloat()
 
         val caloriesTotal =
             if (weight != null && calories != null) {
-                (calories * weight) / 100f
+                (calories * weight) / REFERENCE_WEIGHT_G
             } else {
                 null
             }
@@ -42,7 +42,7 @@ internal class FDCSearchProductMapper : BaseMapper<FDCSearchProductNetModel, Pro
         val nutrientsTotal =
             if (weight != null && nutrients != null) {
                 nutrients.map {
-                    it.copy(amount = (it.amount ?: 0f) * weight / 100f)
+                    it.copy(amount = (it.amount ?: 0f) * weight / REFERENCE_WEIGHT_G)
                 }
             } else {
                 null
@@ -64,5 +64,9 @@ internal class FDCSearchProductMapper : BaseMapper<FDCSearchProductNetModel, Pro
                 null
             }
         )
+    }
+
+    companion object {
+        private const val REFERENCE_WEIGHT_G = 100f
     }
 }

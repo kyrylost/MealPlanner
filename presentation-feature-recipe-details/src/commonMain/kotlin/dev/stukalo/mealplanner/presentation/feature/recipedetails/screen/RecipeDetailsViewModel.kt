@@ -1,6 +1,8 @@
 package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen
 
 import androidx.lifecycle.viewModelScope
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.error_unknown
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipeByIdUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.LogRecipeConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
@@ -10,7 +12,7 @@ import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contrac
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewState
 import kotlinx.coroutines.launch
 
-class RecipeDetailsViewModel(
+internal class RecipeDetailsViewModel(
     private val getRecipeByIdUseCase: GetRecipeByIdUseCase,
     private val logRecipeConsumedUseCase: LogRecipeConsumedUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
@@ -38,6 +40,7 @@ class RecipeDetailsViewModel(
                     updateState { PartialStateChange.RecipeLoaded(recipe).reduce(it) }
                 }.onFailure {
                     updateState { PartialStateChange.Loading(false).reduce(it) }
+                    sendEvent(ViewEvent.ShowError(Res.string.error_unknown))
                 }
         }
     }

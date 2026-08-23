@@ -17,8 +17,8 @@ internal class EdamamRecipeToProductMapper : BaseMapper<EdamamRecipeNetModel, Pr
         val (nutrientsPer100g, caloriesPer100g) =
             if (totalWeight > 0) {
                 totalNutrients.map {
-                    it.copy(amount = (it.amount ?: 0f) / totalWeight * 100f)
-                } to (caloriesTotal?.div(totalWeight)?.times(100f))
+                    it.copy(amount = (it.amount ?: 0f) / totalWeight * REFERENCE_WEIGHT_G)
+                } to (caloriesTotal?.div(totalWeight)?.times(REFERENCE_WEIGHT_G))
             } else {
                 null to null
             }
@@ -46,4 +46,8 @@ internal class EdamamRecipeToProductMapper : BaseMapper<EdamamRecipeNetModel, Pr
             nutrientType = type,
             amount = quantity?.toFloat()
         )
+
+    companion object {
+        private const val REFERENCE_WEIGHT_G = 100f
+    }
 }

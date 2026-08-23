@@ -88,8 +88,8 @@ import dev.stukalo.mealplanner.presentation.feature.settings.component.ActivityL
 import dev.stukalo.mealplanner.presentation.feature.settings.component.DietTypeSelection
 import dev.stukalo.mealplanner.presentation.feature.settings.component.HealthSyncToggle
 import dev.stukalo.mealplanner.presentation.feature.settings.component.ThemeOption
+import dev.stukalo.mealplanner.presentation.feature.settings.core.model.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.core.platform.healthSyncBlockedHint
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource

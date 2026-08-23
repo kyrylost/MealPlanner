@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-class RecipeSearchViewModel(
+internal class RecipeSearchViewModel(
     private val getRecipesUseCase: GetRecipesUseCase,
     private val getRecommendedRecipesUseCase: GetRecommendedRecipesUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {

@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.presentation.feature.settings.screen.contract
+package dev.stukalo.mealplanner.presentation.feature.settings.core.model
 
 /**
  * Represents the fields that can be edited in the settings profile section.

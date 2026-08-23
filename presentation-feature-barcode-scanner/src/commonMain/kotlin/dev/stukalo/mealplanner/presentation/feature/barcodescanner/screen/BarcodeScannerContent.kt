@@ -123,7 +123,7 @@ internal fun BarcodeScannerContent(
                         placeholder = stringResource(Res.string.barcode_scanner_enter_barcode),
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        error = state.error
+                        error = state.error?.let { stringResource(it) }
                     )
 
                     Spacer(modifier = Modifier.height(Theme.spacing.space24))

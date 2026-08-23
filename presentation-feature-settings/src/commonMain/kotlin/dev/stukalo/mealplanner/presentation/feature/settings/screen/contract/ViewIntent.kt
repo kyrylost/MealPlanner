@@ -5,6 +5,7 @@ import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
+import dev.stukalo.mealplanner.presentation.feature.settings.core.model.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 
 /**

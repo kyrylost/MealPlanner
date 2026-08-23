@@ -36,8 +36,8 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.settings.core.mapper.HealthPermissionMapper
+import dev.stukalo.mealplanner.presentation.feature.settings.core.model.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
-import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.ViewIntent

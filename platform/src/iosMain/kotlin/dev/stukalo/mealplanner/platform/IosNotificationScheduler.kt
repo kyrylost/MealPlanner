@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.platform
 
+import dev.stukalo.mealplanner.core.common.util.AppLogger
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.meal_reminder_body
 import dev.stukalo.mealplanner.core.localization.meal_reminder_title
@@ -65,7 +66,11 @@ internal class IosNotificationScheduler : NotificationScheduler {
 
         center.addNotificationRequest(request) { error ->
             if (error != null) {
-                println(error.toString())
+                AppLogger.e(
+                    "IosNotificationScheduler",
+                    "Failed to add notification request",
+                    Exception(error.localizedDescription)
+                )
             }
         }
     }

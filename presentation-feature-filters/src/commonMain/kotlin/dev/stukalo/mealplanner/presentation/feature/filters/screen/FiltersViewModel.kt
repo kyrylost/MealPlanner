@@ -6,7 +6,7 @@ import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.View
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewState
 
-class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
+internal class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
     override suspend fun processIntent(intent: ViewIntent) {

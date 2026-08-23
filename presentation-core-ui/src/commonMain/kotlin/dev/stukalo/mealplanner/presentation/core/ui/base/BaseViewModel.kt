@@ -9,11 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -82,70 +77,5 @@ abstract class BaseViewModel : ViewModel() {
                 }
             }
         }
-    }
-
-    /**
-     * Emits a new value to a [kotlinx.coroutines.flow.StateFlow] if it is a [kotlinx.coroutines.flow.MutableStateFlow].
-     *
-     * This extension function allows emitting a new value to a [kotlinx.coroutines.flow.StateFlow] by casting it to a [kotlinx.coroutines.flow.MutableStateFlow].
-     * If the cast is successful, the new value is emitted. This function is protected and intended to be used
-     * within a class or its subclasses.
-     *
-     * Usage:
-     *
-     * ```kotlin
-     * stateFlow.emitValue(newValue)
-     * ```
-     *
-     * @param value The new value to be emitted.
-     * @receiver The [kotlinx.coroutines.flow.StateFlow] to emit the value to.
-     * @throws IllegalStateException if the [kotlinx.coroutines.flow.StateFlow] is not a [kotlinx.coroutines.flow.MutableStateFlow].
-     */
-// TODO: test
-    protected suspend fun <T> StateFlow<T>.emitValue(value: T) {
-        (this as? MutableStateFlow)?.emit(value)
-    }
-
-    /**
-     * Emits a new value to a [kotlinx.coroutines.flow.SharedFlow] if it is a [kotlinx.coroutines.flow.MutableSharedFlow].
-     *
-     * This extension function allows emitting a new value to a [kotlinx.coroutines.flow.SharedFlow] by casting it to a [kotlinx.coroutines.flow.MutableSharedFlow].
-     * If the cast is successful, the new value is emitted. This function is protected and intended to be used
-     * within a class or its subclasses.
-     *
-     * Usage:
-     *
-     * ```kotlin
-     * sharedFlow.emitValue(newValue)
-     * ```
-     *
-     * @param value The new value to be emitted.
-     * @receiver The [kotlinx.coroutines.flow.SharedFlow] to emit the value to.
-     * @throws IllegalStateException if the [kotlinx.coroutines.flow.SharedFlow] is not a [kotlinx.coroutines.flow.MutableSharedFlow].
-     */
-// TODO: test
-    protected suspend fun <T> SharedFlow<T>.emitValue(value: T) {
-        (this as? MutableSharedFlow)?.emit(value)
-    }
-
-    /**
-     * Updates the value of a [StateFlow] if it is a [MutableStateFlow].
-     *
-     * This extension function updates the current value of a [StateFlow] by casting it to a [MutableStateFlow]
-     * and applying the provided update logic. This function is protected and intended to be used within a class
-     * or its subclasses.
-     *
-     * @param T The type of the value held by the [StateFlow].
-     * @param value The new value to be set in the [StateFlow].
-     *
-     * Usage:
-     *
-     * ```kotlin
-     * stateFlow.updateValue(newValue)
-     * ```
-     */
-// TODO: test
-    protected fun <T> StateFlow<T>.updateValue(value: T) {
-        (this as? MutableStateFlow)?.update { value }
     }
 }

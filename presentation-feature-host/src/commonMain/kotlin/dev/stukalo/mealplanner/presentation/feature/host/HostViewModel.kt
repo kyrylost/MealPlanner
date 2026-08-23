@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.onEach
  * ViewModel for the Host screen.
  * Manages global application state like theme and locale.
  */
-class HostViewModel(
+internal class HostViewModel(
     getColorPaletteUseCase: GetColorPaletteUseCase,
     getThemeModeUseCase: GetThemeModeUseCase,
     getLocaleUseCase: GetLocaleUseCase,

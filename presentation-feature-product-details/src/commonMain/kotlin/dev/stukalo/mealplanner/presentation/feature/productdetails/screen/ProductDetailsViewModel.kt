@@ -10,7 +10,7 @@ import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contra
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewState
 import kotlinx.coroutines.launch
 
-class ProductDetailsViewModel(
+internal class ProductDetailsViewModel(
     private val getProductDetailsUseCase: GetProductDetailsUseCase,
     private val logProductConsumedUseCase: LogProductConsumedUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {

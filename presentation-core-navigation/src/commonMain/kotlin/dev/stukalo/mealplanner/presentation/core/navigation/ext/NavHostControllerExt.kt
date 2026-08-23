@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.Navigator
+import dev.stukalo.mealplanner.core.common.util.AppLogger
 
 /**
  * Safely navigates to a given route, catching any exceptions that occur during navigation.
@@ -26,7 +27,7 @@ fun <T : Any> NavHostController.safeNavigation(
         }
         this.navigate(route, navOptions, navigatorExtras)
     } catch (ex: Exception) {
-        println("Navigation error: ${ex.message}")
+        AppLogger.e("Navigation", "Navigation error: ${ex.message}", ex)
     }
 }
 
@@ -41,6 +42,6 @@ fun <T : Any> NavHostController.safeNavigation(route: T, builder: NavOptionsBuil
     try {
         this.navigate(route, builder)
     } catch (ex: Exception) {
-        println("Navigation error: ${ex.message}")
+        AppLogger.e("Navigation", "Navigation error: ${ex.message}", ex)
     }
 }

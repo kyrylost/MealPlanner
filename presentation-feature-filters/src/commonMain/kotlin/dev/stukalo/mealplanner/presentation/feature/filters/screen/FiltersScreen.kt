@@ -9,7 +9,7 @@ import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.View
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun FiltersScreen(
+internal fun FiltersScreen(
     initialFilters: FilterDomainModel? = null,
     onApplyFilters: (FilterDomainModel) -> Unit,
     onBack: () -> Unit

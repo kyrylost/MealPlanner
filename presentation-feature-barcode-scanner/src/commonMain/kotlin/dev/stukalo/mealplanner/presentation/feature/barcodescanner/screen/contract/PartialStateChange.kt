@@ -1,5 +1,7 @@
 package dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract
 
+import org.jetbrains.compose.resources.StringResource
+
 internal sealed interface PartialStateChange {
     fun reduce(oldState: ViewState): ViewState
 
@@ -19,7 +21,7 @@ internal sealed interface PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(isNavigating = isNavigating)
     }
 
-    data class Error(val message: String?) : PartialStateChange {
+    data class Error(val message: StringResource?) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(error = message, isLoading = false)
     }
 }

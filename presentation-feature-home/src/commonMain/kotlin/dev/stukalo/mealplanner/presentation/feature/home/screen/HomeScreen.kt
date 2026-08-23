@@ -20,7 +20,7 @@ import org.koin.compose.viewmodel.koinViewModel
  * @param onNavigateToRecipeSearch Callback to navigate to recipe search.
  */
 @Composable
-fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateToRecipeSearch: () -> Unit) {
+internal fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateToRecipeSearch: () -> Unit) {
     val viewModel: HomeViewModel = koinViewModel()
     val recommendedRecipes = viewModel.recommendedRecipes.collectAsLazyPagingItems()
     val snackbarHostState = remember { SnackbarHostState() }

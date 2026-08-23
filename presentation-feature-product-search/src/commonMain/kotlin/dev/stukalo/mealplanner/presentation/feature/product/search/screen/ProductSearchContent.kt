@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +30,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.styling.dimension.LocalBottomBarHeight
 import dev.stukalo.mealplanner.presentation.core.ui.component.empty.CommonEmptyState
 import dev.stukalo.mealplanner.presentation.core.ui.component.header.CommonHeader
+import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBarcodeScanner
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
@@ -43,12 +46,14 @@ import org.jetbrains.compose.resources.stringResource
  *
  * @param state The current view state.
  * @param products The paging items for the products list.
+ * @param snackbarHostState State for showing snackbars.
  * @param onIntent The callback for view intents.
  */
 @Composable
 internal fun ProductSearchContent(
     state: ViewState,
     products: LazyPagingItems<ProductDomainModel>?,
+    snackbarHostState: SnackbarHostState,
     onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
@@ -139,6 +144,13 @@ internal fun ProductSearchContent(
                 contentDescription = null
             )
         }
+
+        AppSnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .statusBarsPadding()
+                .align(Alignment.TopCenter)
+        )
     }
 }
 
@@ -150,6 +162,7 @@ private fun ProductSearchContentPreview() {
             ProductSearchContent(
                 state = ViewState(query = "Apple"),
                 products = null,
+                snackbarHostState = SnackbarHostState(),
                 onIntent = {}
             )
         }

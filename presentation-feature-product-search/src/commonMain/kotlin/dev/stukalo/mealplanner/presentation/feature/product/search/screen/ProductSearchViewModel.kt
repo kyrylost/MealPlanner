@@ -1,6 +1,8 @@
 package dev.stukalo.mealplanner.presentation.feature.product.search.screen
 
 import androidx.lifecycle.viewModelScope
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.error_unknown
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
@@ -29,7 +31,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @param logProductConsumedUseCase Use case for logging consumed products.
  */
 @OptIn(FlowPreview::class)
-class ProductSearchViewModel(
+internal class ProductSearchViewModel(
     private val getProductsByQueryUseCase: GetProductsByQueryUseCase,
     private val getAutoCompleteHintsUseCase: GetAutoCompleteHintsUseCase,
     private val logProductConsumedUseCase: LogProductConsumedUseCase
@@ -100,6 +102,7 @@ class ProductSearchViewModel(
                     updateState { PartialStateChange.Loading(false).reduce(it) }
                 }.onFailure {
                     updateState { PartialStateChange.Loading(false).reduce(it) }
+                    sendEvent(ViewEvent.ShowError(Res.string.error_unknown))
                 }
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewEvent
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -16,7 +17,7 @@ import org.koin.compose.viewmodel.koinViewModel
  * @param onNavigateToProductDetails The callback for navigating to product details.
  */
 @Composable
-fun BarcodeScannerScreen(onBackClick: () -> Unit, onNavigateToProductDetails: (String) -> Unit) {
+internal fun BarcodeScannerScreen(onBackClick: () -> Unit, onNavigateToProductDetails: (String) -> Unit) {
     val viewModel: BarcodeScannerViewModel = koinViewModel()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -29,7 +30,7 @@ fun BarcodeScannerScreen(onBackClick: () -> Unit, onNavigateToProductDetails: (S
                 is ViewEvent.NavigateToProductDetails -> onNavigateToProductDetails(event.barcode)
                 is ViewEvent.ShowError -> {
                     scope.launch {
-                        snackbarHostState.showSnackbar(event.message)
+                        snackbarHostState.showSnackbar(getString(event.message))
                     }
                 }
             }
