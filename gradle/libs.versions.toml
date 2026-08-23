@@ -27,6 +27,7 @@ room = "2.8.4"
 sqlite = "2.7.0"
 ksp = "2.3.11"
 paging = "3.5.1"
+work = "2.11.2"
 koin = "4.2.2" # https://github.com/InsertKoinIO/koin
 koin-ksp = "2.1.0"
 androidBuiltInKotlin = "9.3.1"
@@ -89,6 +90,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 androidx-health-connect = { module = "androidx.health.connect:connect-client", version = "1.1.0" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version = "2.1.5" }
 
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcode-scanning" }

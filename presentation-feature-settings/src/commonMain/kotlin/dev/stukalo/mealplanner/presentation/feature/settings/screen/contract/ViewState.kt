@@ -45,7 +45,9 @@ data class ViewState(
     val permissionOptions: List<HealthPermissionOption> = emptyList(),
     val shouldRequestHealthPermissions: Boolean = false,
     val healthPermissionsToRequest: Set<HealthPermissionType> = emptySet(),
-    val showPermissionBlockedDialog: Boolean = false
+    val showPermissionBlockedDialog: Boolean = false,
+    val isMealRemindersEnabled: Boolean = false,
+    val shouldRequestNotificationPermission: Boolean = false
 ) : MviViewState {
     companion object {
         /** Language code for English. */

@@ -20,4 +20,8 @@ interface SettingsRepository {
     fun isOnboardingShown(): Flow<Boolean>
 
     suspend fun setOnboardingShown(shown: Boolean)
+
+    fun isMealRemindersEnabled(): Flow<Boolean>
+
+    suspend fun setMealRemindersEnabled(enabled: Boolean)
 }

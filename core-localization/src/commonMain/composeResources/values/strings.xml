@@ -148,6 +148,9 @@
     <string name="recipe_details_not_found">Recipe not found</string>
 
     <string name="settings_meal_config">Meal Configuration</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_meal_reminders">Meal Reminders</string>
+    <string name="settings_meal_reminders_desc">Get notified when it's time to eat</string>
     <string name="settings_meal_schedule">Meal Schedule</string>
     <string name="settings_my_profile">My Profile</string>
     <string name="settings_language">Language</string>
@@ -190,6 +193,9 @@
     <string name="meal_schedule_total_percentage">Total Percentage: %1$d%%</string>
     <string name="meal_schedule_total_error">Total must be 100%</string>
     <string name="meal_schedule_percentage">Percentage:</string>
+    <string name="meal_reminder_title">Time for meal!</string>
+    <string name="meal_reminder_body">Don't forget to log your calories.</string>
+    <string name="notification_channel_name">Meal Reminders</string>
     <string name="statistics_coming_soon">Statistics coming soon</string>
     <string name="statistics_meal_tracking">Meal Tracking</string>
     <string name="statistics_mark_as_consumed">Mark as consumed</string>

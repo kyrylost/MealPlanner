@@ -55,7 +55,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(projects.coreCommon)
-            implementation(projects.corePlatform)
+            implementation(projects.platform)
             implementation(projects.dataNetworkCore)
             implementation(projects.dataNetworkEdamam)
             implementation(projects.dataNetworkEdamamImpl)

@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.domain.usecase.impl.slot
 
 import dev.stukalo.mealplanner.domain.model.exception.MealSlotException
 import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
+import dev.stukalo.mealplanner.domain.usecase.slot.SyncMealRemindersUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.UpdateMealSlotTimeUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.LocalTime
@@ -10,7 +11,10 @@ import kotlinx.datetime.LocalTime
  * Implementation of [UpdateMealSlotTimeUseCase].
  * Validates that meal slot times maintain chronological order (Breakfast < Lunch < Dinner).
  */
-class UpdateMealSlotTimeUseCaseImpl(private val repository: MealScheduleRepository) : UpdateMealSlotTimeUseCase {
+internal class UpdateMealSlotTimeUseCaseImpl(
+    private val repository: MealScheduleRepository,
+    private val syncMealRemindersUseCase: SyncMealRemindersUseCase
+) : UpdateMealSlotTimeUseCase {
     override suspend fun invoke(slotId: Int, startTime: LocalTime): Result<Unit> {
         val slots = repository.getMealSlotsAsFlow().first().sortedBy { it.startTime }
         val slotToUpdate = slots.find { it.id == slotId } ?: return Result.failure(IllegalArgumentException())
@@ -33,6 +37,8 @@ class UpdateMealSlotTimeUseCaseImpl(private val repository: MealScheduleReposito
             }
         }
 
-        return repository.updateSlotTime(slotId, startTime)
+        return repository.updateSlotTime(slotId, startTime).onSuccess {
+            syncMealRemindersUseCase()
+        }
     }
 }

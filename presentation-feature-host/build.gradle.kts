@@ -70,7 +70,6 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
-            implementation(projects.corePlatform)
             implementation(projects.presentationCoreUi)
             implementation(projects.presentationFeatureMain)
             implementation(projects.presentationFeatureGateway)

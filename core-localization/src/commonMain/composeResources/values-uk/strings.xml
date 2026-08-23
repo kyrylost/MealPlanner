@@ -131,7 +131,11 @@
     <string name="common_grams_short">г</string>
     <string name="common_unit_kcal">ккал</string>
     <string name="common_unit_grams">г</string>
+    <string name="common_nutrient_with_unit" translatable="false">%1$s (%2$s)</string>
+    <string name="common_bullet_item" translatable="false">• %1$s</string>
+    <string name="common_numbered_item" translatable="false">%1$d. %2$s</string>
     <string name="common_close">Закрити</string>
+    <string name="common_value_placeholder" translatable="false">0.0</string>
     <string name="common_kcal_left">Залишилось ккал</string>
     <string name="common_eaten">З'їдено</string>
     <string name="common_burned">Спалено</string>
@@ -145,6 +149,9 @@
     <string name="recipe_details_not_found">Рецепт не знайдено</string>
 
     <string name="settings_meal_config">Конфігурація харчування</string>
+    <string name="settings_notifications">Сповіщення</string>
+    <string name="settings_meal_reminders">Нагадування про їжу</string>
+    <string name="settings_meal_reminders_desc">Отримуйте сповіщення, коли настав час їсти</string>
     <string name="settings_meal_schedule">Розклад харчування</string>
     <string name="settings_my_profile">Мій профіль</string>
     <string name="settings_language">Мова</string>
@@ -185,6 +192,9 @@
     <string name="meal_schedule_total_percentage">Загальний відсоток: %1$d%%</string>
     <string name="meal_schedule_total_error">Сума повинна бути 100%</string>
     <string name="meal_schedule_percentage">Відсоток:</string>
+    <string name="meal_reminder_title">Час для обіду!</string>
+    <string name="meal_reminder_body">Не забудьте записати ваші калорії.</string>
+    <string name="notification_channel_name">Нагадування про їжу</string>
     <string name="statistics_coming_soon">Статистика незабаром</string>
     <string name="statistics_meal_tracking">Відстеження їжі</string>
     <string name="statistics_mark_as_consumed">Відмітити як з'їдене</string>
@@ -217,6 +227,7 @@
     <string name="product_details_nutriscore_label">Nutri-Score %1$s</string>
     <string name="product_details_nova_label">NOVA %1$s</string>
     <string name="product_details_not_found">Продукт не знайдено</string>
+    <string name="product_details_name">Назва: %1$s</string>
     <string name="product_details_add_to_diary">Додати до щоденника</string>
     <string name="product_details_kcal_per_100g">%1$.1f ккал / 100г</string>
     <string name="product_details_success_added">Продукт додано до вашого прогресу!</string>

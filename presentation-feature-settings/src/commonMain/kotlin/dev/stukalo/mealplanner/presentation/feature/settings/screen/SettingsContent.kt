@@ -40,7 +40,10 @@ import dev.stukalo.mealplanner.core.localization.settings_health_sync_revoke_hin
 import dev.stukalo.mealplanner.core.localization.settings_language
 import dev.stukalo.mealplanner.core.localization.settings_language_en
 import dev.stukalo.mealplanner.core.localization.settings_language_uk
+import dev.stukalo.mealplanner.core.localization.settings_meal_reminders
+import dev.stukalo.mealplanner.core.localization.settings_meal_reminders_desc
 import dev.stukalo.mealplanner.core.localization.settings_my_profile
+import dev.stukalo.mealplanner.core.localization.settings_notifications
 import dev.stukalo.mealplanner.core.localization.settings_save_changes
 import dev.stukalo.mealplanner.core.localization.settings_target_weight
 import dev.stukalo.mealplanner.core.localization.settings_theme_color
@@ -77,6 +80,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.component.dialog.ValueEditDi
 import dev.stukalo.mealplanner.presentation.core.ui.component.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.component.picker.RulerPicker
 import dev.stukalo.mealplanner.presentation.core.ui.component.row.SettingsOption
+import dev.stukalo.mealplanner.presentation.core.ui.component.row.SettingsToggleOption
 import dev.stukalo.mealplanner.presentation.core.ui.component.selector.SegmentedSelector
 import dev.stukalo.mealplanner.presentation.feature.settings.component.ActivityLevelSelection
 import dev.stukalo.mealplanner.presentation.feature.settings.component.DietTypeSelection
@@ -274,6 +278,23 @@ internal fun SettingsContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
                     onClick = {
                         onIntent(ViewIntent.OnColorPaletteClick(palette))
                     }
+                )
+            }
+
+            item {
+                Text(
+                    text = stringResource(Res.string.settings_notifications),
+                    style = Theme.typography.bold14,
+                    color = Theme.color.text.primary
+                )
+            }
+
+            item {
+                SettingsToggleOption(
+                    title = stringResource(Res.string.settings_meal_reminders),
+                    description = stringResource(Res.string.settings_meal_reminders_desc),
+                    checked = state.isMealRemindersEnabled,
+                    onCheckedChange = { onIntent(ViewIntent.OnMealRemindersToggle(it)) }
                 )
             }
 

@@ -2,7 +2,6 @@ package dev.stukalo.mealplanner.presentation.feature.settings.screen
 
 import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.core.common.validation.ValidationResult
-import dev.stukalo.mealplanner.core.platform.LocaleManager
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
@@ -11,13 +10,21 @@ import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthServiceStatusUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.InstallHealthConnectUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.OpenHealthSettingsUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.RequestHealthPermissionsUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.ApplyLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetMealRemindersEnabledUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetSystemLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetMealRemindersEnabledUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemeModeUseCase
+import dev.stukalo.mealplanner.domain.usecase.slot.HasNotificationPermissionUseCase
+import dev.stukalo.mealplanner.domain.usecase.slot.SyncMealRemindersUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.SaveDailyNormUseCase
@@ -45,7 +52,7 @@ import kotlinx.coroutines.launch
  * ViewModel for the Settings screen.
  * Handles theme changes, locale updates, and user profile modifications.
  */
-class SettingsViewModel(
+internal class SettingsViewModel(
     private val setColorPaletteUseCase: SetColorPaletteUseCase,
     getColorPaletteUseCase: GetColorPaletteUseCase,
     private val setThemeModeUseCase: SetThemeModeUseCase,
@@ -59,11 +66,18 @@ class SettingsViewModel(
     private val validateWeightUseCase: ValidateWeightUseCase,
     private val validateHeightUseCase: ValidateHeightUseCase,
     private val validateStepsTargetUseCase: ValidateStepsTargetUseCase,
+    private val getMealRemindersEnabledUseCase: GetMealRemindersEnabledUseCase,
+    private val setMealRemindersEnabledUseCase: SetMealRemindersEnabledUseCase,
+    private val syncMealRemindersUseCase: SyncMealRemindersUseCase,
+    private val hasNotificationPermissionUseCase: HasNotificationPermissionUseCase,
     private val getHealthServiceStatusUseCase: GetHealthServiceStatusUseCase,
     private val getHealthPermissionStatusUseCase: GetHealthPermissionStatusUseCase,
     private val requestHealthPermissionsUseCase: RequestHealthPermissionsUseCase,
-    private val healthPermissionMapper: HealthPermissionMapper,
-    private val localeManager: LocaleManager
+    private val openHealthSettingsUseCase: OpenHealthSettingsUseCase,
+    private val installHealthConnectUseCase: InstallHealthConnectUseCase,
+    private val applyLocaleUseCase: ApplyLocaleUseCase,
+    private val getSystemLocaleUseCase: GetSystemLocaleUseCase,
+    private val healthPermissionMapper: HealthPermissionMapper
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
 
     /**
@@ -83,7 +97,7 @@ class SettingsViewModel(
             getThemeModeUseCase()
         ) { locale, palette, mode ->
             PartialStateChange.ConfigLoaded(
-                language = locale ?: localeManager.getSystemLocale(),
+                language = locale ?: getSystemLocaleUseCase(),
                 palette = palette,
                 themeMode = mode
             )
@@ -101,6 +115,11 @@ class SettingsViewModel(
         viewModelScope.launch {
             refreshPermissions()
         }
+
+        getMealRemindersEnabledUseCase()
+            .onEach { enabled ->
+                updateState { PartialStateChange.MealRemindersStatusChange(enabled).reduce(it) }
+            }.launchIn(viewModelScope)
     }
 
     override suspend fun processIntent(intent: ViewIntent) {
@@ -121,6 +140,9 @@ class SettingsViewModel(
             ViewIntent.OnSaveProfileClick -> onSaveProfileClick()
             is ViewIntent.OnManualInputConfirm -> onManualInputConfirm(intent.value)
             is ViewIntent.OnHealthPermissionToggle -> onHealthPermissionToggle(intent.option, intent.enabled)
+            is ViewIntent.OnMealRemindersToggle -> onMealRemindersToggle(intent.enabled)
+            is ViewIntent.OnNotificationPermissionResult -> onNotificationPermissionResult(intent.isGranted)
+            ViewIntent.OnNotificationPermissionHandled -> onNotificationPermissionHandled()
             ViewIntent.OnResume -> onResume()
             ViewIntent.OnHealthPermissionsHandled -> onHealthPermissionsHandled()
             is ViewIntent.OnHealthPermissionsResult -> onHealthPermissionsResult(intent.isGranted)
@@ -146,6 +168,7 @@ class SettingsViewModel(
     private fun onLanguageClick(language: String) {
         viewModelScope.launch {
             setLocaleUseCase(language)
+            applyLocaleUseCase(language)
         }
     }
 
@@ -239,16 +262,51 @@ class SettingsViewModel(
                 }
             }
         } else {
+            onOpenHealthSettings()
+        }
+    }
+
+    private fun onMealRemindersToggle(enabled: Boolean) {
+        if (enabled) {
+            if (hasNotificationPermissionUseCase()) {
+                viewModelScope.launch {
+                    setMealRemindersEnabledUseCase(true)
+                    syncMealRemindersUseCase()
+                }
+            } else {
+                updateState { it.copy(shouldRequestNotificationPermission = true) }
+            }
+        } else {
             viewModelScope.launch {
-                sendEvent(ViewEvent.OpenHealthSettings)
+                setMealRemindersEnabledUseCase(false)
+                syncMealRemindersUseCase()
             }
         }
+    }
+
+    private fun onNotificationPermissionResult(isGranted: Boolean) {
+        updateState { it.copy(shouldRequestNotificationPermission = false) }
+        if (isGranted) {
+            viewModelScope.launch {
+                setMealRemindersEnabledUseCase(true)
+                syncMealRemindersUseCase()
+            }
+        }
+    }
+
+    private fun onNotificationPermissionHandled() {
+        updateState { it.copy(shouldRequestNotificationPermission = false) }
     }
 
     private fun onResume() {
         viewModelScope.launch {
             refreshPermissions()
         }
+
+        getMealRemindersEnabledUseCase()
+            .onEach { enabled ->
+                updateState { PartialStateChange.MealRemindersStatusChange(enabled).reduce(it) }
+            }.launchIn(viewModelScope)
     }
 
     private fun onHealthPermissionsHandled() {
@@ -299,15 +357,11 @@ class SettingsViewModel(
     }
 
     private fun onOpenHealthSettings() {
-        viewModelScope.launch {
-            sendEvent(ViewEvent.OpenHealthSettings)
-        }
+        openHealthSettingsUseCase()
     }
 
     private fun onInstallHealthConnectClick() {
-        viewModelScope.launch {
-            sendEvent(ViewEvent.InstallHealthConnect)
-        }
+        installHealthConnectUseCase()
     }
 
     private fun onRequestHealthPermissions() {

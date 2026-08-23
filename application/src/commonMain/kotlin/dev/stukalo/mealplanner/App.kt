@@ -1,7 +1,6 @@
 package dev.stukalo.mealplanner
 
 import androidx.compose.runtime.Composable
-import dev.stukalo.mealplanner.core.platform.di.platformModule
 import dev.stukalo.mealplanner.data.database.di.databaseBuilderModule
 import dev.stukalo.mealplanner.data.database.di.databaseModule
 import dev.stukalo.mealplanner.data.health.impl.di.healthDataModule
@@ -13,6 +12,7 @@ import dev.stukalo.mealplanner.data.preferences.di.dataPreferencesModule
 import dev.stukalo.mealplanner.data.preferences.di.platformDataPreferencesModule
 import dev.stukalo.mealplanner.data.repository.impl.di.dataRepositoryModule
 import dev.stukalo.mealplanner.domain.usecase.impl.di.domainModule
+import dev.stukalo.mealplanner.platform.di.platformModule
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.di.barcodeScannerModule
 import dev.stukalo.mealplanner.presentation.feature.filters.di.filtersModule
 import dev.stukalo.mealplanner.presentation.feature.gateway.di.gatewayModule

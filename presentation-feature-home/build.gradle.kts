@@ -77,8 +77,6 @@ kotlin {
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationCoreUi)
             implementation(projects.coreLocalization)
-            implementation(projects.dataNetworkFooddatacentral)
-            implementation(projects.dataDatabase)
             implementation(projects.domainUsecase)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)

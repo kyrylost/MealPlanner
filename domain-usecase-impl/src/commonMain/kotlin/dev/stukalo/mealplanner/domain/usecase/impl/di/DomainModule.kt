@@ -3,11 +3,15 @@ package dev.stukalo.mealplanner.domain.usecase.impl.di
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthServiceStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetStepsUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.InstallHealthConnectUseCase
+import dev.stukalo.mealplanner.domain.usecase.health.OpenHealthSettingsUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.RequestHealthPermissionsUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.SyncHealthDataUseCase
 import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthPermissionStatusUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.GetHealthServiceStatusUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.GetStepsUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.InstallHealthConnectUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.health.OpenHealthSettingsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.RequestHealthPermissionsUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.health.SyncHealthDataUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.nutrition.GetDailyNormUseCaseImpl
@@ -23,15 +27,21 @@ import dev.stukalo.mealplanner.domain.usecase.impl.products.GetProductsByQueryUs
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecipeByIdUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecipesUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.recipes.GetRecommendedRecipesUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.ApplyLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetColorPaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetLocaleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetMealRemindersEnabledUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetSystemLocaleUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.GetThemeModeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.IsOnboardingShownUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetColorPaletteUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetLocaleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetMealRemindersEnabledUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetOnboardingShownUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.setting.SetThemeModeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.GetMealScheduleUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.slot.HasNotificationPermissionUseCaseImpl
+import dev.stukalo.mealplanner.domain.usecase.impl.slot.SyncMealRemindersUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.TrackMealConsumedUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.slot.UpdateMealSlotTimeUseCaseImpl
 import dev.stukalo.mealplanner.domain.usecase.impl.statistics.CalculateStreakUseCaseImpl
@@ -64,15 +74,21 @@ import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipeByIdUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecommendedRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.LogRecipeConsumedUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.ApplyLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetMealRemindersEnabledUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetSystemLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.IsOnboardingShownUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.SetMealRemindersEnabledUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetOnboardingShownUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.SetThemeModeUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.GetMealScheduleUseCase
+import dev.stukalo.mealplanner.domain.usecase.slot.HasNotificationPermissionUseCase
+import dev.stukalo.mealplanner.domain.usecase.slot.SyncMealRemindersUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.UpdateMealSlotTimeUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
@@ -106,8 +122,12 @@ val domainModule =
         singleOf(::SetThemeModeUseCaseImpl) bind SetThemeModeUseCase::class
         singleOf(::GetLocaleUseCaseImpl) bind GetLocaleUseCase::class
         singleOf(::SetLocaleUseCaseImpl) bind SetLocaleUseCase::class
+        singleOf(::ApplyLocaleUseCaseImpl) bind ApplyLocaleUseCase::class
+        singleOf(::GetSystemLocaleUseCaseImpl) bind GetSystemLocaleUseCase::class
         singleOf(::IsOnboardingShownUseCaseImpl) bind IsOnboardingShownUseCase::class
         singleOf(::SetOnboardingShownUseCaseImpl) bind SetOnboardingShownUseCase::class
+        singleOf(::GetMealRemindersEnabledUseCaseImpl) bind GetMealRemindersEnabledUseCase::class
+        singleOf(::SetMealRemindersEnabledUseCaseImpl) bind SetMealRemindersEnabledUseCase::class
 
         singleOf(::GetRecipesUseCaseImpl) bind GetRecipesUseCase::class
         singleOf(::GetRecommendedRecipesUseCaseImpl) bind GetRecommendedRecipesUseCase::class
@@ -133,6 +153,8 @@ val domainModule =
         singleOf(::GetMealScheduleUseCaseImpl) bind GetMealScheduleUseCase::class
         singleOf(::TrackMealConsumedUseCaseImpl) bind TrackMealConsumedUseCase::class
         singleOf(::UpdateMealSlotTimeUseCaseImpl) bind UpdateMealSlotTimeUseCase::class
+        singleOf(::SyncMealRemindersUseCaseImpl) bind SyncMealRemindersUseCase::class
+        singleOf(::HasNotificationPermissionUseCaseImpl) bind HasNotificationPermissionUseCase::class
 
         singleOf(::GetStatisticsUseCaseImpl) bind GetStatisticsUseCase::class
         singleOf(::GetWeightHistoryUseCaseImpl) bind GetWeightHistoryUseCase::class
@@ -144,6 +166,8 @@ val domainModule =
         singleOf(::GetHealthServiceStatusUseCaseImpl) bind GetHealthServiceStatusUseCase::class
         singleOf(::GetHealthPermissionStatusUseCaseImpl) bind GetHealthPermissionStatusUseCase::class
         singleOf(::RequestHealthPermissionsUseCaseImpl) bind RequestHealthPermissionsUseCase::class
+        singleOf(::OpenHealthSettingsUseCaseImpl) bind OpenHealthSettingsUseCase::class
+        singleOf(::InstallHealthConnectUseCaseImpl) bind InstallHealthConnectUseCase::class
 
         singleOf(::ValidateNameUseCaseImpl) bind ValidateNameUseCase::class
         singleOf(::ValidateDateUseCaseImpl) bind ValidateDateUseCase::class

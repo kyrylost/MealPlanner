@@ -18,6 +18,7 @@ class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Prefere
         val LOCALE = stringPreferencesKey("locale")
         val LAST_HEALTH_SYNC_TIME = longPreferencesKey("last_health_sync_time")
         val ONBOARDING_SHOWN = booleanPreferencesKey("onboarding_shown")
+        val MEAL_REMINDERS_ENABLED = booleanPreferencesKey("meal_reminders_enabled")
     }
 
     override fun getColorPaletteName(): Flow<String?> = dataStore.data
@@ -62,6 +63,15 @@ class SettingsPreferencesDataSourceImpl(private val dataStore: DataStore<Prefere
     override suspend fun setOnboardingShown(shown: Boolean) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.ONBOARDING_SHOWN] = shown
+        }
+    }
+
+    override fun isMealRemindersEnabled(): Flow<Boolean> = dataStore.data
+        .map { preferences -> preferences[PreferencesKeys.MEAL_REMINDERS_ENABLED] ?: false }
+
+    override suspend fun setMealRemindersEnabled(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.MEAL_REMINDERS_ENABLED] = enabled
         }
     }
 }

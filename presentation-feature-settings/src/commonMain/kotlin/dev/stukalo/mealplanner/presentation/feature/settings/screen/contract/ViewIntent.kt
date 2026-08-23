@@ -105,6 +105,23 @@ sealed interface ViewIntent : MviIntent {
     data class OnHealthPermissionToggle(val option: HealthPermissionOption, val enabled: Boolean) : ViewIntent
 
     /**
+     * Triggered when the user toggles meal reminders.
+     * @property enabled Whether to enable or disable.
+     */
+    data class OnMealRemindersToggle(val enabled: Boolean) : ViewIntent
+
+    /**
+     * Triggered when the notification permission result is received.
+     * @property isGranted Whether the permission was granted.
+     */
+    data class OnNotificationPermissionResult(val isGranted: Boolean) : ViewIntent
+
+    /**
+     * Triggered when the notification permission request has been initiated.
+     */
+    data object OnNotificationPermissionHandled : ViewIntent
+
+    /**
      * Triggered when the screen resumes.
      */
     data object OnResume : ViewIntent

@@ -12,6 +12,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.domainUsecase)
             implementation(projects.domainRepository)
+            implementation(projects.domainService)
             implementation(libs.androidx.paging.common)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)

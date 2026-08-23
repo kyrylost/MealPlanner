@@ -67,4 +67,8 @@ internal sealed interface PartialStateChange {
     data class Error(val message: StringResource?) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(errorMessage = message)
     }
+
+    data class MealRemindersStatusChange(val enabled: Boolean) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(isMealRemindersEnabled = enabled)
+    }
 }

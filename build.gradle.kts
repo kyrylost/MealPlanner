@@ -30,6 +30,12 @@ subprojects {
         ignoreFailures.set(false)
         enableExperimentalRules.set(true)
     }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+        }
+    }
 }
 
 

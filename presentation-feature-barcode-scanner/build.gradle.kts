@@ -81,7 +81,6 @@ kotlin {
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationCoreUi)
             implementation(projects.coreLocalization)
-            implementation(projects.dataNetworkOpenfoodfacts)
             implementation(projects.domainUsecase)
             implementation(libs.koin.compose.viewmodel)
         }

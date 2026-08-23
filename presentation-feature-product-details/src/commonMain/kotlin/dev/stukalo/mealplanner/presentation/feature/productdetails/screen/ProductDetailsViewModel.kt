@@ -11,21 +11,15 @@ import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contra
 import kotlinx.coroutines.launch
 
 class ProductDetailsViewModel(
-    private val productId: String?,
-    private val barcode: String?,
     private val getProductDetailsUseCase: GetProductDetailsUseCase,
     private val logProductConsumedUseCase: LogProductConsumedUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
-    init {
-        onIntent(ViewIntent.InitialLoad)
-    }
-
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
-            ViewIntent.InitialLoad -> {
-                loadProduct()
+            is ViewIntent.InitialLoad -> {
+                loadProduct(intent.productId, intent.barcode)
             }
             is ViewIntent.OnWeightChange -> {
                 updateState { PartialStateChange.WeightChange(intent.weight).reduce(it) }
@@ -46,7 +40,7 @@ class ProductDetailsViewModel(
         }
     }
 
-    private fun loadProduct() {
+    private fun loadProduct(productId: String?, barcode: String?) {
         viewModelScope.launch {
             updateState { PartialStateChange.Loading(true).reduce(it) }
             val product = getProductDetailsUseCase(productId, barcode)

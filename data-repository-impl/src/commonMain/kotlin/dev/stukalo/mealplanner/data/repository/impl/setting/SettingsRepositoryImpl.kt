@@ -67,4 +67,10 @@ class SettingsRepositoryImpl(private val dataSource: SettingsPreferencesDataSour
     override suspend fun setOnboardingShown(shown: Boolean) {
         dataSource.setOnboardingShown(shown)
     }
+
+    override fun isMealRemindersEnabled(): Flow<Boolean> = dataSource.isMealRemindersEnabled()
+
+    override suspend fun setMealRemindersEnabled(enabled: Boolean) {
+        dataSource.setMealRemindersEnabled(enabled)
+    }
 }

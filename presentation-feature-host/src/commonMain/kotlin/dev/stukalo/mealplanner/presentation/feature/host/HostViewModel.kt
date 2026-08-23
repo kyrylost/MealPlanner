@@ -1,9 +1,10 @@
 package dev.stukalo.mealplanner.presentation.feature.host
 
 import androidx.lifecycle.viewModelScope
-import dev.stukalo.mealplanner.core.platform.LocaleManager
+import dev.stukalo.mealplanner.domain.usecase.setting.ApplyLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetColorPaletteUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetLocaleUseCase
+import dev.stukalo.mealplanner.domain.usecase.setting.GetSystemLocaleUseCase
 import dev.stukalo.mealplanner.domain.usecase.setting.GetThemeModeUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.host.contract.PartialStateChange
@@ -22,9 +23,10 @@ class HostViewModel(
     getColorPaletteUseCase: GetColorPaletteUseCase,
     getThemeModeUseCase: GetThemeModeUseCase,
     getLocaleUseCase: GetLocaleUseCase,
-    private val localeManager: LocaleManager
+    private val getSystemLocaleUseCase: GetSystemLocaleUseCase,
+    private val applyLocaleUseCase: ApplyLocaleUseCase
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-    override val initialState = ViewState(locale = localeManager.getSystemLocale())
+    override val initialState = ViewState(locale = getSystemLocaleUseCase())
 
     init {
         combine(
@@ -32,10 +34,13 @@ class HostViewModel(
             getThemeModeUseCase(),
             getLocaleUseCase()
         ) { palette, mode, locale ->
+            val activeLocale = locale ?: getSystemLocaleUseCase()
+            applyLocaleUseCase(activeLocale)
+
             PartialStateChange.ThemeConfigLoaded(
                 colorPalette = palette,
                 themeMode = mode,
-                locale = locale ?: localeManager.getSystemLocale()
+                locale = activeLocale
             )
         }.onEach { change ->
             updateState { change.reduce(it) }
@@ -45,6 +50,7 @@ class HostViewModel(
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
             is ViewIntent.OnLocaleChanged -> {
+                applyLocaleUseCase(intent.locale)
                 updateState {
                     PartialStateChange.ThemeConfigLoaded(it.colorPalette, it.themeMode, intent.locale).reduce(it)
                 }
