@@ -12,16 +12,19 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.window.core.layout.WindowSizeClass
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.onboarding_finish
 import dev.stukalo.mealplanner.core.localization.onboarding_next
@@ -44,7 +47,11 @@ import org.jetbrains.compose.resources.stringResource
  * @param onIntent Callback for processing user intents.
  */
 @Composable
-internal fun OnboardingContent(state: ViewState, onIntent: (ViewIntent) -> Unit = {}) {
+internal fun OnboardingContent(
+    state: ViewState,
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
+    onIntent: (ViewIntent) -> Unit = {}
+) {
     val pagerState = rememberPagerState { state.slides.size }
 
     LaunchedEffect(state.currentSlideIndex) {
@@ -73,7 +80,7 @@ internal fun OnboardingContent(state: ViewState, onIntent: (ViewIntent) -> Unit 
                 .padding(horizontal = Theme.spacing.space16),
             contentAlignment = Alignment.CenterEnd
         ) {
-            if (state.currentSlideIndex < state.slides.size - 1) {
+            if (state.currentSlideIndex < (state.slides.size - 1)) {
                 TextButton(
                     text = stringResource(Res.string.onboarding_skip),
                     onClick = { onIntent(ViewIntent.OnSkipClick) }
@@ -85,7 +92,10 @@ internal fun OnboardingContent(state: ViewState, onIntent: (ViewIntent) -> Unit 
             state = pagerState,
             modifier = Modifier.weight(1f)
         ) { index ->
-            OnboardingSlide(slide = state.slides[index])
+            OnboardingSlide(
+                slide = state.slides[index],
+                windowSizeClass = windowSizeClass
+            )
         }
 
         Column(
@@ -115,7 +125,7 @@ internal fun OnboardingContent(state: ViewState, onIntent: (ViewIntent) -> Unit 
                 }
             }
 
-            val isLastSlide = state.currentSlideIndex == state.slides.size - 1
+            val isLastSlide = state.currentSlideIndex == (state.slides.size - 1)
             val buttonText = if (isLastSlide) {
                 stringResource(Res.string.onboarding_finish)
             } else {
@@ -125,7 +135,7 @@ internal fun OnboardingContent(state: ViewState, onIntent: (ViewIntent) -> Unit 
             PrimaryButton(
                 text = buttonText,
                 onClick = { onIntent(ViewIntent.OnNextClick) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().widthIn(max = Theme.size.compactScreenWidth)
             )
         }
     }
@@ -134,6 +144,25 @@ internal fun OnboardingContent(state: ViewState, onIntent: (ViewIntent) -> Unit 
 @Preview
 @Composable
 private fun OnboardingContentPreview() {
+    Theme {
+        Surface(color = Theme.color.background.primary) {
+            OnboardingContent(
+                state = ViewState(
+                    slides = listOf(
+                        OnboardingSlideModel(
+                            title = Res.string.onboarding_slide1_title,
+                            description = Res.string.onboarding_slide1_desc
+                        )
+                    )
+                )
+            )
+        }
+    }
+}
+
+@Preview(device = "spec:width=1280dp,height=800dp,dpi=240")
+@Composable
+private fun OnboardingContentDesktopPreview() {
     Theme {
         Surface(color = Theme.color.background.primary) {
             OnboardingContent(
