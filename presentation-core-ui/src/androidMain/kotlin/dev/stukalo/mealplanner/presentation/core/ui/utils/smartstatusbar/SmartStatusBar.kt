@@ -28,16 +28,15 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.core.graphics.createBitmap
-import androidx.core.graphics.get
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.resume
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -73,9 +72,7 @@ private const val MAX_BOUND = 255
  *
  *     // Required if using RefreshPolicy.RefreshOnInteraction
  *     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
- *         lifecycleScope.launch {
- *             notifyAboutInteraction()
- *         }
+ *         notifyAboutInteraction()
  *         return super.dispatchTouchEvent(ev)
  *     }
  * }
@@ -172,9 +169,10 @@ fun InstallSmartStatusBar(
                 interactionFlow.debounce(refreshPolicy.debounce).collectLatest {
                     var rechecks = 0
                     val maxRechecks = refreshPolicy.recheck
+                    var lastBalance: Int? = null
 
                     do {
-                        getScreenshotAndProcess(
+                        val currentBalance = getScreenshotAndProcess(
                             context = context,
                             density = localDensity.density,
                             statusBarHeight = fixedStatusBarHeight.intValue,
@@ -185,6 +183,12 @@ fun InstallSmartStatusBar(
                                 darkIcons.value = it
                             }
                         )
+
+                        // If balance hasn't changed, the UI is stable - stop rechecking
+                        if (currentBalance != null && currentBalance == lastBalance) {
+                            break
+                        }
+                        lastBalance = currentBalance
 
                         delay(refreshPolicy.waitAfterCheck)
                     } while (rechecks++ < maxRechecks)
@@ -219,14 +223,14 @@ private suspend fun getScreenshotAndProcess(
     ignoreVerticalDp: Int,
     darkColorBound: Int,
     updateStatusBarIconColor: (Boolean) -> Unit
-) {
+): Int? {
     var attempts = 0
     val maxAttempts = 10
-    var success = false
+    var balance: Int? = null
 
-    val window = (context as? Activity)?.window ?: return
+    val window = (context as? Activity)?.window ?: return null
 
-    while (!success && attempts < maxAttempts) {
+    while (balance == null && attempts < maxAttempts) {
         if (attempts != 0) delay(50.milliseconds)
         attempts++
 
@@ -249,15 +253,15 @@ private suspend fun getScreenshotAndProcess(
         }
 
         statusBarBgBitmap?.let { bitmap ->
-            success = true
-            updateStatusBarIconColor(
-                processBitmap(
-                    bitmap = bitmap,
-                    darkColorBound = darkColorBound
-                )
+            val currentBalance = processBitmap(
+                bitmap = bitmap,
+                darkColorBound = darkColorBound
             )
+            balance = currentBalance
+            updateStatusBarIconColor(currentBalance < 0)
         }
     }
+    return balance
 }
 
 private fun getScreenshotFromView(
@@ -330,27 +334,47 @@ private suspend fun getScreenshotFromWindow(
 }
 
 /**
- * Determines whether light or dark tones dominate in the image.
- * @return true, if bitmap mostly light, otherwise false
+ * Determines the balance of light vs dark tones in the image.
+ * Analyzes only the left and right sides (20% each) where the status bar icons are located.
+ *
+ * @return negative value if mostly light, positive if mostly dark.
  */
-private suspend fun processBitmap(bitmap: Bitmap, darkColorBound: Int): Boolean {
-    val darkColorsCount = AtomicInteger()
+private suspend fun processBitmap(bitmap: Bitmap, darkColorBound: Int): Int {
+    val width = bitmap.width
+    val height = bitmap.height
+    val pixels = IntArray(width * height)
 
-    coroutineScope {
-        for (y in 0 until bitmap.height) {
-            launch(Dispatchers.Default) {
-                for (x in 0 until bitmap.width) {
-                    bitmap[x, y].apply {
-                        if (isDarkColor(darkColorBound)) {
-                            darkColorsCount.incrementAndGet()
-                        } else {
-                            darkColorsCount.decrementAndGet()
-                        }
+    // Batch read pixels for performance
+    bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+    bitmap.recycle() // Release native memory immediately
+
+    return coroutineScope {
+        val sideWidth = (width * 0.2).toInt()
+
+        // Analyze left and right zones in parallel to utilize multiple cores
+        val results = listOf(
+            async(Dispatchers.Default) {
+                var balance = 0
+                for (y in 0 until height) {
+                    val rowOffset = y * width
+                    for (x in 0 until sideWidth) {
+                        if (pixels[rowOffset + x].isDarkColor(darkColorBound)) balance++ else balance--
                     }
                 }
+                balance
+            },
+            async(Dispatchers.Default) {
+                var balance = 0
+                for (y in 0 until height) {
+                    val rowOffset = y * width
+                    for (x in (width - sideWidth) until width) {
+                        if (pixels[rowOffset + x].isDarkColor(darkColorBound)) balance++ else balance--
+                    }
+                }
+                balance
             }
-        }
-    }
+        ).awaitAll()
 
-    return darkColorsCount.get() < 0
+        results.sum()
+    }
 }

@@ -11,6 +11,6 @@ import androidx.core.graphics.red
  * @return true if the color is considered dark, false otherwise.
  */
 fun Int.isDarkColor(darkColorBound: Int): Boolean {
-    val luminance = 0.299 * red + 0.587 * green + 0.114 * blue
+    val luminance = (red * 77 + green * 150 + blue * 29) shr 8
     return luminance <= darkColorBound
 }

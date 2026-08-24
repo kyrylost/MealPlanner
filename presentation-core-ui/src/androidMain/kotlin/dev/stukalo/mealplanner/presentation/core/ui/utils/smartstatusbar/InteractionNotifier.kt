@@ -1,8 +1,12 @@
 package dev.stukalo.mealplanner.presentation.core.ui.utils.smartstatusbar
 
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal val interactionFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
+internal val interactionFlow: MutableSharedFlow<Unit> = MutableSharedFlow(
+    extraBufferCapacity = 1,
+    onBufferOverflow = BufferOverflow.DROP_OLDEST
+)
 
 /**
  * Notifies the smart status bar system about a user interaction.
@@ -13,13 +17,11 @@ internal val interactionFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
  * ### Example in MainActivity
  * ```kotlin
  * override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
- *     lifecycleScope.launch {
- *         notifyAboutInteraction()
- *     }
+ *     notifyAboutInteraction()
  *     return super.dispatchTouchEvent(ev)
  * }
  * ```
  */
-suspend fun notifyAboutInteraction() {
-    interactionFlow.emit(Unit)
+fun notifyAboutInteraction() {
+    interactionFlow.tryEmit(Unit)
 }
