@@ -2,7 +2,7 @@ package dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contr
 
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
-sealed interface ViewIntent : MviIntent {
+internal sealed interface ViewIntent : MviIntent {
     data class InitialLoad(val productId: String?, val barcode: String?) : ViewIntent
     data class OnWeightChange(val weight: String) : ViewIntent
     data object OnAddConsumedClick : ViewIntent

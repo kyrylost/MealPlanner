@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 
 @Composable
-fun HealthLabelChip(label: String, modifier: Modifier = Modifier) {
+internal fun HealthLabelChip(label: String, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier,
         color = Theme.color.brand.primary.copy(alpha = 0.1f),

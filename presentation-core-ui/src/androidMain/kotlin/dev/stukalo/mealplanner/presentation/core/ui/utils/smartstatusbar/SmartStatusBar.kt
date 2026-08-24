@@ -16,6 +16,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
@@ -286,7 +287,7 @@ private fun getScreenshotFromView(
     }
 }
 
-@androidx.annotation.RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.O)
 private suspend fun getScreenshotFromWindow(
     window: Window,
     density: Float,

@@ -3,7 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.product.search.screen.contr
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleEvent
 import org.jetbrains.compose.resources.StringResource
 
-sealed interface ViewEvent : MviSingleEvent {
+internal sealed interface ViewEvent : MviSingleEvent {
     data object NavigateBack : ViewEvent
 
     data object NavigateToBarcodeScanner : ViewEvent

@@ -32,7 +32,12 @@ import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ProductCard(product: ProductDomainModel, hazeState: HazeState, modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun ProductCard(
+    product: ProductDomainModel,
+    hazeState: HazeState,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     BlurredCard(
         modifier = modifier,
         hazeState = hazeState,

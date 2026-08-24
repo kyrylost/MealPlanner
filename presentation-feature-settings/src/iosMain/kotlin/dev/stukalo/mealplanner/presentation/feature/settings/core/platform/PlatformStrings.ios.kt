@@ -7,4 +7,4 @@ import org.jetbrains.compose.resources.StringResource
 /**
  * iOS-specific string for blocked health permissions.
  */
-actual val healthSyncBlockedHint: StringResource = Res.string.settings_health_sync_blocked_hint_ios
+internal actual val healthSyncBlockedHint: StringResource = Res.string.settings_health_sync_blocked_hint_ios

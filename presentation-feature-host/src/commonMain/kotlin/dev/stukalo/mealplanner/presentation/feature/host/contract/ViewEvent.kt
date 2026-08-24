@@ -5,4 +5,4 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleE
 /**
  * Single events for the Host feature.
  */
-sealed interface ViewEvent : MviSingleEvent
+internal sealed interface ViewEvent : MviSingleEvent

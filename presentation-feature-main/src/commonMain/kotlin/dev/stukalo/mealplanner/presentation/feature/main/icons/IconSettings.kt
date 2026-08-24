@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val NavigationBarIcons.IconSettings: ImageVector
+internal val NavigationBarIcons.IconSettings: ImageVector
     get() {
         if (_IconSettings != null) {
             return _IconSettings!!

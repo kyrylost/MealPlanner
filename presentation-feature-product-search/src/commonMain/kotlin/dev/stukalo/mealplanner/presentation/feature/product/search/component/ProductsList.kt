@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.flowOf
  * @param onProductClick The callback for when a product is clicked.
  */
 @Composable
-fun ProductsList(
+internal fun ProductsList(
     products: LazyPagingItems<ProductDomainModel>?,
     hazeState: HazeState,
     onProductClick: (ProductDomainModel) -> Unit

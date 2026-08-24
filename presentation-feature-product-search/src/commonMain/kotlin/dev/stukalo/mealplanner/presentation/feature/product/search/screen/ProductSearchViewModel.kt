@@ -39,14 +39,15 @@ internal class ProductSearchViewModel(
     override val initialState = ViewState()
 
     private val queryFlow = MutableStateFlow("")
+    private var lastSearchedQuery: String? = null
 
     init {
         queryFlow
             .debounce(DEBOUNCE_MILLIS.milliseconds)
             .distinctUntilChanged()
-            .filter { it.isNotBlank() && it.length >= MIN_QUERY_LENGTH }
+            .filter { it.trim().length >= MIN_QUERY_LENGTH }
             .onEach { query ->
-                loadSuggestions(query)
+                loadSuggestions(query.trim())
             }.launchIn(viewModelScope)
     }
 
@@ -87,9 +88,13 @@ internal class ProductSearchViewModel(
     }
 
     private fun searchProducts(query: String) {
-        if (query.isBlank()) return
+        val trimmedQuery = query.trim()
+        if (trimmedQuery.length < MIN_QUERY_LENGTH) return
+        if (trimmedQuery == lastSearchedQuery) return
+
+        lastSearchedQuery = trimmedQuery
         viewModelScope.launch {
-            val flow = getProductsByQueryUseCase(query)
+            val flow = getProductsByQueryUseCase(trimmedQuery)
             updateState { PartialStateChange.ProductsLoaded(flow).reduce(it) }
         }
     }

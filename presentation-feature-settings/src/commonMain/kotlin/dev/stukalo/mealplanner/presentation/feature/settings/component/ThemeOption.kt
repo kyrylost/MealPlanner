@@ -37,7 +37,7 @@ import org.jetbrains.compose.resources.stringResource
  * @param modifier The modifier to apply to the component.
  */
 @Composable
-fun ThemeOption(
+internal fun ThemeOption(
     palette: ColorPaletteDomainModel,
     isSelected: Boolean,
     onClick: () -> Unit,

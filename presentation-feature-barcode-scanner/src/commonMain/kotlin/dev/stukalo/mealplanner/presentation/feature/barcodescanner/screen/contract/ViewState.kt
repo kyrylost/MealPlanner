@@ -3,7 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contr
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
 import org.jetbrains.compose.resources.StringResource
 
-data class ViewState(
+internal data class ViewState(
     val barcode: String = "",
     val isLoading: Boolean = false,
     val isManualEntryVisible: Boolean = false,

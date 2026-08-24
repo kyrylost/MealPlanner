@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MealTypeSelector(
+internal fun MealTypeSelector(
     selectedTypes: List<MealTypeDomainModel>,
     onToggleType: (MealTypeDomainModel) -> Unit,
     modifier: Modifier = Modifier

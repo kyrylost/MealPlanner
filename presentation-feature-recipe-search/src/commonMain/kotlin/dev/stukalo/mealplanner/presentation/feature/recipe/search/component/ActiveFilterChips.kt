@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ActiveFilterChips(
+internal fun ActiveFilterChips(
     filters: FilterDomainModel,
     onRemoveMealType: (MealTypeDomainModel) -> Unit,
     onRemoveNutrient: (NutrientType) -> Unit,
@@ -116,7 +116,7 @@ private sealed class ChipData {
     }
 }
 
-enum class NutrientType(val labelRes: StringResource, val unitRes: StringResource) {
+internal enum class NutrientType(val labelRes: StringResource, val unitRes: StringResource) {
     CALORIES(Res.string.common_calories, Res.string.common_kcal_short),
     PROTEINS(Res.string.common_proteins, Res.string.common_grams_short),
     FATS(Res.string.common_fats, Res.string.common_grams_short),

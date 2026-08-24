@@ -32,7 +32,7 @@ import org.jetbrains.compose.resources.stringResource
  * @param modifier The modifier to apply to the component.
  */
 @Composable
-fun DietTypeSelection(
+internal fun DietTypeSelection(
     selectedDiet: DietDomainModel?,
     onDietSelected: (DietDomainModel) -> Unit,
     modifier: Modifier = Modifier

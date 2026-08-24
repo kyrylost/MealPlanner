@@ -2,7 +2,7 @@ package dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contr
 
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
-sealed interface ViewIntent : MviIntent {
+internal sealed interface ViewIntent : MviIntent {
     data class OnBarcodeScanned(val barcode: String) : ViewIntent
     data class OnBarcodeChange(val barcode: String) : ViewIntent
     data object OnScanClick : ViewIntent

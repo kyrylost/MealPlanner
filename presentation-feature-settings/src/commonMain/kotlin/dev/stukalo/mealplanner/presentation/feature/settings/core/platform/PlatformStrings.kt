@@ -5,4 +5,4 @@ import org.jetbrains.compose.resources.StringResource
 /**
  * Provides platform-specific string resources.
  */
-expect val healthSyncBlockedHint: StringResource
+internal expect val healthSyncBlockedHint: StringResource

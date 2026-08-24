@@ -3,7 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.product.search.screen.contr
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
-sealed interface ViewIntent : MviIntent {
+internal sealed interface ViewIntent : MviIntent {
     data object OnBackClick : ViewIntent
 
     data class OnQueryChange(val query: String) : ViewIntent

@@ -60,7 +60,7 @@ import dev.stukalo.mealplanner.presentation.feature.main.navigation.inner.MainTa
  * @param modifier The modifier to be applied to the navigation bar.
  */
 @Composable
-fun MealPlannerBottomNavigationBar(
+internal fun MealPlannerBottomNavigationBar(
     selectedTab: MainTab,
     onTabSelected: (MainTab) -> Unit,
     hazeState: HazeState? = null,
@@ -199,7 +199,7 @@ private fun NavigationTabRow(
 
 @Composable
 @Preview
-fun MealPlannerBottomNavigationBarPreview() {
+private fun MealPlannerBottomNavigationBarPreview() {
     var selectedTab by remember { mutableStateOf(MainTab.Home) }
     val hazeState = rememberHazeState()
     Theme {

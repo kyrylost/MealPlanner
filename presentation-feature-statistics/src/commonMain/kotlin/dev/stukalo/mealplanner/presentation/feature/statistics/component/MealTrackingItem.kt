@@ -24,7 +24,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.icons.IconEdit
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun MealTrackingItem(
+internal fun MealTrackingItem(
     name: String,
     calories: Double,
     isConsumed: Boolean,

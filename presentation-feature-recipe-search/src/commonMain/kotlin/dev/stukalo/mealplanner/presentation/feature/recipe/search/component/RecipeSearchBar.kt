@@ -17,7 +17,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RecipeSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
+internal fun RecipeSearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
     Row(
         modifier =
         modifier

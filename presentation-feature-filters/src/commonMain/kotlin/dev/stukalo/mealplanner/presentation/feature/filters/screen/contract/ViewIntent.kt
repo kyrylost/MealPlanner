@@ -4,7 +4,7 @@ import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 
-sealed interface ViewIntent : MviIntent {
+internal sealed interface ViewIntent : MviIntent {
     data class OnInitialFilters(val filters: FilterDomainModel) : ViewIntent
 
     data class OnMinCaloriesChange(val value: Int?) : ViewIntent

@@ -7,4 +7,4 @@ import org.jetbrains.compose.resources.StringResource
 /**
  * Desktop-specific string (fallback to Android version).
  */
-actual val healthSyncBlockedHint: StringResource = Res.string.settings_health_sync_blocked_hint_android
+internal actual val healthSyncBlockedHint: StringResource = Res.string.settings_health_sync_blocked_hint_android

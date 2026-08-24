@@ -18,7 +18,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ProductSearchBar(
+internal fun ProductSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onAction: () -> Unit = { },

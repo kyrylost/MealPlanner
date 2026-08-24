@@ -21,7 +21,7 @@ import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPe
 /**
  * Mapper for converting [HealthPermissionStatus] to [HealthPermissionOption].
  */
-class HealthPermissionMapper : BaseMapper<HealthPermissionStatus, HealthPermissionOption> {
+internal class HealthPermissionMapper : BaseMapper<HealthPermissionStatus, HealthPermissionOption> {
 
     private val resourceRegistry = mapOf(
         HealthPermissionGroup.STEPS to

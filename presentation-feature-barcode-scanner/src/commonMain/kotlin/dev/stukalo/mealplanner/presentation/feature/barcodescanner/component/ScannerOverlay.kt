@@ -22,7 +22,7 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
  * @param modifier The modifier to be applied to the overlay.
  */
 @Composable
-fun ScannerOverlay(modifier: Modifier = Modifier) {
+internal fun ScannerOverlay(modifier: Modifier = Modifier) {
     val strokeColor = Theme.color.brand.primary
     val overlayColor = Theme.color.state.fixedDark.copy(alpha = OVERLAY_ALPHA)
     val cornerRadius = Theme.radius.radius16

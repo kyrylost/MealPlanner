@@ -2,7 +2,7 @@ package dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contr
 
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviSingleEvent
 
-sealed interface ViewEvent : MviSingleEvent {
+internal sealed interface ViewEvent : MviSingleEvent {
     data object NavigateBack : ViewEvent
     data class ShowError(val message: String) : ViewEvent
     data object SuccessAdded : ViewEvent

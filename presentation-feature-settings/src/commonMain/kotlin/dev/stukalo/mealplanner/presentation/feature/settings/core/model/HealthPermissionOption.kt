@@ -11,7 +11,7 @@ import org.jetbrains.compose.resources.StringResource
  * @property description Localized description.
  * @property isGranted Whether the permission is currently granted.
  */
-data class HealthPermissionOption(
+internal data class HealthPermissionOption(
     val group: HealthPermissionGroup,
     val title: StringResource,
     val description: StringResource,

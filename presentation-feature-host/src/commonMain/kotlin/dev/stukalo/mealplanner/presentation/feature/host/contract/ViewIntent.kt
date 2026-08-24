@@ -5,7 +5,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviIntent
 /**
  * Intents for the Host feature.
  */
-sealed interface ViewIntent : MviIntent {
+internal sealed interface ViewIntent : MviIntent {
     /**
      * Triggered when the locale changes.
      */

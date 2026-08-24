@@ -36,7 +36,7 @@ import org.jetbrains.compose.resources.stringResource
  * @param modifier The modifier to apply to the component.
  */
 @Composable
-fun ActivityLevelSelection(
+internal fun ActivityLevelSelection(
     selectedLevel: ActivityLevelDomainModel?,
     onLevelSelected: (ActivityLevelDomainModel) -> Unit,
     modifier: Modifier = Modifier

@@ -7,7 +7,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewSta
 /**
  * View state for the Host feature.
  */
-data class ViewState(
+internal data class ViewState(
     val colorPalette: ColorPaletteDomainModel? = null,
     val themeMode: ThemeModeDomainModel = ThemeModeDomainModel.AUTO,
     val locale: String = ""

@@ -13,7 +13,7 @@ import dev.stukalo.mealplanner.presentation.core.ui.component.input.RoundedPlace
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RangeInput(
+internal fun RangeInput(
     min: Int?,
     max: Int?,
     onMinChange: (Int?) -> Unit,

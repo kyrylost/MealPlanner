@@ -3,7 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contr
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviViewState
 
-data class ViewState(
+internal data class ViewState(
     val isLoading: Boolean = false,
     val product: ProductDomainModel? = null,
     val error: String? = null,

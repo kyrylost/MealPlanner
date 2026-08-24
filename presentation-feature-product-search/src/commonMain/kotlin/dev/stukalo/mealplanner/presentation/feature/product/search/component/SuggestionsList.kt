@@ -23,7 +23,11 @@ import dev.stukalo.mealplanner.presentation.core.styling.Theme
  * @param modifier The modifier to be applied to the list.
  */
 @Composable
-fun SuggestionsList(suggestions: List<String>, onSuggestionClick: (String) -> Unit, modifier: Modifier = Modifier) {
+internal fun SuggestionsList(
+    suggestions: List<String>,
+    onSuggestionClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
