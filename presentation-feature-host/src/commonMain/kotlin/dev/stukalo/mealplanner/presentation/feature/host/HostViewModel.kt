@@ -43,7 +43,7 @@ internal class HostViewModel(
                 locale = activeLocale
             )
         }.onEach { change ->
-            updateState { change.reduce(it) }
+            reduce(change)
         }.launchIn(viewModelScope)
     }
 
@@ -51,9 +51,7 @@ internal class HostViewModel(
         when (intent) {
             is ViewIntent.OnLocaleChanged -> {
                 applyLocaleUseCase(intent.locale)
-                updateState {
-                    PartialStateChange.ThemeConfigLoaded(it.colorPalette, it.themeMode, intent.locale).reduce(it)
-                }
+                reduce(PartialStateChange.LocaleChanged(intent.locale))
             }
         }
     }

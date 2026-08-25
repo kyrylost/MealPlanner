@@ -3,11 +3,12 @@ package dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract
 import dev.stukalo.mealplanner.domain.model.statistics.PfcCategory
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsInterval
 import dev.stukalo.mealplanner.domain.model.statistics.StatisticsPoint
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 import kotlinx.datetime.LocalTime
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class MealsLoaded(val meals: List<MealSlotProgress>) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(meals = meals)

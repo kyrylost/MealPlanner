@@ -5,12 +5,13 @@ import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 import org.jetbrains.compose.resources.StringResource
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class UserLoaded(val user: UserDomainModel?) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(user = user)
@@ -39,13 +40,17 @@ internal sealed interface PartialStateChange {
     data class EditingFieldChange(val field: EditableField?) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             editingField = field,
-            isManualInputVisible = field != null,
+            isManualInputVisible = false,
             tempWeightInput = oldState.user?.weight?.toString().orEmpty(),
             tempHeightInput = oldState.user?.height?.toString().orEmpty(),
             tempTargetWeightInput = oldState.user?.targetWeight?.toString().orEmpty(),
             tempStepsTargetInput = oldState.user?.stepsTarget?.toString().orEmpty(),
             errorMessage = null
         )
+    }
+
+    data class ManualInputVisibility(val isVisible: Boolean) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(isManualInputVisible = isVisible)
     }
 
     sealed interface TempInput : PartialStateChange {

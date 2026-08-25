@@ -35,7 +35,7 @@ To maintain strict encapsulation, almost everything within a feature module MUST
 - `ViewState`: Immutable data class representing the entire UI state.
 - `ViewIntent`: Sealed interface for user actions or system triggers.
 - `ViewEvent`: Sealed interface for one-time events (navigation, snackbars).
-- **`PartialStateChange`**: A mandatory sealed interface (or class) with a `reduce(currentState: ViewState): ViewState` function. It encapsulates how specific actions update the `ViewState`.
+- **`PartialStateChange`**: A mandatory sealed interface (or class) inheriting from `MviPartialStateChange<ViewState>`. It encapsulates how specific actions update the `ViewState`.
     - **Simple Changes**: For atomic updates (e.g., toggling a loader or changing a simple value), use a `data class` or `object` directly.
         ```kotlin
         data class Loading(val isLoading: Boolean) : PartialStateChange {
@@ -56,15 +56,15 @@ To maintain strict encapsulation, almost everything within a feature module MUST
         ```
 
 #### 3. Component Responsibilities
-- **ViewModel**: Inherits from `BaseMviViewModel`. Processes `ViewIntent`, orchestrates UseCases, and updates state by applying `PartialStateChange` reducers.
+- **ViewModel**: Inherits from `BaseMviViewModel`. Processes `ViewIntent`, orchestrates UseCases, and updates state EXCLUSIVELY by applying `PartialStateChange` reducers via `reduce(change)`. Directly modifying state or using lambdas in the ViewModel is strictly prohibited to keep business logic in the contract reducers.
 - **Screen**: The "Glue". Uses the `MviScreen` wrapper to standardize state collection and `ViewEvent` handling. It links the ViewModel to the `Content`.
 - **Content**: A stateless Composable. It receives the `ViewState` and an `onIntent` lambda. It is responsible for:
     - **Adaptive Layout**: Handling different screen sizes using `WindowSizeClass`.
     - **UI Composition**: Assembling the screen from internal `components` and `core-ui` widgets.
 
 ### Base Classes
-- **ViewModel**: Must inherit from `BaseMviViewModel<ViewIntent, ViewState, ViewEvent>`.
-- **Screen Wrapper**: Must use the `MviScreen` wrapper to handle lifecycle, state collection, and single event processing.
+- **ViewModel**: Must inherit from `BaseMviViewModel<ViewIntent, ViewState, ViewEvent>`. Use `sendEvent(ViewEvent)` to trigger one-time actions. These are automatically wrapped in `MviSideEffect.Feature`.
+- **Screen Wrapper**: Must use the `MviScreen` wrapper. It automatically handles `MviSideEffect.System` (like `ShowSnackbar`) and provides the unwrapped `ViewEvent` to the screen's `onSingleEvent` callback.
 
 ## Module Layers
 - **Presentation**: UI and UX logic. **Rule**: ViewModels MUST NOT depend on Repositories directly. Always use UseCases to interact with the domain/data layer.

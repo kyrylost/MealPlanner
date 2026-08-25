@@ -2,8 +2,10 @@ package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contra
 
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
+
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class RecipeLoaded(val recipe: RecipeDomainModel) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(

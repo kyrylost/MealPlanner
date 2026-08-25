@@ -1,7 +1,9 @@
 package dev.stukalo.mealplanner.presentation.feature.home.screen.contract
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
+
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class UserLoaded(val userName: String, val stepsTarget: Int) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(

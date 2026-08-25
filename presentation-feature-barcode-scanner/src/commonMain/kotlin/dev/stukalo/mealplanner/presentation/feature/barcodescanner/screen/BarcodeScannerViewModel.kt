@@ -1,8 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen
 
-import androidx.lifecycle.viewModelScope
-import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.barcode_scanner_not_found
+import dev.stukalo.mealplanner.domain.model.exception.ProductException
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.PartialStateChange
@@ -22,7 +20,7 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 internal class BarcodeScannerViewModel(
     private val getProductByBarcodeUseCase: GetProductByBarcodeUseCase,
-    val clock: Clock
+    private val clock: Clock
 ) : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
     override val initialState = ViewState()
 
@@ -33,12 +31,12 @@ internal class BarcodeScannerViewModel(
         when (intent) {
             is ViewIntent.OnBarcodeScanned -> {
                 if (shouldThrottle(intent.barcode) || isProcessing) return
-                updateState { PartialStateChange.BarcodeChange(intent.barcode).reduce(it) }
+                reduce(PartialStateChange.BarcodeChange(intent.barcode))
                 getProductByBarcode(intent.barcode)
             }
             is ViewIntent.OnBarcodeChange -> {
-                updateState { PartialStateChange.BarcodeChange(intent.barcode).reduce(it) }
-                updateState { PartialStateChange.Error(null).reduce(it) }
+                reduce(PartialStateChange.BarcodeChange(intent.barcode))
+                reduce(PartialStateChange.Error(null))
             }
             ViewIntent.OnScanClick -> {
                 if (isProcessing) return
@@ -48,14 +46,20 @@ internal class BarcodeScannerViewModel(
                 sendEvent(ViewEvent.NavigateBack)
             }
             ViewIntent.OnManualEntryClick -> {
-                updateState { PartialStateChange.ManualEntryVisibility(true).reduce(it) }
-                updateState { PartialStateChange.Error(null).reduce(it) }
+                reduce(PartialStateChange.ManualEntryVisibility(true))
+                reduce(PartialStateChange.Error(null))
             }
             ViewIntent.OnDismissManualEntry -> {
-                updateState { PartialStateChange.ManualEntryVisibility(false).reduce(it) }
-                updateState { PartialStateChange.Error(null).reduce(it) }
+                reduce(PartialStateChange.ManualEntryVisibility(false))
+                reduce(PartialStateChange.Error(null))
             }
         }
+    }
+
+    override fun handleError(throwable: Throwable) {
+        isProcessing = false
+        reduce(PartialStateChange.Loading(false))
+        super.handleError(throwable)
     }
 
     private fun shouldThrottle(barcode: String): Boolean {
@@ -74,31 +78,29 @@ internal class BarcodeScannerViewModel(
 
         isProcessing = true
 
-        viewModelScope.launch {
-            updateState { PartialStateChange.Loading(true).reduce(it) }
-            updateState { PartialStateChange.Error(null).reduce(it) }
+        safeLaunch {
+            reduce(PartialStateChange.Loading(true))
+            reduce(PartialStateChange.Error(null))
             val result = getProductByBarcodeUseCase(barcode)
 
-            updateState { PartialStateChange.Loading(false).reduce(it) }
+            reduce(PartialStateChange.Loading(false))
             isProcessing = false
 
             result.onSuccess { product ->
                 if (product != null) {
-                    updateState { PartialStateChange.ManualEntryVisibility(false).reduce(it) }
-                    updateState { PartialStateChange.Navigating(true).reduce(it) }
+                    reduce(PartialStateChange.ManualEntryVisibility(false))
+                    reduce(PartialStateChange.Navigating(true))
                     sendEvent(ViewEvent.NavigateToProductDetails(barcode))
                     // Reset navigation state after some time to allow scanning again if returned
                     launch {
                         delay(RESET_NAVIGATION_DELAY_MS.milliseconds)
-                        updateState { PartialStateChange.Navigating(false).reduce(it) }
+                        reduce(PartialStateChange.Navigating(false))
                     }
                 } else {
-                    updateState { PartialStateChange.Error(Res.string.barcode_scanner_not_found).reduce(it) }
-                    sendEvent(ViewEvent.ShowError(Res.string.barcode_scanner_not_found))
+                    handleError(ProductException.ProductNotFound())
                 }
             }.onFailure {
-                updateState { PartialStateChange.Error(Res.string.barcode_scanner_not_found).reduce(it) }
-                sendEvent(ViewEvent.ShowError(Res.string.barcode_scanner_not_found))
+                handleError(it)
             }
         }
     }

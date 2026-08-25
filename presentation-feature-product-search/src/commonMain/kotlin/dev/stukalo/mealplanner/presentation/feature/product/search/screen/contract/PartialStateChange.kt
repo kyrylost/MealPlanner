@@ -2,10 +2,11 @@ package dev.stukalo.mealplanner.presentation.feature.product.search.screen.contr
 
 import androidx.paging.PagingData
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
 import kotlinx.coroutines.flow.Flow
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class QueryChange(val query: String) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(

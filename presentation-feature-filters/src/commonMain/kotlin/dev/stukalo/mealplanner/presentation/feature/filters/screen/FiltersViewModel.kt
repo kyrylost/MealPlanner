@@ -12,49 +12,34 @@ internal class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEv
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
             is ViewIntent.OnInitialFilters -> {
-                updateState { PartialStateChange.FiltersChanged(intent.filters).reduce(it) }
+                reduce(PartialStateChange.FiltersChanged(intent.filters))
             }
             is ViewIntent.OnMinCaloriesChange -> {
-                updateState {
-                    PartialStateChange.FiltersChanged(it.filters.copy(minCalories = intent.value)).reduce(it)
-                }
+                reduce(PartialStateChange.MinCaloriesChanged(intent.value))
             }
             is ViewIntent.OnMaxCaloriesChange -> {
-                updateState {
-                    PartialStateChange.FiltersChanged(it.filters.copy(maxCalories = intent.value)).reduce(it)
-                }
+                reduce(PartialStateChange.MaxCaloriesChanged(intent.value))
             }
             is ViewIntent.OnMinProteinsChange -> {
-                updateState {
-                    PartialStateChange.FiltersChanged(it.filters.copy(minProteins = intent.value)).reduce(it)
-                }
+                reduce(PartialStateChange.MinProteinsChanged(intent.value))
             }
             is ViewIntent.OnMaxProteinsChange -> {
-                updateState {
-                    PartialStateChange.FiltersChanged(it.filters.copy(maxProteins = intent.value)).reduce(it)
-                }
+                reduce(PartialStateChange.MaxProteinsChanged(intent.value))
             }
             is ViewIntent.OnMinFatsChange -> {
-                updateState { PartialStateChange.FiltersChanged(it.filters.copy(minFats = intent.value)).reduce(it) }
+                reduce(PartialStateChange.MinFatsChanged(intent.value))
             }
             is ViewIntent.OnMaxFatsChange -> {
-                updateState { PartialStateChange.FiltersChanged(it.filters.copy(maxFats = intent.value)).reduce(it) }
+                reduce(PartialStateChange.MaxFatsChanged(intent.value))
             }
             is ViewIntent.OnMinCarbsChange -> {
-                updateState { PartialStateChange.FiltersChanged(it.filters.copy(minCarbs = intent.value)).reduce(it) }
+                reduce(PartialStateChange.MinCarbsChanged(intent.value))
             }
             is ViewIntent.OnMaxCarbsChange -> {
-                updateState { PartialStateChange.FiltersChanged(it.filters.copy(maxCarbs = intent.value)).reduce(it) }
+                reduce(PartialStateChange.MaxCarbsChanged(intent.value))
             }
             is ViewIntent.OnToggleMealType -> {
-                val currentTypes = viewState.value.filters.mealTypes
-                val newTypes =
-                    if (currentTypes.contains(intent.type)) {
-                        currentTypes - intent.type
-                    } else {
-                        currentTypes + intent.type
-                    }
-                updateState { PartialStateChange.FiltersChanged(it.filters.copy(mealTypes = newTypes)).reduce(it) }
+                reduce(PartialStateChange.MealTypeToggled(intent.type))
             }
             ViewIntent.OnApplyClick -> {
                 sendEvent(ViewEvent.ApplyFilters(viewState.value.filters))

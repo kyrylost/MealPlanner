@@ -26,7 +26,7 @@ internal class GatewayViewModel(
     }
 
     private suspend fun checkUserExistence() {
-        updateState { PartialStateChange.Loading(true).reduce(it) }
+        reduce(PartialStateChange.Loading(true))
 
         try {
             if (checkUserExistsUseCase()) {
@@ -42,7 +42,7 @@ internal class GatewayViewModel(
             e.printStackTrace()
             sendEvent(ViewEvent.NavigateToOnboarding)
         } finally {
-            updateState { PartialStateChange.Loading(false).reduce(it) }
+            reduce(PartialStateChange.Loading(false))
         }
     }
 }

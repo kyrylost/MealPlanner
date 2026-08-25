@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.productdetails.screen
 
-import androidx.lifecycle.viewModelScope
+import dev.stukalo.mealplanner.domain.model.exception.ProductException
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductDetailsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.LogProductConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
@@ -8,7 +8,6 @@ import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contra
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewState
-import kotlinx.coroutines.launch
 
 internal class ProductDetailsViewModel(
     private val getProductDetailsUseCase: GetProductDetailsUseCase,
@@ -22,17 +21,17 @@ internal class ProductDetailsViewModel(
                 loadProduct(intent.productId, intent.barcode)
             }
             is ViewIntent.OnWeightChange -> {
-                updateState { PartialStateChange.WeightChange(intent.weight).reduce(it) }
+                reduce(PartialStateChange.WeightChange(intent.weight))
             }
             ViewIntent.OnAddConsumedClick -> {
-                updateState { PartialStateChange.DialogVisibility(true).reduce(it) }
+                reduce(PartialStateChange.DialogVisibility(true))
             }
             is ViewIntent.OnConfirmLog -> {
-                updateState { PartialStateChange.DialogVisibility(false).reduce(it) }
+                reduce(PartialStateChange.DialogVisibility(false))
                 logConsumed(intent.weight)
             }
             ViewIntent.OnDismissDialog -> {
-                updateState { PartialStateChange.DialogVisibility(false).reduce(it) }
+                reduce(PartialStateChange.DialogVisibility(false))
             }
             ViewIntent.OnBackClick -> {
                 sendEvent(ViewEvent.NavigateBack)
@@ -40,14 +39,19 @@ internal class ProductDetailsViewModel(
         }
     }
 
+    override fun handleError(throwable: Throwable) {
+        reduce(PartialStateChange.Loading(false))
+        super.handleError(throwable)
+    }
+
     private fun loadProduct(productId: String?, barcode: String?) {
-        viewModelScope.launch {
-            updateState { PartialStateChange.Loading(true).reduce(it) }
+        safeLaunch {
+            reduce(PartialStateChange.Loading(true))
             val product = getProductDetailsUseCase(productId, barcode)
             if (product != null) {
-                updateState { PartialStateChange.ProductLoaded(product).reduce(it) }
+                reduce(PartialStateChange.ProductLoaded(product))
             } else {
-                updateState { PartialStateChange.Error("PRODUCT_NOT_FOUND").reduce(it) }
+                handleError(ProductException.ProductNotFound())
             }
         }
     }
@@ -56,15 +60,14 @@ internal class ProductDetailsViewModel(
         val product = viewState.value.product ?: return
         if (weight <= 0) return
 
-        viewModelScope.launch {
-            updateState { PartialStateChange.Loading(true).reduce(it) }
+        safeLaunch {
+            reduce(PartialStateChange.Loading(true))
             logProductConsumedUseCase(product, weight)
                 .onSuccess {
-                    updateState { PartialStateChange.Loading(false).reduce(it) }
+                    reduce(PartialStateChange.Loading(false))
                     sendEvent(ViewEvent.SuccessAdded)
                 }.onFailure {
-                    updateState { PartialStateChange.Loading(false).reduce(it) }
-                    sendEvent(ViewEvent.ShowError(it.message ?: "Unknown error"))
+                    handleError(it)
                 }
         }
     }

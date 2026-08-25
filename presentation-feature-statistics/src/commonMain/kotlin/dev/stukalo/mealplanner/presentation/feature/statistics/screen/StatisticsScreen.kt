@@ -3,15 +3,7 @@ package dev.stukalo.mealplanner.presentation.feature.statistics.screen
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
-import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
-import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
-import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
-import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewEvent
-import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState
-import kotlinx.datetime.LocalTime
-import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -25,13 +17,8 @@ internal fun StatisticsScreen() {
 
     MviScreen(
         viewModel = viewModel,
-        onSingleEvent = { event ->
-            when (event) {
-                is ViewEvent.ShowError -> {
-                    snackbarHostState.showSnackbar(getString(event.message))
-                }
-            }
-        },
+        onSingleEvent = {},
+        snackbarHostState = snackbarHostState,
         content = { state ->
             StatisticsContent(
                 state = state,
@@ -40,39 +27,4 @@ internal fun StatisticsScreen() {
             )
         }
     )
-}
-
-@Preview
-@Composable
-private fun StatisticsScreenPreview() {
-    Theme {
-        StatisticsContent(
-            state = ViewState(
-                meals = listOf(
-                    MealSlotProgress(
-                        id = 1,
-                        type = MealTypeDomainModel.BREAKFAST,
-                        startTime = LocalTime(7, 0),
-                        calories = 500.0,
-                        proteins = 30.0,
-                        fats = 15.0,
-                        carbohydrates = 60.0,
-                        isConsumed = true
-                    ),
-                    MealSlotProgress(
-                        id = 2,
-                        type = MealTypeDomainModel.LUNCH,
-                        startTime = LocalTime(12, 0),
-                        calories = 800.0,
-                        proteins = 40.0,
-                        fats = 25.0,
-                        carbohydrates = 100.0,
-                        isConsumed = false
-                    )
-                )
-            ),
-            snackbarHostState = remember { SnackbarHostState() },
-            onIntent = {}
-        )
-    }
 }

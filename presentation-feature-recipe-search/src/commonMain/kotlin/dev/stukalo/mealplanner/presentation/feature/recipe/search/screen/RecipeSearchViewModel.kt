@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -40,7 +39,7 @@ internal class RecipeSearchViewModel(
     }
 
     private fun setupSearch() {
-        viewModelScope.launch {
+        safeLaunch {
             searchFlow
                 .debounce(500.milliseconds)
                 .distinctUntilChanged()
@@ -60,16 +59,16 @@ internal class RecipeSearchViewModel(
                 searchRecommended()
             }
             is ViewIntent.OnSearchQueryChange -> {
-                updateState { PartialStateChange.SearchQueryChange(intent.query).reduce(it) }
+                reduce(PartialStateChange.SearchQueryChange(intent.query))
                 searchFlow.value = intent.query
             }
             is ViewIntent.ApplyFilters -> {
-                updateState { PartialStateChange.FiltersChanged(intent.filters).reduce(it) }
+                reduce(PartialStateChange.FiltersChanged(intent.filters))
                 searchWithFilters(viewState.value.searchQuery, intent.filters)
             }
             ViewIntent.OnClearFilters -> {
-                updateState { PartialStateChange.SearchQueryChange("").reduce(it) }
-                updateState { PartialStateChange.FiltersChanged(null).reduce(it) }
+                reduce(PartialStateChange.SearchQueryChange(""))
+                reduce(PartialStateChange.FiltersChanged(null))
                 searchFlow.value = ""
                 searchRecommended()
             }
@@ -86,7 +85,7 @@ internal class RecipeSearchViewModel(
     }
 
     private fun searchRecommended() {
-        viewModelScope.launch {
+        safeLaunch {
             getRecommendedRecipesUseCase()
                 .cachedIn(viewModelScope)
                 .collectLatest { recipesFlow.value = it }
@@ -94,7 +93,7 @@ internal class RecipeSearchViewModel(
     }
 
     private fun searchWithFilters(query: String, filters: FilterDomainModel?) {
-        viewModelScope.launch {
+        safeLaunch {
             getRecipesUseCase(
                 calories = filters?.caloriesRange ?: 0..5000,
                 carbohydrates = filters?.carbsRange ?: 0..1000,

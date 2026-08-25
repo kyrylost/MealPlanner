@@ -2,8 +2,10 @@ package dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contr
 
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
+
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class ProductLoaded(val product: ProductDomainModel) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
@@ -22,12 +24,5 @@ internal sealed interface PartialStateChange {
 
     data class Loading(val isLoading: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(isLoading = isLoading)
-    }
-
-    data class Error(val message: String?) : PartialStateChange {
-        override fun reduce(oldState: ViewState): ViewState = oldState.copy(
-            error = message,
-            isLoading = false
-        )
     }
 }

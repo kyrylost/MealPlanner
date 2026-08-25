@@ -1,9 +1,10 @@
 package dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract
 
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
 import org.jetbrains.compose.resources.StringResource
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class BarcodeChange(val barcode: String) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(barcode = barcode)

@@ -1,8 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.product.search.screen
 
 import androidx.lifecycle.viewModelScope
-import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.error_unknown
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
@@ -19,7 +17,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -57,14 +54,14 @@ internal class ProductSearchViewModel(
                 sendEvent(ViewEvent.NavigateBack)
             }
             is ViewIntent.OnQueryChange -> {
-                updateState { PartialStateChange.QueryChange(intent.query).reduce(it) }
+                reduce(PartialStateChange.QueryChange(intent.query))
                 queryFlow.value = intent.query
             }
             ViewIntent.OnSearchClick -> {
                 searchProducts(viewState.value.query)
             }
             is ViewIntent.OnSuggestionClick -> {
-                updateState { PartialStateChange.QueryChange(intent.suggestion).reduce(it) }
+                reduce(PartialStateChange.QueryChange(intent.suggestion))
                 searchProducts(intent.suggestion)
             }
             is ViewIntent.OnProductClick -> {
@@ -79,10 +76,15 @@ internal class ProductSearchViewModel(
         }
     }
 
+    override fun handleError(throwable: Throwable) {
+        reduce(PartialStateChange.Loading(false))
+        super.handleError(throwable)
+    }
+
     private fun loadSuggestions(query: String) {
-        viewModelScope.launch {
+        safeLaunch {
             getAutoCompleteHintsUseCase(query).onSuccess { suggestions ->
-                updateState { PartialStateChange.SuggestionsLoaded(suggestions).reduce(it) }
+                reduce(PartialStateChange.SuggestionsLoaded(suggestions))
             }
         }
     }
@@ -93,21 +95,20 @@ internal class ProductSearchViewModel(
         if (trimmedQuery == lastSearchedQuery) return
 
         lastSearchedQuery = trimmedQuery
-        viewModelScope.launch {
+        safeLaunch {
             val flow = getProductsByQueryUseCase(trimmedQuery)
-            updateState { PartialStateChange.ProductsLoaded(flow).reduce(it) }
+            reduce(PartialStateChange.ProductsLoaded(flow))
         }
     }
 
     private fun logProduct(product: ProductDomainModel, weight: Float) {
-        viewModelScope.launch {
-            updateState { PartialStateChange.Loading(true).reduce(it) }
+        safeLaunch {
+            reduce(PartialStateChange.Loading(true))
             logProductConsumedUseCase(product, weight)
                 .onSuccess {
-                    updateState { PartialStateChange.Loading(false).reduce(it) }
+                    reduce(PartialStateChange.Loading(false))
                 }.onFailure {
-                    updateState { PartialStateChange.Loading(false).reduce(it) }
-                    sendEvent(ViewEvent.ShowError(Res.string.error_unknown))
+                    handleError(it)
                 }
         }
     }

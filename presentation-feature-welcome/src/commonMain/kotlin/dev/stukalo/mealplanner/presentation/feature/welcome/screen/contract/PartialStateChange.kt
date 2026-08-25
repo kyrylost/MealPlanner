@@ -4,13 +4,14 @@ import dev.stukalo.mealplanner.core.common.date.formatDate
 import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Instant
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     sealed interface NameInput : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = when (this) {
@@ -133,6 +134,14 @@ internal sealed interface PartialStateChange {
 
     data class ShowDatePicker(val show: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(showDatePicker = show)
+    }
+
+    data class InitialSetup(val weight: String, val height: String) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(
+            weightInput = weight,
+            heightInput = height,
+            targetWeightInput = weight
+        )
     }
 
     data class Loading(val isLoading: Boolean) : PartialStateChange {

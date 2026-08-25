@@ -8,7 +8,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
 import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.home.screen.contract.ViewIntent
-import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -36,11 +35,9 @@ internal fun HomeScreen(onNavigateToRecipeDetails: (String) -> Unit, onNavigateT
             when (event) {
                 is ViewEvent.NavigateToRecipeDetails -> onNavigateToRecipeDetails(event.recipeId)
                 ViewEvent.NavigateToRecipeSearch -> onNavigateToRecipeSearch()
-                is ViewEvent.ShowError -> {
-                    snackbarHostState.showSnackbar(getString(event.message))
-                }
             }
         },
+        snackbarHostState = snackbarHostState,
         content = { state ->
             HomeContent(
                 state = state,

@@ -13,5 +13,5 @@ interface CalculateDailyNormUseCase {
      * @param user The user profile data.
      * @return The calculated daily nutritional norm.
      */
-    operator fun invoke(user: UserDomainModel): DailyNormDomainModel
+    suspend operator fun invoke(user: UserDomainModel): DailyNormDomainModel
 }

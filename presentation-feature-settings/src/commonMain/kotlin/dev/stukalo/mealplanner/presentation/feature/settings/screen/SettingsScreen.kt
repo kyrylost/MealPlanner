@@ -1,6 +1,8 @@
 package dev.stukalo.mealplanner.presentation.feature.settings.screen
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
 import dev.stukalo.mealplanner.presentation.core.ui.component.permission.HealthPermissionGate
@@ -16,6 +18,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 internal fun SettingsScreen() {
     val viewModel: SettingsViewModel = koinViewModel()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LifecycleResumeEffect(Unit) {
         viewModel.onIntent(ViewIntent.OnResume)
@@ -28,7 +31,8 @@ internal fun SettingsScreen() {
             when (event) {
                 ViewEvent.NavigateBack -> { /* No back in tab */ }
             }
-        }
+        },
+        snackbarHostState = snackbarHostState
     ) { state ->
         HealthPermissionGate(
             permissions = state.healthPermissionsToRequest,

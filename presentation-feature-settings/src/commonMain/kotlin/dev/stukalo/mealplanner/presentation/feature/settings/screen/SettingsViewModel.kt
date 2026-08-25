@@ -34,7 +34,6 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateStepsTargetUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
-import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.settings.core.mapper.HealthPermissionMapper
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
@@ -47,7 +46,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel for the Settings screen.
@@ -89,7 +87,7 @@ internal class SettingsViewModel(
     init {
         getUserUseCase()
             .onEach { user ->
-                updateState { PartialStateChange.UserLoaded(user).reduce(it) }
+                reduce(PartialStateChange.UserLoaded(user))
             }.launchIn(viewModelScope)
 
         combine(
@@ -103,23 +101,23 @@ internal class SettingsViewModel(
                 themeMode = mode
             )
         }.onEach { change ->
-            updateState { change.reduce(it) }
+            reduce(change)
         }.launchIn(viewModelScope)
 
         getHealthPermissionStatusUseCase()
             .map { healthPermissionMapper.mapListTo(it) }
             .onEach { options ->
                 val status = getHealthServiceStatusUseCase()
-                updateState { PartialStateChange.HealthStatusLoaded(status, options).reduce(it) }
+                reduce(PartialStateChange.HealthStatusLoaded(status, options))
             }.launchIn(viewModelScope)
 
-        viewModelScope.launch {
+        safeLaunch {
             refreshPermissions()
         }
 
         getMealRemindersEnabledUseCase()
             .onEach { enabled ->
-                updateState { PartialStateChange.MealRemindersStatusChange(enabled).reduce(it) }
+                reduce(PartialStateChange.MealRemindersStatusChange(enabled))
             }.launchIn(viewModelScope)
     }
 
@@ -154,62 +152,66 @@ internal class SettingsViewModel(
         }
     }
 
+    override fun handleError(throwable: Throwable) {
+        reduce(PartialStateChange.Saving(false))
+        super.handleError(throwable)
+    }
+
     private fun onColorPaletteClick(palette: ColorPaletteDomainModel) {
-        viewModelScope.launch {
+        safeLaunch {
             setColorPaletteUseCase(palette)
         }
     }
 
     private fun onThemeModeClick(mode: ThemeModeDomainModel) {
-        viewModelScope.launch {
+        safeLaunch {
             setThemeModeUseCase(mode)
         }
     }
 
     private fun onLanguageClick(language: String) {
-        viewModelScope.launch {
+        safeLaunch {
             setLocaleUseCase(language)
             applyLocaleUseCase(language)
         }
     }
 
     private fun onBackClick() {
-        viewModelScope.launch {
+        safeLaunch {
             sendEvent(ViewEvent.NavigateBack)
         }
     }
 
     private fun onEditFieldClick(field: EditableField) {
-        updateState { PartialStateChange.EditingFieldChange(field).reduce(it) }
+        reduce(PartialStateChange.EditingFieldChange(field))
     }
 
     private fun onDismissEdit() {
-        updateState { PartialStateChange.EditingFieldChange(null).reduce(it) }
+        reduce(PartialStateChange.EditingFieldChange(null))
     }
 
     private fun onManualInputClick() {
-        val currentField = viewState.value.editingField
-        updateState { PartialStateChange.EditingFieldChange(currentField).reduce(it) }
+        reduce(PartialStateChange.ManualInputVisibility(true))
     }
 
     private fun onWeightChange(weight: String) {
-        updateState { PartialStateChange.TempInput.Weight(weight).reduce(it) }
-        updateState { PartialStateChange.Error(null).reduce(it) }
+        reduce(PartialStateChange.TempInput.Weight(weight))
+        reduce(PartialStateChange.Error(null))
     }
 
     private fun onHeightChange(height: String) {
-        updateState { PartialStateChange.TempInput.Height(height).reduce(it) }
-        updateState { PartialStateChange.Error(null).reduce(it) }
+        reduce(PartialStateChange.TempInput.Height(height))
+        reduce(PartialStateChange.Error(null))
     }
 
     private fun onTargetWeightChange(targetWeight: String) {
-        updateState { PartialStateChange.TempInput.TargetWeight(targetWeight).reduce(it) }
-        updateState { PartialStateChange.Error(null).reduce(it) }
+        reduce(PartialStateChange.TempInput.TargetWeight(targetWeight))
+        reduce(PartialStateChange.Error(null))
     }
 
     private fun onStepsTargetChange(steps: String) {
-        updateState { PartialStateChange.TempInput.StepsTarget(steps).reduce(it) }
-        updateState { PartialStateChange.Error(null).reduce(it) }
+        reduce(PartialStateChange.TempInput.StepsTarget(steps))
+        reduce(PartialStateChange.Error(null))
     }
 
     private fun onActivityLevelChange(activityLevel: ActivityLevelDomainModel) {
@@ -230,16 +232,16 @@ internal class SettingsViewModel(
         val state = viewState.value
         val field = state.editingField ?: return
 
-        updateState {
-            val inputChange = when (field) {
-                EditableField.Weight -> PartialStateChange.TempInput.Weight(value)
-                EditableField.Height -> PartialStateChange.TempInput.Height(value)
-                EditableField.TargetWeight -> PartialStateChange.TempInput.TargetWeight(value)
-                EditableField.StepsTarget -> PartialStateChange.TempInput.StepsTarget(value)
-                else -> null
-            }
-            inputChange?.reduce(it) ?: it
+        val inputChange = when (field) {
+            EditableField.Weight -> PartialStateChange.TempInput.Weight(value)
+            EditableField.Height -> PartialStateChange.TempInput.Height(value)
+            EditableField.TargetWeight -> PartialStateChange.TempInput.TargetWeight(value)
+            EditableField.StepsTarget -> PartialStateChange.TempInput.StepsTarget(value)
+            else -> null
         }
+        inputChange?.let { reduce(it) }
+
+        reduce(PartialStateChange.ManualInputVisibility(false))
         saveProfile()
     }
 
@@ -251,13 +253,13 @@ internal class SettingsViewModel(
      */
     private fun onHealthPermissionToggle(option: HealthPermissionOption, enabled: Boolean) {
         if (enabled) {
-            viewModelScope.launch {
+            safeLaunch {
                 val result = requestHealthPermissionsUseCase(option.group)
                 if (option.group == HealthPermissionGroup.INTEGRATED) {
                     onHealthPermissionsResult(result.isSuccess)
                 } else {
                     val types = result.getOrDefault(defaultValue = emptySet())
-                    updateState { PartialStateChange.HealthPermissionsTriggered(types).reduce(it) }
+                    reduce(PartialStateChange.HealthPermissionsTriggered(types))
                 }
             }
         } else {
@@ -268,15 +270,15 @@ internal class SettingsViewModel(
     private fun onMealRemindersToggle(enabled: Boolean) {
         if (enabled) {
             if (hasNotificationPermissionUseCase()) {
-                viewModelScope.launch {
+                safeLaunch {
                     setMealRemindersEnabledUseCase(true)
                     syncMealRemindersUseCase()
                 }
             } else {
-                updateState { PartialStateChange.NotificationPermissionTriggered.reduce(it) }
+                reduce(PartialStateChange.NotificationPermissionTriggered)
             }
         } else {
-            viewModelScope.launch {
+            safeLaunch {
                 setMealRemindersEnabledUseCase(false)
                 syncMealRemindersUseCase()
             }
@@ -284,9 +286,9 @@ internal class SettingsViewModel(
     }
 
     private fun onNotificationPermissionResult(isGranted: Boolean) {
-        updateState { PartialStateChange.NotificationPermissionHandled.reduce(it) }
+        reduce(PartialStateChange.NotificationPermissionHandled)
         if (isGranted) {
-            viewModelScope.launch {
+            safeLaunch {
                 setMealRemindersEnabledUseCase(true)
                 syncMealRemindersUseCase()
             }
@@ -294,22 +296,22 @@ internal class SettingsViewModel(
     }
 
     private fun onNotificationPermissionHandled() {
-        updateState { PartialStateChange.NotificationPermissionHandled.reduce(it) }
+        reduce(PartialStateChange.NotificationPermissionHandled)
     }
 
     private fun onResume() {
-        viewModelScope.launch {
+        safeLaunch {
             refreshPermissions()
         }
 
         getMealRemindersEnabledUseCase()
             .onEach { enabled ->
-                updateState { PartialStateChange.MealRemindersStatusChange(enabled).reduce(it) }
+                reduce(PartialStateChange.MealRemindersStatusChange(enabled))
             }.launchIn(viewModelScope)
     }
 
     private fun onHealthPermissionsHandled() {
-        updateState { PartialStateChange.HealthPermissionsHandled.reduce(it) }
+        reduce(PartialStateChange.HealthPermissionsHandled)
     }
 
     /**
@@ -318,8 +320,8 @@ internal class SettingsViewModel(
      * @param isGranted Whether the permission was granted by the user.
      */
     private fun onHealthPermissionsResult(isGranted: Boolean) {
-        updateState { PartialStateChange.HealthPermissionsHandled.reduce(it) }
-        viewModelScope.launch {
+        reduce(PartialStateChange.HealthPermissionsHandled)
+        safeLaunch {
             val previouslyGrantedGroups =
                 viewState.value.permissionOptions
                     .filter { it.isGranted }
@@ -353,13 +355,13 @@ internal class SettingsViewModel(
             }
 
             if (shouldShowBlocked) {
-                updateState { PartialStateChange.PermissionBlockedDialogVisibility(true).reduce(it) }
+                reduce(PartialStateChange.PermissionBlockedDialogVisibility(true))
             }
         }
     }
 
     private fun onDismissPermissionBlockedDialog() {
-        updateState { PartialStateChange.PermissionBlockedDialogVisibility(false).reduce(it) }
+        reduce(PartialStateChange.PermissionBlockedDialogVisibility(false))
     }
 
     private fun onOpenHealthSettings() {
@@ -371,7 +373,7 @@ internal class SettingsViewModel(
     }
 
     private fun onRequestHealthPermissions() {
-        viewModelScope.launch {
+        safeLaunch {
             val result = requestHealthPermissionsUseCase()
             val isIntegrated = viewState.value.permissionOptions.any {
                 it.group == HealthPermissionGroup.INTEGRATED
@@ -381,7 +383,7 @@ internal class SettingsViewModel(
                 onHealthPermissionsResult(result.isSuccess)
             } else {
                 val types = result.getOrDefault(defaultValue = emptySet())
-                updateState { PartialStateChange.HealthPermissionsTriggered(types).reduce(it) }
+                reduce(PartialStateChange.HealthPermissionsTriggered(types))
             }
         }
     }
@@ -391,22 +393,22 @@ internal class SettingsViewModel(
      */
     private suspend fun refreshPermissions() {
         val status = getHealthServiceStatusUseCase()
-        updateState { PartialStateChange.HealthServiceStatusChange(status).reduce(it) }
+        reduce(PartialStateChange.HealthServiceStatusChange(status))
 
         if (status == HealthServiceStatus.AVAILABLE) {
             val statuses = getHealthPermissionStatusUseCase().first()
             val options = healthPermissionMapper.mapListTo(statuses)
-            updateState { PartialStateChange.HealthStatusLoaded(status, options).reduce(it) }
+            reduce(PartialStateChange.HealthStatusLoaded(status, options))
         }
     }
 
     private fun saveUser(user: UserDomainModel) {
-        viewModelScope.launch {
-            updateState { PartialStateChange.Saving(true).reduce(it) }
+        safeLaunch {
+            reduce(PartialStateChange.Saving(true))
             saveUserDataUseCase(user)
             val dailyNorm = calculateDailyNormUseCase(user)
             saveDailyNormUseCase(dailyNorm)
-            updateState { PartialStateChange.Saving(false).reduce(it) }
+            reduce(PartialStateChange.Saving(false))
         }
     }
 
@@ -423,7 +425,7 @@ internal class SettingsViewModel(
             val weight = state.tempWeightInput.toDoubleOrNull()
             val validationResult = validateWeightUseCase(weight)
             if (validationResult is ValidationResult.Error) {
-                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
+                handleError(validationResult.exception)
                 return
             }
             weight?.let { updatedUser = updatedUser.copy(weight = it) }
@@ -433,7 +435,7 @@ internal class SettingsViewModel(
             val height = state.tempHeightInput.toDoubleOrNull()
             val validationResult = validateHeightUseCase(height)
             if (validationResult is ValidationResult.Error) {
-                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
+                handleError(validationResult.exception)
                 return
             }
             height?.let { updatedUser = updatedUser.copy(height = it) }
@@ -443,7 +445,7 @@ internal class SettingsViewModel(
             val targetWeight = state.tempTargetWeightInput.toDoubleOrNull()
             val validationResult = validateWeightUseCase(targetWeight)
             if (validationResult is ValidationResult.Error) {
-                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
+                handleError(validationResult.exception)
                 return
             }
             targetWeight?.let { updatedUser = updatedUser.copy(targetWeight = it) }
@@ -453,13 +455,14 @@ internal class SettingsViewModel(
             val steps = state.tempStepsTargetInput.toIntOrNull()
             val validationResult = validateStepsTargetUseCase(steps)
             if (validationResult is ValidationResult.Error) {
-                updateState { PartialStateChange.Error(validationResult.exception.toMessage()).reduce(it) }
+                handleError(validationResult.exception)
                 return
             }
             steps?.let { updatedUser = updatedUser.copy(stepsTarget = it) }
         }
 
         saveUser(updatedUser)
-        updateState { PartialStateChange.EditingFieldChange(null).reduce(it) }
+        reduce(PartialStateChange.EditingFieldChange(null))
+        reduce(PartialStateChange.ManualInputVisibility(false))
     }
 }

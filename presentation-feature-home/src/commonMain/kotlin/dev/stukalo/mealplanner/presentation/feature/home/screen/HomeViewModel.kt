@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import kotlin.time.Clock
@@ -68,39 +67,37 @@ internal class HomeViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun setupStepsCollection() {
-        viewModelScope.launch {
+        safeLaunch {
             refreshTrigger.flatMapLatest {
                 val today = clock.todayIn(TimeZone.currentSystemDefault())
                 getStepsUseCase(today)
             }.collectLatest { steps ->
-                updateState { state ->
-                    PartialStateChange.StepsLoaded(steps).reduce(state)
-                }
+                reduce(PartialStateChange.StepsLoaded(steps))
             }
         }
     }
 
     private fun onInitialLoad() {
-        viewModelScope.launch { collectUserData() }
-        viewModelScope.launch { collectNutrition() }
-        viewModelScope.launch { syncHealthData() }
+        safeLaunch { collectUserData() }
+        safeLaunch { collectNutrition() }
+        safeLaunch { syncHealthData() }
         refreshTrigger.tryEmit(Unit)
     }
 
     private fun onRecipeClick(recipeId: String) {
-        viewModelScope.launch {
+        safeLaunch {
             sendEvent(ViewEvent.NavigateToRecipeDetails(recipeId))
         }
     }
 
     private fun onShowAllRecipesClick() {
-        viewModelScope.launch {
+        safeLaunch {
             sendEvent(ViewEvent.NavigateToRecipeSearch)
         }
     }
 
     private fun onAddNutrient(type: NutrientType, amount: Float) {
-        viewModelScope.launch {
+        safeLaunch {
             val nutrientType =
                 when (type) {
                     NutrientType.PROTEINS -> NutrientTypeDomainModel.PROTEIN
@@ -112,7 +109,7 @@ internal class HomeViewModel(
     }
 
     private fun onResume() {
-        viewModelScope.launch {
+        safeLaunch {
             val currentPermissions = getHealthPermissionStatusUseCase().first().count { it.isGranted }
 
             // Only sync and refresh steps if permissions were granted (count increased)
@@ -134,9 +131,7 @@ internal class HomeViewModel(
     private suspend fun collectUserData() {
         getUserUseCase().collectLatest { user ->
             user?.let { userModel ->
-                updateState { state ->
-                    PartialStateChange.UserLoaded(userModel.name, userModel.stepsTarget).reduce(state)
-                }
+                reduce(PartialStateChange.UserLoaded(userModel.name, userModel.stepsTarget))
             }
         }
     }
@@ -150,29 +145,25 @@ internal class HomeViewModel(
         ) { norm, progress ->
             norm to progress
         }.collectLatest { (norm, progress) ->
-            updateState { state ->
-                var newState = state
-                norm?.let {
-                    newState =
-                        PartialStateChange
-                            .DailyNormLoaded(
-                                calories = it.calories.toInt(),
-                                proteins = it.proteins.toFloat(),
-                                fats = it.fats.toFloat(),
-                                carbs = it.carbohydrates.toFloat()
-                            ).reduce(newState)
-                }
-                progress?.let {
-                    newState =
-                        PartialStateChange
-                            .DailyProgressLoaded(
-                                calories = it.consumedCalories.toInt(),
-                                proteins = it.consumedProteins.toFloat(),
-                                fats = it.consumedFats.toFloat(),
-                                carbs = it.consumedCarbohydrates.toFloat()
-                            ).reduce(newState)
-                }
-                newState
+            norm?.let {
+                reduce(
+                    PartialStateChange.DailyNormLoaded(
+                        calories = it.calories.toInt(),
+                        proteins = it.proteins.toFloat(),
+                        fats = it.fats.toFloat(),
+                        carbs = it.carbohydrates.toFloat()
+                    )
+                )
+            }
+            progress?.let {
+                reduce(
+                    PartialStateChange.DailyProgressLoaded(
+                        calories = it.consumedCalories.toInt(),
+                        proteins = it.consumedProteins.toFloat(),
+                        fats = it.consumedFats.toFloat(),
+                        carbs = it.consumedCarbohydrates.toFloat()
+                    )
+                )
             }
         }
     }

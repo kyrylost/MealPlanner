@@ -1,9 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.statistics.screen
 
-import androidx.lifecycle.viewModelScope
-import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.statistics_meal_order_error
-import dev.stukalo.mealplanner.domain.model.exception.MealSlotException
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_CARB_GRAM
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_FAT_GRAM
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_PROTEIN_GRAM
@@ -23,7 +19,6 @@ import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.V
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel for the Statistics screen.
@@ -61,9 +56,9 @@ internal class StatisticsViewModel(
                 loadData()
             }
             is ViewIntent.OnMealConsumed -> {
-                viewModelScope.launch {
-                    val meal = viewState.value.meals.find { it.id == intent.slotId } ?: return@launch
-                    if (meal.isConsumed) return@launch
+                safeLaunch {
+                    val meal = viewState.value.meals.find { it.id == intent.slotId } ?: return@safeLaunch
+                    if (meal.isConsumed) return@safeLaunch
 
                     trackMealConsumedUseCase(
                         slotId = intent.slotId,
@@ -75,53 +70,44 @@ internal class StatisticsViewModel(
                 }
             }
             is ViewIntent.OnMealClick -> {
-                updateState { PartialStateChange.SelectedMealChange(intent.meal).reduce(it) }
+                reduce(PartialStateChange.SelectedMealChange(intent.meal))
             }
             ViewIntent.OnDismissDialog -> {
-                updateState { PartialStateChange.SelectedMealChange(null).reduce(it) }
+                reduce(PartialStateChange.SelectedMealChange(null))
             }
             is ViewIntent.ChangePfcCategory -> {
-                updateState { PartialStateChange.PfcConfigChange(intent.category, it.timeInterval).reduce(it) }
+                reduce(PartialStateChange.PfcConfigChange(intent.category, viewState.value.timeInterval))
                 loadStatistics()
             }
             is ViewIntent.ChangeTimeInterval -> {
-                updateState { PartialStateChange.PfcConfigChange(it.pfcCategory, intent.interval).reduce(it) }
+                reduce(PartialStateChange.PfcConfigChange(viewState.value.pfcCategory, intent.interval))
                 loadStatistics()
             }
             is ViewIntent.ChangeWeightInterval -> {
-                updateState { PartialStateChange.WeightIntervalChange(intent.interval).reduce(it) }
+                reduce(PartialStateChange.WeightIntervalChange(intent.interval))
                 loadWeightHistory()
             }
             ViewIntent.OnAddWeightClick -> {
-                updateState { PartialStateChange.AddWeightDialogVisibility(isVisible = true).reduce(it) }
+                reduce(PartialStateChange.AddWeightDialogVisibility(isVisible = true))
             }
             ViewIntent.OnDismissAddWeightDialog -> {
-                updateState { PartialStateChange.AddWeightDialogVisibility(isVisible = false).reduce(it) }
+                reduce(PartialStateChange.AddWeightDialogVisibility(isVisible = false))
             }
             is ViewIntent.OnAddWeight -> {
-                viewModelScope.launch {
+                safeLaunch {
                     saveWeightUseCase(intent.weight)
                 }
             }
             is ViewIntent.OnEditTimeClick -> {
-                updateState {
-                    PartialStateChange.EditTimeDialogVisibility(intent.slotId, intent.currentTime).reduce(it)
-                }
+                reduce(PartialStateChange.EditTimeDialogVisibility(intent.slotId, intent.currentTime))
             }
             ViewIntent.OnDismissTimePickerDialog -> {
-                updateState { PartialStateChange.EditTimeDialogVisibility(null, null).reduce(it) }
+                reduce(PartialStateChange.EditTimeDialogVisibility(null, null))
             }
             is ViewIntent.OnTimeSelected -> {
-                viewModelScope.launch {
-                    val result = updateMealSlotTimeUseCase(intent.slotId, intent.newTime)
-                    if (result.isSuccess) {
-                        updateState { PartialStateChange.EditTimeDialogVisibility(null, null).reduce(it) }
-                    } else {
-                        val error = result.exceptionOrNull()
-                        if (error is MealSlotException.MealOrderViolation) {
-                            sendEvent(ViewEvent.ShowError(Res.string.statistics_meal_order_error))
-                        }
-                    }
+                safeLaunch {
+                    updateMealSlotTimeUseCase(intent.slotId, intent.newTime).getOrThrow()
+                    reduce(PartialStateChange.EditTimeDialogVisibility(null, null))
                 }
             }
         }
@@ -132,12 +118,12 @@ internal class StatisticsViewModel(
      * Fetches user info, meal schedule, daily norms, and streak information.
      */
     private fun loadData() {
-        viewModelScope.launch {
+        safeLaunch {
             getUserUseCase().collect { user ->
-                updateState { PartialStateChange.WeightDataLoaded(it.weightData, user?.targetWeight).reduce(it) }
+                reduce(PartialStateChange.WeightDataLoaded(viewState.value.weightData, user?.targetWeight))
             }
         }
-        viewModelScope.launch {
+        safeLaunch {
             combine(
                 getMealScheduleUseCase(),
                 getDailyNormUseCase()
@@ -162,12 +148,12 @@ internal class StatisticsViewModel(
                     )
                 }
             }.collect { meals ->
-                updateState { PartialStateChange.MealsLoaded(meals).reduce(it) }
+                reduce(PartialStateChange.MealsLoaded(meals))
             }
         }
-        viewModelScope.launch {
+        safeLaunch {
             calculateStreakUseCase().collect { streak ->
-                updateState { PartialStateChange.StreakLoaded(streak).reduce(it) }
+                reduce(PartialStateChange.StreakLoaded(streak))
             }
         }
         loadStatistics()
@@ -178,9 +164,9 @@ internal class StatisticsViewModel(
      * Loads nutrient statistics for the selected time interval and PFC category.
      */
     private fun loadStatistics() {
-        viewModelScope.launch {
+        safeLaunch {
             getStatisticsUseCase(viewState.value.timeInterval, viewState.value.pfcCategory).collect { points ->
-                updateState { PartialStateChange.PfcDataLoaded(points).reduce(it) }
+                reduce(PartialStateChange.PfcDataLoaded(points))
             }
         }
     }
@@ -189,9 +175,9 @@ internal class StatisticsViewModel(
      * Loads weight history for the selected time interval.
      */
     private fun loadWeightHistory() {
-        viewModelScope.launch {
+        safeLaunch {
             getWeightHistoryUseCase(viewState.value.weightInterval).collect { points ->
-                updateState { PartialStateChange.WeightDataLoaded(points, it.targetWeight).reduce(it) }
+                reduce(PartialStateChange.WeightDataLoaded(points, viewState.value.targetWeight))
             }
         }
     }

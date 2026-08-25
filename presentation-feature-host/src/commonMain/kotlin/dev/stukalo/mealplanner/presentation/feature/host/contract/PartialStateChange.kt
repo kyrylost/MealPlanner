@@ -3,8 +3,10 @@ package dev.stukalo.mealplanner.presentation.feature.host.contract
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
 import dev.stukalo.mealplanner.domain.model.setting.ThemeModeDomainModel
 
-internal sealed interface PartialStateChange {
-    fun reduce(oldState: ViewState): ViewState
+import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.contract.MviPartialStateChange
+
+internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
+    override fun reduce(oldState: ViewState): ViewState
 
     data class ThemeConfigLoaded(
         val colorPalette: ColorPaletteDomainModel?,
@@ -16,5 +18,9 @@ internal sealed interface PartialStateChange {
             themeMode = themeMode,
             locale = locale
         )
+    }
+
+    data class LocaleChanged(val locale: String) : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(locale = locale)
     }
 }

@@ -1,6 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.onboarding.screen
 
-import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.onboarding_slide1_desc
 import dev.stukalo.mealplanner.core.localization.onboarding_slide1_title
@@ -15,7 +14,6 @@ import dev.stukalo.mealplanner.presentation.feature.onboarding.screen.contract.P
 import dev.stukalo.mealplanner.presentation.feature.onboarding.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.onboarding.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.onboarding.screen.contract.ViewState
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel for the Onboarding screen.
@@ -52,7 +50,7 @@ internal class OnboardingViewModel(private val setOnboardingShownUseCase: SetOnb
             ViewIntent.OnSkipClick -> finishOnboarding()
             ViewIntent.OnNextClick -> handleNextClick()
             is ViewIntent.OnSlideChange -> {
-                updateState { PartialStateChange.SlideChange(intent.index).reduce(it) }
+                reduce(PartialStateChange.SlideChange(intent.index))
             }
         }
     }
@@ -63,14 +61,14 @@ internal class OnboardingViewModel(private val setOnboardingShownUseCase: SetOnb
 
         if (currentIndex < totalSlides - 1) {
             val nextIndex = currentIndex + 1
-            updateState { PartialStateChange.SlideChange(nextIndex).reduce(it) }
+            reduce(PartialStateChange.SlideChange(nextIndex))
         } else {
             finishOnboarding()
         }
     }
 
     private fun finishOnboarding() {
-        viewModelScope.launch {
+        safeLaunch {
             setOnboardingShownUseCase(true)
             sendEvent(ViewEvent.NavigateToWelcome)
         }

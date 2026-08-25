@@ -39,7 +39,6 @@ import dev.stukalo.mealplanner.core.localization.home_consumed_amount_subtitle
 import dev.stukalo.mealplanner.core.localization.home_consumed_amount_title
 import dev.stukalo.mealplanner.core.localization.product_details_add_to_diary
 import dev.stukalo.mealplanner.core.localization.product_details_ingredients
-import dev.stukalo.mealplanner.core.localization.product_details_not_found
 import dev.stukalo.mealplanner.core.localization.product_details_serving_size_value
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.model.food.quality.NovaGroup
@@ -222,12 +221,6 @@ internal fun ProductDetailsContent(
                     .onGloballyPositioned {
                         buttonHeight = with(density) { it.size.height.toDp() }
                     }
-            )
-        } else if (state.error != null) {
-            Text(
-                text = stringResource(Res.string.product_details_not_found),
-                color = Theme.color.text.secondary,
-                modifier = Modifier.align(Alignment.Center)
             )
         }
 

@@ -64,6 +64,11 @@
     <string name="validation_error_activity_empty">Будь ласка, оберіть рівень активності</string>
     <string name="validation_error_diet_empty">Будь ласка, оберіть дієту</string>
     <string name="error_unknown">Сталася неочікувана помилка</string>
+    <string name="error_api_unauthorized">Ваша сесія закінчилася. Будь ласка, увійдіть знову.</string>
+    <string name="error_api_not_found">Запитуваний ресурс не знайдено.</string>
+    <string name="error_api_server">На сервері сталася помилка. Будь ласка, спробуйте пізніше.</string>
+    <string name="error_api_connection">Перевірте підключення до інтернету та спробуйте ще раз.</string>
+    <string name="error_api_timeout">Час очікування запиту минув. Будь ласка, спробуйте ще раз.</string>
     <string name="error_health_unavailable">Відстеження здоров'я недоступне на цьому пристрої</string>
     <string name="error_health_permissions_denied">Будь ласка, надайте дозволи для синхронізації з сервісами здоров'я</string>
     <string name="error_health_sync_failed">Не вдалося синхронізувати дані здоров'я</string>

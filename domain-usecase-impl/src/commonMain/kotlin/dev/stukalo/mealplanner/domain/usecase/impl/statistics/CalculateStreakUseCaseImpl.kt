@@ -4,8 +4,10 @@ import dev.stukalo.mealplanner.domain.model.norm.DailyNormDomainModel
 import dev.stukalo.mealplanner.domain.model.progress.DailyProgressDomainModel
 import dev.stukalo.mealplanner.domain.repository.NutritionRepository
 import dev.stukalo.mealplanner.domain.usecase.statistics.CalculateStreakUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
@@ -36,7 +38,7 @@ class CalculateStreakUseCaseImpl(private val nutritionRepository: NutritionRepos
             if (norm == null) return@combine 0
 
             calculateStreak(norm, history.sortedByDescending { it.date })
-        }
+        }.flowOn(Dispatchers.Default)
     }
 
     private fun calculateStreak(norm: DailyNormDomainModel, history: List<DailyProgressDomainModel>): Int {

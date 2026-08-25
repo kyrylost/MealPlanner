@@ -9,6 +9,8 @@ import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import kotlin.time.Clock
@@ -21,7 +23,7 @@ import kotlin.time.Clock
  */
 internal class CalculateDailyNormUseCaseImpl(private val clock: Clock) : CalculateDailyNormUseCase {
 
-    override fun invoke(user: UserDomainModel): DailyNormDomainModel {
+    override suspend fun invoke(user: UserDomainModel): DailyNormDomainModel = withContext(Dispatchers.Default) {
         val today = clock.todayIn(TimeZone.currentSystemDefault())
         var age = today.year - user.birthDate.year
         if (today.month < user.birthDate.month ||
@@ -75,7 +77,7 @@ internal class CalculateDailyNormUseCaseImpl(private val clock: Clock) : Calcula
             }
         }
 
-        return DailyNormDomainModel(
+        DailyNormDomainModel(
             calories = calories,
             proteins = (calories * proteinsCoefficient) / CALORIES_PER_PROTEIN_GRAM,
             fats = (calories * fatsCoefficient) / CALORIES_PER_FAT_GRAM,

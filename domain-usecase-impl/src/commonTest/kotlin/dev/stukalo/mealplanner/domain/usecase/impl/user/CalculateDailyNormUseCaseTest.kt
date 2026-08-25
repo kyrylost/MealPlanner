@@ -4,6 +4,7 @@ import dev.stukalo.mealplanner.domain.model.user.ActivityLevelDomainModel
 import dev.stukalo.mealplanner.domain.model.user.DietDomainModel
 import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
+import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -19,7 +20,7 @@ class CalculateDailyNormUseCaseTest {
     private val useCase = CalculateDailyNormUseCaseImpl(fixedClock)
 
     @Test
-    fun `calculate norm for young male with balanced diet`() {
+    fun `calculate norm for young male with balanced diet`() = runTest {
         val user = UserDomainModel(
             id = 1,
             name = "John",

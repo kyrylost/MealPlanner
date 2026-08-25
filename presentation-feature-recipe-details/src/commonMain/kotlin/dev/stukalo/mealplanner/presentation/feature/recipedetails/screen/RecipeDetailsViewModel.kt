@@ -1,8 +1,5 @@
 package dev.stukalo.mealplanner.presentation.feature.recipedetails.screen
 
-import androidx.lifecycle.viewModelScope
-import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.error_unknown
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipeByIdUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.LogRecipeConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
@@ -10,7 +7,6 @@ import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contrac
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.screen.contract.ViewState
-import kotlinx.coroutines.launch
 
 internal class RecipeDetailsViewModel(
     private val getRecipeByIdUseCase: GetRecipeByIdUseCase,
@@ -32,22 +28,26 @@ internal class RecipeDetailsViewModel(
         }
     }
 
+    override fun handleError(throwable: Throwable) {
+        reduce(PartialStateChange.Loading(false))
+        super.handleError(throwable)
+    }
+
     private fun loadRecipe(id: String) {
-        viewModelScope.launch {
-            updateState { PartialStateChange.Loading(true).reduce(it) }
+        safeLaunch {
+            reduce(PartialStateChange.Loading(true))
             getRecipeByIdUseCase(id)
                 .onSuccess { recipe ->
-                    updateState { PartialStateChange.RecipeLoaded(recipe).reduce(it) }
+                    reduce(PartialStateChange.RecipeLoaded(recipe))
                 }.onFailure {
-                    updateState { PartialStateChange.Loading(false).reduce(it) }
-                    sendEvent(ViewEvent.ShowError(Res.string.error_unknown))
+                    handleError(it)
                 }
         }
     }
 
     private fun logMeal(weight: Float) {
         val currentRecipe = viewState.value.recipe ?: return
-        viewModelScope.launch {
+        safeLaunch {
             logRecipeConsumedUseCase(currentRecipe, weight)
             sendEvent(ViewEvent.NavigateBack)
         }
