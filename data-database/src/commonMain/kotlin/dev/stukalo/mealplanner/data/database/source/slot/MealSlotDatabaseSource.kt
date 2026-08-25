@@ -3,6 +3,7 @@ package dev.stukalo.mealplanner.data.database.source.slot
 import dev.stukalo.mealplanner.data.database.dao.slot.MealSlotDao
 import dev.stukalo.mealplanner.data.database.model.slot.MealSlotDatabaseModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
 class MealSlotDatabaseSource(private val dao: MealSlotDao) {
@@ -18,8 +19,8 @@ class MealSlotDatabaseSource(private val dao: MealSlotDao) {
 
     suspend fun getSlotById(id: Int): MealSlotDatabaseModel? = dao.getSlotById(id)
 
-    suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit> = runCatching {
-        dao.updateConsumedStatus(id, isConsumed)
+    suspend fun updateLastConsumedDate(id: Int, lastConsumedDate: LocalDate?): Result<Unit> = runCatching {
+        dao.updateLastConsumedDate(id, lastConsumedDate)
     }
 
     suspend fun updateSlotTime(id: Int, startTime: LocalTime): Result<Unit> = runCatching {

@@ -5,12 +5,14 @@ import dev.stukalo.mealplanner.data.repository.impl.mapper.MealSlotMapper
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.slot.MealSlotDomainModel
 import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 /**
  * Implementation of [MealScheduleRepository] that handles meal slot data using a database source.
@@ -18,29 +20,33 @@ import kotlinx.datetime.LocalTime
  *
  * @property mealSlotDatabaseSource The source for database operations.
  * @property mealSlotMapper Mapper to convert between domain and database models.
+ * @property clock Clock provider for daily status calculation.
  */
 internal class MealScheduleRepositoryImpl(
     private val mealSlotDatabaseSource: MealSlotDatabaseSource,
-    private val mealSlotMapper: MealSlotMapper
+    private val mealSlotMapper: MealSlotMapper,
+    private val clock: Clock
 ) : MealScheduleRepository {
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>> =
-        mealSlotDatabaseSource.getAllSlotsAsFlow().flatMapLatest { slots ->
+    override fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>> = mealSlotDatabaseSource.getAllSlotsAsFlow()
+        .onEach { slots ->
             if (slots.isEmpty()) {
                 val defaults = getDefaultSlots()
                 mealSlotDatabaseSource.insertAll(defaults.map { mealSlotMapper.mapFrom(it) })
-                mealSlotDatabaseSource.getAllSlotsAsFlow().map { list ->
-                    list.map { mealSlotMapper.mapTo(it) }
-                }
-            } else {
-                flow {
-                    emit(slots.map { mealSlotMapper.mapTo(it) })
-                }
             }
         }
+        .filter { it.isNotEmpty() }
+        .map { slots ->
+            mealSlotMapper.mapListTo(slots)
+        }
 
-    override suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit> =
-        mealSlotDatabaseSource.updateConsumedStatus(id, isConsumed)
+    override suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit> {
+        val lastConsumedDate = if (isConsumed) {
+            clock.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+        } else {
+            null
+        }
+        return mealSlotDatabaseSource.updateLastConsumedDate(id, lastConsumedDate)
+    }
 
     override suspend fun updateSlotTime(id: Int, startTime: LocalTime): Result<Unit> =
         mealSlotDatabaseSource.updateSlotTime(id, startTime)

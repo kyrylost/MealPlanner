@@ -2,6 +2,7 @@ package dev.stukalo.mealplanner.data.database.model.slot
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
 /**
@@ -13,7 +14,7 @@ import kotlinx.datetime.LocalTime
  * @property fatsPercentage Target percentage of daily fat intake for this slot.
  * @property carbsPercentage Target percentage of daily carbohydrate intake for this slot.
  * @property mealType The type of meal.
- * @property isConsumed Whether the meal has been consumed today.
+ * @property lastConsumedDate The date when the meal was last consumed.
  */
 @Entity
 data class MealSlotDatabaseModel(
@@ -24,5 +25,5 @@ data class MealSlotDatabaseModel(
     val fatsPercentage: Int,
     val carbsPercentage: Int,
     val mealType: MealTypeDatabaseModel,
-    val isConsumed: Boolean = false
+    val lastConsumedDate: LocalDate? = null
 )
