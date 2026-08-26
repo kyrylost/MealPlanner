@@ -1,10 +1,39 @@
 package dev.stukalo.mealplanner.presentation.core.navigation.ext
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.Navigator
 import dev.stukalo.mealplanner.core.common.util.AppLogger
+import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
+
+/**
+ * Extension for [SavedStateHandle] to set a [kotlinx.serialization.Serializable] object as a JSON string.
+ */
+inline fun <reified T : Any> SavedStateHandle.setSerializable(key: String, value: T?) {
+    this[key] = value?.let { Json.encodeToString(it) }
+}
+
+/**
+ * Extension for [SavedStateHandle] to get a [kotlinx.serialization.Serializable] object from a JSON string.
+ */
+inline fun <reified T : Any> SavedStateHandle.getSerializable(key: String): T? =
+    this.get<String>(key)?.let { Json.decodeFromString<T>(it) }
+
+/**
+ * Extension for [SavedStateHandle] to get a [State] of a [kotlinx.serialization.Serializable] object.
+ * This handles the JSON decoding internally.
+ */
+@Composable
+inline fun <reified T : Any> SavedStateHandle.getSerializableState(key: String, initialValue: T? = null): State<T?> =
+    this.getStateFlow<String?>(key, null)
+        .map { it?.let { Json.decodeFromString<T>(it) } ?: initialValue }
+        .collectAsState(initialValue)
 
 /**
  * Safely navigates to a given route, catching any exceptions that occur during navigation.

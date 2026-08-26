@@ -3,25 +3,38 @@ package dev.stukalo.mealplanner.presentation.feature.filters.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
+import androidx.navigation.toRoute
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationKeys
+import dev.stukalo.mealplanner.presentation.core.navigation.ext.setSerializable
+import dev.stukalo.mealplanner.presentation.core.navigation.model.FilterNavModel
+import dev.stukalo.mealplanner.presentation.core.navigation.util.SerializableNavType
+import dev.stukalo.mealplanner.presentation.feature.filters.core.mapper.FilterNavMapper
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.FiltersScreen
-import kotlinx.serialization.json.Json
+import kotlin.reflect.typeOf
 
+/**
+ * Registers the Filters feature in the navigation graph.
+ *
+ * @param navController The navigation controller used for routing and result handling.
+ */
 fun NavGraphBuilder.filtersNavigationGraph(navController: NavHostController) {
-    composable<NavigationDirection.Filters> {
-        // Retrieve initial filters from savedStateHandle if any
-        val initialFiltersJson = navController.previousBackStackEntry?.savedStateHandle?.get<String>(
-            NavigationKeys.FILTER_RESULT
+    composable<NavigationDirection.Filters>(
+        typeMap = mapOf(
+            typeOf<FilterNavModel?>() to SerializableNavType(FilterNavModel.serializer(), isNullable = true)
         )
-        val initialFilters = initialFiltersJson?.let { Json.decodeFromString<FilterDomainModel>(it) }
+    ) { backStackEntry ->
+        val route: NavigationDirection.Filters = backStackEntry.toRoute()
+        val initialFilters = route.initialFilters?.let(FilterNavMapper::mapFrom)
 
         FiltersScreen(
             initialFilters = initialFilters,
             onApplyFilters = { filters ->
-                val filtersJson = Json.encodeToString(filters)
-                navController.previousBackStackEntry?.savedStateHandle?.set(NavigationKeys.FILTER_RESULT, filtersJson)
+                val navModel = FilterNavMapper.mapTo(filters)
+                navController.previousBackStackEntry?.savedStateHandle?.setSerializable(
+                    NavigationKeys.FILTER_RESULT,
+                    navModel
+                )
                 navController.popBackStack()
             },
             onBack = {

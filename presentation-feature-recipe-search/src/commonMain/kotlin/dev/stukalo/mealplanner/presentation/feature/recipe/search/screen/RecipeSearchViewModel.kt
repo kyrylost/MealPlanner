@@ -21,6 +21,12 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlin.time.Duration.Companion.milliseconds
 
+/**
+ * ViewModel for the Recipe Search screen, responsible for handling search logic and filters.
+ *
+ * @property getRecipesUseCase Use case to fetch recipes based on query and filters.
+ * @property getRecommendedRecipesUseCase Use case to fetch recommended recipes when no search is active.
+ */
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 internal class RecipeSearchViewModel(
     private val getRecipesUseCase: GetRecipesUseCase,
@@ -41,7 +47,7 @@ internal class RecipeSearchViewModel(
     private fun setupSearch() {
         safeLaunch {
             searchFlow
-                .debounce(500.milliseconds)
+                .debounce(SEARCH_DEBOUNCE_MS.milliseconds)
                 .distinctUntilChanged()
                 .collectLatest { query ->
                     if (query.isEmpty() && viewState.value.filters == null) {
@@ -76,7 +82,7 @@ internal class RecipeSearchViewModel(
                 sendEvent(ViewEvent.NavigateToRecipeDetails(intent.recipeId))
             }
             ViewIntent.OnFiltersClick -> {
-                sendEvent(ViewEvent.NavigateToFilters)
+                sendEvent(ViewEvent.NavigateToFilters(viewState.value.filters))
             }
             ViewIntent.OnBackClick -> {
                 sendEvent(ViewEvent.NavigateBack)
@@ -95,14 +101,20 @@ internal class RecipeSearchViewModel(
     private fun searchWithFilters(query: String, filters: FilterDomainModel?) {
         safeLaunch {
             getRecipesUseCase(
-                calories = filters?.caloriesRange ?: 0..5000,
-                carbohydrates = filters?.carbsRange ?: 0..1000,
-                fats = filters?.fatsRange ?: 0..1000,
-                proteins = filters?.proteinsRange ?: 0..1000,
+                calories = filters?.caloriesRange ?: DEFAULT_CALORIES_RANGE,
+                carbohydrates = filters?.carbsRange ?: DEFAULT_NUTRIENT_RANGE,
+                fats = filters?.fatsRange ?: DEFAULT_NUTRIENT_RANGE,
+                proteins = filters?.proteinsRange ?: DEFAULT_NUTRIENT_RANGE,
                 mealTypes = filters?.mealTypes ?: emptyList(),
                 query = query.ifEmpty { null }
             ).cachedIn(viewModelScope)
                 .collectLatest { recipesFlow.value = it }
         }
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_MS = 500L
+        private val DEFAULT_CALORIES_RANGE = 0..5000
+        private val DEFAULT_NUTRIENT_RANGE = 0..1000
     }
 }

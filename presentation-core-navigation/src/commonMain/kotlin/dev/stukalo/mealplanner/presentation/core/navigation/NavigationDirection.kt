@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.core.navigation
 
+import dev.stukalo.mealplanner.presentation.core.navigation.model.FilterNavModel
 import kotlinx.serialization.Serializable
 
 /**
@@ -35,10 +36,7 @@ sealed interface NavigationDirection {
     data object Settings : NavigationDirection
 
     @Serializable
-    data object MealSchedule : NavigationDirection
-
-    @Serializable
-    data object Filters : NavigationDirection
+    data class Filters(val initialFilters: FilterNavModel? = null) : NavigationDirection
 
     @Serializable
     data class RecipeDetails(val recipeId: String) : NavigationDirection

@@ -24,6 +24,7 @@ import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClose
+import dev.stukalo.mealplanner.presentation.core.ui.mapper.toText
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -97,7 +98,7 @@ private sealed class ChipData {
 
     data class MealType(val type: MealTypeDomainModel) : ChipData() {
         @Composable
-        override fun getLabel() = type.name.lowercase().replaceFirstChar { it.uppercase() }
+        override fun getLabel() = stringResource(type.toText())
     }
 
     data class Nutrient(val type: NutrientType, val min: Int?, val max: Int?) : ChipData() {

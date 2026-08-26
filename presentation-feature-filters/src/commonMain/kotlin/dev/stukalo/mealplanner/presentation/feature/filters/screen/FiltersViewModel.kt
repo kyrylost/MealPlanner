@@ -1,13 +1,21 @@
 package dev.stukalo.mealplanner.presentation.feature.filters.screen
 
+import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.filters.screen.contract.ViewState
 
-internal class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
-    override val initialState = ViewState()
+/**
+ * ViewModel for the Filters feature.
+ * Manages the state of recipe filters and processes user intents.
+ *
+ * @param initialFilters The filters to initialize the state with.
+ */
+internal class FiltersViewModel(initialFilters: FilterDomainModel?) :
+    BaseMviViewModel<ViewIntent, ViewState, ViewEvent>() {
+    override val initialState = ViewState(filters = initialFilters ?: FilterDomainModel())
 
     override suspend fun processIntent(intent: ViewIntent) {
         when (intent) {
@@ -15,28 +23,28 @@ internal class FiltersViewModel : BaseMviViewModel<ViewIntent, ViewState, ViewEv
                 reduce(PartialStateChange.FiltersChanged(intent.filters))
             }
             is ViewIntent.OnMinCaloriesChange -> {
-                reduce(PartialStateChange.MinCaloriesChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MinCaloriesChanged(intent.value))
             }
             is ViewIntent.OnMaxCaloriesChange -> {
-                reduce(PartialStateChange.MaxCaloriesChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MaxCaloriesChanged(intent.value))
             }
             is ViewIntent.OnMinProteinsChange -> {
-                reduce(PartialStateChange.MinProteinsChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MinProteinsChanged(intent.value))
             }
             is ViewIntent.OnMaxProteinsChange -> {
-                reduce(PartialStateChange.MaxProteinsChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MaxProteinsChanged(intent.value))
             }
             is ViewIntent.OnMinFatsChange -> {
-                reduce(PartialStateChange.MinFatsChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MinFatsChanged(intent.value))
             }
             is ViewIntent.OnMaxFatsChange -> {
-                reduce(PartialStateChange.MaxFatsChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MaxFatsChanged(intent.value))
             }
             is ViewIntent.OnMinCarbsChange -> {
-                reduce(PartialStateChange.MinCarbsChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MinCarbsChanged(intent.value))
             }
             is ViewIntent.OnMaxCarbsChange -> {
-                reduce(PartialStateChange.MaxCarbsChanged(intent.value))
+                reduce(PartialStateChange.NutrientChange.MaxCarbsChanged(intent.value))
             }
             is ViewIntent.OnToggleMealType -> {
                 reduce(PartialStateChange.MealTypeToggled(intent.type))

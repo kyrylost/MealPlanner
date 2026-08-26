@@ -26,6 +26,7 @@ import dev.stukalo.mealplanner.core.localization.common_carbs
 import dev.stukalo.mealplanner.core.localization.common_fats
 import dev.stukalo.mealplanner.core.localization.common_filters
 import dev.stukalo.mealplanner.core.localization.common_meal_types
+import dev.stukalo.mealplanner.core.localization.common_nutrient_with_unit
 import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.core.localization.common_unit_grams
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
@@ -76,9 +77,11 @@ internal fun FiltersContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
                 item {
                     FilterSection(
-                        title = "${stringResource(
-                            Res.string.common_proteins
-                        )} (${stringResource(Res.string.common_unit_grams)})"
+                        title = stringResource(
+                            Res.string.common_nutrient_with_unit,
+                            stringResource(Res.string.common_proteins),
+                            stringResource(Res.string.common_unit_grams)
+                        )
                     ) {
                         RangeInput(
                             min = filters.minProteins,
@@ -91,9 +94,11 @@ internal fun FiltersContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
                 item {
                     FilterSection(
-                        title = "${stringResource(
-                            Res.string.common_fats
-                        )} (${stringResource(Res.string.common_unit_grams)})"
+                        title = stringResource(
+                            Res.string.common_nutrient_with_unit,
+                            stringResource(Res.string.common_fats),
+                            stringResource(Res.string.common_unit_grams)
+                        )
                     ) {
                         RangeInput(
                             min = filters.minFats,
@@ -106,9 +111,11 @@ internal fun FiltersContent(state: ViewState, onIntent: (ViewIntent) -> Unit) {
 
                 item {
                     FilterSection(
-                        title = "${stringResource(
-                            Res.string.common_carbs
-                        )} (${stringResource(Res.string.common_unit_grams)})"
+                        title = stringResource(
+                            Res.string.common_nutrient_with_unit,
+                            stringResource(Res.string.common_carbs),
+                            stringResource(Res.string.common_unit_grams)
+                        )
                     ) {
                         RangeInput(
                             min = filters.minCarbs,

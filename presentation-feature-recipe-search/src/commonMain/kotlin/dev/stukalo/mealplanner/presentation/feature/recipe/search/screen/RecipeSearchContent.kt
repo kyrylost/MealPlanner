@@ -41,12 +41,21 @@ import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconFilter
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconSearch
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.component.ActiveFilterChips
+import dev.stukalo.mealplanner.presentation.feature.recipe.search.component.NutrientType
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.component.RecipeSearchBar
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
 import kotlinx.coroutines.flow.flowOf
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The UI content of the Recipe Search screen.
+ *
+ * @param state The current view state.
+ * @param recipes The paging data for recipes.
+ * @param snackbarHostState State for showing snackbars.
+ * @param onIntent Callback to send user intents to the ViewModel.
+ */
 @Composable
 internal fun RecipeSearchContent(
     state: ViewState,
@@ -67,7 +76,9 @@ internal fun RecipeSearchContent(
             horizontalArrangement = Arrangement.spacedBy(Theme.spacing.space16),
             verticalArrangement = Arrangement.spacedBy(Theme.spacing.space16)
         ) {
-            item(span = { GridItemSpan(maxLineSpan) }) {
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) {
                 CommonHeader(
                     title = stringResource(Res.string.common_recipe_search),
                     leftIcon = IconBack,
@@ -79,7 +90,9 @@ internal fun RecipeSearchContent(
                 )
             }
 
-            item(span = { GridItemSpan(maxLineSpan) }) {
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) {
                 RecipeSearchBar(
                     query = state.searchQuery,
                     onQueryChange = { onIntent(ViewIntent.OnSearchQueryChange(it)) },
@@ -88,7 +101,9 @@ internal fun RecipeSearchContent(
             }
 
             state.filters?.let { filters ->
-                item(span = { GridItemSpan(maxLineSpan) }) {
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
                     ActiveFilterChips(
                         filters = filters,
                         onRemoveMealType = { type ->
@@ -96,7 +111,13 @@ internal fun RecipeSearchContent(
                             onIntent(ViewIntent.ApplyFilters(filters.copy(mealTypes = newTypes)))
                         },
                         onRemoveNutrient = { type ->
-                            // Logic to clear specific nutrient ranges
+                            val newFilters = when (type) {
+                                NutrientType.CALORIES -> filters.copy(minCalories = null, maxCalories = null)
+                                NutrientType.PROTEINS -> filters.copy(minProteins = null, maxProteins = null)
+                                NutrientType.FATS -> filters.copy(minFats = null, maxFats = null)
+                                NutrientType.CARBS -> filters.copy(minCarbs = null, maxCarbs = null)
+                            }
+                            onIntent(ViewIntent.ApplyFilters(newFilters))
                         },
                         modifier = Modifier.padding(horizontal = Theme.spacing.space16)
                     )
@@ -104,7 +125,9 @@ internal fun RecipeSearchContent(
             }
 
             if (recipes.loadState.refresh is LoadState.Loading && recipes.itemCount == 0) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
                     Box(
                         modifier =
                         Modifier
@@ -116,13 +139,19 @@ internal fun RecipeSearchContent(
                     }
                 }
             } else if (recipes.loadState.refresh is LoadState.NotLoading && recipes.itemCount == 0) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
                     CommonEmptyState(
                         title = stringResource(Res.string.common_no_results),
                         description = stringResource(Res.string.common_no_results_desc),
                         icon = IconSearch,
                         actionText = stringResource(Res.string.common_clear_filters),
-                        onActionClick = { onIntent(ViewIntent.OnClearFilters) }
+                        onActionClick = if (state.filters != null) {
+                            { onIntent(ViewIntent.OnClearFilters) }
+                        } else {
+                            null
+                        }
                     )
                 }
             } else {
@@ -151,7 +180,9 @@ internal fun RecipeSearchContent(
                 }
 
                 if (recipes.loadState.append is LoadState.Loading) {
-                    item(span = { GridItemSpan(maxLineSpan) }) {
+                    item(
+                        span = { GridItemSpan(maxLineSpan) }
+                    ) {
                         Box(
                             modifier =
                             Modifier
