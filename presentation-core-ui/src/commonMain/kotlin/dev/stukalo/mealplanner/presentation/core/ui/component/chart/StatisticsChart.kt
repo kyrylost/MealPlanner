@@ -170,6 +170,12 @@ fun StatisticsChart(
                 )
             }
 
+            val labelStep = when {
+                points.size > MAX_POINTS_FOR_SINGLE_STEP -> LARGE_LABEL_STEP
+                points.size > MAX_POINTS_FOR_NO_STEP -> SMALL_LABEL_STEP
+                else -> NO_LABEL_STEP
+            }
+
             when (style) {
                 ChartStyle.BAR -> {
                     val barWidth = itemWidth * BAR_WIDTH_FACTOR
@@ -196,7 +202,7 @@ fun StatisticsChart(
                         )
 
                         // Label
-                        if (point.label.isNotEmpty()) {
+                        if (point.label.isNotEmpty() && index % labelStep == 0) {
                             val textLayoutResult = textMeasurer.measure(point.label, labelStyle)
                             drawText(
                                 textLayoutResult = textLayoutResult,
@@ -216,7 +222,7 @@ fun StatisticsChart(
                         val x = yAxisWidth + index * itemWidth + itemWidth / 2
 
                         // Draw Label
-                        if (point.label.isNotEmpty()) {
+                        if (point.label.isNotEmpty() && index % labelStep == 0) {
                             val textLayoutResult = textMeasurer.measure(point.label, labelStyle)
                             drawText(
                                 textLayoutResult = textLayoutResult,
@@ -267,6 +273,12 @@ private const val BAR_SPACING_FACTOR = 0.4f
 private const val DASH_ON_INTERVAL = 10f
 private const val DASH_OFF_INTERVAL = 10f
 
+private const val MAX_POINTS_FOR_SINGLE_STEP = 14
+private const val MAX_POINTS_FOR_NO_STEP = 7
+private const val LARGE_LABEL_STEP = 5
+private const val SMALL_LABEL_STEP = 2
+private const val NO_LABEL_STEP = 1
+
 @Preview
 @Composable
 private fun StatisticsChartBarPreview() {
@@ -300,6 +312,25 @@ private fun StatisticsChartLinePreview() {
                     ChartPoint(78.1, label = "04.08"),
                     ChartPoint(77.5, label = "05.08")
                 ),
+                style = ChartStyle.LINE,
+                modifier = Modifier.padding(Theme.spacing.space16)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun StatisticsChartMonthPreview() {
+    Theme {
+        Surface(color = Theme.color.background.primary) {
+            StatisticsChart(
+                points = List(30) { i ->
+                    ChartPoint(
+                        value = (60..90).random().toDouble(),
+                        label = "${i + 1}.08"
+                    )
+                },
                 style = ChartStyle.LINE,
                 modifier = Modifier.padding(Theme.spacing.space16)
             )
