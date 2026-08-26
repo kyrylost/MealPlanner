@@ -22,12 +22,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(projects.coreCommon)
         }
-        val desktopMain by getting {
+        val desktopMain = getByName("desktopMain") {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
             }
         }
-        val iosMain by getting {
+        val iosMain = getByName("iosMain") {
             dependencies {
                 implementation(libs.ktor.client.darwin)
             }

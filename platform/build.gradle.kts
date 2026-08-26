@@ -46,7 +46,7 @@ kotlin {
     iosSimulatorArm64()
 
     sourceSets {
-        val desktopMain by getting
+        val desktopMain = getByName("desktopMain")
 
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)

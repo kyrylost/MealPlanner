@@ -33,7 +33,7 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        val desktopMain by getting
+        val desktopMain = getByName("desktopMain")
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
