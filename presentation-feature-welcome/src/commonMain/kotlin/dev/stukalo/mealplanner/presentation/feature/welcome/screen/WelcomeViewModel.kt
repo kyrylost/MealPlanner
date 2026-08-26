@@ -5,6 +5,7 @@ import dev.stukalo.mealplanner.core.common.date.parseDate
 import dev.stukalo.mealplanner.core.common.exception.AppException
 import dev.stukalo.mealplanner.core.common.validation.ValidationResult
 import dev.stukalo.mealplanner.core.common.validation.onValidationError
+import dev.stukalo.mealplanner.domain.model.exception.ValidationException
 import dev.stukalo.mealplanner.domain.model.user.UserConstants
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.domain.usecase.user.CalculateDailyNormUseCase
@@ -18,7 +19,7 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateHeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateNameUseCase
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
-import dev.stukalo.mealplanner.presentation.core.ui.mapper.toMessage
+import dev.stukalo.mealplanner.presentation.feature.welcome.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.welcome.screen.contract.ViewIntent
@@ -27,6 +28,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Instant
 
 /**
@@ -108,6 +110,11 @@ internal class WelcomeViewModel(
     override fun handleError(throwable: Throwable) {
         reduce(PartialStateChange.Loading(false))
         super.handleError(throwable)
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is ValidationException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     private fun onChangeNameInput(intent: ViewIntent.OnChangeNameInputIntent) {

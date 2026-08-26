@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import dev.stukalo.mealplanner.core.localization.Res
 import dev.stukalo.mealplanner.core.localization.common_calories
 import dev.stukalo.mealplanner.core.localization.common_carbs
@@ -24,7 +25,7 @@ import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconClose
-import dev.stukalo.mealplanner.presentation.core.ui.mapper.toText
+import dev.stukalo.mealplanner.presentation.feature.recipe.common.core.mapper.toText
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -41,16 +42,16 @@ internal fun ActiveFilterChips(
                 filters.mealTypes.forEach { type ->
                     add(ChipData.MealType(type))
                 }
-                if (filters.minCalories != null || filters.maxCalories != null) {
+                if ((filters.minCalories != null) || (filters.maxCalories != null)) {
                     add(ChipData.Nutrient(NutrientType.CALORIES, filters.minCalories, filters.maxCalories))
                 }
-                if (filters.minProteins != null || filters.maxProteins != null) {
+                if ((filters.minProteins != null) || (filters.maxProteins != null)) {
                     add(ChipData.Nutrient(NutrientType.PROTEINS, filters.minProteins, filters.maxProteins))
                 }
-                if (filters.minFats != null || filters.maxFats != null) {
+                if ((filters.minFats != null) || (filters.maxFats != null)) {
                     add(ChipData.Nutrient(NutrientType.FATS, filters.minFats, filters.maxFats))
                 }
-                if (filters.minCarbs != null || filters.maxCarbs != null) {
+                if ((filters.minCarbs != null) || (filters.maxCarbs != null)) {
                     add(ChipData.Nutrient(NutrientType.CARBS, filters.minCarbs, filters.maxCarbs))
                 }
             }
@@ -122,4 +123,43 @@ internal enum class NutrientType(val labelRes: StringResource, val unitRes: Stri
     PROTEINS(Res.string.common_proteins, Res.string.common_grams_short),
     FATS(Res.string.common_fats, Res.string.common_grams_short),
     CARBS(Res.string.common_carbs, Res.string.common_grams_short)
+}
+
+@Preview
+@Composable
+private fun ActiveFilterChipsPreview() {
+    Theme {
+        ActiveFilterChips(
+            filters = FilterDomainModel(
+                mealTypes = listOf(MealTypeDomainModel.BREAKFAST, MealTypeDomainModel.LUNCH),
+                minCalories = 500,
+                maxCalories = 1000,
+                minProteins = 50
+            ),
+            onRemoveMealType = {},
+            onRemoveNutrient = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ActiveFilterChipsManyPreview() {
+    Theme {
+        ActiveFilterChips(
+            filters = FilterDomainModel(
+                mealTypes = MealTypeDomainModel.entries.toList(),
+                minCalories = 100,
+                maxCalories = 2000,
+                minProteins = 10,
+                maxProteins = 100,
+                minFats = 5,
+                maxFats = 50,
+                minCarbs = 20,
+                maxCarbs = 200
+            ),
+            onRemoveMealType = {},
+            onRemoveNutrient = {}
+        )
+    }
 }

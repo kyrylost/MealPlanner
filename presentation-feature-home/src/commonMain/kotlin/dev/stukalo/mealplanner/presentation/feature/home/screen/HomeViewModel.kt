@@ -2,6 +2,9 @@ package dev.stukalo.mealplanner.presentation.feature.home.screen
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import dev.stukalo.mealplanner.core.localization.Res
+import dev.stukalo.mealplanner.core.localization.error_health_sync_failed
+import dev.stukalo.mealplanner.domain.model.exception.HealthException
 import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
 import dev.stukalo.mealplanner.domain.usecase.health.GetHealthPermissionStatusUseCase
 import dev.stukalo.mealplanner.domain.usecase.health.GetStepsUseCase
@@ -25,6 +28,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
+import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Clock
 
 /**
@@ -63,6 +67,11 @@ internal class HomeViewModel(
             is ViewIntent.OnAddNutrient -> onAddNutrient(intent.type, intent.amount)
             ViewIntent.OnResume -> onResume()
         }
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is HealthException -> Res.string.error_health_sync_failed
+        else -> super.mapThrowable(throwable)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

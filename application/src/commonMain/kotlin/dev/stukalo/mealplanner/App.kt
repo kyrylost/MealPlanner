@@ -14,7 +14,6 @@ import dev.stukalo.mealplanner.data.repository.impl.di.dataRepositoryModule
 import dev.stukalo.mealplanner.domain.usecase.impl.di.domainModule
 import dev.stukalo.mealplanner.platform.di.platformModule
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.di.barcodeScannerModule
-import dev.stukalo.mealplanner.presentation.feature.filters.di.filtersModule
 import dev.stukalo.mealplanner.presentation.feature.gateway.di.gatewayModule
 import dev.stukalo.mealplanner.presentation.feature.home.di.homeModule
 import dev.stukalo.mealplanner.presentation.feature.host.HostScreen
@@ -22,6 +21,7 @@ import dev.stukalo.mealplanner.presentation.feature.host.di.hostModule
 import dev.stukalo.mealplanner.presentation.feature.onboarding.di.onboardingModule
 import dev.stukalo.mealplanner.presentation.feature.product.search.di.productSearchModule
 import dev.stukalo.mealplanner.presentation.feature.productdetails.di.productDetailsModule
+import dev.stukalo.mealplanner.presentation.feature.recipe.filters.di.recipeFiltersModule
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.di.recipeSearchModule
 import dev.stukalo.mealplanner.presentation.feature.recipedetails.di.recipeDetailsModule
 import dev.stukalo.mealplanner.presentation.feature.settings.di.settingsModule
@@ -60,7 +60,7 @@ fun App(koinAppDeclaration: KoinAppDeclaration? = null) {
                     productSearchModule,
                     settingsModule,
                     statisticsModule,
-                    filtersModule,
+                    recipeFiltersModule,
                     recipeDetailsModule,
                     productDetailsModule,
                     hostModule

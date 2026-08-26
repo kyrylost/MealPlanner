@@ -21,7 +21,7 @@ import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.component.button.text.TextButton
-import dev.stukalo.mealplanner.presentation.core.ui.mapper.toText
+import dev.stukalo.mealplanner.presentation.feature.recipe.common.core.mapper.toText
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 import kotlinx.datetime.LocalTime
 import org.jetbrains.compose.resources.stringResource

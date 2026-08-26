@@ -1,5 +1,6 @@
 package dev.stukalo.mealplanner.presentation.feature.statistics.screen
 
+import dev.stukalo.mealplanner.domain.model.exception.MealSlotException
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_CARB_GRAM
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_FAT_GRAM
 import dev.stukalo.mealplanner.domain.model.nutrient.CALORIES_PER_PROTEIN_GRAM
@@ -13,12 +14,14 @@ import dev.stukalo.mealplanner.domain.usecase.statistics.GetWeightHistoryUseCase
 import dev.stukalo.mealplanner.domain.usecase.statistics.SaveWeightUseCase
 import dev.stukalo.mealplanner.domain.usecase.user.GetUserUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.statistics.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState
 import kotlinx.coroutines.flow.combine
+import org.jetbrains.compose.resources.StringResource
 
 /**
  * ViewModel for the Statistics screen.
@@ -111,6 +114,11 @@ internal class StatisticsViewModel(
                 }
             }
         }
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is MealSlotException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     /**

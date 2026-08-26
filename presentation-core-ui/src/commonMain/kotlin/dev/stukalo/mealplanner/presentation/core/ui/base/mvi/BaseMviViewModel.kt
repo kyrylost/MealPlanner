@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import org.jetbrains.compose.resources.StringResource
 
 /**
  * Base class for all MVI ViewModels in the project.
@@ -82,11 +83,20 @@ abstract class BaseMviViewModel<I : MviIntent, S : MviViewState, E : MviSingleEv
      * Maps the [throwable] to a message and sends it as a standard [MviSingleEvent.ShowSnackbar].
      */
     override fun handleError(throwable: Throwable) {
-        val message = throwable.toMessage()
+        val message = mapThrowable(throwable)
         safeLaunch {
             eventChannel.send(MviSideEffect.System(MviSingleEvent.ShowSnackbar(message, SnackbarType.ERROR)))
         }
     }
+
+    /**
+     * Maps the given [throwable] to a localized [StringResource].
+     * Can be overridden by subclasses to provide feature-specific mapping.
+     *
+     * @param throwable The exception to map.
+     * @return The localized message.
+     */
+    protected open fun mapThrowable(throwable: Throwable): StringResource = throwable.toMessage()
 
     /**
      * Reduces the current state by applying the [change].

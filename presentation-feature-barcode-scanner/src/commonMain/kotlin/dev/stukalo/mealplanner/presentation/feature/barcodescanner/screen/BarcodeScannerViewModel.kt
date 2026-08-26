@@ -3,12 +3,14 @@ package dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen
 import dev.stukalo.mealplanner.domain.model.exception.ProductException
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductByBarcodeUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.barcodescanner.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.barcodescanner.screen.contract.ViewState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -60,6 +62,11 @@ internal class BarcodeScannerViewModel(
         isProcessing = false
         reduce(PartialStateChange.Loading(false))
         super.handleError(throwable)
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is ProductException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     private fun shouldThrottle(barcode: String): Boolean {

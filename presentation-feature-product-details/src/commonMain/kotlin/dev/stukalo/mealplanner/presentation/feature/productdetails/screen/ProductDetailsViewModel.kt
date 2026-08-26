@@ -4,10 +4,12 @@ import dev.stukalo.mealplanner.domain.model.exception.ProductException
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductDetailsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.LogProductConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.productdetails.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewState
+import org.jetbrains.compose.resources.StringResource
 
 internal class ProductDetailsViewModel(
     private val getProductDetailsUseCase: GetProductDetailsUseCase,
@@ -42,6 +44,11 @@ internal class ProductDetailsViewModel(
     override fun handleError(throwable: Throwable) {
         reduce(PartialStateChange.Loading(false))
         super.handleError(throwable)
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is ProductException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     private fun loadProduct(productId: String?, barcode: String?) {

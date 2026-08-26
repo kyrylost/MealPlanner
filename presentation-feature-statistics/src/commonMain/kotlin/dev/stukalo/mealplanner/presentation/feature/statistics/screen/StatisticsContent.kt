@@ -53,10 +53,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.component.header.CommonHeade
 import dev.stukalo.mealplanner.presentation.core.ui.component.selector.SegmentedSelector
 import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconAdd
-import dev.stukalo.mealplanner.presentation.core.ui.mapper.toText
+import dev.stukalo.mealplanner.presentation.feature.recipe.common.core.mapper.toText
 import dev.stukalo.mealplanner.presentation.feature.statistics.component.MealDetailsDialog
 import dev.stukalo.mealplanner.presentation.feature.statistics.component.MealTrackingItem
 import dev.stukalo.mealplanner.presentation.feature.statistics.component.StreakCard
+import dev.stukalo.mealplanner.presentation.feature.statistics.core.mapper.toChartPoints
 import dev.stukalo.mealplanner.presentation.feature.statistics.core.model.MealSlotProgress
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.statistics.screen.contract.ViewState
@@ -135,7 +136,7 @@ internal fun StatisticsContent(state: ViewState, snackbarHostState: SnackbarHost
                             }
                         )
                         StatisticsChart(
-                            points = state.pfcData,
+                            points = state.pfcData.toChartPoints(),
                             style = ChartStyle.BAR
                         )
                     }
@@ -176,7 +177,7 @@ internal fun StatisticsContent(state: ViewState, snackbarHostState: SnackbarHost
                             }
                         )
                         StatisticsChart(
-                            points = state.weightData,
+                            points = state.weightData.toChartPoints(),
                             style = ChartStyle.LINE,
                             targetValue = state.targetWeight
                         )
@@ -289,19 +290,23 @@ private fun StatisticsContentPreview() {
                             fats = 25.0,
                             carbohydrates = 100.0,
                             isConsumed = false
-                        ),
-                        MealSlotProgress(
-                            id = 3,
-                            type = MealTypeDomainModel.DINNER,
-                            startTime = LocalTime(19, 0),
-                            calories = 700.0,
-                            proteins = 35.0,
-                            fats = 20.0,
-                            carbohydrates = 80.0,
-                            isConsumed = false
                         )
                     )
                 ),
+                snackbarHostState = remember { SnackbarHostState() },
+                onIntent = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun StatisticsContentEmptyPreview() {
+    Theme {
+        Surface(color = Theme.color.background.primary) {
+            StatisticsContent(
+                state = ViewState(meals = emptyList()),
                 snackbarHostState = remember { SnackbarHostState() },
                 onIntent = {}
             )

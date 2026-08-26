@@ -51,11 +51,11 @@ import dev.stukalo.mealplanner.presentation.core.ui.component.chip.InfoChip
 import dev.stukalo.mealplanner.presentation.core.ui.component.dialog.ValueEditDialog
 import dev.stukalo.mealplanner.presentation.core.ui.component.header.CommonHeader
 import dev.stukalo.mealplanner.presentation.core.ui.component.nutrition.NutritionSummary
-import dev.stukalo.mealplanner.presentation.core.ui.component.quality.NovaGroupBadge
-import dev.stukalo.mealplanner.presentation.core.ui.component.quality.NutriScoreBadge
 import dev.stukalo.mealplanner.presentation.core.ui.component.snackbar.AppSnackbarHost
 import dev.stukalo.mealplanner.presentation.core.ui.haze.rememberHazeState
 import dev.stukalo.mealplanner.presentation.core.ui.icons.IconBack
+import dev.stukalo.mealplanner.presentation.feature.productdetails.component.quality.NovaGroupBadge
+import dev.stukalo.mealplanner.presentation.feature.productdetails.component.quality.NutriScoreBadge
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewIntent
 import dev.stukalo.mealplanner.presentation.feature.productdetails.screen.contract.ViewState
 import org.jetbrains.compose.resources.stringResource

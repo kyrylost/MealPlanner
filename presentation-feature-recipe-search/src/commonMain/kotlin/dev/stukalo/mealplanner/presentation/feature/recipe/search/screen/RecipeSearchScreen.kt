@@ -1,26 +1,19 @@
 package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationDirection
 import dev.stukalo.mealplanner.presentation.core.navigation.NavigationKeys
 import dev.stukalo.mealplanner.presentation.core.navigation.ext.getSerializableState
 import dev.stukalo.mealplanner.presentation.core.navigation.model.FilterNavModel
-import dev.stukalo.mealplanner.presentation.core.styling.Theme
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.MviScreen
-import dev.stukalo.mealplanner.presentation.feature.recipe.search.core.mapper.FilterNavMapper
+import dev.stukalo.mealplanner.presentation.feature.recipe.common.core.mapper.FilterNavMapper
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
-import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewState
-import kotlinx.coroutines.flow.flowOf
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -74,20 +67,5 @@ internal fun RecipeSearchScreen(navController: NavController) {
             snackbarHostState = snackbarHostState,
             onIntent = viewModel::onIntent
         )
-    }
-}
-
-@Preview
-@Composable
-private fun RecipeSearchScreenPreview() {
-    Theme {
-        Surface(color = Theme.color.background.primary) {
-            RecipeSearchContent(
-                state = ViewState(),
-                recipes = flowOf(PagingData.from(emptyList<RecipeDomainModel>())).collectAsLazyPagingItems(),
-                snackbarHostState = SnackbarHostState(),
-                onIntent = {}
-            )
-        }
     }
 }

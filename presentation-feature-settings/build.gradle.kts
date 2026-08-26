@@ -56,6 +56,8 @@ kotlin {
             implementation(libs.androidx.core.ktx)
             implementation(libs.androidx.appcompat)
             implementation(libs.material)
+            implementation(libs.androidx.health.connect)
+            implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)

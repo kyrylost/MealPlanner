@@ -3,11 +3,13 @@ package dev.stukalo.mealplanner.presentation.feature.recipe.search.screen
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import dev.stukalo.mealplanner.domain.model.exception.RecipeException
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.filter.FilterDomainModel
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecipesUseCase
 import dev.stukalo.mealplanner.domain.usecase.recipes.GetRecommendedRecipesUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.recipe.common.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.recipe.search.screen.contract.ViewIntent
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -88,6 +91,11 @@ internal class RecipeSearchViewModel(
                 sendEvent(ViewEvent.NavigateBack)
             }
         }
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is RecipeException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     private fun searchRecommended() {

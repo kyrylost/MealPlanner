@@ -76,6 +76,7 @@ kotlin {
             implementation(projects.presentationCoreNavigation)
             implementation(projects.presentationCoreStyling)
             implementation(projects.presentationCoreUi)
+            implementation(projects.presentationFeatureRecipeCommon)
             implementation(projects.coreLocalization)
             implementation(projects.domainUsecase)
         }

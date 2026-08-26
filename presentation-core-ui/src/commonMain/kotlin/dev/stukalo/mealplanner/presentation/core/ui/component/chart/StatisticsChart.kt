@@ -22,46 +22,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.stukalo.mealplanner.core.localization.Res
-import dev.stukalo.mealplanner.core.localization.common_apr
-import dev.stukalo.mealplanner.core.localization.common_aug
-import dev.stukalo.mealplanner.core.localization.common_dec
-import dev.stukalo.mealplanner.core.localization.common_feb
-import dev.stukalo.mealplanner.core.localization.common_format_date_short
 import dev.stukalo.mealplanner.core.localization.common_format_percentage
-import dev.stukalo.mealplanner.core.localization.common_fri
-import dev.stukalo.mealplanner.core.localization.common_jan
-import dev.stukalo.mealplanner.core.localization.common_jul
-import dev.stukalo.mealplanner.core.localization.common_jun
-import dev.stukalo.mealplanner.core.localization.common_mar
-import dev.stukalo.mealplanner.core.localization.common_may
-import dev.stukalo.mealplanner.core.localization.common_mon
-import dev.stukalo.mealplanner.core.localization.common_nov
-import dev.stukalo.mealplanner.core.localization.common_oct
-import dev.stukalo.mealplanner.core.localization.common_sat
-import dev.stukalo.mealplanner.core.localization.common_sep
-import dev.stukalo.mealplanner.core.localization.common_sun
-import dev.stukalo.mealplanner.core.localization.common_thu
-import dev.stukalo.mealplanner.core.localization.common_tue
-import dev.stukalo.mealplanner.core.localization.common_wed
 import dev.stukalo.mealplanner.core.localization.statistics_no_data
-import dev.stukalo.mealplanner.domain.model.statistics.StatisticsPoint
 import dev.stukalo.mealplanner.presentation.core.styling.Theme
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.number
 import org.jetbrains.compose.resources.stringResource
 
 /**
  * A custom-drawn chart for displaying statistics.
  * Supports [ChartStyle.BAR] for discrete data and [ChartStyle.LINE] for trend data.
  *
- * @param points List of data points to display.
+ * @param points List of [ChartPoint] to display.
  * @param style Visual style of the chart (BAR or LINE).
- * @param targetValue Optional target value to draw a goal line (primarily for LINE style).
+ * @param targetValue Optional global target value to draw a goal line (primarily for LINE style).
  * @param modifier Modifier for the chart container.
  */
 @Composable
 fun StatisticsChart(
-    points: List<StatisticsPoint>,
+    points: List<ChartPoint>,
     style: ChartStyle = ChartStyle.BAR,
     targetValue: Double? = null,
     modifier: Modifier = Modifier
@@ -72,35 +49,9 @@ fun StatisticsChart(
         textAlign = TextAlign.Center
     )
 
-    val localizedDays = listOf(
-        stringResource(Res.string.common_mon),
-        stringResource(Res.string.common_tue),
-        stringResource(Res.string.common_wed),
-        stringResource(Res.string.common_thu),
-        stringResource(Res.string.common_fri),
-        stringResource(Res.string.common_sat),
-        stringResource(Res.string.common_sun)
-    )
-
-    val localizedMonths = listOf(
-        stringResource(Res.string.common_jan),
-        stringResource(Res.string.common_feb),
-        stringResource(Res.string.common_mar),
-        stringResource(Res.string.common_apr),
-        stringResource(Res.string.common_may),
-        stringResource(Res.string.common_jun),
-        stringResource(Res.string.common_jul),
-        stringResource(Res.string.common_aug),
-        stringResource(Res.string.common_sep),
-        stringResource(Res.string.common_oct),
-        stringResource(Res.string.common_nov),
-        stringResource(Res.string.common_dec)
-    )
-
-    val dateFormat = stringResource(Res.string.common_format_date_short)
     val percentageFormat = stringResource(Res.string.common_format_percentage)
 
-    val xAxisLabelOffset = Theme.spacing.space8
+    val xAxisLabelOffset = Theme.spacing.space12
     val pointRadius = Theme.radius.radius4
     val gridThickness = Theme.thickness.thickness1
     val lineThickness = Theme.thickness.thickness2
@@ -245,9 +196,8 @@ fun StatisticsChart(
                         )
 
                         // Label
-                        if (points.size <= MAX_X_LABELS || index % (points.size / 5).coerceAtLeast(1) == 0) {
-                            val label = getLabel(point.date, points.size, localizedDays, localizedMonths, dateFormat)
-                            val textLayoutResult = textMeasurer.measure(label, labelStyle)
+                        if (point.label.isNotEmpty()) {
+                            val textLayoutResult = textMeasurer.measure(point.label, labelStyle)
                             drawText(
                                 textLayoutResult = textLayoutResult,
                                 topLeft = Offset(
@@ -265,10 +215,9 @@ fun StatisticsChart(
                     points.forEachIndexed { index, point ->
                         val x = yAxisWidth + index * itemWidth + itemWidth / 2
 
-                        // Draw Label (Independent of value)
-                        if (points.size <= MAX_X_LABELS || index % (points.size / 5).coerceAtLeast(1) == 0) {
-                            val label = getLabel(point.date, points.size, localizedDays, localizedMonths, dateFormat)
-                            val textLayoutResult = textMeasurer.measure(label, labelStyle)
+                        // Draw Label
+                        if (point.label.isNotEmpty()) {
+                            val textLayoutResult = textMeasurer.measure(point.label, labelStyle)
                             drawText(
                                 textLayoutResult = textLayoutResult,
                                 topLeft = Offset(
@@ -315,21 +264,8 @@ private const val BAR_CHART_TARGET_MULTIPLIER = 1.5f
 private const val LINE_CHART_PADDING_FACTOR = 0.1f
 private const val BAR_WIDTH_FACTOR = 0.6f
 private const val BAR_SPACING_FACTOR = 0.4f
-private const val MAX_X_LABELS = 12
 private const val DASH_ON_INTERVAL = 10f
 private const val DASH_OFF_INTERVAL = 10f
-
-private fun getLabel(
-    date: LocalDate,
-    totalPoints: Int,
-    days: List<String>,
-    months: List<String>,
-    dateFormat: String
-): String = when {
-    totalPoints <= 7 -> days[date.dayOfWeek.ordinal]
-    totalPoints <= 12 -> months[date.month.ordinal]
-    else -> dateFormat.replace($$"%1$d", date.day.toString()).replace("%2\$d", date.month.number.toString())
-}
 
 @Preview
 @Composable
@@ -338,11 +274,11 @@ private fun StatisticsChartBarPreview() {
         Surface(color = Theme.color.background.primary) {
             StatisticsChart(
                 points = listOf(
-                    StatisticsPoint(LocalDate(2026, 8, 1), 1500.0, 2000.0),
-                    StatisticsPoint(LocalDate(2026, 8, 2), 1800.0, 2000.0),
-                    StatisticsPoint(LocalDate(2026, 8, 3), 2200.0, 2000.0),
-                    StatisticsPoint(LocalDate(2026, 8, 4), 1200.0, 2000.0),
-                    StatisticsPoint(LocalDate(2026, 8, 5), 2000.0, 2000.0)
+                    ChartPoint(1500.0, 2000.0, "Mon"),
+                    ChartPoint(1800.0, 2000.0, "Tue"),
+                    ChartPoint(2200.0, 2000.0, "Wed"),
+                    ChartPoint(1200.0, 2000.0, "Thu"),
+                    ChartPoint(2000.0, 2000.0, "Fri")
                 ),
                 style = ChartStyle.BAR,
                 modifier = Modifier.padding(Theme.spacing.space16)
@@ -358,11 +294,11 @@ private fun StatisticsChartLinePreview() {
         Surface(color = Theme.color.background.primary) {
             StatisticsChart(
                 points = listOf(
-                    StatisticsPoint(LocalDate(2026, 8, 1), 78.5),
-                    StatisticsPoint(LocalDate(2026, 8, 2), 78.2),
-                    StatisticsPoint(LocalDate(2026, 8, 3), 77.9),
-                    StatisticsPoint(LocalDate(2026, 8, 4), 78.1),
-                    StatisticsPoint(LocalDate(2026, 8, 5), 77.5)
+                    ChartPoint(78.5, label = "01.08"),
+                    ChartPoint(78.2, label = "02.08"),
+                    ChartPoint(77.9, label = "03.08"),
+                    ChartPoint(78.1, label = "04.08"),
+                    ChartPoint(77.5, label = "05.08")
                 ),
                 style = ChartStyle.LINE,
                 modifier = Modifier.padding(Theme.spacing.space16)

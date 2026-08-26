@@ -74,7 +74,6 @@ kotlin {
             implementation(projects.coreCommon)
             implementation(projects.presentationCoreStyling)
             implementation(projects.coreLocalization)
-            implementation(projects.domainModel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

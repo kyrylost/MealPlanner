@@ -2,6 +2,8 @@ package dev.stukalo.mealplanner.presentation.feature.settings.screen
 
 import androidx.lifecycle.viewModelScope
 import dev.stukalo.mealplanner.core.common.validation.ValidationResult
+import dev.stukalo.mealplanner.domain.model.exception.HealthException
+import dev.stukalo.mealplanner.domain.model.exception.ValidationException
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
 import dev.stukalo.mealplanner.domain.model.health.HealthServiceStatus
 import dev.stukalo.mealplanner.domain.model.setting.ColorPaletteDomainModel
@@ -35,6 +37,7 @@ import dev.stukalo.mealplanner.domain.usecase.validation.ValidateStepsTargetUseC
 import dev.stukalo.mealplanner.domain.usecase.validation.ValidateWeightUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
 import dev.stukalo.mealplanner.presentation.feature.settings.core.mapper.HealthPermissionMapper
+import dev.stukalo.mealplanner.presentation.feature.settings.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.EditableField
 import dev.stukalo.mealplanner.presentation.feature.settings.core.model.HealthPermissionOption
 import dev.stukalo.mealplanner.presentation.feature.settings.screen.contract.PartialStateChange
@@ -46,6 +49,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import org.jetbrains.compose.resources.StringResource
 
 /**
  * ViewModel for the Settings screen.
@@ -155,6 +159,11 @@ internal class SettingsViewModel(
     override fun handleError(throwable: Throwable) {
         reduce(PartialStateChange.Saving(false))
         super.handleError(throwable)
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is HealthException, is ValidationException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     private fun onColorPaletteClick(palette: ColorPaletteDomainModel) {

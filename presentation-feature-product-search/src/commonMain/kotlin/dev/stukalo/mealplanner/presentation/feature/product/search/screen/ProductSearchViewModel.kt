@@ -1,11 +1,13 @@
 package dev.stukalo.mealplanner.presentation.feature.product.search.screen
 
 import androidx.lifecycle.viewModelScope
+import dev.stukalo.mealplanner.domain.model.exception.ProductException
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.usecase.products.GetAutoCompleteHintsUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.GetProductsByQueryUseCase
 import dev.stukalo.mealplanner.domain.usecase.products.LogProductConsumedUseCase
 import dev.stukalo.mealplanner.presentation.core.ui.base.mvi.BaseMviViewModel
+import dev.stukalo.mealplanner.presentation.feature.product.search.core.mapper.toMessage
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.PartialStateChange
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.ViewEvent
 import dev.stukalo.mealplanner.presentation.feature.product.search.screen.contract.ViewIntent
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -73,12 +76,20 @@ internal class ProductSearchViewModel(
             ViewIntent.OnBarcodeScannerClick -> {
                 sendEvent(ViewEvent.NavigateToBarcodeScanner)
             }
+            ViewIntent.OnDismissSuggestions -> {
+                reduce(PartialStateChange.DismissSuggestions)
+            }
         }
     }
 
     override fun handleError(throwable: Throwable) {
         reduce(PartialStateChange.Loading(false))
         super.handleError(throwable)
+    }
+
+    override fun mapThrowable(throwable: Throwable): StringResource = when (throwable) {
+        is ProductException -> throwable.toMessage()
+        else -> super.mapThrowable(throwable)
     }
 
     private fun loadSuggestions(query: String) {

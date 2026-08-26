@@ -78,7 +78,7 @@ kotlin {
             implementation(projects.presentationFeatureBarcodeScanner)
             implementation(projects.presentationFeatureRecipeDetails)
             implementation(projects.presentationFeatureSettings)
-            implementation(projects.presentationFeatureFilters)
+            implementation(projects.presentationFeatureRecipeFilters)
             implementation(projects.presentationFeatureRecipeSearch)
             implementation(projects.presentationFeatureProductDetails)
             implementation(projects.domainModel)
