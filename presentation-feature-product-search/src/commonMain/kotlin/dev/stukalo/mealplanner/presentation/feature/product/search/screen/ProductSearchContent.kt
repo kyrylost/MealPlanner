@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -14,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +59,13 @@ internal fun ProductSearchContent(
     onIntent: (ViewIntent) -> Unit
 ) {
     val hazeState = rememberHazeState()
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(listState.isScrollInProgress) {
+        if (listState.isScrollInProgress && state.suggestions.isNotEmpty()) {
+            onIntent(ViewIntent.OnDismissSuggestions)
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -107,7 +116,8 @@ internal fun ProductSearchContent(
                         ProductsList(
                             products = products,
                             hazeState = hazeState,
-                            onProductClick = { onIntent(ViewIntent.OnProductClick(it)) }
+                            onProductClick = { onIntent(ViewIntent.OnProductClick(it)) },
+                            listState = listState
                         )
                     }
                 }

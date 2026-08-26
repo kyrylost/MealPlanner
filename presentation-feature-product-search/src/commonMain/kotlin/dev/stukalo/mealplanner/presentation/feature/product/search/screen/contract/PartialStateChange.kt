@@ -8,10 +8,14 @@ import kotlinx.coroutines.flow.Flow
 internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> {
     override fun reduce(oldState: ViewState): ViewState
 
-    data class QueryChange(val query: String) : PartialStateChange {
+    data class QueryChange(val query: String, val forceDismissSuggestions: Boolean = false) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(
             query = query,
-            suggestions = if (query.isBlank()) emptyList() else oldState.suggestions
+            suggestions = if (forceDismissSuggestions || query.trim().length < MIN_QUERY_LENGTH) {
+                emptyList()
+            } else {
+                oldState.suggestions
+            }
         )
     }
 
@@ -28,5 +32,13 @@ internal sealed interface PartialStateChange : MviPartialStateChange<ViewState> 
 
     data class Loading(val isLoading: Boolean) : PartialStateChange {
         override fun reduce(oldState: ViewState): ViewState = oldState.copy(isLoading = isLoading)
+    }
+
+    data object DismissSuggestions : PartialStateChange {
+        override fun reduce(oldState: ViewState): ViewState = oldState.copy(suggestions = emptyList())
+    }
+
+    companion object {
+        const val MIN_QUERY_LENGTH = 3
     }
 }

@@ -45,7 +45,7 @@ internal class ProductSearchViewModel(
         queryFlow
             .debounce(DEBOUNCE_MILLIS.milliseconds)
             .distinctUntilChanged()
-            .filter { it.trim().length >= MIN_QUERY_LENGTH }
+            .filter { it.trim().length >= PartialStateChange.MIN_QUERY_LENGTH }
             .onEach { query ->
                 loadSuggestions(query.trim())
             }.launchIn(viewModelScope)
@@ -64,7 +64,12 @@ internal class ProductSearchViewModel(
                 searchProducts(viewState.value.query)
             }
             is ViewIntent.OnSuggestionClick -> {
-                reduce(PartialStateChange.QueryChange(intent.suggestion))
+                reduce(
+                    PartialStateChange.QueryChange(
+                        query = intent.suggestion,
+                        forceDismissSuggestions = true
+                    )
+                )
                 searchProducts(intent.suggestion)
             }
             is ViewIntent.OnProductClick -> {
@@ -102,7 +107,7 @@ internal class ProductSearchViewModel(
 
     private fun searchProducts(query: String) {
         val trimmedQuery = query.trim()
-        if (trimmedQuery.length < MIN_QUERY_LENGTH) return
+        if (trimmedQuery.length < PartialStateChange.MIN_QUERY_LENGTH) return
         if (trimmedQuery == lastSearchedQuery) return
 
         lastSearchedQuery = trimmedQuery
@@ -125,7 +130,6 @@ internal class ProductSearchViewModel(
     }
 
     companion object {
-        private const val DEBOUNCE_MILLIS = 1000L
-        private const val MIN_QUERY_LENGTH = 3
+        private const val DEBOUNCE_MILLIS = 500L
     }
 }

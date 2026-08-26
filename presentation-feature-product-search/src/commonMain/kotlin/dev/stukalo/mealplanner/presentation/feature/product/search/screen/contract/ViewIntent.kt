@@ -17,4 +17,6 @@ internal sealed interface ViewIntent : MviIntent {
     data class OnLogProduct(val product: ProductDomainModel, val weight: Float) : ViewIntent
 
     data object OnBarcodeScannerClick : ViewIntent
+
+    data object OnDismissSuggestions : ViewIntent
 }

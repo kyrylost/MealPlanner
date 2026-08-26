@@ -18,6 +18,7 @@ import dev.stukalo.mealplanner.core.localization.common_carbs
 import dev.stukalo.mealplanner.core.localization.common_fats
 import dev.stukalo.mealplanner.core.localization.common_grams_value
 import dev.stukalo.mealplanner.core.localization.common_kcal
+import dev.stukalo.mealplanner.core.localization.common_not_available
 import dev.stukalo.mealplanner.core.localization.common_nutrient_with_unit
 import dev.stukalo.mealplanner.core.localization.common_proteins
 import dev.stukalo.mealplanner.core.localization.common_unit_grams
@@ -66,7 +67,8 @@ internal fun ProductCard(
             ) {
                 NutrientShortInfo(
                     label = stringResource(Res.string.common_calories),
-                    value = product.calories?.toInt()?.let { stringResource(Res.string.common_kcal, it) } ?: "--",
+                    value = product.calories?.toInt()?.let { stringResource(Res.string.common_kcal, it) }
+                        ?: stringResource(Res.string.common_not_available),
                     unit = stringResource(Res.string.common_unit_kcal)
                 )
                 NutrientShortInfo(
@@ -78,7 +80,7 @@ internal fun ProductCard(
                         }?.amount
                         ?.toInt()
                         ?.let { stringResource(Res.string.common_grams_value, it) }
-                        ?: "--",
+                        ?: stringResource(Res.string.common_not_available),
                     unit = stringResource(Res.string.common_unit_grams)
                 )
                 NutrientShortInfo(
@@ -90,7 +92,7 @@ internal fun ProductCard(
                         }?.amount
                         ?.toInt()
                         ?.let { stringResource(Res.string.common_grams_value, it) }
-                        ?: "--",
+                        ?: stringResource(Res.string.common_not_available),
                     unit = stringResource(Res.string.common_unit_grams)
                 )
                 NutrientShortInfo(
@@ -102,7 +104,7 @@ internal fun ProductCard(
                         }?.amount
                         ?.toInt()
                         ?.let { stringResource(Res.string.common_grams_value, it) }
-                        ?: "--",
+                        ?: stringResource(Res.string.common_not_available),
                     unit = stringResource(Res.string.common_unit_grams)
                 )
             }

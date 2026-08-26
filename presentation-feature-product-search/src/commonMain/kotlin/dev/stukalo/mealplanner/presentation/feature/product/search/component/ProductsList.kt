@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,16 +32,19 @@ import kotlinx.coroutines.flow.flowOf
  * @param products The paging items for the products list.
  * @param hazeState The state for the haze effect (blur).
  * @param onProductClick The callback for when a product is clicked.
+ * @param listState The state for the lazy list.
  */
 @Composable
 internal fun ProductsList(
     products: LazyPagingItems<ProductDomainModel>?,
     hazeState: HazeState,
-    onProductClick: (ProductDomainModel) -> Unit
+    onProductClick: (ProductDomainModel) -> Unit,
+    listState: LazyListState = rememberLazyListState()
 ) {
     if (products == null) return
 
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize(),
         contentPadding =
         PaddingValues(
