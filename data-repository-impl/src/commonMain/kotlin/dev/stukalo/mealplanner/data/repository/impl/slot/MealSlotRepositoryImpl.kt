@@ -1,10 +1,10 @@
-package dev.stukalo.mealplanner.data.repository.impl
+package dev.stukalo.mealplanner.data.repository.impl.slot
 
 import dev.stukalo.mealplanner.data.database.source.slot.MealSlotDatabaseSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.MealSlotMapper
+import dev.stukalo.mealplanner.data.repository.impl.slot.mapper.MealSlotMapper
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.slot.MealSlotDomainModel
-import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
+import dev.stukalo.mealplanner.domain.repository.MealSlotRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -15,18 +15,18 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 
 /**
- * Implementation of [MealScheduleRepository] that handles meal slot data using a database source.
+ * Implementation of [dev.stukalo.mealplanner.domain.repository.MealSlotRepository] that handles meal slot data using a database source.
  * It provides default slots if the database is empty.
  *
  * @property mealSlotDatabaseSource The source for database operations.
  * @property mealSlotMapper Mapper to convert between domain and database models.
  * @property clock Clock provider for daily status calculation.
  */
-internal class MealScheduleRepositoryImpl(
+internal class MealSlotRepositoryImpl(
     private val mealSlotDatabaseSource: MealSlotDatabaseSource,
     private val mealSlotMapper: MealSlotMapper,
     private val clock: Clock
-) : MealScheduleRepository {
+) : MealSlotRepository {
     override fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>> = mealSlotDatabaseSource.getAllSlotsAsFlow()
         .onEach { slots ->
             if (slots.isEmpty()) {

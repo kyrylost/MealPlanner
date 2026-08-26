@@ -1,9 +1,9 @@
-package dev.stukalo.mealplanner.data.repository.impl.paging
+package dev.stukalo.mealplanner.data.repository.impl.product.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.stukalo.mealplanner.data.network.fooddatacentral.source.FoodDataCentralNetSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.FDCSearchProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.product.mapper.FDCSearchProductMapper
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 
 internal class ProductPagingSource(

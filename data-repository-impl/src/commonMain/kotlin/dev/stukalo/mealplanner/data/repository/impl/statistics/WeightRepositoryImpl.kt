@@ -1,7 +1,7 @@
-package dev.stukalo.mealplanner.data.repository.impl
+package dev.stukalo.mealplanner.data.repository.impl.statistics
 
 import dev.stukalo.mealplanner.data.database.source.statistics.WeightHistoryDatabaseSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.WeightHistoryMapper
+import dev.stukalo.mealplanner.data.repository.impl.statistics.mapper.WeightHistoryMapper
 import dev.stukalo.mealplanner.domain.model.statistics.WeightHistoryDomainModel
 import dev.stukalo.mealplanner.domain.repository.WeightRepository
 import kotlinx.coroutines.flow.Flow

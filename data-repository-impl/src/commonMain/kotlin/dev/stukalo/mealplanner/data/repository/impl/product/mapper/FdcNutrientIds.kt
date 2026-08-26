@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.data.repository.impl.mapper
+package dev.stukalo.mealplanner.data.repository.impl.product.mapper
 
 /**
  * Nutrient IDs used by the FoodData Central API.

@@ -1,9 +1,9 @@
-package dev.stukalo.mealplanner.data.repository.impl
+package dev.stukalo.mealplanner.data.repository.impl.user
 
 import dev.stukalo.mealplanner.data.database.model.statistics.WeightHistoryDatabaseModel
 import dev.stukalo.mealplanner.data.database.source.statistics.WeightHistoryDatabaseSource
 import dev.stukalo.mealplanner.data.database.source.user.UserDatabaseSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.UserMapper
+import dev.stukalo.mealplanner.data.repository.impl.user.mapper.UserMapper
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 import dev.stukalo.mealplanner.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,7 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 
 /**
- * Implementation of [UserRepository] optimized for a single-user profile.
+ * Implementation of [dev.stukalo.mealplanner.domain.repository.UserRepository] optimized for a single-user profile.
  *
  * @property userDatabaseSource Data source for user profile.
  * @property weightHistoryDatabaseSource Data source for weight history.

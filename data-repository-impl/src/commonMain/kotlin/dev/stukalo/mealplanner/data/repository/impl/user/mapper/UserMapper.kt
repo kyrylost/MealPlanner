@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.data.repository.impl.mapper
+package dev.stukalo.mealplanner.data.repository.impl.user.mapper
 
 import dev.stukalo.mealplanner.core.common.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.database.model.user.ActivityLevelDatabaseModel
@@ -11,7 +11,7 @@ import dev.stukalo.mealplanner.domain.model.user.GenderDomainModel
 import dev.stukalo.mealplanner.domain.model.user.UserDomainModel
 
 /**
- * Mapper for [UserDatabaseModel] and [UserDomainModel].
+ * Mapper for [dev.stukalo.mealplanner.data.database.model.user.UserDatabaseModel] and [dev.stukalo.mealplanner.domain.model.user.UserDomainModel].
  * Weight is handled externally because it resides in a separate table.
  */
 internal class UserMapper : BaseMapper<UserDatabaseModel, UserDomainModel> {

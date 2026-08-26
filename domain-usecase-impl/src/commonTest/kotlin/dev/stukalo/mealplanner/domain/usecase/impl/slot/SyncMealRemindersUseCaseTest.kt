@@ -2,7 +2,7 @@ package dev.stukalo.mealplanner.domain.usecase.impl.slot
 
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.slot.MealSlotDomainModel
-import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
+import dev.stukalo.mealplanner.domain.repository.MealSlotRepository
 import dev.stukalo.mealplanner.domain.repository.SettingsRepository
 import dev.stukalo.mealplanner.domain.service.NotificationScheduler
 import kotlinx.coroutines.flow.flowOf
@@ -15,7 +15,7 @@ import kotlin.test.assertTrue
 class SyncMealRemindersUseCaseTest {
 
     private lateinit var useCase: SyncMealRemindersUseCaseImpl
-    private val mealScheduleRepository = MockMealScheduleRepository()
+    private val mealScheduleRepository = MockMealSlotRepository()
     private val settingsRepository = MockSettingsRepository()
     private val notificationScheduler = MockNotificationScheduler()
 
@@ -55,7 +55,7 @@ class SyncMealRemindersUseCaseTest {
         assertTrue(notificationScheduler.scheduledIds.isEmpty())
     }
 
-    private class MockMealScheduleRepository : MealScheduleRepository {
+    private class MockMealSlotRepository : MealSlotRepository {
         var slots = emptyList<MealSlotDomainModel>()
         override fun getMealSlotsAsFlow() = flowOf(slots)
         override suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean) = Result.success(Unit)

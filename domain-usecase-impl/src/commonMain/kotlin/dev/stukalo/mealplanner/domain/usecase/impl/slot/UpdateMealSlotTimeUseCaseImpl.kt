@@ -1,7 +1,7 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.slot
 
 import dev.stukalo.mealplanner.domain.model.exception.MealSlotException
-import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
+import dev.stukalo.mealplanner.domain.repository.MealSlotRepository
 import dev.stukalo.mealplanner.domain.usecase.slot.SyncMealRemindersUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.UpdateMealSlotTimeUseCase
 import kotlinx.coroutines.flow.first
@@ -12,7 +12,7 @@ import kotlinx.datetime.LocalTime
  * Validates that meal slot times maintain chronological order (Breakfast < Lunch < Dinner).
  */
 internal class UpdateMealSlotTimeUseCaseImpl(
-    private val repository: MealScheduleRepository,
+    private val repository: MealSlotRepository,
     private val syncMealRemindersUseCase: SyncMealRemindersUseCase
 ) : UpdateMealSlotTimeUseCase {
     override suspend fun invoke(slotId: Int, startTime: LocalTime): Result<Unit> {

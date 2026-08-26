@@ -4,7 +4,7 @@ import dev.stukalo.mealplanner.domain.model.slot.MealSlotDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalTime
 
-interface MealScheduleRepository {
+interface MealSlotRepository {
     fun getMealSlotsAsFlow(): Flow<List<MealSlotDomainModel>>
 
     suspend fun updateConsumedStatus(id: Int, isConsumed: Boolean): Result<Unit>

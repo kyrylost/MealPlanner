@@ -1,6 +1,6 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.slot
 
-import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
+import dev.stukalo.mealplanner.domain.repository.MealSlotRepository
 import dev.stukalo.mealplanner.domain.repository.SettingsRepository
 import dev.stukalo.mealplanner.domain.service.NotificationScheduler
 import dev.stukalo.mealplanner.domain.usecase.slot.SyncMealRemindersUseCase
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.first
  * Orchestrates the scheduling of meal reminders based on user settings and meal slots.
  */
 internal class SyncMealRemindersUseCaseImpl(
-    private val mealScheduleRepository: MealScheduleRepository,
+    private val mealSlotRepository: MealSlotRepository,
     private val settingsRepository: SettingsRepository,
     private val notificationScheduler: NotificationScheduler
 ) : SyncMealRemindersUseCase {
@@ -21,7 +21,7 @@ internal class SyncMealRemindersUseCaseImpl(
         notificationScheduler.cancelAllReminders()
 
         if (enabled) {
-            val slots = mealScheduleRepository.getMealSlotsAsFlow().first()
+            val slots = mealSlotRepository.getMealSlotsAsFlow().first()
             slots.forEach { slot ->
                 notificationScheduler.scheduleMealReminder(
                     id = slot.id,

@@ -1,11 +1,11 @@
-package dev.stukalo.mealplanner.data.repository.impl
+package dev.stukalo.mealplanner.data.repository.impl.recipe
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import dev.stukalo.mealplanner.data.network.edamam.recipe.source.EdamamRecipeNetSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.RecipeMapper
-import dev.stukalo.mealplanner.data.repository.impl.paging.RecipePagingSource
+import dev.stukalo.mealplanner.data.repository.impl.recipe.mapper.RecipeMapper
+import dev.stukalo.mealplanner.data.repository.impl.recipe.paging.RecipePagingSource
 import dev.stukalo.mealplanner.domain.model.recipe.MealTypeDomainModel
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 import dev.stukalo.mealplanner.domain.repository.RecipeRepository

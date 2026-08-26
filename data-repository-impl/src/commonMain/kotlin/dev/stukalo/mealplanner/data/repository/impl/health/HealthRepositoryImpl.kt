@@ -6,8 +6,8 @@ import dev.stukalo.mealplanner.data.preferences.settings.SettingsPreferencesData
 import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthPermissionStatusMapper
 import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthPermissionTypeMapper
 import dev.stukalo.mealplanner.data.repository.impl.health.mapper.HealthServiceStatusMapper
-import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyProgressMapper
-import dev.stukalo.mealplanner.data.repository.impl.mapper.WeightHistoryMapper
+import dev.stukalo.mealplanner.data.repository.impl.statistics.mapper.DailyProgressMapper
+import dev.stukalo.mealplanner.data.repository.impl.statistics.mapper.WeightHistoryMapper
 import dev.stukalo.mealplanner.domain.model.exception.HealthException
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionGroup
 import dev.stukalo.mealplanner.domain.model.health.HealthPermissionStatus

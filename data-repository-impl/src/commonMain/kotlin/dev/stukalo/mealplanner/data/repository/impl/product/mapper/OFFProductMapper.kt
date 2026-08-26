@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.data.repository.impl.mapper
+package dev.stukalo.mealplanner.data.repository.impl.product.mapper
 
 import dev.stukalo.mealplanner.core.common.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.network.openfoodfacts.model.OFFProductResponseNetModel
@@ -12,7 +12,7 @@ import dev.stukalo.mealplanner.domain.model.nutrient.NutrientTypeDomainModel
  * A mapper that converts [OFFProductResponseNetModel] from the Open Food Facts API
  * into the domain-specific [ProductDomainModel].
  */
-internal class OffProductMapper : BaseMapper<OFFProductResponseNetModel, ProductDomainModel> {
+internal class OFFProductMapper : BaseMapper<OFFProductResponseNetModel, ProductDomainModel> {
     override fun mapTo(model: OFFProductResponseNetModel): ProductDomainModel {
         val product = model.product
         val nutrients =

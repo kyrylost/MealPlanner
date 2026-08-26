@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.data.repository.impl.mapper
+package dev.stukalo.mealplanner.data.repository.impl.statistics.mapper
 
 import dev.stukalo.mealplanner.core.common.mapper.BaseMapper
 import dev.stukalo.mealplanner.data.database.model.statistics.WeightHistoryDatabaseModel

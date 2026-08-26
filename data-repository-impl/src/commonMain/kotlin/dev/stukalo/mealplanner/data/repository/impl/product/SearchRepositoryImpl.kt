@@ -1,4 +1,4 @@
-package dev.stukalo.mealplanner.data.repository.impl
+package dev.stukalo.mealplanner.data.repository.impl.product
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -6,10 +6,10 @@ import androidx.paging.PagingData
 import dev.stukalo.mealplanner.data.network.edamam.food.source.EdamamFoodNetSource
 import dev.stukalo.mealplanner.data.network.fooddatacentral.source.FoodDataCentralNetSource
 import dev.stukalo.mealplanner.data.network.openfoodfacts.source.OpenFoodFactsNetSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.FDCDetailsProductMapper
-import dev.stukalo.mealplanner.data.repository.impl.mapper.FDCSearchProductMapper
-import dev.stukalo.mealplanner.data.repository.impl.mapper.OffProductMapper
-import dev.stukalo.mealplanner.data.repository.impl.paging.ProductPagingSource
+import dev.stukalo.mealplanner.data.repository.impl.product.mapper.FDCDetailsProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.product.mapper.FDCSearchProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.product.mapper.OFFProductMapper
+import dev.stukalo.mealplanner.data.repository.impl.product.paging.ProductPagingSource
 import dev.stukalo.mealplanner.domain.model.food.ProductDomainModel
 import dev.stukalo.mealplanner.domain.repository.SearchRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ internal class SearchRepositoryImpl(
     private val offNetSource: OpenFoodFactsNetSource,
     private val fdcSearchProductMapper: FDCSearchProductMapper,
     private val fdcDetailsProductMapper: FDCDetailsProductMapper,
-    private val offProductMapper: OffProductMapper
+    private val offProductMapper: OFFProductMapper
 ) : SearchRepository {
     private val productCache = mutableMapOf<String, ProductDomainModel>()
 

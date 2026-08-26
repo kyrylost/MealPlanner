@@ -1,9 +1,9 @@
-package dev.stukalo.mealplanner.data.repository.impl
+package dev.stukalo.mealplanner.data.repository.impl.statistics
 
 import dev.stukalo.mealplanner.data.database.source.norm.DailyNormDatabaseSource
 import dev.stukalo.mealplanner.data.database.source.progress.DailyProgressDatabaseSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyNormMapper
-import dev.stukalo.mealplanner.data.repository.impl.mapper.DailyProgressMapper
+import dev.stukalo.mealplanner.data.repository.impl.statistics.mapper.DailyNormMapper
+import dev.stukalo.mealplanner.data.repository.impl.statistics.mapper.DailyProgressMapper
 import dev.stukalo.mealplanner.domain.model.norm.DailyNormDomainModel
 import dev.stukalo.mealplanner.domain.model.progress.DailyProgressDomainModel
 import dev.stukalo.mealplanner.domain.repository.NutritionRepository

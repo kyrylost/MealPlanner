@@ -1,7 +1,7 @@
 package dev.stukalo.mealplanner.domain.usecase.impl.slot
 
 import dev.stukalo.mealplanner.domain.model.progress.DailyProgressDomainModel
-import dev.stukalo.mealplanner.domain.repository.MealScheduleRepository
+import dev.stukalo.mealplanner.domain.repository.MealSlotRepository
 import dev.stukalo.mealplanner.domain.usecase.nutrition.GetDailyProgressUseCase
 import dev.stukalo.mealplanner.domain.usecase.nutrition.UpdateDailyProgressUseCase
 import dev.stukalo.mealplanner.domain.usecase.slot.TrackMealConsumedUseCase
@@ -13,7 +13,7 @@ import kotlin.time.Clock
 class TrackMealConsumedUseCaseImpl(
     private val getDailyProgressUseCase: GetDailyProgressUseCase,
     private val updateDailyProgressUseCase: UpdateDailyProgressUseCase,
-    private val mealScheduleRepository: MealScheduleRepository,
+    private val mealSlotRepository: MealSlotRepository,
     private val clock: Clock
 ) : TrackMealConsumedUseCase {
     override suspend fun invoke(
@@ -47,6 +47,6 @@ class TrackMealConsumedUseCaseImpl(
         updateDailyProgressUseCase(updatedProgress)
 
         // 2. Mark Slot as Consumed
-        return mealScheduleRepository.updateConsumedStatus(slotId, true)
+        return mealSlotRepository.updateConsumedStatus(slotId, true)
     }
 }

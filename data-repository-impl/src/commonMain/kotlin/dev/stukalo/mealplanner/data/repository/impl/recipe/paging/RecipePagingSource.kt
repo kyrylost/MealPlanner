@@ -1,9 +1,9 @@
-package dev.stukalo.mealplanner.data.repository.impl.paging
+package dev.stukalo.mealplanner.data.repository.impl.recipe.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.stukalo.mealplanner.data.network.edamam.recipe.source.EdamamRecipeNetSource
-import dev.stukalo.mealplanner.data.repository.impl.mapper.RecipeMapper
+import dev.stukalo.mealplanner.data.repository.impl.recipe.mapper.RecipeMapper
 import dev.stukalo.mealplanner.domain.model.recipe.RecipeDomainModel
 
 internal class RecipePagingSource(
