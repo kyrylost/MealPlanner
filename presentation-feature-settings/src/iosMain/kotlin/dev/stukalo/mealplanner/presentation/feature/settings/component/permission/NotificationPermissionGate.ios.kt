@@ -20,7 +20,7 @@ actual fun NotificationPermissionGate(
             val center = UNUserNotificationCenter.currentNotificationCenter()
             center.requestAuthorizationWithOptions(
                 UNAuthorizationOptionAlert or UNAuthorizationOptionSound
-            ) { granted, error ->
+            ) { granted, _ ->
                 onPermissionResult(granted)
             }
             onTriggerReset()

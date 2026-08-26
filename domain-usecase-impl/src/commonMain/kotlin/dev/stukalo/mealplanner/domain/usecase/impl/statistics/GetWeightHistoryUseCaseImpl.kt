@@ -37,7 +37,7 @@ class GetWeightHistoryUseCaseImpl(private val weightRepository: WeightRepository
                     val days = if (interval == StatisticsInterval.WEEK) DAYS_IN_WEEK else DAYS_IN_MONTH
                     var lastKnownWeight = 0.0
 
-                    (0 until days).map { i ->
+                    ((days - 1) downTo 0).map { i ->
                         val date = today.minus(i, DateTimeUnit.DAY)
                         val entry = weightMap[date]
 
@@ -49,14 +49,14 @@ class GetWeightHistoryUseCaseImpl(private val weightRepository: WeightRepository
                         }
 
                         StatisticsPoint(date = date, value = lastKnownWeight)
-                    }.reversed()
+                    }
                 }
                 StatisticsInterval.YEAR -> {
                     // For year, return 12 points (last 12 months)
                     val monthlyHistory = history.groupBy { it.date.year to it.date.month }
                     var lastKnownWeight = 0.0
 
-                    (0 until MONTHS_IN_YEAR).map { i ->
+                    ((MONTHS_IN_YEAR - 1) downTo 0).map { i ->
                         val targetDate = today.minus(i, DateTimeUnit.MONTH)
                         val entries = monthlyHistory[targetDate.year to targetDate.month]
                         val lastEntry = entries?.maxBy { it.date }
@@ -71,7 +71,7 @@ class GetWeightHistoryUseCaseImpl(private val weightRepository: WeightRepository
                             date = targetDate,
                             value = lastKnownWeight
                         )
-                    }.reversed()
+                    }
                 }
             }
         }

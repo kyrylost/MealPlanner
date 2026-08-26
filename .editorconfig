@@ -17,3 +17,6 @@ ktlint_standard_backing-property-naming = disabled
 
 [**/build/generated/**/*.kt]
 ktlint_standard = disabled
+
+[**/src/*Test/**/*.kt]
+ktlint_standard = disabled
